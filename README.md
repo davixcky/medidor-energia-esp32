@@ -607,115 +607,97 @@ Fuente: elaboración propia. La columna de resultados se completará el día de 
 
 Una pinza solo mide si abraza **un** conductor: si se coloca sobre el cable de un electrodoméstico, que
 lleva fase y neutro juntos, las dos corrientes son iguales y opuestas y la lectura es cero. Para medir
-cualquier equipo sin cortar ni pelar su cable se diseñó un banco de medición: una caja con una clavija de
-entrada y tres tomacorrientes de salida. Por dentro, la fase va separada del neutro y pasa por las dos
-pinzas del medidor, de modo que basta con enchufar el equipo en el banco.
+cualquier equipo sin cortar ni pelar su cable se diseñó un banco de medición mínimo: una clavija que se
+enchufa a un tomacorriente de pared, un cable, un tramo de la fase accesible para la pinza y un
+tomacorriente donde se conecta el equipo. No tiene nada más.
 
 #### 7.11.1. Funcionamiento
 
 El esquemático del banco (Ilustración 6) está en
 [`hardware/banco-pruebas.kicad_sch`](hardware/banco-pruebas.kicad_sch) (PDF en
-[`hardware/banco-pruebas.pdf`](hardware/banco-pruebas.pdf)) y su ERC también termina con **0 errores y 0
-advertencias** ([`hardware/erc-banco.rpt`](hardware/erc-banco.rpt)). El recorrido de la fase es:
+[`hardware/banco-pruebas.pdf`](hardware/banco-pruebas.pdf)) y su ERC termina con **0 errores y 0
+advertencias** ([`hardware/erc-banco.rpt`](hardware/erc-banco.rpt)).
 
-1. **P1**, clavija de entrada NEMA 5-15P con cable de 3 hilos 14 AWG.
-2. **Q1**, *breaker* de 15 A, que protege el cableado interno y sirve de interruptor general.
-3. Nodo `L_SW` (conector de palanca W3), del que salen cuatro conductores de fase:
-   - al piloto **H1**;
-   - a la toma auxiliar **X0**, que no se mide. En ella se enchufan el cable de red del medidor (J4,
-     rama del ZMPT101B) y su adaptador de 5 V, de modo que el consumo del propio medidor no se suma a la
-     medida y la tensión se toma de la misma línea;
-   - a la **salida CH1 (X1)**, pasando **una vez** por la ventana de la pinza CT1;
-   - a la **salida CH2 (X2)**, pasando **una vez** por la ventana de la pinza CT2.
+1. **P1**, clavija NEMA 5-15P con cable de 3 hilos 14 AWG, se enchufa a un tomacorriente de pared.
+2. Dentro de la caja, el **neutro** y la **tierra** van directo al tomacorriente X1.
+3. La **fase** sale de la caja por un prensaestopas PG7, forma un **lazo de medición** exterior de unos
+   16 cm de THHN 14 AWG aislado y vuelve a entrar por otro PG7 hasta el tornillo de bronce de X1.
+4. La pinza **CT1** se cierra sobre una de las dos patas del lazo, de modo que la fase atraviesa su
+   ventana **una sola vez**. Su cable va a J2 (CH1) del medidor.
+5. El equipo a medir se enchufa en **X1**, un tomacorriente doble polarizado.
 
-Cada salida tiene su propia pinza: CH1 mide lo que se enchufe en X1 y CH2 lo que se enchufe en X2. El
-neutro y la tierra van de la clavija a dos conectores de palanca (W1 y W2) y de allí a cada
-tomacorriente; **nunca pasan por una pinza**.
+El medidor se alimenta de otro tomacorriente de pared, de modo que su propio consumo no se suma a la
+medida. La tensión de la red es la misma en los dos tomacorrientes si están en el mismo circuito.
 
 ![Esquemático del banco de medición](img/banco-esquematico.png)
 
-**Ilustración 6.** Esquemático del banco de medición (hoja A4). Todo el recuadro rojo es zona de red.
-Fuente: elaboración propia en KiCad 10.
+**Ilustración 6.** Esquemático del banco de medición (hoja A4): clavija, lazo de medición con la pinza y
+tomacorriente de salida. Fuente: elaboración propia en KiCad 10.
 
 #### 7.11.2. Rango y calibre
 
-El conductor atraviesa cada pinza una sola vez, igual que cuando la pinza se instala en un tablero; por
-eso la constante de calibración es la misma en los dos usos y el *firmware* no necesita ningún factor
-adicional. El banco limita la corriente a 15 A (Q1), muy por debajo de los límites lineales de la
-sección 7.4.1 (72,6 A en CH1 y 34,0 A en CH2), así que ninguna carga que el banco permita puede saturar
-un canal. La resolución es la de la sección 7.4.1: un código del ADC equivale a 73 mA en CH1 y 34 mA en
-CH2 (8,8 W y 4,1 W a 120 V), y el promedio sobre miles de muestras baja el ruido por debajo de ese
-valor. Para cargas muy pequeñas (cargadores, equipos en reposo) conviene usar X2, que tiene el doble de
-sensibilidad.
+La fase atraviesa la pinza una sola vez, igual que cuando la pinza se instala en un tablero; por eso la
+constante de calibración es la misma en los dos usos. La corriente queda limitada por el *breaker* del
+circuito de pared (15 A), muy por debajo del límite lineal de CH1 (72,6 A, sección 7.4.1), así que ninguna
+carga que el banco permita satura el canal. La resolución es la de la sección 7.4.1: un código del ADC
+equivale a 73 mA (8,8 W a 120 V), y el promedio sobre miles de muestras baja el ruido por debajo de ese
+valor. Para cargas muy pequeñas, la pinza puede ir en CH2 (J3), que tiene el doble de sensibilidad.
 
-**Calibre.** Todo el cableado de fuerza es THHN 14 AWG de cobre, el calibre que corresponde a un circuito
-de 15 A [8]. El cable de entrada es de uso rudo (SJT 3 × 14 AWG). Un conductor THHN 14 AWG mide unos 2,9 mm
-por fuera y la ventana de la SCT-013-000 tiene 13 mm, de modo que la pinza cierra sin forzar el núcleo.
+Todo el cableado es de cobre 14 AWG, el calibre que corresponde a un circuito de 15 A [8]. Un conductor
+THHN 14 AWG mide unos 2,9 mm por fuera y la ventana de la SCT-013-000 tiene 13 mm, de modo que la pinza
+cierra sin forzar el núcleo. El lazo también admite una pinza amperimétrica comercial, útil para
+calibrar el canal contra una referencia.
 
 #### 7.11.3. Gabinete y cableado
 
-El banco usa una caja plástica de 300 × 180 × 100 mm, independiente del medidor (Ilustración 7). Los
-tres tomacorrientes, la ventana de Q1 y el piloto van en la tapa; Q1 va en un riel DIN y las pinzas se
-fijan con bridas sobre una base adhesiva. Los cables de las pinzas salen por un prensaestopas PG9 hacia
-J2 y J3 del medidor, y el cable de red entra por un PG11 con alivio de tracción. Las pinzas quedan fijas
-dentro del banco; para instalar el medidor en un tablero se retiran con el banco desconectado.
+El banco es una caja plástica de 130 × 90 × 65 mm (Ilustración 7). El tomacorriente va en la tapa, el
+cable de red entra por un prensaestopas PG11 con alivio de tracción y el lazo sale y vuelve por dos PG7,
+que también lo sujetan para que no se pueda halar hacia los bornes.
 
-![Gabinete del banco de medición](img/banco-pruebas.png)
+![Banco de medición](img/banco-pruebas.png)
 
-**Ilustración 7.** Banco de medición: interior sin tapa con el recorrido de la fase por las pinzas
-(izquierda) y tapa vista desde afuera (derecha). Fuente: elaboración propia en Python y Matplotlib.
+**Ilustración 7.** Banco de medición: interior sin tapa con el lazo de medición y la pinza (izquierda) y
+tapa vista desde afuera (derecha). Fuente: elaboración propia en Python y Matplotlib.
 
 **Tabla 8.** Materiales del banco de medición.
 
 | # | Referencia | Descripción | Cant. |
 |---:|---|---|---:|
-| 1 | P1 | Clavija NEMA 5-15P con cable SJT 3 × 14 AWG de 1,8 m | 1 |
-| 2 | Q1 | *Breaker* termomagnético 1P de 15 A, curva C, para riel DIN, y 15 cm de riel DIN de 35 mm | 1 |
-| 3 | X0, X1, X2 | Tomacorriente doble polarizado con polo a tierra, 15 A 125 V (NEMA 5-15R) | 3 |
-| 4 | H1 | Piloto neón de panel de 120 V con resistencia integrada | 1 |
-| 5 | W1, W2, W3 | Conector de palanca de 5 vías, 4 mm² (tipo WAGO 221-415) | 3 |
-| 6 | CT1, CT2 | Las mismas pinzas SCT-013-000 del medidor (no se compran adicionales) | — |
-| 7 | — | Caja plástica de 300 × 180 × 100 mm | 1 |
-| 8 | — | Prensaestopas PG11 (cable de red) y PG9 (cables de las pinzas) | 1 + 1 |
-| 9 | — | Cable THHN 14 AWG en negro, blanco y verde | 2 m de cada color |
-| 10 | — | Cable dúplex 2 × 18 AWG con clavija NEMA 1-15P, para la entrada J4 del medidor | 1 |
-| 11 | — | Terminales de ojo, tubo termoencogible, bridas y bases adhesivas | 1 juego |
+| 1 | P1 | Clavija NEMA 5-15P con cable SJT 3 × 14 AWG de 1,8 m (puede ser una extensión cortada) | 1 |
+| 2 | X1 | Tomacorriente doble polarizado con polo a tierra, 15 A 125 V (NEMA 5-15R) | 1 |
+| 3 | CT1 | La misma pinza SCT-013-000 del medidor (no se compra adicional) | — |
+| 4 | — | Caja plástica de 130 × 90 × 65 mm | 1 |
+| 5 | — | Prensaestopas PG11 (cable de red) y PG7 (lazo de medición) | 1 + 2 |
+| 6 | — | Cable THHN 14 AWG negro para el lazo | 0,3 m |
+| 7 | — | Terminales de ojo y tubo termoencogible | 1 juego |
 
 Fuente: elaboración propia.
 
-**Tabla 9.** Lista de conductores del banco (toda la fuerza en THHN 14 AWG).
+**Tabla 9.** Lista de conductores del banco (todos de 14 AWG).
 
 | # | Desde | Hasta | Color | Red |
 |---:|---|---|---|---|
-| 1 | P1, fase | Q1, borne de entrada | Negro | `L_RED` |
-| 2 | P1, neutro | W1 | Blanco | `N` |
-| 3 | P1, tierra | W2 | Verde | `PE` |
-| 4 | Q1, borne de salida | W3 | Negro | `L_SW` |
-| 5 | W3 | X0, tornillo de bronce | Negro | `L_SW` |
-| 6 | W3 | H1, terminal 2 | Negro | `L_SW` |
-| 7 | W3 | X1, tornillo de bronce, pasando una vez por CT1 (un solo tramo, sin empalmes) | Negro | `L_SW` → `L_A` |
-| 8 | W3 | X2, tornillo de bronce, pasando una vez por CT2 (un solo tramo, sin empalmes) | Negro | `L_SW` → `L_B` |
-| 9 | W1 | X0, X1 y X2, tornillo plateado (un conductor a cada uno) | Blanco | `N` |
-| 10 | W1 | H1, terminal 1 | Blanco | `N` |
-| 11 | W2 | X0, X1 y X2, tornillo verde (un conductor a cada uno) | Verde | `PE` |
+| 1 | P1, neutro | X1, tornillo plateado | Blanco | `N` |
+| 2 | P1, tierra | X1, tornillo verde | Verde | `PE` |
+| 3 | P1, fase | Primer PG7 (sale de la caja) | Negro | `L_ENT` |
+| 4 | Lazo exterior, por la ventana de CT1 | Segundo PG7 (vuelve a la caja) | Negro | `L_ENT` → `L_X1` |
+| 5 | Segundo PG7 | X1, tornillo de bronce | Negro | `L_X1` |
 
-Fuente: elaboración propia. En los tomacorrientes polarizados la fase va a la ranura corta (tornillo de
-bronce) y el neutro a la ranura larga (tornillo plateado).
+Fuente: elaboración propia. Las filas 3 a 5 son un solo tramo de cable, sin empalmes. En el tomacorriente
+polarizado la fase va a la ranura corta (tornillo de bronce) y el neutro a la ranura larga (tornillo
+plateado).
 
 #### 7.11.4. Verificación antes de usar el banco
 
 1. Sin conectar a la red, medir con el multímetro la continuidad de cada fila de la Tabla 9 y comprobar
-   que no hay continuidad entre fase, neutro y tierra con Q1 abierto y con Q1 cerrado.
-2. Comprobar a la vista que el neutro y la tierra no pasan por ninguna pinza y que cada pinza cierra por
-   completo.
-3. Conectar los plugs de las pinzas a J2 y J3 del medidor **antes** de cerrar Q1 (nunca dejar un
+   que no hay continuidad entre fase, neutro y tierra.
+2. Comprobar a la vista que la pinza abraza **solo** una pata del lazo y que cierra por completo.
+3. Conectar el plug de la pinza a J2 del medidor **antes** de enchufar el banco (nunca dejar el
    secundario abierto con carga).
-4. Enchufar el banco, cerrar Q1 y verificar cada salida con un probador de tomacorrientes (fase, neutro
-   y tierra correctos).
-5. Conectar una carga resistiva conocida (bombillo incandescente o hervidor) en X1 y luego en X2, y
-   comparar la corriente con una pinza amperimétrica o con el PZEM-004T (su anillo puede abrazar el mismo
-   conductor que CT1). Con esa medida se ajusta la
-   constante de calibración de cada canal.
+4. Enchufar el banco y verificar X1 con un probador de tomacorrientes (fase, neutro y tierra correctos).
+5. Conectar una carga resistiva conocida (bombillo incandescente o hervidor) en X1 y comparar la
+   corriente con una pinza amperimétrica colocada en la otra pata del lazo, o con el PZEM-004T. Con esa
+   medida se ajusta la constante de calibración del canal.
 
 ### 7.12. Simulación del circuito
 
@@ -863,7 +845,7 @@ La placa no se dibujó en FreeCAD: el ensamble del medidor importa el STEP que e
 zona de red, con el módulo ZMPT101B, el portafusible F1, la bornera J4 y el prensaestopas PG7, de la
 zona de muy baja tensión. Allí va la placa sobre separadores de 10 mm. Los *jacks* de las pinzas y el de
 alimentación están en la pared izquierda, y la ventana del USB en la pared frontal (Ilustraciones
-ILUS_F1 a ILUS_F3). La tapa lleva la ventana rehundida de la OLED, el LED, los pulsadores y los rótulos
+12 a 14). La tapa lleva la ventana rehundida de la OLED, el LED, los pulsadores y los rótulos
 grabados.
 
 ![Medidor cerrado](img/3d-medidor-cerrado.png)
@@ -881,28 +863,33 @@ ESP32, zona de red tras el tabique y aparatos de la tapa. Fuente: elaboración p
 cable de tres hilos por el collarín y placa perforada (abajo). Fuente: elaboración propia en FreeCAD y
 KiCad.
 
-**Banco de medición.** La caja de 300 × 180 × 100 mm contiene el *breaker* Q1 sobre riel DIN, los
-conectores de palanca W1 (neutro), W2 (tierra) y W3 (fase después de Q1) y las dos pinzas SCT-013-000.
-El conductor de fase de cada salida atraviesa **una sola vez** la ventana de su pinza: CT1 el de X1 y
-CT2 el de X2. El neutro y la tierra no pasan por ninguna pinza. En la tapa quedan los tres
-tomacorrientes, la ventana de Q1 y el piloto H1. El cable de red entra por un prensaestopas PG11 y los
-cables de las pinzas salen por un PG9 hacia J2 y J3 del medidor (Ilustraciones ILUS_F4 a ILUS_F6).
+**Banco de medición.** El banco es lo mínimo para medir cualquier equipo sin cortar su cable: una
+clavija NEMA 5-15P que se enchufa a la pared, el cordón SJT 3 × 14 AWG, que entra por un prensaestopas
+PG11, y un tomacorriente doble (X1) donde se conecta el equipo, en una caja de 130 × 90 × 65 mm. El
+neutro y la tierra van directo del cordón a los tornillos plateado y verde de X1. La fase, en cambio,
+sale de la caja por un prensaestopas PG7, forma un lazo exterior de conductor THHN 14 AWG aislado, con
+dos patas paralelas separadas 25 mm, y vuelve a entrar por un segundo PG7 hasta el tornillo de bronce de
+X1. La pinza SCT-013-000 se cierra sobre **una sola pata** del lazo, de modo que mide la corriente del
+equipo conectado sin abrir ningún circuito, y su cable termina en el *plug* de 3,5 mm que va a J2 del
+medidor (Ilustraciones 15 a 17). En el modelo, X1 queda a lo largo de la caja porque su yugo de 107 mm
+no cabe a lo ancho.
 
 ![Banco cerrado](img/3d-banco-cerrado.png)
 
-**Ilustración 15.** Modelo 3D del banco de medición cerrado. Fuente: elaboración propia en FreeCAD.
+**Ilustración 15.** Modelo 3D del banco de medición cerrado: clavija y cordón al frente, tomacorriente X1
+en la tapa y, detrás, el lazo de fase con la pinza. Fuente: elaboración propia en FreeCAD.
 
 ![Banco abierto](img/3d-banco-abierto.png)
 
-**Ilustración 16.** Banco con la tapa a un lado. Los tomacorrientes y el piloto se dibujan
-translúcidos para mostrar el cableado: fase en negro, neutro en blanco, tierra en verde y cables de las
-pinzas en gris. Fuente: elaboración propia en FreeCAD.
+**Ilustración 16.** Banco con la tapa a un lado. El tomacorriente y la pinza se dibujan translúcidos para
+mostrar el cableado: neutro (blanco) y tierra (verde) directo a X1, y la fase (negro) que sale al lazo
+exterior, atraviesa la ventana de la pinza y vuelve al tornillo de bronce. Fuente: elaboración propia en
+FreeCAD.
 
 ![Banco en planta](img/3d-banco-planta.png)
 
-**Ilustración 17.** Vista superior del banco sin tapa, con cada pieza rotulada. Las pinzas CT1 y CT2 se
-dibujan translúcidas para que se vea el conductor de fase de cada salida pasando por su ventana.
-Fuente: elaboración propia en FreeCAD (rótulos con Matplotlib).
+**Ilustración 17.** Vista superior del banco sin tapa, con cada pieza rotulada. Fuente: elaboración propia
+en FreeCAD (rótulos con Matplotlib).
 
 Los ensambles se exportaron en STEP con colores (`freecad/medidor.step` y `freecad/banco.step`), y
 los cuerpos y tapas, en STL para impresión 3D ([`freecad/stl/`](freecad/stl/)). Para regenerar los
@@ -1225,8 +1212,10 @@ Fuente: elaboración propia.
    4,75 V no alcanza para el regulador durante las ráfagas de Wi-Fi. Se corrigieron antes de comprar los
    componentes (sección 7.12).
 8. **Medición de equipos sueltos.** Una pinza no mide sobre el cable de un electrodoméstico, porque abraza
-   fase y neutro a la vez. Se diseñó el banco de medición de la sección 7.11, donde cada salida tiene su
-   fase separada y su propia pinza.
+   fase y neutro a la vez. Se diseñó el banco de medición de la sección 7.11: una clavija, un cable, un lazo
+   exterior con la fase separada para colocar la pinza y un tomacorriente. Una primera versión tenía
+   *breaker*, piloto, tres tomacorrientes y dos pinzas; se simplificó porque el circuito de pared ya trae
+   su protección y para medir un equipo basta una pinza.
 9. **Sin datos propios para el pronóstico.** Mientras el medidor no registre, el LSTM se entrenó con una
    serie pública (sección 7.15); el modelo definitivo se entrenará con las mediciones del corte 3.
 

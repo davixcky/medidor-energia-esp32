@@ -1,8 +1,8 @@
 (export
 	(version "E")
 	(design
-		(source "/home/davixcky/dev/.personal/electronica/sistemas-embebidos-1/C2-ABPR/hardware/banco-pruebas.kicad_sch")
-		(date "2026-10-16T15:43:24")
+		(source "/home/davixcky/dev/.personal/electronica/medidor-energia-esp32/hardware/banco-pruebas.kicad_sch")
+		(date "2026-10-16T17:03:08")
 		(tool "Eeschema 10.0.0")
 		(sheet
 			(number "1")
@@ -85,7 +85,7 @@
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "fee45f9c-5865-5f55-a9f4-a222f09b1a74")
+			(tstamps "e3044e64-8d93-530f-a60e-cfc62dca86f9")
 			(units
 				(unit
 					(name "A")
@@ -101,108 +101,6 @@
 						)
 						(pin
 							(num "2")
-						)
-					)
-				)
-			)
-		)
-		(comp
-			(ref "CT2")
-			(value "SCT-013-000 (CH2)")
-			(fields
-				(field
-					(name "Footprint")
-				)
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description")
-				)
-			)
-			(libsource
-				(lib "Medidor")
-				(part "Pinza_SCT-013-000")
-				(description "Pinza de corriente de núcleo partido 100 A : 50 mA, sin resistencia de carga")
-			)
-			(property
-				(name "Sheetname")
-				(value "")
-			)
-			(property
-				(name "Sheetfile")
-				(value "banco-pruebas.kicad_sch")
-			)
-			(sheetpath
-				(names "/")
-				(tstamps "/")
-			)
-			(tstamps "0ea134b2-54b6-5de8-b154-308e9c1d08ed")
-			(units
-				(unit
-					(name "A")
-					(pins
-						(pin
-							(num "1")
-						)
-						(pin
-							(num "3")
-						)
-						(pin
-							(num "4")
-						)
-						(pin
-							(num "2")
-						)
-					)
-				)
-			)
-		)
-		(comp
-			(ref "H1")
-			(value "Piloto neón 120 V")
-			(fields
-				(field
-					(name "Footprint")
-				)
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description")
-				)
-			)
-			(libsource
-				(lib "Device")
-				(part "Lamp_Neon")
-				(description "Neon lamp")
-			)
-			(property
-				(name "Sheetname")
-				(value "")
-			)
-			(property
-				(name "Sheetfile")
-				(value "banco-pruebas.kicad_sch")
-			)
-			(property
-				(name "ki_keywords")
-				(value "neon lamp")
-			)
-			(sheetpath
-				(names "/")
-				(tstamps "/")
-			)
-			(tstamps "0ec3f46c-0d29-5bd6-994a-7cf4a5d289f7")
-			(units
-				(unit
-					(name "A")
-					(pins
-						(pin
-							(num "2")
-						)
-						(pin
-							(num "1")
 						)
 					)
 				)
@@ -288,7 +186,7 @@
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "e7414a01-6046-54a8-94f7-27f993d60808")
+			(tstamps "0ec3f46c-0d29-5bd6-994a-7cf4a5d289f7")
 			(units
 				(unit
 					(name "A")
@@ -304,104 +202,8 @@
 			)
 		)
 		(comp
-			(ref "PL2")
-			(value "Plug 3,5 mm → J3 del medidor")
-			(fields
-				(field
-					(name "Footprint")
-				)
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description")
-				)
-			)
-			(libsource
-				(lib "Medidor")
-				(part "Plug_3.5mm")
-				(description "Plug macho de 3,5 mm del cable de la pinza (punta = T, manga = S)")
-			)
-			(property
-				(name "Sheetname")
-				(value "")
-			)
-			(property
-				(name "Sheetfile")
-				(value "banco-pruebas.kicad_sch")
-			)
-			(sheetpath
-				(names "/")
-				(tstamps "/")
-			)
-			(tstamps "b8705db8-6ec1-5d49-b8b2-5260b69e1678")
-			(units
-				(unit
-					(name "A")
-					(pins
-						(pin
-							(num "1")
-						)
-						(pin
-							(num "2")
-						)
-					)
-				)
-			)
-		)
-		(comp
-			(ref "Q1")
-			(value "Breaker 1P 15 A curva C (riel DIN)")
-			(fields
-				(field
-					(name "Footprint")
-				)
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description")
-				)
-			)
-			(libsource
-				(lib "Device")
-				(part "CircuitBreaker_1P")
-				(description "Single pole circuit breaker")
-			)
-			(property
-				(name "Sheetname")
-				(value "")
-			)
-			(property
-				(name "Sheetfile")
-				(value "banco-pruebas.kicad_sch")
-			)
-			(property
-				(name "ki_keywords")
-				(value "CB")
-			)
-			(sheetpath
-				(names "/")
-				(tstamps "/")
-			)
-			(tstamps "e3044e64-8d93-530f-a60e-cfc62dca86f9")
-			(units
-				(unit
-					(name "A")
-					(pins
-						(pin
-							(num "1")
-						)
-						(pin
-							(num "2")
-						)
-					)
-				)
-			)
-		)
-		(comp
-			(ref "X0")
-			(value "Toma auxiliar (sin medir): medidor + adaptador 5 V")
+			(ref "X1")
+			(value "Tomacorriente doble 5-15R (equipo a medir)")
 			(fields
 				(field
 					(name "Footprint")
@@ -448,170 +250,10 @@
 				)
 			)
 		)
-		(comp
-			(ref "X1")
-			(value "Salida CH1 (15 A)")
-			(fields
-				(field
-					(name "Footprint")
-				)
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description")
-				)
-			)
-			(libsource
-				(lib "Medidor")
-				(part "Tomacorriente_NEMA_5-15R")
-				(description "Tomacorriente doble polarizado con polo a tierra, 125 V 15 A")
-			)
-			(property
-				(name "Sheetname")
-				(value "")
-			)
-			(property
-				(name "Sheetfile")
-				(value "banco-pruebas.kicad_sch")
-			)
-			(sheetpath
-				(names "/")
-				(tstamps "/")
-			)
-			(tstamps "8e65920b-0f30-5613-af5d-3a3ceae5b05e")
-			(units
-				(unit
-					(name "A")
-					(pins
-						(pin
-							(num "1")
-						)
-						(pin
-							(num "2")
-						)
-						(pin
-							(num "3")
-						)
-					)
-				)
-			)
-		)
-		(comp
-			(ref "X2")
-			(value "Salida CH2 (15 A)")
-			(fields
-				(field
-					(name "Footprint")
-				)
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description")
-				)
-			)
-			(libsource
-				(lib "Medidor")
-				(part "Tomacorriente_NEMA_5-15R")
-				(description "Tomacorriente doble polarizado con polo a tierra, 125 V 15 A")
-			)
-			(property
-				(name "Sheetname")
-				(value "")
-			)
-			(property
-				(name "Sheetfile")
-				(value "banco-pruebas.kicad_sch")
-			)
-			(sheetpath
-				(names "/")
-				(tstamps "/")
-			)
-			(tstamps "bf7860fa-1f12-55d8-9edf-701d4df8adc3")
-			(units
-				(unit
-					(name "A")
-					(pins
-						(pin
-							(num "1")
-						)
-						(pin
-							(num "2")
-						)
-						(pin
-							(num "3")
-						)
-					)
-				)
-			)
-		)
 	)
 	(groups)
 	(variants)
 	(libparts
-		(libpart
-			(lib "Device")
-			(part "CircuitBreaker_1P")
-			(description "Single pole circuit breaker")
-			(fields
-				(field
-					(name "Reference") "CB")
-				(field
-					(name "Value") "CircuitBreaker_1P")
-				(field
-					(name "Footprint")
-				)
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description") "Single pole circuit breaker")
-			)
-			(pins
-				(pin
-					(num "1")
-					(name "")
-					(type "passive")
-				)
-				(pin
-					(num "2")
-					(name "")
-					(type "passive")
-				)
-			)
-		)
-		(libpart
-			(lib "Device")
-			(part "Lamp_Neon")
-			(description "Neon lamp")
-			(fields
-				(field
-					(name "Reference") "NE")
-				(field
-					(name "Value") "Lamp_Neon")
-				(field
-					(name "Footprint")
-				)
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description") "Neon lamp")
-			)
-			(pins
-				(pin
-					(num "1")
-					(name "")
-					(type "passive")
-				)
-				(pin
-					(num "2")
-					(name "")
-					(type "passive")
-				)
-			)
-		)
 		(libpart
 			(lib "Medidor")
 			(part "Clavija_NEMA_5-15P")
@@ -759,10 +401,6 @@
 	)
 	(libraries
 		(library
-			(logical "Device")
-			(uri "${KICAD10_SYMBOL_DIR}/Device.kicad_sym")
-		)
-		(library
 			(logical "Medidor")
 			(uri "${KIPRJMOD}/Medidor.kicad_sym")
 		)
@@ -770,16 +408,16 @@
 	(nets
 		(net
 			(code "1")
-			(name "/L_A")
+			(name "/L_ENT")
 			(class "Default")
 			(node
 				(ref "CT1")
-				(pin "2")
-				(pinfunction "P2_2")
+				(pin "1")
+				(pinfunction "P1_1")
 				(pintype "passive")
 			)
 			(node
-				(ref "X1")
+				(ref "P1")
 				(pin "1")
 				(pinfunction "L_1")
 				(pintype "passive")
@@ -787,16 +425,16 @@
 		)
 		(net
 			(code "2")
-			(name "/L_B")
+			(name "/L_X1")
 			(class "Default")
 			(node
-				(ref "CT2")
+				(ref "CT1")
 				(pin "2")
 				(pinfunction "P2_2")
 				(pintype "passive")
 			)
 			(node
-				(ref "X2")
+				(ref "X1")
 				(pin "1")
 				(pinfunction "L_1")
 				(pintype "passive")
@@ -804,70 +442,10 @@
 		)
 		(net
 			(code "3")
-			(name "/L_RED")
-			(class "Default")
-			(node
-				(ref "P1")
-				(pin "1")
-				(pinfunction "L_1")
-				(pintype "passive")
-			)
-			(node
-				(ref "Q1")
-				(pin "1")
-				(pintype "passive")
-			)
-		)
-		(net
-			(code "4")
-			(name "/L_SW")
-			(class "Default")
-			(node
-				(ref "CT1")
-				(pin "1")
-				(pinfunction "P1_1")
-				(pintype "passive")
-			)
-			(node
-				(ref "CT2")
-				(pin "1")
-				(pinfunction "P1_1")
-				(pintype "passive")
-			)
-			(node
-				(ref "H1")
-				(pin "2")
-				(pintype "passive")
-			)
-			(node
-				(ref "Q1")
-				(pin "2")
-				(pintype "passive")
-			)
-			(node
-				(ref "X0")
-				(pin "1")
-				(pinfunction "L_1")
-				(pintype "passive")
-			)
-		)
-		(net
-			(code "5")
 			(name "/N")
 			(class "Default")
 			(node
-				(ref "H1")
-				(pin "1")
-				(pintype "passive")
-			)
-			(node
 				(ref "P1")
-				(pin "2")
-				(pinfunction "N_2")
-				(pintype "passive")
-			)
-			(node
-				(ref "X0")
 				(pin "2")
 				(pinfunction "N_2")
 				(pintype "passive")
@@ -878,15 +456,9 @@
 				(pinfunction "N_2")
 				(pintype "passive")
 			)
-			(node
-				(ref "X2")
-				(pin "2")
-				(pinfunction "N_2")
-				(pintype "passive")
-			)
 		)
 		(net
-			(code "6")
+			(code "4")
 			(name "/PE")
 			(class "Default")
 			(node
@@ -896,26 +468,14 @@
 				(pintype "passive")
 			)
 			(node
-				(ref "X0")
-				(pin "3")
-				(pinfunction "PE_3")
-				(pintype "passive")
-			)
-			(node
 				(ref "X1")
-				(pin "3")
-				(pinfunction "PE_3")
-				(pintype "passive")
-			)
-			(node
-				(ref "X2")
 				(pin "3")
 				(pinfunction "PE_3")
 				(pintype "passive")
 			)
 		)
 		(net
-			(code "7")
+			(code "5")
 			(name "Net-(CT1-S)")
 			(class "Default")
 			(node
@@ -932,7 +492,7 @@
 			)
 		)
 		(net
-			(code "8")
+			(code "6")
 			(name "Net-(CT1-T)")
 			(class "Default")
 			(node
@@ -943,40 +503,6 @@
 			)
 			(node
 				(ref "PL1")
-				(pin "2")
-				(pinfunction "T_2")
-				(pintype "passive")
-			)
-		)
-		(net
-			(code "9")
-			(name "Net-(CT2-S)")
-			(class "Default")
-			(node
-				(ref "CT2")
-				(pin "3")
-				(pinfunction "S_3")
-				(pintype "passive")
-			)
-			(node
-				(ref "PL2")
-				(pin "1")
-				(pinfunction "S_1")
-				(pintype "passive")
-			)
-		)
-		(net
-			(code "10")
-			(name "Net-(CT2-T)")
-			(class "Default")
-			(node
-				(ref "CT2")
-				(pin "4")
-				(pinfunction "T_4")
-				(pintype "passive")
-			)
-			(node
-				(ref "PL2")
 				(pin "2")
 				(pinfunction "T_2")
 				(pintype "passive")

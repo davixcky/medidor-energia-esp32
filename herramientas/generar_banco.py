@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Genera el esquemático KiCad del banco de medición en ../hardware/banco-pruebas.kicad_sch.
 
-El banco es una caja con una clavija de entrada y tres tomacorrientes de salida. Por dentro,
-el conductor de fase de cada salida pasa una vez por su pinza SCT-013-000 del medidor, de modo que cualquier
-equipo se mide con solo enchufarlo, sin cortar ni pelar su cable. Reutiliza la clase
+El banco es una caja con una clavija de entrada y un tomacorriente de salida. La fase sale de
+la caja en un lazo aislado donde se coloca la pinza, de modo que cualquier equipo se mide con
+solo enchufarlo, sin cortar ni pelar su cable. Reutiliza la clase
 Esquematico de generar_esquematico.py. Se verifica con:
 
     kicad-cli sch erc ../hardware/banco-pruebas.kicad_sch
@@ -106,66 +106,44 @@ def construir():
     for d in (sim_clavija(), sim_toma(), sim_pinza(), sim_plug()):
         sch.usar(d[1], d)
 
-    yf, y_n, y_pe = 60.96, 121.92, 129.54     # fila de fase, barra de neutro, barra de tierra
+    yf, y_n, y_pe = 60.96, 101.6, 109.22     # fila de fase, neutro y tierra
     sch.texto("BANCO DE MEDICIÓN — 120 V CA, 60 Hz, 15 A máx.", 20.32, 30.48, 2.0, True)
-    sch.texto("Caja plástica independiente del medidor. Toda la caja es ZONA DE RED: ningún circuito de MBT entra en ella;\n"
-              "solo salen los cables de las pinzas, que están aislados del primario por el núcleo partido.",
+    sch.texto("Se enchufa a un tomacorriente de pared; el equipo a medir se enchufa en X1. La fase sale de la caja\n"
+              "en un lazo aislado donde se coloca la pinza; el neutro y la tierra van directo a X1.",
               20.32, 36.83, 1.27)
-    sch.caja(11.43, 41.91, 233.68, 138.43, color=(200, 0, 0))
+    sch.caja(11.43, 41.91, 182.88, 118.11, color=(200, 0, 0))
 
-    # Entrada
+    # Entrada: clavija con cable de 3 hilos
     p1 = sch.colocar("Medidor:Clavija_NEMA_5-15P", "P1", "Clavija 5-15P, cable SJT 3×14 AWG 1,8 m", 22.86, yf + 2.54,
                      ref_at=(19.05, yf - 4.5), val_at=(17.78, yf + 12.7))
     sch.cable(p1["2"], (35.56, p1["2"][1]), (35.56, y_n))
     sch.cable(p1["3"], (33.02, p1["3"][1]), (33.02, y_pe))
-    q1 = sch.colocar("Device:CircuitBreaker_1P", "Q1", "Breaker 1P 15 A curva C (riel DIN)", 48.26, yf, rot=90,
-                     ref_at=(46.99, yf - 5.08), val_at=(40.64, yf - 10.16))
-    sch.cable(p1["1"], q1["1"])
-    sch.etiqueta("L_RED", 33.02, yf)
 
-    # Nodo L_SW: piloto y toma auxiliar, antes de las pinzas
-    h1 = sch.colocar("Device:Lamp_Neon", "H1", "Piloto neón 120 V", 66.04, 91.44,
-                     ref_at=(46.99, 88.9), val_at=(41.91, 94.0))
-    x0 = toma(sch, "X0", "Toma auxiliar (sin medir): medidor + adaptador 5 V", 88.9, 91.44, y_n, y_pe, 73.66, yf)
-    sch.cable(q1["2"], (66.04, yf), (73.66, yf), (96.52, yf))
-    sch.cable(h1["2"], (66.04, yf))
-    sch.cable(h1["1"], (66.04, y_n))
-    sch.etiqueta("L_SW", 76.2, yf)
+    # Lazo de medición: la fase atraviesa una vez la pinza CT1
+    ct1 = pinza(sch, "CT1", "PL1", 71.12, yf, "CH1", "J2")
+    sch.cable(p1["1"], ct1["1"])
+    sch.etiqueta("L_ENT", 40.64, yf)
+    sch.texto("Lazo de medición (fuera de la caja)", 55.88, yf - 13.97, 1.27, True)
 
-    # Dos ramas en paralelo desde L_SW; cada fase atraviesa su pinza una sola vez.
-    # Rama CH1 → salida X1
-    ct1 = pinza(sch, "CT1", "PL1", 106.68, yf, "CH1", "J2")
-    sch.cable((96.52, yf), ct1["1"])
-    x1 = toma(sch, "X1", "Salida CH1 (15 A)", 147.32, 91.44, y_n, y_pe, 132.08, yf)
-    sch.cable(ct1["2"], (132.08, yf))
-    sch.etiqueta("L_A", 119.38, yf)
+    # Salida
+    x1 = toma(sch, "X1", "Tomacorriente doble 5-15R (equipo a medir)", 127.0, 81.28, y_n, y_pe, 111.76, yf)
+    sch.cable(ct1["2"], (111.76, yf))
+    sch.etiqueta("L_X1", 93.98, yf)
 
-    # Rama CH2 → salida X2 (sube por encima de CT1 para no cruzarla)
-    ct2 = pinza(sch, "CT2", "PL2", 177.8, yf, "CH2", "J3")
-    sch.cable((96.52, yf), (96.52, 48.26), (160.02, 48.26), (160.02, yf), ct2["1"])
-    x2 = toma(sch, "X2", "Salida CH2 (15 A)", 208.28, 91.44, y_n, y_pe, 193.04, yf)
-    sch.cable(ct2["2"], (193.04, yf))
-    sch.etiqueta("L_B", 190.5, yf, "izq")
-
-    # Barras de neutro y tierra
-    sch.cable((35.56, y_n), (66.04, y_n), (76.2, y_n), (134.62, y_n), (195.58, y_n))
-    sch.cable((33.02, y_pe), (78.74, y_pe), (137.16, y_pe), (198.12, y_pe))
+    sch.cable((35.56, y_n), (114.3, y_n))
+    sch.cable((33.02, y_pe), (116.84, y_pe))
     sch.etiqueta("N", 40.64, y_n)
     sch.etiqueta("PE", 40.64, y_pe)
-    sch.texto("Barra de neutro: conector de palanca de 5 vías (W1)", 142.24, y_n - 1.27, 1.1)
-    sch.texto("Barra de tierra: conector de palanca de 5 vías (W2)", 142.24, y_pe - 1.27, 1.1)
-    sch.texto("Empalme de fase L_SW: conector de palanca de 5 vías (W3)", 100.33, 46.99, 1.1)
 
     notas = ("NOTAS\n"
-             "1. Solo la fase pasa por las pinzas, una sola vez y en línea recta: CT1 abraza el tramo L_SW → L_A y CT2 el tramo L_SW → L_B.\n"
-             "    El neutro y la tierra nunca pasan por una pinza (las corrientes de ida y vuelta se cancelarían).\n"
-             "2. CH1 mide lo que se conecte en X1 y CH2 lo que se conecte en X2; la calibración es la misma que en el tablero (una pasada).\n"
-             "3. Conductores THHN 14 AWG: fase negro, neutro blanco, tierra verde. Tomacorrientes polarizados: fase al tornillo de bronce\n"
-             "    (ranura corta), neutro al tornillo plateado (ranura larga), tierra al tornillo verde.\n"
-             "4. X0 queda antes de las pinzas: allí se conectan el cable de red del medidor (J4, rama del ZMPT101B) y su adaptador de 5 V,\n"
-             "    así el consumo del propio medidor no se suma a la medición y la tensión se toma de la misma línea.\n"
-             "5. Las pinzas se cierran sobre el cable antes de energizar y sus plugs se conectan a J2 y J3 del medidor antes de cerrar Q1.")
-    sch.texto(notas, 20.32, 165.1, 1.27)
+             "1. Solo la fase pasa por la pinza, una sola vez: el lazo exterior es un tramo de THHN 14 AWG negro que sale y vuelve a entrar\n"
+             "    a la caja por dos prensaestopas PG7. El neutro y la tierra nunca pasan por la pinza (las corrientes se cancelarían).\n"
+             "2. La pinza se conecta a J2 (CH1) del medidor; la calibración es la misma que en un tablero (una pasada).\n"
+             "3. Conductores 14 AWG: fase negro, neutro blanco, tierra verde. Tomacorriente polarizado: fase al tornillo de bronce\n"
+             "    (ranura corta), neutro al plateado (ranura larga), tierra al verde.\n"
+             "4. La protección es el breaker del circuito de pared (15 A). El medidor se alimenta de otro tomacorriente de pared.\n"
+             "5. El lazo también admite una pinza amperimétrica comercial, útil para calibrar el canal.")
+    sch.texto(notas, 20.32, 152.4, 1.27)
     return sch
 
 

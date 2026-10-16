@@ -8,7 +8,8 @@ principio del script.
 |---|---|
 | `comun.py` | Utilidades: caja redondeada, ranuras, textos grabados, conductores, prensaestopas, colores |
 | `medidor.py` | Gabinete de 200 × 150 × 75 mm con tabique, tapa y ensamble con la placa de KiCad |
-| `banco.py` | Caja de 300 × 180 × 100 mm, tapa con tres tomacorrientes, *breaker*, pinzas y cableado |
+| `banco.py` | Caja de 130 × 90 × 65 mm: clavija y cordón, tomacorriente doble X1 y lazo exterior de fase con la pinza CT1 |
+| `rotular.py` | Rótulos de la vista superior del banco (`../img/3d-banco-planta.png`) |
 | `render.py` | Aplica los colores, exporta los STEP y guarda las vistas en `../img/3d-*.png` |
 | `medidor.FCStd`, `banco.FCStd` | Documentos de FreeCAD (abrir con FreeCAD 1.1) |
 | `medidor.step`, `banco.step` | Ensambles en STEP con colores |

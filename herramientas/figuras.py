@@ -157,96 +157,73 @@ def _hilo(ax, pts, tipo):
                 solid_capstyle="round", zorder=3)
 
 
-def _pinza(ax, cx, cy, nombre):
-    """Pinza vista desde arriba: el núcleo queda de canto y el conductor de fase lo atraviesa."""
-    yf = cy + 4                                   # altura del conductor de fase
-    ax.add_patch(FancyBboxPatch((cx - 9, yf - 17), 18, 34, boxstyle="round,pad=1,rounding_size=4",
-                                fc="#37474f", ec="black", alpha=0.9, zorder=4))
-    # Ventana del núcleo (13 mm) vista de canto y el conductor que pasa por ella.
-    ax.add_patch(Rectangle((cx - 10.5, yf - 6.5), 21, 13, fc="#eceff1", ec="black", lw=0.8, zorder=5))
-    ax.plot([cx - 24, cx + 24], [yf, yf], color="black", lw=2.6, zorder=6, solid_capstyle="round")
-    ax.annotate("", (cx + 22, yf - 9), (cx - 22, yf - 9),
-                arrowprops=dict(arrowstyle="->", lw=0.9, color="#c62828"), zorder=7)
-    ax.text(cx, yf - 21, f"{nombre}: la fase cruza\nla ventana una vez", ha="center", va="top",
-            fontsize=6.5, color="#263238", weight="bold", zorder=7)
-
-
 def banco():
-    fig, (a, b) = plt.subplots(1, 2, figsize=(16, 6.4))
-    W, D, t = 300, 180, 3
+    """Banco de medición: clavija → cable → caja con tomacorriente; la fase sale en un lazo exterior."""
+    fig, (a, b) = plt.subplots(1, 2, figsize=(15, 6.6), gridspec_kw={"width_ratios": [1.45, 1]})
+    W, D, t = 130, 90, 3
     # ---------------- interior, vista superior sin tapa
     a.add_patch(Rectangle((0, 0), W, D, fc="#eceff1", ec="black", lw=2))
     a.add_patch(Rectangle((t, t), W - 2 * t, D - 2 * t, fc="#ffebee", ec="#607d8b", lw=1))
-    a.text(150, 8, "TODA LA CAJA ES ZONA DE RED 120 V CA", color="#c62828", fontsize=9, weight="bold", ha="center")
-    a.add_patch(Rectangle((t, 112), 110, 7, fc="#b0bec5", ec="black"))
-    a.text(60, 115.5, "riel DIN 35 mm", ha="center", va="center", fontsize=6.5)
-    a.add_patch(Rectangle((22, 92), 18, 47, fc="white", ec="black", lw=1.2, zorder=4))
-    a.text(31, 115.5, "Q1\n15 A", ha="center", va="center", fontsize=7, weight="bold", zorder=5)
-    # salidas montadas en la tapa (contorno punteado)
-    for x, n in ((40, "X0"), (150, "X1"), (255, "X2")):
-        a.add_patch(Rectangle((x - 17, 18), 34, 52, fill=False, ec="#455a64", ls="--", lw=1.2))
-        a.text(x, 44, f"{n}\n(en la tapa)", ha="center", va="center", fontsize=7, color="#455a64")
-    a.add_patch(Circle((95, 44), 5, fill=False, ec="#455a64", ls="--"))
-    a.text(95, 33, "H1", ha="center", fontsize=7, color="#455a64")
-    # conectores de palanca
-    for x, y, w, n in ((60, 150, 30, "W1 neutro (5)"), (60, 165, 30, "W2 tierra (5)"),
-                       (75, 84, 22, "W3 L_SW (5)")):
-        a.add_patch(Rectangle((x - w / 2, y - 4), w, 8, fc="#ff9800", ec="black", zorder=4))
-        a.text(x, y + 6, n, ha="center", fontsize=6.5, zorder=5)
-    # entrada: la fase va al breaker; neutro y tierra a sus conectores de palanca
-    a.add_patch(Circle((0, 140), 7, fc="#9e9e9e", ec="black", zorder=5))
-    a.text(-10, 140, "PG11\ncable de red\nSJT 3×14 AWG", ha="right", va="center", fontsize=7)
-    _hilo(a, [(0, 141), (31, 141), (31, 139)], "L")
-    _hilo(a, [(0, 139), (12, 139), (12, 150), (45, 150)], "N")
-    _hilo(a, [(0, 137), (8, 137), (8, 165), (45, 165)], "PE")
-    for y in (150, 165):
-        a.annotate("", (110, y), (76, y), arrowprops=dict(arrowstyle="->", lw=1.0, color="#455a64"))
-    a.text(112, 157.5, "a X0, X1, X2 y H1\n(Tabla 9)", va="center", fontsize=7, color="#455a64")
-    # recorrido de la fase: Q1 → W3 → (CT1 → X1) y (CT2 → X2); la fase cruza cada ventana una vez
-    _hilo(a, [(31, 92), (31, 84), (64, 84)], "L")
-    _hilo(a, [(68, 80), (68, 76), (46, 76), (46, 70)], "L")
-    _hilo(a, [(76, 80), (76, 62), (95, 62), (95, 49)], "L")
-    _hilo(a, [(86, 84), (92, 84), (92, 124), (160, 124), (160, 70)], "L")
-    _hilo(a, [(84, 88), (84, 144), (214, 144), (214, 124), (270, 124), (270, 76), (262, 76), (262, 70)], "L")
-    _pinza(a, 125, 120, "CT1")
-    _pinza(a, 240, 120, "CT2")
-    # cables de las pinzas (MBT aislada) hacia el prensaestopas
-    a.add_patch(Circle((W, 172), 5, fc="#9e9e9e", ec="black", zorder=5))
-    _hilo(a, [(125, 141), (125, 170), (W, 170)], "S")
-    _hilo(a, [(240, 141), (240, 174), (W, 174)], "S")
-    a.text(W + 8, 172, "PG9: cables de las pinzas\n→ plugs a J2 y J3\ndel medidor", va="center", fontsize=7)
-    cota(a, 0, 0, W, 0, "300 mm", off=10)
-    cota(a, 0, 0, 0, D, "180 mm", off=40, vertical=True)
-    a.set_xlim(-75, W + 70)
-    a.set_ylim(-22, D + 8)
+    a.text(W - 6, D - 9, "ZONA DE RED\n120 V CA", color="#c62828", fontsize=8, weight="bold", ha="right", va="top")
+    # tomacorriente X1 (montado en la tapa) con sus tornillos
+    xt, yt = 80, 45
+    a.add_patch(Rectangle((xt - 17, yt - 33), 34, 66, fill=False, ec="#455a64", ls="--", lw=1.2))
+    a.text(xt, yt, "X1\n(en la tapa)", ha="center", va="center", fontsize=8, color="#455a64")
+    tornillos = {"bronce": (xt + 17, yt + 8, "#b8860b"), "plata": (xt - 17, yt + 8, "#9e9e9e"),
+                 "verde": (xt, yt - 33, "#2e7d32")}
+    for x, y, c in tornillos.values():
+        a.add_patch(Circle((x, y), 2.2, fc=c, ec="black", zorder=5))
+    # entrada del cable por PG11
+    a.add_patch(Circle((0, 45), 6, fc="#9e9e9e", ec="black", zorder=5))
+    a.plot([-45, -6], [45, 45], color="black", lw=7, solid_capstyle="butt")
+    a.add_patch(Rectangle((-62, 37), 17, 16, fc="#212121", ec="black"))
+    a.text(-53.5, 30, "P1: clavija\n5-15P", ha="center", va="top", fontsize=7.5)
+    a.text(-25, 52, "cable SJT 3×14 AWG", ha="center", fontsize=7)
+    a.text(0, 58, "PG11", ha="center", fontsize=7)
+    # neutro y tierra directo a X1
+    _hilo(a, [(6, 44), (40, 44), (40, 53), (tornillos["plata"][0] - 2, 53)], "N")
+    _hilo(a, [(6, 42), (30, 42), (30, 8), (xt, 8), (xt, tornillos["verde"][1] - 2)], "PE")
+    # fase: sale por un PG7, forma el lazo exterior y vuelve por otro PG7
+    _hilo(a, [(6, 46), (25, 46), (25, D)], "L")
+    _hilo(a, [(50, D), (50, 70), (xt + 25, 70), (xt + 25, yt + 8), (tornillos["bronce"][0] + 2, yt + 8)], "L")
+    for x in (25, 50):
+        a.add_patch(Circle((x, D), 4.5, fc="#9e9e9e", ec="black", zorder=5))
+    a.text(37.5, D - 9, "2 × PG7", ha="center", fontsize=7)
+    _hilo(a, [(25, D), (25, D + 55), (50, D + 55), (50, D)], "L")
+    a.text(54, D + 40, "LAZO DE MEDICIÓN\n(fase aislada, 14 AWG)", fontsize=7.5, weight="bold", va="center")
+    # pinza CT1 abrazando una pata del lazo
+    yc = D + 28
+    a.add_patch(FancyBboxPatch((25 - 17, yc - 9), 34, 18, boxstyle="round,pad=1,rounding_size=4",
+                               fc="#37474f", ec="black", alpha=0.9, zorder=6))
+    a.add_patch(Rectangle((25 - 6.5, yc - 10.5), 13, 21, fc="#eceff1", ec="black", lw=0.8, zorder=7))
+    a.plot([25, 25], [yc - 14, yc + 14], color="black", lw=2.6, zorder=8)
+    a.text(5, yc - 7, "CT1 (pinza SCT-013)", ha="right", va="top", fontsize=7.5, weight="bold")
+    _hilo(a, [(8, yc), (-20, yc), (-20, yc + 25), (-60, yc + 25)], "S")
+    a.text(-60, yc + 29, "cable de la pinza → J2 (CH1) del medidor", fontsize=7, va="bottom")
+    cota(a, 0, 0, W, 0, "130 mm", off=8)
+    cota(a, 0, 0, 0, D, "90 mm", off=72, vertical=True)
+    a.set_xlim(-95, W + 15)
+    a.set_ylim(-20, D + 70)
     a.set_aspect("equal")
     a.axis("off")
-    a.set_title("Interior sin tapa (frente abajo): recorrido de la fase por las pinzas\nnegro: fase · blanco: neutro · verde: tierra · gris: cable de pinza",
+    a.set_title("Interior sin tapa: negro fase · blanco neutro · verde tierra · gris cable de pinza",
                 weight="bold", fontsize=9)
 
     # ---------------- tapa
     b.add_patch(Rectangle((0, 0), W, D, fc="#eceff1", ec="black", lw=2))
-    for x, n, d in ((40, "X0", "AUXILIAR\nsin medir"), (150, "X1", "SALIDA CH1\nmedida"),
-                    (255, "X2", "SALIDA CH2\nmedida")):
-        b.add_patch(FancyBboxPatch((x - 17, 18), 34, 52, boxstyle="round,pad=0.5,rounding_size=3", fc="white",
-                                   ec="black"))
-        for yy in (32, 56):
-            b.add_patch(Rectangle((x - 5, yy), 1.6, 6, fc="black"))
-            b.add_patch(Rectangle((x + 3.6, yy), 1.6, 7.5, fc="black"))
-            b.add_patch(Circle((x, yy - 3.5), 1.6, fc="black"))
-        b.text(x, 80, f"{n}  {d}", ha="center", va="bottom", fontsize=7.5, weight="bold")
-    b.add_patch(Rectangle((86, 120), 18, 24, fc="#263238", ec="black"))
-    b.text(95, 132, "Q1", color="white", ha="center", va="center", fontsize=8)
-    b.text(95, 117, "ventana del breaker", ha="center", va="top", fontsize=7)
-    b.add_patch(Circle((55, 140), 5, fc="#ff7043", ec="black"))
-    b.text(55, 132, "H1 piloto", ha="center", va="top", fontsize=7)
-    b.text(205, 140, "BANCO DE MEDICIÓN · 120 V 15 A máx.\nCH1 = X1 · CH2 = X2", ha="center", fontsize=9,
-           weight="bold")
-    b.text(205, 118, "⚠ NO ABRIR ENERGIZADO", ha="center", fontsize=8.5, color="#b71c1c", weight="bold")
+    b.add_patch(FancyBboxPatch((xt - 17, yt - 26), 34, 52, boxstyle="round,pad=0.5,rounding_size=3", fc="white",
+                               ec="black"))
+    for yy in (yt - 12, yt + 12):
+        b.add_patch(Rectangle((xt - 5, yy), 1.6, 6, fc="black"))
+        b.add_patch(Rectangle((xt + 3.6, yy), 1.6, 7.5, fc="black"))
+        b.add_patch(Circle((xt, yy - 3.5), 1.6, fc="black"))
+    b.text(xt, yt + 32, "X1: equipo a medir", ha="center", fontsize=8, weight="bold")
+    b.text(30, 60, "BANCO DE\nMEDICIÓN\n120 V 15 A", ha="center", fontsize=8.5, weight="bold")
+    b.text(30, 25, "⚠ NO ABRIR\nENERGIZADO", ha="center", fontsize=8, color="#b71c1c", weight="bold")
     for cx, cy in ((6, 6), (W - 6, 6), (6, D - 6), (W - 6, D - 6)):
         b.add_patch(Circle((cx, cy), 1.7, fc="white", ec="black"))
     b.set_xlim(-10, W + 10)
-    b.set_ylim(-22, D + 8)
+    b.set_ylim(-20, D + 70)
     b.set_aspect("equal")
     b.axis("off")
     b.set_title("Tapa (vista exterior)", weight="bold")

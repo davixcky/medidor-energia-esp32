@@ -11,26 +11,24 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 IMG = os.path.join(AQUI, "..", "img")
 
 img = mpimg.imread(os.path.join(AQUI, "planta-banco-base.png"))   # vista sin rótulos de render.py
-x0, x1, y0, y1 = 300, 1720, 280, 960            # recorte alrededor de la caja (píxeles)
+x0, x1, y0, y1 = 280, 1780, 200, 1030           # recorte alrededor del banco (píxeles)
 img = img[y0:y1, x0:x1]
-fig, ax = plt.subplots(figsize=(14, 8.6))
+fig, ax = plt.subplots(figsize=(14, 7.8))
 ax.imshow(img)
 ax.axis("off")
 
 # (texto, punto señalado en píxeles del render, posición del texto)
 rotulos = [
-    ("Cable de red (entrada)\ny prensaestopas PG11", (470, 490), (330, 300)),
-    ("H1: piloto neón", (735, 430), (600, 300)),
-    ("W1 neutro y W2 tierra\n(conectores de palanca)", (785, 440), (840, 300)),
-    ("Q1: breaker 15 A", (860, 470), (1060, 300)),
-    ("CT1: pinza de CH1\n(translúcida; la fase de X1\npasa por su ventana)", (950, 520), (1250, 300)),
-    ("CT2: pinza de CH2\n(la fase de X2 pasa\npor su ventana)", (1310, 520), (1500, 300)),
-    ("Cables de las pinzas\nhacia J2 y J3 del medidor\n(prensaestopas PG9)", (1590, 430), (1590, 560)),
-    ("W3: empalme de fase\ndespués de Q1", (795, 672), (560, 900)),
-    ("X0: toma auxiliar\n(sin medir)", (705, 760), (730, 940)),
-    ("X1: salida CH1", (1030, 760), (1010, 940)),
-    ("Fase (negro) al tornillo\nde bronce de X1", (1105, 600), (1200, 860)),
-    ("X2: salida CH2", (1357, 760), (1400, 940)),
+    ("P1: clavija NEMA 5-15P\n(se enchufa a la pared)", (490, 790), (470, 600)),
+    ("Cordón SJT 3 × 14 AWG\ny prensaestopas PG11", (1075, 790), (820, 960)),
+    ("Neutro (blanco): directo al\ntornillo plateado de X1", (1300, 866), (1180, 1000)),
+    ("Tierra (verde): directo al\ntornillo verde de X1", (1575, 830), (1640, 960)),
+    ("Fase (negro): sale por\nel primer PG7", (1335, 640), (1040, 640)),
+    ("Lazo de fase exterior\n(THHN 14 AWG aislado)", (1390, 290), (1640, 300)),
+    ("CT1: pinza SCT-013-000\n(translúcida) cerrada sobre\nuna sola pata del lazo", (1337, 470), (1660, 480)),
+    ("Cable de la pinza: plug de\n3,5 mm a J2 del medidor", (900, 413), (760, 280)),
+    ("X1: tomacorriente doble\ndonde se conecta el equipo", (1475, 760), (1700, 720)),
+    ("La fase vuelve por el segundo\nPG7 al tornillo de bronce de X1", (1390, 698), (1680, 600)),
 ]
 for texto, (px, py), (tx, ty) in rotulos:
     ax.annotate(texto, (px - x0, py - y0), (tx - x0, ty - y0), fontsize=8.5, ha="center", va="center",
