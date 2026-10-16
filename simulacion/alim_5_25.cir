@@ -1,0 +1,20 @@
+* alim_5_25
+
+Vad in 0 5.25
+Rptc in p 0.15
+D1 p v5 D1N5819
+C1 v5 0 470u
+Iload v5 0 0
+.dc Iload 0 0.8 0.01
+
+
+.model BAT85 D(IS=1.3e-8 N=1.1 RS=2 CJO=10p BV=30 IBV=2u)
+.model D1N5819 D(IS=31.7u N=1.373 RS=0.051 CJO=110p M=0.35 EG=0.69 XTI=2 BV=40 IBV=1m)
+
+.control
+set wr_singlescale
+set wr_vecnames
+run
+wrdata /home/davixcky/dev/.personal/electronica/sistemas-embebidos-1/C2-ABPR/herramientas/../simulacion/alim_5_25.dat v(v5)
+.endc
+.end

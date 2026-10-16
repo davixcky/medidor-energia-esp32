@@ -1,0 +1,29 @@
+* ch2_armonico
+
+V33 v33 0 3.3
+R3 v33 vb 15k
+R4 vb 0 10k
+C7 vb 0 10u
+C8 vb 0 100n
+Ict vb t SIN(0 0.01414213562373095 60)
+Ih3 vb t SIN(0 0.00848528137423857 180)
+Rb t vb 47
+R5 t a 3.3k
+C5 a 0 47n
+Dsup a v33 BAT85
+Dinf 0 a BAT85
+Radc a 0 10Meg
+.ic v(vb)=1.32 v(a)=1.32 v(t)=1.32
+.tran 5u 120m 70m uic
+
+
+.model BAT85 D(IS=1.3e-8 N=1.1 RS=2 CJO=10p BV=30 IBV=2u)
+.model D1N5819 D(IS=31.7u N=1.373 RS=0.051 CJO=110p M=0.35 EG=0.69 XTI=2 BV=40 IBV=1m)
+
+.control
+set wr_singlescale
+set wr_vecnames
+run
+wrdata /home/davixcky/dev/.personal/electronica/sistemas-embebidos-1/C2-ABPR/herramientas/../simulacion/ch2_armonico.dat v(a) v(vb) i(V33)
+.endc
+.end

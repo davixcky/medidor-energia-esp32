@@ -1,0 +1,77 @@
+(footprint "Cable_Jack_Panel"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(property "Reference" "J"
+		(at 3.5 1.27 0)
+		(layer "F.SilkS")
+		(uuid "496b62e6-12fa-431b-8581-dac8d3a37794")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" "Jack 3,5 mm de panel (pinza SCT-013-000 CH2)"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "346649de-1a69-4fcc-ae3c-870ce1f0d380")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "d7d62b66-e4b3-426b-9fab-6fb850129542")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "7d2c202a-c3a5-4a20-959b-78f105676ee9")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(sheetfile "medidor-energia.kicad_sch")
+	(attr through_hole)
+	(duplicate_pad_numbers_are_jumpers no)
+	(pad "R" thru_hole circle
+		(at 0 2.54)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "0632500e-ee0d-4732-9af6-92edf621aee0")
+	)
+	(pad "S" thru_hole circle
+		(at 0 5.08)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "6d02f1c9-0866-404f-96cd-6b1e3dba9851")
+	)
+	(pad "T" thru_hole circle
+		(at 0 0)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "0acaf0a6-9760-49ad-8315-600297d0c16c")
+	)
+	(embedded_fonts no)
+)

@@ -1,0 +1,2359 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "0bf51f38-864b-5603-a014-831187070c2f")
+	(paper "A4")
+	(title_block
+		(title "Banco de medición con tomacorriente de entrada y salida")
+		(date "2026-10-16")
+		(rev "C2-A")
+		(company "Universidad de la Costa (CUC) — Sistemas Embebidos 1")
+		(comment 1 "David Orozco · Jose Torres · Leo Rojas")
+		(comment 2 "Complemento del medidor de energía de dos canales")
+	)
+	(lib_symbols
+		(symbol "Medidor:Clavija_NEMA_5-15P"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "P"
+				(at 0 7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Clavija 5-15P"
+				(at 0 -7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Clavija de 3 patas NEMA 5-15P, 125 V 15 A, con cable"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Clavija_NEMA_5-15P_0_1"
+				(rectangle
+					(start -5.08 5.08)
+					(end 2.54 -5.08)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(polyline
+					(pts
+						(xy -8.89 0)
+						(xy -5.08 0)
+					)
+					(stroke
+						(width 0.6)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(text "5-15P"
+					(at -1.27 -6.6 0)
+					(effects
+						(font
+							(size 1 1)
+						)
+					)
+				)
+			)
+			(symbol "Clavija_NEMA_5-15P_1_1"
+				(pin passive line
+					(at 7.62 2.54 180)
+					(length 5.08)
+					(name "L"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 0 180)
+					(length 5.08)
+					(name "N"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 -2.54 180)
+					(length 5.08)
+					(name "PE"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+		(symbol "Medidor:Tomacorriente_NEMA_5-15R"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "X"
+				(at 0 7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Tomacorriente doble 5-15R"
+				(at 0 -7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Tomacorriente doble polarizado con polo a tierra, 125 V 15 A"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Tomacorriente_NEMA_5-15R_0_1"
+				(rectangle
+					(start -2.54 5.08)
+					(end 7.62 -5.08)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.9 3.44)
+						(xy 0.9 2.24)
+					)
+					(stroke
+						(width 0.3)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 3 3.44)
+						(xy 3 2.24)
+					)
+					(stroke
+						(width 0.3)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 1.95 1.34)
+					(radius 0.35)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.9 -1.64)
+						(xy 0.9 -2.84)
+					)
+					(stroke
+						(width 0.3)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 3 -1.64)
+						(xy 3 -2.84)
+					)
+					(stroke
+						(width 0.3)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 1.95 -3.74)
+					(radius 0.35)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(text "5-15R"
+					(at 2.54 -6.6 0)
+					(effects
+						(font
+							(size 1 1)
+						)
+					)
+				)
+			)
+			(symbol "Tomacorriente_NEMA_5-15R_1_1"
+				(pin passive line
+					(at -7.62 2.54 0)
+					(length 5.08)
+					(name "L"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -7.62 0 0)
+					(length 5.08)
+					(name "N"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -7.62 -2.54 0)
+					(length 5.08)
+					(name "PE"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+		(symbol "Medidor:Pinza_SCT-013-000"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "CT"
+				(at 0 8.89 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "SCT-013-000"
+				(at 0 -8.89 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Pinza de corriente de núcleo partido 100 A : 50 mA, sin resistencia de carga"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Pinza_SCT-013-000_0_1"
+				(circle
+					(center 0 0)
+					(radius 4.2)
+					(stroke
+						(width 0.6)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 0 0)
+					(radius 2.6)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -5.08 0)
+						(xy 5.08 0)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.54 -5.08)
+						(xy -2.54 -3.6)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 -5.08)
+						(xy 2.54 -3.6)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(text "100 A : 50 mA"
+					(at 0 5.6 0)
+					(effects
+						(font
+							(size 1 1)
+						)
+					)
+				)
+			)
+			(symbol "Pinza_SCT-013-000_1_1"
+				(pin passive line
+					(at -10.16 0 0)
+					(length 5.08)
+					(name "P1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 10.16 0 180)
+					(length 5.08)
+					(name "P2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -2.54 -10.16 90)
+					(length 5.08)
+					(name "S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -10.16 90)
+					(length 5.08)
+					(name "T"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+		(symbol "Medidor:Plug_3.5mm"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "PL"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Plug 3,5 mm"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Plug macho de 3,5 mm del cable de la pinza (punta = T, manga = S)"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Plug_3.5mm_0_1"
+				(rectangle
+					(start -4.445 2.54)
+					(end 4.445 -2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -2.54)
+						(xy 0 -5.08)
+					)
+					(stroke
+						(width 0.6)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(text "3,5 mm"
+					(at 0 -6.4 0)
+					(effects
+						(font
+							(size 1 1)
+						)
+					)
+				)
+			)
+			(symbol "Plug_3.5mm_1_1"
+				(pin passive line
+					(at -2.54 5.08 270)
+					(length 2.54)
+					(name "S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 5.08 270)
+					(length 2.54)
+					(name "T"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+		(symbol "Device:CircuitBreaker_1P"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "CB"
+				(at 1.905 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "CircuitBreaker_1P"
+				(at 1.905 1.905 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Single pole circuit breaker"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "CB"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "CircuitBreaker_1P_0_1"
+				(polyline
+					(pts
+						(xy 0 -3.81)
+						(xy -2.54 3.81)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -5.08)
+						(xy 0 -3.81)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "CircuitBreaker_1P_1_1"
+				(polyline
+					(pts
+						(xy -0.635 4.445)
+						(xy 0.635 3.175)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 5.08)
+						(xy 0 3.81)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.635 4.445)
+						(xy -0.635 3.175)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 0 7.62 270)
+					(length 2.54)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -7.62 90)
+					(length 2.54)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:Lamp_Neon"
+			(pin_names
+				(offset 0.0254)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "NE"
+				(at 0.635 3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "Lamp_Neon"
+				(at 0.635 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 2.54 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 2.54 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Neon lamp"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "neon lamp"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Lamp_Neon_0_1"
+				(rectangle
+					(start -1.524 0.762)
+					(end 1.524 0.508)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start -1.524 -0.508)
+					(end 1.524 -0.762)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0.762)
+						(xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 0 0)
+					(radius 2.54)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -2.54)
+						(xy 0 -0.762)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 1.016 -1.27)
+					(radius 0.254)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+			)
+			(symbol "Lamp_Neon_1_1"
+				(pin passive line
+					(at 0 -5.08 90)
+					(length 2.54)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 5.08 270)
+					(length 2.54)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(junction
+		(at 66.04 60.96)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7f3bcc06-ebde-5321-b063-92cd65af0634")
+	)
+	(junction
+		(at 66.04 121.92)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0eb16bd1-20b0-582b-b8c9-c1a62df78deb")
+	)
+	(junction
+		(at 73.66 60.96)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0f87fcd1-de06-5c06-8f9c-a3e5ad5535b8")
+	)
+	(junction
+		(at 76.2 121.92)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "6cbea32d-9c73-5eb2-974d-0a0bd3a4dcda")
+	)
+	(junction
+		(at 78.74 129.54)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7036a359-4f1d-59cc-8e75-afcf077dd69a")
+	)
+	(junction
+		(at 96.52 60.96)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a38bdd15-89a4-57f0-88ea-88e23e7ab81d")
+	)
+	(junction
+		(at 134.62 121.92)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e00983be-25ca-5da6-9460-5e495a27e8c8")
+	)
+	(junction
+		(at 137.16 129.54)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "43ba8a11-0677-5b38-9d75-dd2a3b508dac")
+	)
+	(wire
+		(pts
+			(xy 30.48 63.5)
+			(xy 35.56 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "60c2dd8e-5e61-5bbc-b5a8-31c07759e13d")
+	)
+	(wire
+		(pts
+			(xy 35.56 63.5)
+			(xy 35.56 121.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e51864a2-7a27-5922-b09d-303a359597b8")
+	)
+	(wire
+		(pts
+			(xy 30.48 66.04)
+			(xy 33.02 66.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3f29ee50-7720-567d-a470-c708958df91f")
+	)
+	(wire
+		(pts
+			(xy 33.02 66.04)
+			(xy 33.02 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c9a8ca18-b32e-5a43-8030-9652144d39b3")
+	)
+	(wire
+		(pts
+			(xy 30.48 60.96)
+			(xy 40.64 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2aa048d5-dc00-593c-ab17-8d93349ef950")
+	)
+	(wire
+		(pts
+			(xy 81.28 88.9)
+			(xy 73.66 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0673343d-8a4b-5568-ad7f-9356a3b97faf")
+	)
+	(wire
+		(pts
+			(xy 73.66 88.9)
+			(xy 73.66 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fca1fc18-e250-5a12-bd1f-5f462329381d")
+	)
+	(wire
+		(pts
+			(xy 81.28 91.44)
+			(xy 76.2 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f83ec17c-b596-53f1-aead-5ac6c957f764")
+	)
+	(wire
+		(pts
+			(xy 76.2 91.44)
+			(xy 76.2 121.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "550a26a9-53fc-5fb0-be28-ef2128dca43b")
+	)
+	(wire
+		(pts
+			(xy 81.28 93.98)
+			(xy 78.74 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "91f7637d-2aee-5fbb-9b4b-6256e44ccd4d")
+	)
+	(wire
+		(pts
+			(xy 78.74 93.98)
+			(xy 78.74 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f1dbf7e2-3669-5d72-8ef9-1973b9ea0313")
+	)
+	(wire
+		(pts
+			(xy 55.88 60.96)
+			(xy 66.04 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "79dbd1f2-a891-5a05-b81c-62e947a77103")
+	)
+	(wire
+		(pts
+			(xy 66.04 60.96)
+			(xy 73.66 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8d28105f-8053-5b2c-8ae8-25309de0045e")
+	)
+	(wire
+		(pts
+			(xy 73.66 60.96)
+			(xy 96.52 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0b83e920-40ae-5f4f-a56a-03976cf6073e")
+	)
+	(wire
+		(pts
+			(xy 66.04 86.36)
+			(xy 66.04 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "607aa190-fcee-5640-9333-d87d439947cb")
+	)
+	(wire
+		(pts
+			(xy 66.04 96.52)
+			(xy 66.04 121.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "caa5595d-4142-5472-82d9-8b0691aa3210")
+	)
+	(wire
+		(pts
+			(xy 104.14 71.12)
+			(xy 104.14 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1b2aaba3-fc3a-59a3-a6b7-495ca966065c")
+	)
+	(wire
+		(pts
+			(xy 109.22 71.12)
+			(xy 109.22 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4ac39c3c-15ca-5771-a443-f7e2ce778097")
+	)
+	(wire
+		(pts
+			(xy 139.7 88.9)
+			(xy 132.08 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "55b449da-4874-5786-a4a5-aef56ca5eb67")
+	)
+	(wire
+		(pts
+			(xy 132.08 88.9)
+			(xy 132.08 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8330ee56-812b-5585-bf56-5b06f6e40abe")
+	)
+	(wire
+		(pts
+			(xy 139.7 91.44)
+			(xy 134.62 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "85fff022-24ce-584c-9a0b-6698829bce01")
+	)
+	(wire
+		(pts
+			(xy 134.62 91.44)
+			(xy 134.62 121.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c747eb8f-97f9-5636-8c15-4c2883b19608")
+	)
+	(wire
+		(pts
+			(xy 139.7 93.98)
+			(xy 137.16 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c32a1ba9-e775-5cfb-9175-445a2408a98a")
+	)
+	(wire
+		(pts
+			(xy 137.16 93.98)
+			(xy 137.16 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3d7303a5-4b12-555c-8467-4b4d5571c2e0")
+	)
+	(wire
+		(pts
+			(xy 116.84 60.96)
+			(xy 132.08 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "649a4917-ed28-50da-b584-9d23b8215a01")
+	)
+	(wire
+		(pts
+			(xy 175.26 71.12)
+			(xy 175.26 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "299b9768-5409-5ff3-8105-b0fecfd30cde")
+	)
+	(wire
+		(pts
+			(xy 180.34 71.12)
+			(xy 180.34 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a81378d3-301f-5da3-ae42-fbc53e13c528")
+	)
+	(wire
+		(pts
+			(xy 96.52 60.96)
+			(xy 96.52 48.26)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0e7e8abf-8837-5fdd-adea-1fc8ef8ef1f7")
+	)
+	(wire
+		(pts
+			(xy 96.52 48.26)
+			(xy 160.02 48.26)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "95a03b1f-0822-58e7-91e0-6e243efeee4c")
+	)
+	(wire
+		(pts
+			(xy 160.02 48.26)
+			(xy 160.02 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "24a0503f-7305-57ca-a1c9-de3b99c9b770")
+	)
+	(wire
+		(pts
+			(xy 160.02 60.96)
+			(xy 167.64 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b754c2cb-2273-5b6b-9384-16498a9d9ff8")
+	)
+	(wire
+		(pts
+			(xy 200.66 88.9)
+			(xy 193.04 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "23d0ffbf-5b76-5496-a91e-93a4e217d364")
+	)
+	(wire
+		(pts
+			(xy 193.04 88.9)
+			(xy 193.04 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dbe3700d-4529-51e7-b5a9-c67963e58604")
+	)
+	(wire
+		(pts
+			(xy 200.66 91.44)
+			(xy 195.58 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "08bc6749-81be-5bc0-b4a8-729cedbb884f")
+	)
+	(wire
+		(pts
+			(xy 195.58 91.44)
+			(xy 195.58 121.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "87c20976-13e1-550f-977f-70cc3ebc51bb")
+	)
+	(wire
+		(pts
+			(xy 200.66 93.98)
+			(xy 198.12 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4f9fa8c0-3945-57b6-8388-50c2b140dbeb")
+	)
+	(wire
+		(pts
+			(xy 198.12 93.98)
+			(xy 198.12 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "524ca7a6-4a88-5dbb-8de9-5667170d1614")
+	)
+	(wire
+		(pts
+			(xy 187.96 60.96)
+			(xy 193.04 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9af3cc1d-3343-516e-8023-83bbe72fe17a")
+	)
+	(wire
+		(pts
+			(xy 35.56 121.92)
+			(xy 66.04 121.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1b859176-dec9-52fe-a0a9-e8d713a71f07")
+	)
+	(wire
+		(pts
+			(xy 66.04 121.92)
+			(xy 76.2 121.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "400a8108-b48a-514e-ba31-34877dc8fec2")
+	)
+	(wire
+		(pts
+			(xy 76.2 121.92)
+			(xy 134.62 121.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "79bb2511-5f0b-541a-83cb-27a41e4818c3")
+	)
+	(wire
+		(pts
+			(xy 134.62 121.92)
+			(xy 195.58 121.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fb5e511c-7871-50f5-a377-ef0db6b351ac")
+	)
+	(wire
+		(pts
+			(xy 33.02 129.54)
+			(xy 78.74 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8b2bb215-8ac9-533a-9a8a-b6478139e17d")
+	)
+	(wire
+		(pts
+			(xy 78.74 129.54)
+			(xy 137.16 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7962e63a-9fd7-524e-bdb1-08fcc81db5dc")
+	)
+	(wire
+		(pts
+			(xy 137.16 129.54)
+			(xy 198.12 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "150a6905-b4a9-5fdf-90a8-128a045ff8cd")
+	)
+	(text "BANCO DE MEDICIÓN — 120 V CA, 60 Hz, 15 A máx."
+		(exclude_from_sim no)
+		(at 20.32 30.48 0)
+		(effects
+			(font
+				(size 2 2)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+		(uuid "00f16a13-74c7-5498-9ef8-2593fb556d6a")
+	)
+	(text "Caja plástica independiente del medidor. Toda la caja es ZONA DE RED: ningún circuito de MBT entra en ella;\nsolo salen los cables de las pinzas, que están aislados del primario por el núcleo partido."
+		(exclude_from_sim no)
+		(at 20.32 36.83 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "67253330-be57-59fa-915a-c14dd253c1b4")
+	)
+	(rectangle
+		(start 11.43 41.91)
+		(end 233.68 138.43)
+		(stroke
+			(width 0.3)
+			(type dash)
+			(color 200 0 0 1)
+		)
+		(fill
+			(type none)
+		)
+		(uuid "587c025f-4344-5195-9a07-9bae7f65bf19")
+	)
+	(symbol
+		(lib_id "Medidor:Clavija_NEMA_5-15P")
+		(at 22.86 63.5 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "dcbdd3e2-f8bb-5336-acdd-8526acd29923")
+		(property "Reference" "P1"
+			(at 19.05 56.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Clavija 5-15P, cable SJT 3×14 AWG 1,8 m"
+			(at 17.78 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 22.86 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 22.86 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "88c546fe-53a4-584e-ae6e-7d707a0af253")
+		)
+		(pin "2"
+			(uuid "d74c407c-3dc3-59de-94e1-0b406d39125c")
+		)
+		(pin "3"
+			(uuid "dbfcd02c-9117-5e12-8596-73e8475cad7b")
+		)
+		(instances
+			(project "banco-pruebas"
+				(path "/0bf51f38-864b-5603-a014-831187070c2f"
+					(reference "P1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:CircuitBreaker_1P")
+		(at 48.26 60.96 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e3044e64-8d93-530f-a60e-cfc62dca86f9")
+		(property "Reference" "Q1"
+			(at 46.99 55.88 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Breaker 1P 15 A curva C (riel DIN)"
+			(at 40.64 50.8 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 48.26 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 48.26 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "9cb0103c-c72e-59dc-9c9c-8e2f73451705")
+		)
+		(pin "2"
+			(uuid "14a9d7fe-2a7f-50d9-aa7c-4f0f695aed20")
+		)
+		(instances
+			(project "banco-pruebas"
+				(path "/0bf51f38-864b-5603-a014-831187070c2f"
+					(reference "Q1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "L_RED"
+		(at 33.02 60.96 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "023b72ef-27bc-5475-a4a5-e5c50114fad2")
+	)
+	(symbol
+		(lib_id "Device:Lamp_Neon")
+		(at 66.04 91.44 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "0ec3f46c-0d29-5bd6-994a-7cf4a5d289f7")
+		(property "Reference" "H1"
+			(at 46.99 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Piloto neón 120 V"
+			(at 41.91 94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 66.04 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 66.04 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "76f2d2c4-49ca-5db7-8a82-c64598cf7163")
+		)
+		(pin "2"
+			(uuid "81104508-734b-530a-82f6-7250d88661f6")
+		)
+		(instances
+			(project "banco-pruebas"
+				(path "/0bf51f38-864b-5603-a014-831187070c2f"
+					(reference "H1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Medidor:Tomacorriente_NEMA_5-15R")
+		(at 88.9 91.44 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e13c7f53-23fd-50cb-8471-67451b39dd07")
+		(property "Reference" "X0"
+			(at 87.63 84.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Toma auxiliar (sin medir): medidor + adaptador 5 V"
+			(at 85.09 100.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 88.9 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 88.9 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "723e79c8-7266-55e7-9536-19c938009092")
+		)
+		(pin "2"
+			(uuid "cdb2f1c2-af23-5d56-b506-9faea68d0b43")
+		)
+		(pin "3"
+			(uuid "0181de3e-fa41-56cd-83e9-29edb50639b1")
+		)
+		(instances
+			(project "banco-pruebas"
+				(path "/0bf51f38-864b-5603-a014-831187070c2f"
+					(reference "X0")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "L_SW"
+		(at 76.2 60.96 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "c96383bd-df93-5d60-b33d-c648373ba02b")
+	)
+	(symbol
+		(lib_id "Medidor:Pinza_SCT-013-000")
+		(at 106.68 60.96 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "fee45f9c-5865-5f55-a9f4-a222f09b1a74")
+		(property "Reference" "CT1"
+			(at 112.28 52.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "SCT-013-000 (CH1)"
+			(at 112.28 54.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 106.68 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 106.68 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5e5da952-334e-525c-98b9-165ca6fb64d3")
+		)
+		(pin "2"
+			(uuid "62e9942e-96ba-567f-b366-f71c7ffeffa5")
+		)
+		(pin "3"
+			(uuid "1d0096da-3df9-5de6-bf8c-ba4957408791")
+		)
+		(pin "4"
+			(uuid "6d1b8468-d72b-5cba-aa01-71501cb2ad62")
+		)
+		(instances
+			(project "banco-pruebas"
+				(path "/0bf51f38-864b-5603-a014-831187070c2f"
+					(reference "CT1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Medidor:Plug_3.5mm")
+		(at 106.68 78.74 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e7414a01-6046-54a8-94f7-27f993d60808")
+		(property "Reference" "PL1"
+			(at 112.28 77.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Plug 3,5 mm → J2 del medidor"
+			(at 112.28 79.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 106.68 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 106.68 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d762a024-3156-5dff-b2aa-5585f0f78021")
+		)
+		(pin "2"
+			(uuid "74372e41-1c27-5194-a8b2-d36861cd5ee8")
+		)
+		(instances
+			(project "banco-pruebas"
+				(path "/0bf51f38-864b-5603-a014-831187070c2f"
+					(reference "PL1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Medidor:Tomacorriente_NEMA_5-15R")
+		(at 147.32 91.44 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "8e65920b-0f30-5613-af5d-3a3ceae5b05e")
+		(property "Reference" "X1"
+			(at 146.05 84.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Salida CH1 (15 A)"
+			(at 143.51 100.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 147.32 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 147.32 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "eef64dce-0656-50d4-b87c-b85973ecdb1f")
+		)
+		(pin "2"
+			(uuid "808ad7bb-df2f-56d5-8c55-3ec809e04fde")
+		)
+		(pin "3"
+			(uuid "6ea4de54-47eb-5647-adae-5a37800acc00")
+		)
+		(instances
+			(project "banco-pruebas"
+				(path "/0bf51f38-864b-5603-a014-831187070c2f"
+					(reference "X1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "L_A"
+		(at 119.38 60.96 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "957f8dd2-31ef-5f4e-90e6-0a434e2e1c20")
+	)
+	(symbol
+		(lib_id "Medidor:Pinza_SCT-013-000")
+		(at 177.8 60.96 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "0ea134b2-54b6-5de8-b154-308e9c1d08ed")
+		(property "Reference" "CT2"
+			(at 183.4 52.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "SCT-013-000 (CH2)"
+			(at 183.4 54.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 177.8 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 177.8 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "1fd5ad78-ebaa-59c1-ba55-822ac05a0522")
+		)
+		(pin "2"
+			(uuid "81376380-3c20-54e7-906f-a3a098b9f990")
+		)
+		(pin "3"
+			(uuid "a3dd9365-29a6-5709-a5c0-0388f3af853f")
+		)
+		(pin "4"
+			(uuid "49025776-fa26-5079-b62e-2d705dc65ea7")
+		)
+		(instances
+			(project "banco-pruebas"
+				(path "/0bf51f38-864b-5603-a014-831187070c2f"
+					(reference "CT2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Medidor:Plug_3.5mm")
+		(at 177.8 78.74 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b8705db8-6ec1-5d49-b8b2-5260b69e1678")
+		(property "Reference" "PL2"
+			(at 183.4 77.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Plug 3,5 mm → J3 del medidor"
+			(at 183.4 79.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 177.8 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 177.8 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "737ba00b-abe3-5d3d-9d08-d02905044b23")
+		)
+		(pin "2"
+			(uuid "a0890741-3004-54de-9e46-25064c49c8d3")
+		)
+		(instances
+			(project "banco-pruebas"
+				(path "/0bf51f38-864b-5603-a014-831187070c2f"
+					(reference "PL2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Medidor:Tomacorriente_NEMA_5-15R")
+		(at 208.28 91.44 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "bf7860fa-1f12-55d8-9edf-701d4df8adc3")
+		(property "Reference" "X2"
+			(at 207.01 84.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Salida CH2 (15 A)"
+			(at 204.47 100.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 208.28 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 208.28 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "1b325f08-f3dc-50e3-a8fc-8cb570e39d3c")
+		)
+		(pin "2"
+			(uuid "7f6e84e3-520e-584a-9093-0cd2578bc840")
+		)
+		(pin "3"
+			(uuid "0e4394ee-553d-5b21-b505-2ffe1ad53f5e")
+		)
+		(instances
+			(project "banco-pruebas"
+				(path "/0bf51f38-864b-5603-a014-831187070c2f"
+					(reference "X2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "L_B"
+		(at 190.5 60.96 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "1833a699-76b9-5841-83c9-e2dd5ac81230")
+	)
+	(label "N"
+		(at 40.64 121.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "778b16c2-ebaf-57e0-8021-46c90c89e3c3")
+	)
+	(label "PE"
+		(at 40.64 129.54 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e606df38-d624-5eec-ae98-fb31907d2956")
+	)
+	(text "Barra de neutro: conector de palanca de 5 vías (W1)"
+		(exclude_from_sim no)
+		(at 142.24 120.65 0)
+		(effects
+			(font
+				(size 1.1 1.1)
+			)
+			(justify left bottom)
+		)
+		(uuid "d2a969fe-8373-5ce5-978d-77b4b9c19100")
+	)
+	(text "Barra de tierra: conector de palanca de 5 vías (W2)"
+		(exclude_from_sim no)
+		(at 142.24 128.27 0)
+		(effects
+			(font
+				(size 1.1 1.1)
+			)
+			(justify left bottom)
+		)
+		(uuid "62ca9bdf-ab69-526d-aa65-315ab0fe56a3")
+	)
+	(text "Empalme de fase L_SW: conector de palanca de 5 vías (W3)"
+		(exclude_from_sim no)
+		(at 100.33 46.99 0)
+		(effects
+			(font
+				(size 1.1 1.1)
+			)
+			(justify left bottom)
+		)
+		(uuid "41d6c7b0-2421-59a6-b52b-9493a5132ddc")
+	)
+	(text "NOTAS\n1. Solo la fase pasa por las pinzas, una sola vez y en línea recta: CT1 abraza el tramo L_SW → L_A y CT2 el tramo L_SW → L_B.\n    El neutro y la tierra nunca pasan por una pinza (las corrientes de ida y vuelta se cancelarían).\n2. CH1 mide lo que se conecte en X1 y CH2 lo que se conecte en X2; la calibración es la misma que en el tablero (una pasada).\n3. Conductores THHN 14 AWG: fase negro, neutro blanco, tierra verde. Tomacorrientes polarizados: fase al tornillo de bronce\n    (ranura corta), neutro al tornillo plateado (ranura larga), tierra al tornillo verde.\n4. X0 queda antes de las pinzas: allí se conectan el cable de red del medidor (J4, rama del ZMPT101B) y su adaptador de 5 V,\n    así el consumo del propio medidor no se suma a la medición y la tensión se toma de la misma línea.\n5. Las pinzas se cierran sobre el cable antes de energizar y sus plugs se conectan a J2 y J3 del medidor antes de cerrar Q1."
+		(exclude_from_sim no)
+		(at 20.32 165.1 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "1dd5b758-3875-51fd-9f1c-4911c133ef69")
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)

@@ -1,0 +1,21 @@
+# Dependencias y entornos
+node_modules/
+.venv/
+__pycache__/
+.pio/
+.output/
+
+# Datos y resultados regenerables
+pronostico/datos/
+plataforma/datos/
+simulacion/*.dat
+*.FCBak
+# STEP pesados: se regeneran con kicad-cli y freecad/generar.sh (ver sección 10)
+freecad/*.step
+hardware/3d/medidor-placa.step
+hardware/*-backups/
+hardware/fp-info-cache
+hardware/*.kicad_prl
+
+# Secretos del firmware
+firmware/include/secretos.h

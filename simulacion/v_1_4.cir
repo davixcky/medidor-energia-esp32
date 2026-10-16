@@ -1,0 +1,23 @@
+* v_1_4
+
+V33 v33 0 3.3
+Vz z 0 SIN(2.5 1.4 60)
+R7 z v 11k
+R8 v 0 13k
+C9 v 0 27n
+Dsup v v33 BAT85
+Dinf 0 v BAT85
+Radc v 0 10Meg
+.tran 5u 60m 20m
+
+
+.model BAT85 D(IS=1.3e-8 N=1.1 RS=2 CJO=10p BV=30 IBV=2u)
+.model D1N5819 D(IS=31.7u N=1.373 RS=0.051 CJO=110p M=0.35 EG=0.69 XTI=2 BV=40 IBV=1m)
+
+.control
+set wr_singlescale
+set wr_vecnames
+run
+wrdata /home/davixcky/dev/.personal/electronica/sistemas-embebidos-1/C2-ABPR/herramientas/../simulacion/v_1_4.dat v(v)
+.endc
+.end
