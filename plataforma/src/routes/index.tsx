@@ -214,7 +214,7 @@ function Tablero() {
             </div>
             <p className="note">
               {d.pronostico.disponible
-                ? <>Modelo: {(d.pronostico as { modelo: string }).modelo}. Temperatura de entrada: {(d.pronostico as { temperatura: string }).temperatura}, fuera del rango de entrenamiento (Sceaux, Francia); el intervalo usa el RMSE medido en la prueba con UCI.</>
+                ? <>Modelo: {(d.pronostico as { modelo: string }).modelo}. Temperatura de entrada: {(d.pronostico as { temperatura: string }).temperatura}, en el extremo alto de las temperaturas de entrenamiento (Sceaux, Francia: −10,5 a 31,7 °C); el intervalo usa el RMSE medido en la prueba con UCI.</>
                 : <>Pronóstico no disponible: {(d.pronostico as { motivo: string }).motivo}.</>}
             </p>
           </section>

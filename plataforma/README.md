@@ -37,8 +37,8 @@ Navegador  ◄── HTML con datos (función de servidor) + /api/eventos (SSE, 
   24 horas completas de CH1. El intervalo del 90 % usa el RMSE de la prueba con los datos de UCI.
 - **Temperatura del pronóstico:** el modelo necesita la temperatura de cada hora. Por defecto se usa un
   perfil diario típico de Barranquilla (25 °C a las 5 h y 32 °C a las 14 h); `TEMP_CONSTANTE=28` fija un
-  valor único. Esa temperatura está fuera del rango con el que se entrenó el modelo (Sceaux, Francia), y
-  el tablero lo advierte.
+  valor único. Esos valores quedan en el extremo alto del rango con el que se entrenó el modelo (Sceaux,
+  Francia: de −10,5 a 31,7 °C, media de 10,7 °C), con pocos ejemplos, y el tablero lo advierte.
 - **Hora local:** los días y las horas se calculan en la hora de Colombia (UTC−5).
 
 ## Cómo ejecutar

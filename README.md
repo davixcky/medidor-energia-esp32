@@ -1018,8 +1018,9 @@ equivalencia del LSTM con PyTorch, la integración de energía, el umbral P95, l
 Además, se enviaron al servidor tramas codificadas con el mismo código del *firmware*
 (`firmware/test/trama_prueba.cpp`) y se decodificaron sin diferencias.
 
-> La temperatura de entrada del pronóstico es un perfil diario típico de Barranquilla (25–32 °C), fuera
-> del rango con el que se entrenó el modelo (Sceaux, Francia), y su intervalo usa el error medido con
+> La temperatura de entrada del pronóstico es un perfil diario típico de Barranquilla (25–32 °C). El
+> modelo se entrenó en Sceaux, Francia, con temperaturas entre −10,5 y 31,7 °C (media de 10,7 °C), así
+> que esos valores quedan en el extremo alto del rango, con pocos ejemplos; además, su intervalo usa el error medido con
 > los datos de UCI; por eso el pronóstico se presenta como ilustrativo hasta reentrenar con las
 > mediciones propias.
 
@@ -1080,16 +1081,50 @@ capa densa de 1, con **5.281 parámetros**. La capa LSTM se programó con un sol
 compuerta, como en las ecuaciones del primer entregable, porque la implementación estándar de PyTorch usa
 dos.
 
+**Funcionamiento de la celda.** La LSTM recorre las 24 horas de la ventana en orden. En cada hora recibe
+las 4 variables de esa hora y los estados anteriores $h_{t-1}$ y $c_{t-1}$, de 32 valores cada uno
+(Ilustración 23). Tres compuertas con sigmoide dan números entre 0 y 1: la de olvido $f_t$ decide
+cuánto se conserva del estado, la de entrada $i_t$ cuánto se escribe del candidato $\tilde c_t$ y la de
+salida $o_t$ cuánto del estado pasa a $h_t$ (Ilustración 24). Como el estado se actualiza con una
+suma, el gradiente se atenúa menos que en una red recurrente simple y la red puede usar información de
+las primeras horas de la ventana. Después de la hora 24, la capa densa convierte $h_{24}$ en el consumo
+estandarizado de la hora siguiente, que se lleva a kWh con $\hat y\,\sigma + \mu$. El conteo de
+parámetros sale de las matrices: $4 \times 32 \times (32 + 4) + 4 \times 32 = 4.736$ en la LSTM,
+$32 \times 16 + 16 = 528$ en la capa densa y $16 + 1 = 17$ en la salida.
+
+![Celda LSTM](img/lstm-celda.png)
+
+**Ilustración 23.** Esquema de la celda LSTM: la línea roja es el estado $c_t$ y las cajas son las
+compuertas. Fuente: elaboración propia en Python y Matplotlib.
+
+![Ecuaciones de la celda](img/lstm-ecuaciones.png)
+
+**Ilustración 24.** Ecuaciones de la celda tal como están programadas en
+[`pronostico/modelo.py`](pronostico/modelo.py). Fuente: elaboración propia en Python y Matplotlib.
+
 Los datos se dividieron en periodos consecutivos: entrenamiento hasta el 30 de junio de 2009 (21.940
 ventanas), validación hasta el 31 de diciembre de 2009 (4.377) y prueba de enero a noviembre de 2010
 (7.528). La normalización se calcula solo con los datos de entrenamiento. El entrenamiento usa Adam con
-parada temprana sobre la validación y tarda unos 6 s en CPU (Ilustración 23).
+parada temprana sobre la validación y tarda unos 6 s en CPU (Ilustración 25).
 
 ![Curvas de aprendizaje](img/lstm-entrenamiento.png)
 
-**Ilustración 23.** Error cuadrático medio por época en entrenamiento y validación. El error de
+**Ilustración 25.** Error cuadrático medio por época en entrenamiento y validación. El error de
 validación queda por debajo del de entrenamiento porque el *dropout* solo actúa al entrenar y porque el
 segundo semestre de 2009 es más regular. Fuente: elaboración propia en Python con PyTorch.
+
+Para ver qué hace la red entrenada, se aplicó a la medianoche del conjunto de prueba con error cercano a
+la mediana (Ilustración 26). Con las 24 horas del 10 de febrero de 2010 predijo 0,42 kWh para las
+00 h del día siguiente, cuando se midieron 0,30 kWh. El estado de la unidad 2 sigue el consumo de la
+ventana (correlación de 0,90), y en esa unidad la compuerta de olvido baja durante el día mientras la de
+entrada sube, es decir, el estado se renueva con cada hora; otras unidades cambian despacio a lo largo
+del día.
+
+![LSTM sobre un día real](img/lstm-dia-real.png)
+
+**Ilustración 26.** Entrada, compuertas de la unidad 2 y estado de las 32 unidades de la red
+entrenada sobre el 10 de febrero de 2010. Fuente: elaboración propia con
+[`pronostico/figuras_lstm.py`](pronostico/figuras_lstm.py).
 
 El modelo se comparó con tres líneas base ingenuas: persistencia (repetir la última hora medida),
 ingenuo diario (repetir el último día) e ingenuo semanal (misma hora de la semana anterior). A 24 h y 48 h
@@ -1114,14 +1149,24 @@ el LSTM pronostica de forma recursiva desde cada medianoche del periodo de prueb
 
 Fuente: elaboración propia. A 24 h se evaluaron 286 pronósticos y a 48 h, 281.
 
+La Ilustración 27 muestra el error medio por horizonte en 281 inicios a medianoche. La LSTM tiene
+menos error que las tres referencias en las 48 horas; el error no crece de forma continua, porque también
+depende de la hora del día: es bajo en la madrugada y alto en la noche.
+
+![Error por horizonte](img/lstm-horizonte.png)
+
+**Ilustración 27.** Error absoluto medio por horizonte del pronóstico recursivo frente a las
+referencias, en el conjunto de prueba. Fuente: elaboración propia con
+[`pronostico/figuras_lstm.py`](pronostico/figuras_lstm.py).
+
 El LSTM reduce el MAE frente a la mejor línea base en un 15 % a 1 h, un 17 % a 24 h y un 15 % a 48 h. En
 MAPE a 48 h presenta un valor similar al del ingenuo diario (70,3 % frente a 70,8 %). El MAPE aumenta
 en las horas nocturnas de bajo consumo, por lo que la comparación se centra en el MAE y el RMSE. La Ilustración
-24 muestra un caso del conjunto de prueba.
+28 muestra un caso del conjunto de prueba.
 
 ![Pronóstico de 48 h](img/lstm-pronostico.png)
 
-**Ilustración 24.** Consumo medido durante 72 h y pronóstico recursivo de las 48 h siguientes, del 10
+**Ilustración 28.** Consumo medido durante 72 h y pronóstico recursivo de las 48 h siguientes, del 10
 al 12 de marzo de 2010, frente a la línea base semanal. Fuente: elaboración propia en Python con PyTorch.
 
 **Limitaciones.** A 24 h y 48 h la red recibe la temperatura observada de las horas futuras, lo que
@@ -1218,7 +1263,7 @@ El diseño se revisó mediante las siguientes verificaciones y cálculos:
 
 ![Cronograma](img/cronograma.png)
 
-**Ilustración 25.** Cronograma de actividades y estado al 21 de octubre de 2026. Fuente: elaboración
+**Ilustración 29.** Cronograma de actividades y estado al 21 de octubre de 2026. Fuente: elaboración
 propia en Python y Matplotlib.
 
 **Tabla 19.** Estado de las actividades.
