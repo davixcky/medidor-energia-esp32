@@ -1,10 +1,11 @@
 """Modelo paramétrico del gabinete y el ensamble del medidor (FreeCAD 1.1, freecadcmd).
 
 Cotas tomadas de la sección 7.8 del documento y de herramientas/figuras.py (gabinete()).
-La placa perforada es el STEP exportado por KiCad (../hardware/3d/medidor-placa.step); si no
+La PCB de una cara es el STEP exportado por KiCad (../hardware/3d/medidor-placa.step); si no
 existe, se usa una placa de reemplazo del mismo tamaño y el script lo avisa.
 """
 import os
+import json
 import sys
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
@@ -26,6 +27,47 @@ Z_PLACA = PISO + SEPARADOR
 Z_JACKS = 26.0
 STEP_PLACA = os.path.join(AQUI, "..", "hardware", "3d", "medidor-placa.step")
 
+JSON_CONECTORES = os.path.join(AQUI, "..", "hardware", "3d", "conectores.json")
+# Respaldo para los modelos anteriores que aún no incluyen el manifiesto de KiCad.
+RESPALDO = {
+    "J1": {"1": (3, 81), "2": (3, 78.8)},
+    "J2": {"T": (3, 43), "S": (3, 45.2)},
+    "J3": {"T": (3, 57), "S": (3, 59.2)},
+    "J5": {"1": (5, 10), "2": (6.8, 10), "3": (8.6, 10)},
+    "J6": {str(k + 1): (128, 34 + k * 2.54) for k in range(4)},
+    "D8": {"1": (62, 72), "2": (64.54, 72)},
+    "SW1": {"1": (69, 72), "2": (71.54, 72)},
+    "SW2": {"1": (76, 72), "2": (78.54, 72)},
+    "U1": {"1": (89, 30), "20": (117, 30), "19": (89, 75.72)},
+}
+AGUJEROS = [(4, 4), (146, 4), (4, 86), (146, 86)]
+if os.path.exists(JSON_CONECTORES):
+    with open(JSON_CONECTORES, encoding="utf-8") as archivo:
+        datos = json.load(archivo)
+    CONECTORES = {ref: valor["pads"] for ref, valor in datos["conectores"].items()}
+    AGUJEROS = datos.get("agujeros_m3", AGUJEROS)
+else:
+    print("AVISO: falta conectores.json; se usan las posiciones de respaldo")
+    CONECTORES = RESPALDO
+
+
+def pad(ref, pin, altura=0):
+    """Centro del pad: KiCad desde arriba → ensamble con Y hacia el fondo."""
+    x, y = CONECTORES[ref][str(pin)]
+    return (PLACA_X + x, PLACA_Y + PLACA_D - y, Z_PLACA + 1.6 + altura)
+
+
+def centro(ref):
+    puntos = [pad(ref, pin) for pin in CONECTORES[ref]]
+    return tuple(sum(p[i] for p in puntos) / len(puntos) for i in range(3))
+
+
+JACKS = [("J2", "J2_CH1", 6), ("J3", "J3_CH2", 6), ("J1", "Jack_5V", 8)]
+X_PASO = centro("J5")[0]
+X_USB = (pad("U1", "1")[0] + pad("U1", "20")[0]) / 2
+Z_USB = Z_PLACA + 13.6
+DEVKIT_COMPLETO = False
+
 
 def cuerpo():
     ext = caja_redondeada(W, D, H_CUERPO, R_ESQ)
@@ -33,24 +75,25 @@ def cuerpo():
     c = ext.cut(inte)
     # tabique de 3 mm que separa la zona de red, con collarín para el cable de 3 hilos
     tab = Part.makeBox(W - 2 * PARED, E_TABIQUE, H_CUERPO - PISO - 4, V(PARED, Y_TABIQUE, PISO))
-    collar = cilindro(12, 10, 25, Y_TABIQUE - 3.5, 30, "y")
-    tab = tab.fuse(collar).cut(cilindro(6.5, 12, 25, Y_TABIQUE - 4.5, 30, "y"))
+    collar = cilindro(12, 10, X_PASO, Y_TABIQUE - 3.5, 30, "y")
+    tab = tab.fuse(collar).cut(cilindro(6.5, 12, X_PASO, Y_TABIQUE - 4.5, 30, "y"))
     c = c.fuse(tab)
     # postes de la tapa (M3 con inserto) en las cuatro esquinas
     for x, y in ((TORNILLO, TORNILLO), (W - TORNILLO, TORNILLO), (TORNILLO, D - TORNILLO), (W - TORNILLO, D - TORNILLO)):
         c = c.fuse(cilindro(8, H_CUERPO - PISO, x, y, PISO)).cut(cilindro(4.0, 12, x, y, H_CUERPO - 12))
-    # separadores de la placa perforada (los cuatro agujeros a 4 mm de las esquinas)
-    for x, y in ((4, 4), (PLACA_W - 4, 4), (4, PLACA_D - 4), (PLACA_W - 4, PLACA_D - 4)):
-        px, py = PLACA_X + x, PLACA_Y + y
+    # separadores de la PCB (los cuatro agujeros a 4 mm de las esquinas)
+    for x, y in AGUJEROS:
+        px, py = PLACA_X + x, PLACA_Y + PLACA_D - y
         c = c.fuse(cilindro(6, SEPARADOR, px, py, PISO)).cut(cilindro(2.5, SEPARADOR, px, py, PISO + 2))
     # postes del módulo ZMPT101B (49 × 19 mm) en la zona de red
     for x, y in ((73, 121), (116, 121), (73, 134), (116, 134)):
         c = c.fuse(cilindro(5, 8, x, y, PISO)).cut(cilindro(2.5, 8, x, y, PISO + 1))
     # pared izquierda: jacks J2 (CH1) y J3 (CH2) de 3,5 mm y jack de alimentación
-    for y, d in ((PLACA_Y + 47, 6.2), (PLACA_Y + 33, 6.2), (PLACA_Y + 9, 8.2)):
-        c = c.cut(cilindro(d, 10, -1, y, Z_JACKS, "x"))
+    for ref, nombre, d in JACKS:
+        y = centro(ref)[1]
+        c = c.cut(cilindro(d + 0.2, 10, -1, y, Z_JACKS, "x"))
     # pared frontal: ventana del USB del DevKitC (10 × 6 mm)
-    c = c.cut(Part.makeBox(10, 10, 6, V(PLACA_X + 98, -2, Z_PLACA + 9)))
+    c = c.cut(Part.makeBox(14, 10, 9, V(X_USB - 7, -2, Z_USB - 4.5)))
     # pared posterior: prensaestopas PG7 (rosca de 12,5 mm)
     c = c.cut(cilindro(12.7, 10, 180, D - 4, 40, "y"))
     # ranuras de ventilación en la pared derecha (zona de MBT)
@@ -79,18 +122,22 @@ def tapa():
         t = t.cut(cilindro(12.2, 10, x, 62.5, H_CUERPO - 1))
     # rótulos grabados 0,6 mm
     for s, tam, x, y in (("OLED", 4, 53.25, 47), ("ESTADO", 3.5, 95, 52), ("SW1", 3.5, 125, 52), ("SW2", 3.5, 155, 52),
-                         ("MEDIDOR DE ENERGIA", 6, 100, 22), ("CH1 TOTAL  -  CH2 SUBCIRCUITO", 3.5, 100, 14)):
+                         ("MEDIDOR DE ENERGÍA", 6, 100, 22), ("CH1 TOTAL  -  CH2 SUBCIRCUITO", 3.5, 100, 14)):
         t = t.cut(texto(s, tam, x, y, H_CUERPO + E_TAPA - 0.6, 1))
     return t.removeSplitter()
 
 
 def placa(m):
+    global DEVKIT_COMPLETO, X_USB, Z_USB
     if os.path.exists(STEP_PLACA):
         import Import
         antes = set(o.Name for o in m.doc.Objects)
         Import.insert(STEP_PLACA, m.doc.Name)
         nuevos = [o for o in m.doc.Objects if o.Name not in antes]
         nombres = [o.Name for o in nuevos]
+        devkit = [o.Shape.copy() for o in nuevos if o.TypeId == "Part::Feature"
+                  and "devkit" in o.Label.lower() and not o.Shape.isNull()]
+        DEVKIT_COMPLETO = bool(devkit)
         formas = [o.Shape for o in nuevos if hasattr(o, "Shape") and not o.Shape.isNull() and o.Shape.Volume > 0
                   and o.TypeId == "Part::Feature"]
         if not formas:
@@ -104,6 +151,12 @@ def placa(m):
         sust = max(formas, key=lambda f: f.BoundBox.XLength * f.BoundBox.YLength)
         sb = sust.BoundBox
         comp.translate(V(PLACA_X - sb.XMin, PLACA_Y - sb.YMin, Z_PLACA - sb.ZMin))
+        if DEVKIT_COMPLETO:
+            # El cuerpo USB es la pieza del DevKit que sobresale más hacia el frente.
+            usb = min(devkit, key=lambda f: f.BoundBox.YMin).BoundBox
+            X_USB = usb.Center.x + PLACA_X - sb.XMin
+            Z_USB = usb.Center.z + Z_PLACA - sb.ZMin
+            print(f"USB verificado en STEP: X={X_USB:.2f}, Z={Z_USB:.2f} mm")
         print(f"Placa de KiCad importada: {bb.XLength:.1f} × {bb.YLength:.1f} × {bb.ZLength:.1f} mm")
         o = m.agregar("Placa_KiCad", comp, "placa", "interior")
         # traslado aplicado, para que render.py vuelva a importar el STEP con sus colores
@@ -114,8 +167,8 @@ def placa(m):
         return True
     print("AVISO: no existe", STEP_PLACA, "— se usa una placa de reemplazo")
     p = Part.makeBox(PLACA_W, PLACA_D, 1.6, V(PLACA_X, PLACA_Y, Z_PLACA))
-    for x, y in ((4, 4), (PLACA_W - 4, 4), (4, PLACA_D - 4), (PLACA_W - 4, PLACA_D - 4)):
-        p = p.cut(cilindro(3.2, 3, PLACA_X + x, PLACA_Y + y, Z_PLACA - 1))
+    for x, y in AGUJEROS:
+        p = p.cut(cilindro(3.2, 3, PLACA_X + x, PLACA_Y + PLACA_D - y, Z_PLACA - 1))
     m.agregar("Placa_reemplazo", p, "placa", "interior")
     esp = Part.makeBox(28, 54, 12, V(PLACA_X + 89, PLACA_Y + 2, Z_PLACA + 1.6))
     m.agregar("ESP32_reemplazo", esp, "negro", "interior")
@@ -125,8 +178,11 @@ def placa(m):
 def interior(m):
     # zona de red: módulo ZMPT101B, portafusible F1 y bornera J4
     zm = Part.makeBox(49, 19, 1.6, V(70, 118, PISO + 8))
+    for k, (x, y) in enumerate(((73, 121), (116, 121), (73, 134), (116, 134))):
+        zm = zm.cut(cilindro(3.2, 2, x, y, PISO + 8))
+        m.agregar(f"Tornillo_ZMPT_{k}", cilindro(4.5, 1.5, x, y, PISO + 9.6), "metal")
     m.agregar("ZMPT101B_PCB", zm, "azul")
-    m.agregar("ZMPT101B_trafo", Part.makeBox(19, 17, 17, V(73, 119, PISO + 9.6)), "azul")
+    m.agregar("ZMPT101B_trafo", Part.makeBox(19, 11, 17, V(77, 122, PISO + 9.6)), "azul")
     m.agregar("ZMPT101B_bornes", Part.makeBox(7, 10, 10, V(112, 122, PISO + 9.6)), "verde_pcb")
     m.agregar("ZMPT101B_pot", cilindro(6, 5, 100, 127, PISO + 9.6), "azul")
     f1 = Part.makeBox(25, 9, 10, V(35, 120, PISO)).fuse(cilindro(5, 20, 37.5, 124.5, PISO + 7, "x"))
@@ -136,25 +192,59 @@ def interior(m):
     # cableado de red: fase negro, neutro blanco, tierra verde (18 AWG)
     m.agregar("Red_fase", tubo([(178, D - 6, 40), (178, 135, 40), (160, 135, 14), (153, 125, 8)], 2.4), "fase")
     m.agregar("Red_neutro", tubo([(182, D - 6, 40), (182, 132, 40), (162, 132, 14), (153, 122, 8)], 2.4), "neutro")
-    m.agregar("Red_fase_F1", tubo([(135, 125, 9), (62, 125, 9), (60, 124.5, 12)], 2.0), "fase")
+    m.agregar("Red_fase_F1", tubo([(135, 125, 9), (130, 140, 9), (62, 140, 9), (60, 124.5, 12)], 2.0), "fase")
     m.agregar("Red_F1_ZMPT", tubo([(35, 124.5, 12), (31, 124.5, 12), (31, 140, 12), (115, 140, 14), (115, 131, 16)], 2.0), "fase")
     m.agregar("Red_N_ZMPT", tubo([(135, 121, 9), (118, 121, 9), (115, 125, 16)], 2.0), "neutro")
-    # cable de 3 hilos ZMPT101B → J5 a través del collarín del tabique
+    m.agregar("ZMPT_salida", Part.makeBox(2.5, 8, 2, V(70, 120, 12.1)), "negro")
+    # Pasacables flexible con rebordes: los tres hilos atraviesan únicamente su luz.
+    goma = cilindro(6.5, 10, X_PASO, Y_TABIQUE - 3.5, 30, "y")
+    for y in (Y_TABIQUE - 4, Y_TABIQUE + 6):
+        goma = goma.fuse(cilindro(9, 1, X_PASO, y, 30, "y"))
+    goma = goma.cut(cilindro(5, 13, X_PASO, Y_TABIQUE - 5, 30, "y"))
+    m.agregar("Pasacables_tabique", goma, "negro")
     for k, col in enumerate(("rojo", "verde_led", "negro")):
-        dx = (k - 1) * 1.8
-        m.agregar(f"ZMPT_J5_{k}", tubo([(70, 126 + dx, 14), (25 + dx, 126, 30), (25 + dx, 100, 30),
-                                       (30 + dx, PLACA_Y + 80, Z_PLACA + 6)], 1.4), col)
-    # pared izquierda: jacks de 3,5 mm y jack de alimentación con su tuerca
-    for nombre, y, d in (("J2_CH1", PLACA_Y + 47, 6), ("J3_CH2", PLACA_Y + 33, 6), ("Jack_5V", PLACA_Y + 9, 8)):
+        dx = (k - 1) * 1.5
+        fin = pad("J5", k + 1, 6)
+        # La entrada lateral de la bornera comunica con el pad mediante su contacto.
+        puntos = [(71, 121 + k * 2.54, 14), (65, 121 + k * 2.54, 30),
+                  (X_PASO + dx, 117, 30), (X_PASO + dx, 102, 30),
+                  (fin[0], 100, fin[2]), fin]
+        m.agregar(f"ZMPT_J5_{k}", tubo(puntos, 1.2), col)
+    # Jacks pasantes: cañón y tuerca exteriores; terminales interiores.
+    for ref, nombre, d in JACKS:
+        y = centro(ref)[1]
         cuerpo_j = cilindro(d + 4, 14, PARED, y, Z_JACKS, "x")
-        tuerca = cilindro(d + 3, 2, -2, y, Z_JACKS, "x").cut(cilindro(d, 3, -2.5, y, Z_JACKS, "x"))
-        m.agregar(nombre, cuerpo_j.fuse(tuerca), "negro")
-    # cables de los jacks a la placa (amarillo = señal, violeta = VBIAS, rojo/negro = 5 V)
-    for y, cols in ((PLACA_Y + 47, ("naranja", "azul")), (PLACA_Y + 33, ("naranja", "azul")), (PLACA_Y + 9, ("rojo", "negro"))):
-        for k, col in enumerate(cols):
-            dy = (k - 0.5) * 2.2
-            m.agregar(f"Cable_jack_{int(y)}_{k}", tubo([(PARED + 14, y + dy, Z_JACKS), (22, y + dy, Z_JACKS),
-                                                       (PLACA_X + 3, y + dy, Z_PLACA + 5)], 1.2), col)
+        canon = cilindro(d, 5, -2.5, y, Z_JACKS, "x")
+        tuerca = cilindro(d + 3, 2, -2, y, Z_JACKS, "x")
+        jack = cuerpo_j.fuse([canon, tuerca]).cut(cilindro(3.5 if ref != "J1" else 5.5, 7, -3, y, Z_JACKS, "x"))
+        m.agregar(nombre, jack, "negro")
+        pines = ("1", "2") if ref == "J1" else ("T", "S")
+        colores = ("rojo", "negro") if ref == "J1" else ("naranja", "azul")
+        for k, (pin, col) in enumerate(zip(pines, colores)):
+            fin = pad(ref, pin, 6 if ref == "J1" else 0)
+            puntos = [(PARED + 14, y + (k - 0.5) * 2.2, Z_JACKS),
+                      (22, fin[1], Z_JACKS), (fin[0] - 3, fin[1], fin[2] + 3), fin]
+            m.agregar(f"Cable_{ref}_{pin}", tubo(puntos, 1.2), col)
+    for ref in ("J1", "J5", "J6", "D8", "SW1", "SW2"):
+        for pin in CONECTORES[ref]:
+            base = pad(ref, pin)
+            alto = 6 if ref in ("J1", "J5") else 8.5
+            o = m.agregar(f"Contacto_{ref}_{pin}", tubo([base, pad(ref, pin, alto)], 0.65), "metal")
+            o.addProperty("App::PropertyVector", "CentroPad", "Conexión")
+            o.CentroPad = V(*base)
+    # Tornillos M3: vástago dentro del separador y cabeza ranurada sobre la PCB.
+    for k, (x, y) in enumerate(AGUJEROS):
+        px, py = PLACA_X + x, PLACA_Y + PLACA_D - y
+        cabeza = cilindro(5.5, 2, px, py, Z_PLACA + 1.6)
+        cabeza = cabeza.cut(Part.makeBox(6, 0.8, 1, V(px - 3, py - 0.4, Z_PLACA + 2.8)))
+        m.agregar(f"Tornillo_placa_{k}", cabeza.fuse(cilindro(3, 8, px, py, Z_PLACA - 6.4)), "metal")
+    # Respaldo para STEP provisionales que todavía omiten la tarjeta DevKit.
+    if not DEVKIT_COMPLETO:
+        y_usb = pad("U1", "19")[1] - 4
+        m.agregar("DevKit_tarjeta_auxiliar", Part.makeBox(28, 54, 1.6, V(X_USB - 14, y_usb, Z_PLACA + 10.1)), "negro")
+        usb = Part.makeBox(8, 6, 3.4, V(X_USB - 4, y_usb - 1, Z_USB - 1.7))
+        usb = usb.cut(Part.makeBox(6.8, 5, 2.2, V(X_USB - 3.4, y_usb - 1.1, Z_USB - 1.1)))
+        m.agregar("USB_DevKit_auxiliar", usb, "metal")
     # bajo la tapa: OLED, LED y pulsadores
     zt = H_CUERPO
     m.agregar("OLED_modulo", Part.makeBox(27.3, 27.8, 1.6, V(39.6, 49.6, zt - 4.6)), "azul", "tapa")
@@ -165,16 +255,50 @@ def interior(m):
         ta = cilindro(9, 4, x, 62.5, zt + 1)
         tu = cilindro(16, 2, x, 62.5, zt - 2.5).cut(cilindro(12, 3, x, 62.5, zt - 3))
         m.agregar(nombre, cu.fuse([ta, tu]), "gris", "tapa")
+    # Soportes del OLED unidos a la cara inferior de la tapa.
+    for x in (40.8, 65.5):
+        for y in (51, 76):
+            m.agregar(f"Soporte_OLED_{x}_{y}", cilindro(2.2, 3, x, y, zt - 3), "tapa", "tapa")
+    # Mazos de servicio: reserva de longitud por encima de los componentes.
+    for ref, colores, destino in (
+        ("J6", ("negro", "rojo", "azul", "verde_led"), (48, 76, zt - 4.6)),
+        ("D8", ("verde_led", "negro"), (94, 62.5, zt - 5)),
+        ("SW1", ("verde_led", "negro"), (124, 62.5, zt - 12)),
+        ("SW2", ("verde_led", "negro"), (154, 62.5, zt - 12)),
+    ):
+        for k, col in enumerate(colores):
+            inicio = pad(ref, k + 1, 8.5)
+            fin = (destino[0] + k * 2.54, destino[1], destino[2])
+            carril = 65 + ("J6", "D8", "SW1", "SW2").index(ref) * 8 + k * 1.5
+            puntos = [inicio, (inicio[0], inicio[1], 43), (178 + k * 2, inicio[1], 46),
+                      (185 + k * 2, carril, 52), (165, 96 - k * 2, 55),
+                      (fin[0], carril, 57), fin]
+            o = m.agregar(f"Mazo_{ref}_{k}", tubo(puntos, 1.1), col)
+            o.addProperty("Part::PropertyPartShape", "FormaAbierta", "Render")
+            o.FormaAbierta = tubo([inicio, (inicio[0], inicio[1], 43),
+                                  (178 + k * 2, inicio[1], 46), (190, carril, 80 + k * 1.5),
+                                  (220, carril, 83 + k * 1.5),
+                                  (232, carril, -16),
+                                  (fin[0] + W + 40, fin[1], -16),
+                                  (fin[0] + W + 40, fin[1], fin[2] - H_CUERPO)], 1.1)
+    # Pintura en el fondo del grabado para leer las leyendas en la presentación.
+    for k, (leyenda, tam, x, y) in enumerate((
+        ("OLED", 4, 53.25, 47), ("ESTADO", 3.5, 95, 52),
+        ("SW1", 3.5, 125, 52), ("SW2", 3.5, 155, 52),
+        ("MEDIDOR DE ENERGÍA", 6, 100, 22),
+        ("CH1 TOTAL  -  CH2 SUBCIRCUITO", 3.5, 100, 14),
+    )):
+        m.agregar(f"Tinta_grabado_{k}", texto(leyenda, tam, x, y, zt + E_TAPA - 0.6, 0.1), "negro", "tapa")
     # rótulo de advertencia sobre la zona de red (relieve rojo de 0,4 mm)
-    m.agregar("Rotulo_peligro", texto("PELIGRO 120 V - NO ABRIR ENERGIZADO", 5, 100, 128, zt + E_TAPA, 0.4),
+    m.agregar("Rotulo_peligro", texto("PELIGRO 120 V · NO ABRIR ENERGIZADO", 4, 100, 128, zt + E_TAPA, 0.4),
               "rojo_texto", "tapa")
 
 
 def construir():
     m = Modelo("medidor")
+    integrada = placa(m)
     m.agregar("Cuerpo", cuerpo(), "abs", "cuerpo")
     m.agregar("Tapa", tapa(), "tapa", "tapa")
-    integrada = placa(m)
     interior(m)
     m.guardar(AQUI, [("Cuerpo", "medidor-cuerpo.stl", False), ("Tapa", "medidor-tapa.stl", True)])
     print("Medidor guardado. Placa de KiCad integrada:", integrada)

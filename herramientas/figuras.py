@@ -25,7 +25,7 @@ digraph G {
     zmpt [label="U2  módulo ZMPT101B\ntransformador aislado\n+ LM358", fillcolor="#ffebee"];
   }
   subgraph cluster_mbt {
-    label="Muy baja tensión (≤ 5 V CC) — placa perforada"; color="#1565c0"; fontcolor="#1565c0"; style="dashed,rounded";
+    label="Muy baja tensión (≤ 5 V CC) — PCB de una cara"; color="#1565c0"; fontcolor="#1565c0"; style="dashed,rounded";
     ct1  [label="Pinza SCT-013-000 CH1\n(total, 0–60 A)", fillcolor="#fff8e1"];
     ct2  [label="Pinza SCT-013-000 CH2\n(subcircuito, 0–30 A)", fillcolor="#fff8e1"];
     b1   [label="Burden 22 Ω\n+ RC 3,3 kΩ / 47 nF\n+ recorte BAT85", fillcolor="#fff8e1"];
@@ -38,7 +38,7 @@ digraph G {
     res  [label="J7 reserva\nGPIO34 / 32 / 33", fillcolor="#eeeeee"];
     pwr  [label="Adaptador 5 V 2 A\n→ PTC → 1N5819", fillcolor="#ffebee"];
   }
-  nube [label="Broker MQTT / TLS\nbase de series de tiempo\ntablero web", shape=cylinder, fillcolor="#ede7f6"];
+  nube [label="Plataforma web\nTanStack Start + SQLite\npanel en vivo", shape=cylinder, fillcolor="#ede7f6"];
 
   red -> fus -> zmpt;
   zmpt -> div [label="0–3,5 V\nreposo 2,5 V", color="#2e7d32"];
@@ -55,7 +55,7 @@ digraph G {
   esp -> res [style=dashed];
   pwr -> esp [label="+5 V", color="#c62828"];
   pwr -> zmpt [label="+5 V", color="#c62828"];
-  esp -> nube [label="Wi-Fi\n40 B/s", style=bold];
+  esp -> nube [label="Wi-Fi · HTTP POST\n/api/ingesta\nregistros de 40 bytes", style=bold];
 }
 '''
 
@@ -237,7 +237,9 @@ def cronograma():
         ("Definición de la idea y requerimientos", 1, 3, "hecho"),
         ("Arquitectura y selección de componentes", 3, 5, "hecho"),
         ("Esquemático en KiCad y verificación ERC", 5, 8, "hecho"),
-        ("Distribución en placa perforada", 7, 8, "hecho"),
+        ("Distribución en placa perforada (alternativa)", 7, 8, "hecho"),
+        ("PCB de una cara: diseño, ruteo y archivos de fabricación", 9, 9, "hecho"),
+        ("Fabricación de la PCB (transferencia de tóner)", 10, 10, "pendiente"),
         ("Banco de medición: diseño y esquemático", 8, 8, "hecho"),
         ("Simulación SPICE de las entradas y la alimentación", 8, 8, "hecho"),
         ("Modelos 3D del medidor y del banco", 8, 8, "hecho"),
@@ -274,7 +276,7 @@ def cronograma():
     from matplotlib.patches import Patch
     ax.legend(handles=[Patch(fc=colores[k], ec="black", label=nombres[k]) for k in colores],
               loc="lower left", fontsize=8, ncol=4, bbox_to_anchor=(0, -0.28))
-    ax.set_title("Cronograma de actividades y estado al 16 de octubre de 2026", weight="bold", pad=12)
+    ax.set_title("Cronograma de actividades y estado al 21 de octubre de 2026", weight="bold", pad=12)
     fig.tight_layout()
     fig.savefig(os.path.join(IMG, "cronograma.png"), dpi=150)
     plt.close(fig)

@@ -1,8 +1,8 @@
 (export
 	(version "E")
 	(design
-		(source "/home/davixcky/dev/.personal/electronica/sistemas-embebidos-1/C2-ABPR/hardware/medidor-energia.kicad_sch")
-		(date "2026-10-16T16:19:29")
+		(source "/home/davixcky/dev/.personal/electronica/medidor-energia-esp32/hardware/medidor-energia.kicad_sch")
+		(date "2026-10-21T15:42:39")
 		(tool "Eeschema 10.0.0")
 		(sheet
 			(number "1")
@@ -57,10 +57,10 @@
 		(comp
 			(ref "C1")
 			(value "470u 10V")
-			(footprint "Capacitor_THT:CP_Radial_D8.0mm_P5.00mm")
+			(footprint "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm")
 			(fields
 				(field
-					(name "Footprint") "Capacitor_THT:CP_Radial_D8.0mm_P5.00mm")
+					(name "Footprint") "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm")
 				(field
 					(name "Datasheet")
 				)
@@ -381,10 +381,10 @@
 		(comp
 			(ref "C9")
 			(value "27n C0G")
-			(footprint "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P7.50mm")
+			(footprint "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm")
 			(fields
 				(field
-					(name "Footprint") "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P7.50mm")
+					(name "Footprint") "Capacitor_THT:C_Disc_D7.5mm_W5.0mm_P5.00mm")
 				(field
 					(name "Datasheet")
 				)
@@ -435,10 +435,10 @@
 		(comp
 			(ref "C10")
 			(value "100n")
-			(footprint "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm")
+			(footprint "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm")
 			(fields
 				(field
-					(name "Footprint") "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm")
+					(name "Footprint") "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm")
 				(field
 					(name "Datasheet")
 				)
@@ -489,10 +489,10 @@
 		(comp
 			(ref "C11")
 			(value "100n")
-			(footprint "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm")
+			(footprint "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm")
 			(fields
 				(field
-					(name "Footprint") "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm")
+					(name "Footprint") "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm")
 				(field
 					(name "Datasheet")
 				)
@@ -597,10 +597,10 @@
 		(comp
 			(ref "D2")
 			(value "BAT85")
-			(footprint "Diode_THT:D_DO-35_SOD27_P5.08mm_Vertical_AnodeUp")
+			(footprint "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal")
 			(fields
 				(field
-					(name "Footprint") "Diode_THT:D_DO-35_SOD27_P5.08mm_Vertical_AnodeUp")
+					(name "Footprint") "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal")
 				(field
 					(name "Datasheet")
 				)
@@ -651,10 +651,10 @@
 		(comp
 			(ref "D3")
 			(value "BAT85")
-			(footprint "Diode_THT:D_DO-35_SOD27_P5.08mm_Vertical_AnodeUp")
+			(footprint "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal")
 			(fields
 				(field
-					(name "Footprint") "Diode_THT:D_DO-35_SOD27_P5.08mm_Vertical_AnodeUp")
+					(name "Footprint") "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal")
 				(field
 					(name "Datasheet")
 				)
@@ -759,10 +759,10 @@
 		(comp
 			(ref "D5")
 			(value "BAT85")
-			(footprint "Diode_THT:D_DO-35_SOD27_P5.08mm_Vertical_AnodeUp")
+			(footprint "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal")
 			(fields
 				(field
-					(name "Footprint") "Diode_THT:D_DO-35_SOD27_P5.08mm_Vertical_AnodeUp")
+					(name "Footprint") "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal")
 				(field
 					(name "Datasheet")
 				)
@@ -1428,10 +1428,10 @@
 		(comp
 			(ref "R4")
 			(value "10k 1%")
-			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
 			(fields
 				(field
-					(name "Footprint") "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical")
+					(name "Footprint") "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
 				(field
 					(name "Datasheet")
 				)
@@ -1644,10 +1644,10 @@
 		(comp
 			(ref "R8")
 			(value "13k 1%")
-			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
 			(fields
 				(field
-					(name "Footprint") "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal")
+					(name "Footprint") "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
 				(field
 					(name "Datasheet")
 				)
@@ -2944,7 +2944,7 @@
 		(net
 			(code "1")
 			(name "+3V3")
-			(class "Default")
+			(class "Alimentacion")
 			(node
 				(ref "D2")
 				(pin "1")
@@ -3004,7 +3004,7 @@
 		(net
 			(code "2")
 			(name "+5V")
-			(class "Default")
+			(class "Alimentacion")
 			(node
 				(ref "C1")
 				(pin "1")
@@ -3357,7 +3357,7 @@
 		(net
 			(code "16")
 			(name "GND")
-			(class "Default")
+			(class "Alimentacion")
 			(node
 				(ref "C1")
 				(pin "2")
@@ -3495,7 +3495,7 @@
 		(net
 			(code "17")
 			(name "Net-(D1-A)")
-			(class "Default")
+			(class "Alimentacion")
 			(node
 				(ref "D1")
 				(pin "2")
@@ -3527,7 +3527,7 @@
 		(net
 			(code "19")
 			(name "Net-(J1-Pin_1)")
-			(class "Default")
+			(class "Alimentacion")
 			(node
 				(ref "F2")
 				(pin "1")

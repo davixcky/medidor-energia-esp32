@@ -86,6 +86,8 @@ for nombre in MODELOS:
     # abierto: la tapa y lo que va montado en ella se dejan a un lado, a la altura del piso
     mov = App.Placement(App.Vector(W + 40, 0, -H), App.Rotation())
     for o in piezas:
+        if hasattr(o, "FormaAbierta"):
+            o.Shape = o.FormaAbierta
         if o.Grupo == "tapa":
             o.Placement = mov.multiply(o.Placement)
         elif o.Grupo == "montado":   # aparatos de la tapa: quedan en su sitio, translúcidos
@@ -96,7 +98,7 @@ for nombre in MODELOS:
     vista(f"3d-{nombre}-abierto.png", gdoc, (0.45, 1.0, -2.6), 0.56)
     # planta: interior visto desde arriba, sin la tapa
     for o in piezas:
-        if o.Grupo == "tapa":
+        if o.Grupo == "tapa" or hasattr(o, "FormaAbierta"):
             o.ViewObject.Visibility = False
     # la planta del banco se guarda sin rótulos; rotular.py la rotula en ../img
     planta = os.path.join(AQUI, "planta-banco-base.png") if nombre == "banco" else f"3d-{nombre}-planta.png"

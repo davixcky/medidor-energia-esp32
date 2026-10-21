@@ -1,44 +1,44 @@
 ** Drc report for medidor-energia.kicad_pcb **
-** Created on 2026-10-16T16:20:42 **
+** Created on 2026-10-21T15:47:25 **
 ** Report includes: Errors, Warnings **
 
 ** Found 9 DRC violations **
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; error
-    @(106.4200 mm, 178.0200 mm): Footprint J1
-    @(114.0400 mm, 178.0200 mm): Footprint F2
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; error
-    @(228.3400 mm, 167.8600 mm): Footprint C10
-    @(230.8800 mm, 167.8600 mm): Footprint SW1
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; error
-    @(235.9600 mm, 145.0000 mm): Footprint R10
-    @(246.1200 mm, 142.4600 mm): Footprint R9
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; error
-    @(235.9600 mm, 145.0000 mm): Footprint R10
-    @(233.4200 mm, 137.3800 mm): Footprint J6
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; error
-    @(228.3400 mm, 178.0200 mm): Footprint C11
-    @(230.8800 mm, 178.0200 mm): Footprint SW2
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; error
-    @(228.3400 mm, 157.7000 mm): Footprint R11
-    @(241.0400 mm, 160.2400 mm): Footprint D8
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; error
-    @(134.3600 mm, 178.0200 mm): Footprint D1
-    @(139.4400 mm, 178.0200 mm): Footprint C1
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; error
-    @(144.5200 mm, 157.7000 mm): Footprint C6
-    @(147.0600 mm, 165.3200 mm): Footprint D4
-[courtyards_overlap]: Courtyards overlap
-    Rule: board setup constraints courtyard; error
-    @(246.1200 mm, 142.4600 mm): Footprint R9
-    @(233.4200 mm, 137.3800 mm): Footprint J6
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(62.6900 mm, 50.3800 mm): Rectangle of D2 on F.Silkscreen
+    @(66.1900 mm, 52.7700 mm): Segment of JP1 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(86.8100 mm, 78.1300 mm): Rectangle of R12 on F.Silkscreen
+    @(91.9900 mm, 79.9000 mm): Segment of JP3 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(103.5500 mm, 84.5950 mm): Reference field of JP3
+    @(91.9900 mm, 79.9000 mm): Segment of JP3 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(111.2000 mm, 50.7200 mm): Rectangle of U1 on F.Silkscreen
+    @(91.9900 mm, 79.9000 mm): Segment of JP3 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(111.2000 mm, 50.7200 mm): Rectangle of U1 on F.Silkscreen
+    @(69.3100 mm, 55.9600 mm): Segment of JP2 on F.Silkscreen
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; warning
+    @(91.9900 mm, 79.9000 mm): PTH pad 1 [+3V3] of JP3
+    @(85.0000 mm, 79.5000 mm): Footprint R12
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; warning
+    @(115.2300 mm, 57.6800 mm): PTH pad 1 [/CH2_ADC] of JP2
+    @(112.5000 mm, 55.0000 mm): Footprint U1
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; warning
+    @(115.1100 mm, 91.6900 mm): PTH pad 1 [+3V3] of JP3
+    @(112.5000 mm, 55.0000 mm): Footprint U1
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; warning
+    @(66.1900 mm, 52.7700 mm): PTH pad 1 [/CH1_ADC] of JP1
+    @(61.0000 mm, 51.5000 mm): Footprint D2
 
 ** Found 0 unconnected pads **
 
@@ -49,9 +49,7 @@
     - Track endpoint not centered on via
     - Tuning profile track geometries
     - Footprint doesn't match symbol's footprint filters
-    - Silkscreen clearance
     - Silkscreen clipped by solder mask
-    - PTH inside courtyard
     - Footprint component type doesn't match footprint pads
     - Footprint doesn't match copy in library
 

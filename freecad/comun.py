@@ -72,13 +72,8 @@ def texto(t, tam, x, y, z, prof):
     for letra in hilos:
         if not letra:
             continue
-        ws = sorted(letra, key=lambda w: -abs(Part.Face(w).Area))
-        f = Part.Face(ws[0])
-        for w in ws[1:]:
-            try:
-                f = f.cut(Part.Face(w))
-            except Exception:
-                pass
+        # Conserva contornos separados (tildes, puntos) y huecos interiores.
+        f = Part.makeFace(letra, "Part::FaceMakerBullseye")
         caras.append(f)
     sol = Part.makeCompound([c.extrude(V(0, 0, prof)) for c in caras])
     bb = sol.BoundBox

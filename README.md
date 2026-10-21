@@ -41,7 +41,7 @@ interno, calcula tensión y corriente eficaces, potencia activa, reactiva y apar
 potencia, y publica los resultados por Wi-Fi.
 
 Este documento corresponde al segundo avance. Contiene el diseño eléctrico completo en KiCad, los
-cálculos que justifican cada componente, la distribución verificada sobre placa perforada, el gabinete,
+cálculos que justifican cada componente, la PCB de una cara lista para fabricar, el gabinete,
 el protocolo de pruebas y el estado del cronograma. El prototipo de este corte integra el *hardware* y el
 microcontrolador; la programación final pertenece al tercer corte.
 
@@ -50,7 +50,7 @@ microcontrolador; la programación final pertenece al tercer corte.
 ### 2.1. Objetivo general
 
 Desarrollar un medidor de energía eléctrica monofásico y no invasivo, basado en ESP32, con dos canales
-de corriente y un canal de tensión aislado, montado en placa perforada dentro de un gabinete con la
+de corriente y un canal de tensión aislado, montado en una PCB de una cara dentro de un gabinete con la
 zona de red separada, que calcule tensión y corriente eficaces, potencias activa, reactiva y aparente y
 factor de potencia por canal, y los publique por Wi-Fi.
 
@@ -59,7 +59,7 @@ factor de potencia por canal, y los publique por Wi-Fi.
 1. **Diseñar** la cadena de acondicionamiento (resistencia de carga, polarización, filtro antialias y
    protección) y el esquemático completo en KiCad, sin errores en la verificación eléctrica (ERC), de
    modo que 60 A en CH1 y 30 A en CH2 queden dentro de la zona lineal del ADC1 del ESP32.
-2. **Construir** el prototipo en placa perforada, integrado con el microcontrolador dentro del
+2. **Construir** el prototipo en una PCB de una cara fabricada por el grupo, integrado con el microcontrolador dentro del
    gabinete, y aprobar la verificación previa a la energización y la prueba de resistencia
    (*HardExplosion*).
 3. **Programar y validar** el *firmware* de adquisición y cálculo (8.000 muestras por segundo por canal,
@@ -172,7 +172,7 @@ El Reglamento Técnico de Instalaciones Eléctricas (RETIE) [8] establece la sep
 red y de muy baja tensión (MBT), la protección contra sobrecorriente y el código de colores de los
 conductores. En el prototipo se aplican cuatro criterios:
 
-1. La red de 120 V nunca entra a la placa perforada: llega solo al módulo ZMPT101B, ubicado en un
+1. La red de 120 V nunca entra a la PCB: llega solo al módulo ZMPT101B, ubicado en un
    compartimento separado del gabinete por un tabique.
 2. La rama de tensión está protegida con un fusible lento de 500 mA.
 3. Las pinzas abrazan únicamente el conductor de fase y no se abre ningún circuito para instalarlas.
@@ -221,7 +221,7 @@ esquemático de la Ilustración 2.
 | 2 | — | Pinza de corriente YHDC SCT-013-000, 100 A : 50 mA, sin resistencia de carga | 2 | Medición de corriente CH1 y CH2 |
 | 3 | U2 | Módulo sensor de tensión ZMPT101B (con LM358 y potenciómetro) | 1 | Medición aislada de tensión |
 | 4 | J6 | Pantalla OLED SSD1306 de 0,96", 128 × 64, I2C | 1 | Lectura local |
-| 5 | — | Placa perforada de 9 × 15 cm, paso 2,54 mm, pads individuales | 1 | Soporte del circuito |
+| 5 | — | Baquelita de una cara de 10 × 15 cm (FR-2 o FR-4), percloruro férrico, papel de transferencia y alambre UTP para los puentes | 1 | PCB del circuito (sección 7.7) |
 | 6 | — | Adaptador 100–240 V CA a 5,1 V CC (5,0–5,25 V), 2 A o más, con aislamiento certificado | 1 | Alimentación |
 | 7 | — | *Jack* de panel para alimentación de 5,5 × 2,1 mm | 1 | Entrada de 5 V en el gabinete |
 | 8 | J2, J3 | *Jack* estéreo hembra de 3,5 mm para panel | 2 | Conexión de las pinzas |
@@ -266,7 +266,7 @@ Fuente: elaboración propia.
 El sistema se divide en cinco bloques: medición, acondicionamiento, adquisición, interfaz local y
 comunicación (Ilustración 1). La frontera de seguridad separa la **zona de red** (rojo), que contiene
 únicamente el fusible y el módulo ZMPT101B, de la **zona de muy baja tensión** (azul), donde está todo
-lo que se suelda en la placa perforada.
+lo que se suelda en la PCB.
 
 ![Diagrama de bloques](img/diagrama-de-bloques.png)
 
@@ -453,7 +453,7 @@ Fuente: elaboración propia.
 
 ### 7.6. Código de colores del cableado
 
-Cada cable y cada pista se identifica por su función. El mismo código se usa en las Ilustraciones 3 y 4.
+Cada cable y cada pista se identifica por su función. El mismo código se usa en las Ilustraciones 4 y 5.
 
 **Tabla 5.** Código de colores.
 
@@ -477,27 +477,120 @@ Fuente: elaboración propia; colores de red según el RETIE [8].
 Los colores de red coinciden con algunos de MBT (negro, blanco y verde), pero nunca se confunden: los
 conductores de red tienen otro calibre y están confinados al compartimento separado por el tabique.
 
-### 7.7. Distribución en placa perforada
+### 7.7. Placa de circuito impreso (PCB) de una cara
 
-La placa es de 9 × 15 cm, con 59 columnas por 35 filas de agujeros. Las coordenadas se dan como
+#### 7.7.1. Diseño y fabricación
+
+El circuito se montará en una PCB de **una sola cara** diseñada en KiCad 10
+([`hardware/medidor-energia.kicad_pcb`](hardware/medidor-energia.kicad_pcb)), pensada para
+fabricarse en el laboratorio por transferencia de tóner o por fresado CNC sobre una baquelita de
+10 × 15 cm. La placa la genera el script [`herramientas/generar_pcb.py`](herramientas/generar_pcb.py)
+a partir de la netlist del esquemático, con la interfaz de Python de KiCad (`pcbnew`):
+
+- **Contorno:** 150 × 90 mm y 1,6 mm de espesor, con cuatro agujeros M3 a 4 mm de las esquinas, que
+  coinciden con los separadores del gabinete (sección 7.8).
+- **Cobre solo abajo:** pistas de 0,8 mm (1,2 mm en alimentación), separación mínima de 0,45 mm y
+  pads de al menos 2 mm (ovalados en las filas de 2,54 mm) para que no se desprendan al perforar.
+- **Distribución por bloques:** las entradas de las pinzas y la de 5 V en el borde izquierdo, frente a
+  los *jacks* de la pared; la bornera del ZMPT101B en el borde superior, junto al tabique; el ESP32 a la
+  derecha, sobre zócalos y con el USB hacia el frente; la OLED con sus resistencias de *pull-up* a la
+  derecha, y el LED y los pulsadores en el centro.
+- **Ruteo:** Freerouting 2.5, con la cara de arriba como «capa de puentes». Lo que no cabe en una cara
+  se resuelve con **4 puentes de alambre** del lado de los componentes (Tabla 6), dibujados en
+  la serigrafía como JP1 a JP4.
+- **Relleno de GND** en toda la cara libre: hay menos cobre que disolver y las señales analógicas
+  tienen una referencia común. Se deja sin relleno la zona bajo la antena del ESP32.
+- **Texto en el cobre** en espejo: en el papel se lee al revés y en la placa terminada, al derecho.
+
+La verificación de reglas de diseño (DRC) con comparación contra el esquemático termina con
+**0 conexiones pendientes, 0 diferencias con el esquemático y ninguna violación de separación**
+([`hardware/drc.rpt`](hardware/drc.rpt)). Quedan 9 advertencias que no afectan la fabricación:
+5 textos de serigrafía que se tocan y 4 extremos de puentes que caen dentro del patio de otro
+componente (tres bajo el ESP32, que va en zócalo). Las reglas que se relajan a propósito son la
+diferencia con la huella de biblioteca, porque los pads se agrandaron, y la serigrafía recortada por
+esos pads.
+
+![Cobre de la PCB para transferencia de tóner](img/pcb-cobre-toner.png)
+
+**Ilustración 3.** Cara de cobre a escala 1:1, como se imprime para la transferencia de tóner
+(el texto se lee al revés). Fuente: elaboración propia en KiCad 10.
+
+**Tabla 6.** Puentes de alambre de la PCB (lado de componentes). Coordenadas en mm desde la
+esquina superior izquierda, vista desde los componentes.
+
+| Puente | Red | Desde | Hasta | Largo |
+|---|---|---|---|---|
+| JP1 | CH1_ADC | (41,2; 27,8) junto a D2 | (79,4; 30,3) junto al ESP32 | 38 mm |
+| JP2 | CH2_ADC | (44,3; 31,0) junto a D3 | (90,2; 32,7) pin 2 del ESP32 | 46 mm |
+| JP3 | +3V3 | (67,0; 54,9) junto a R12 | (90,1; 66,7) bajo el ESP32 | 26 mm |
+| JP4 | RES_IO34 | (72,5; 24,7) junto a J7 | (80,6; 27,3) junto a J7 | 9 mm |
+
+Fuente: elaboración propia a partir de [`hardware/fabricacion/PUENTES.md`](hardware/fabricacion/PUENTES.md).
+
+Los archivos de fabricación se exportan con
+[`herramientas/exportar_fabricacion.sh`](herramientas/exportar_fabricacion.sh) en
+[`hardware/fabricacion/`](hardware/fabricacion/) (Tabla 7).
+
+**Tabla 7.** Archivos de fabricación de la PCB.
+
+| Archivo | Uso |
+|---|---|
+| `toner/1-cobre-B_Cu-1a1.pdf` | Cobre para imprimir en láser **al 100 %**, sin ajustar a la página |
+| `toner/2-serigrafia-F_SilkS-espejo-1a1.pdf` | Serigrafía opcional del lado de componentes (ya va en espejo) |
+| `guia-montaje.pdf` | Dónde va cada componente y cada puente, visto desde arriba |
+| `vista-cobre-desde-abajo.pdf` | El cobre como se ve al soldar |
+| `cnc/gerbers-medidor.zip` | Gerber y taladros Excellon para fresado CNC o para un fabricante |
+| `PUENTES.md` | Lista de puentes con su red, largo y agujeros |
+
+Fuente: elaboración propia.
+
+**Procedimiento de fabricación y montaje.**
+
+1. Imprimir el cobre a escala 1:1 en impresora láser sobre papel de transferencia (o couché) y
+   comprobar con regla que la placa mida 150 × 90 mm.
+2. Lijar y desengrasar la baquelita, transferir con plancha caliente unos 5 min y retirar el papel en
+   agua. Retocar con marcador permanente las pistas cortadas.
+3. Atacar en percloruro férrico, retirar el tóner con acetona y revisar con lupa que no queden puentes de
+   cobre entre pistas.
+4. Perforar con brocas de 0,8, 1,0 y 1,3 mm según el archivo de taladros (1,3 mm para las borneras) y
+   de 3,2 mm para los agujeros M3.
+5. Soldar primero los **puentes de alambre** (JP2 y JP3 quedan bajo el ESP32), después los componentes
+   de menor a mayor altura y al final los zócalos del ESP32.
+6. Antes de energizar, seguir la verificación de la sección 7.9.
+
+**Conexiones que salen de la placa.**
+
+- **_Jacks_ de panel J2 y J3:** la resistencia de carga (R1 o R2) se suelda directamente entre los
+  terminales de punta (T) y manga (S) de cada *jack* y se cubre con termoencogible. Desde el *jack* sale un
+  par trenzado hacia los pads T y S de J2 o J3 en el borde izquierdo de la PCB. El anillo (R) del *jack*
+  no se conecta; su pad solo sujeta el hilo.
+- **J1:** bornera que recibe los 5 V del *jack* de alimentación de panel.
+- **J5:** bornera del cable de tres hilos del módulo ZMPT101B, que atraviesa el tabique por un collarín.
+- **J6:** cable de 4 hilos a la pantalla OLED, montada en la tapa.
+- **D8, SW1 y SW2:** espadines con cables de dos hilos al LED y a los pulsadores de la tapa.
+
+#### 7.7.2. Alternativa: placa perforada
+
+Si la PCB no se pudiera fabricar a tiempo, el mismo circuito está distribuido y verificado sobre una
+placa perforada de 9 × 15 cm, con 59 columnas por 35 filas de agujeros. Las coordenadas se dan como
 (columna, fila), con la columna 0 a la izquierda y la fila 0 arriba, vistas desde la cara de
 componentes. El ESP32 se monta sobre dos tiras de espadín hembra en las columnas 36 y 46 (10 pasos =
-25,4 mm), con el conector USB hacia el borde inferior para poder programarlo dentro del gabinete.
+25,4 mm), con el conector USB hacia el borde inferior.
 
-**Antes de soldar los espadines hay que medir con calibrador la separación entre filas de la tarjeta
-comprada:** algunos clones de 38 pines no tienen exactamente 25,4 mm.
+**Antes de soldar los zócalos (en la PCB o en la placa perforada) hay que medir con calibrador la
+separación entre filas de la tarjeta comprada:** algunos clones de 38 pines no tienen exactamente 25,4 mm.
 
 ![Placa perforada, cara de componentes](img/placa-perforada-componentes.png)
 
-**Ilustración 3.** Cara de componentes. Las líneas tenues son las pistas de estaño de la cara inferior
-y las gruesas, los puentes de cable aislado por la cara superior. Los círculos rojos marcan los puntos
-donde se sueldan los cables que vienen de los *jacks* de panel. Fuente: elaboración propia en Python y
-Matplotlib.
+**Ilustración 4.** Placa perforada, cara de componentes. Las líneas tenues son las pistas de estaño de
+la cara inferior y las gruesas, los puentes de cable aislado por la cara superior. Los círculos rojos
+marcan los puntos donde se sueldan los cables que vienen de los *jacks* de panel. Fuente: elaboración
+propia en Python y Matplotlib.
 
 ![Placa perforada, cara de soldadura](img/placa-perforada-soldadura.png)
 
-**Ilustración 4.** Cara de soldadura vista en espejo, como queda la placa al voltearla para soldar.
-Fuente: elaboración propia en Python y Matplotlib.
+**Ilustración 5.** Placa perforada, cara de soldadura vista en espejo, como queda la placa al voltearla
+para soldar. Fuente: elaboración propia en Python y Matplotlib.
 
 **Verificación automática de la distribución.** La distribución está descrita agujero por agujero en
 [`herramientas/placa_perforada.py`](herramientas/placa_perforada.py). Ese programa lee la netlist que
@@ -514,7 +607,7 @@ exclusivas no se cuentan.) Se comprobó además que el programa detecta errores 
 cortocircuito entre `CH1_ADC` y GND, un puente faltante en `V_ADC` y una pista sobre un pin sin
 conexión.
 
-**Tabla 6.** Puentes de cable aislado (cara superior).
+**Tabla 8.** Puentes de cable aislado de la placa perforada (cara superior).
 
 | # | Desde | Hasta | Color | Red |
 |---:|---|---|---|---|
@@ -535,40 +628,32 @@ conexión.
 
 Fuente: elaboración propia.
 
-**Conexiones que salen de la placa.**
-
-- **_Jacks_ de panel J2 y J3:** la resistencia de carga (R1 o R2) se suelda directamente entre los
-  terminales de punta (T) y manga (S) de cada *jack* y se cubre con termoencogible. Desde el *jack* sale un
-  par trenzado amarillo hacia los puntos de la placa: CH1 T (3, 16), CH1 S (3, 18), CH2 T (3, 22) y
-  CH2 S (3, 24). El anillo (R) del *jack* no se conecta.
-- **J1:** recibe los 5 V del *jack* de alimentación de panel.
-- **J5:** recibe el cable de tres hilos del módulo ZMPT101B, que atraviesa el tabique por un collarín.
-- **J6:** cable de 4 hilos a la pantalla OLED, montada en la tapa.
-- **Espadines de LED, SW1 y SW2:** cables de dos hilos al LED y a los pulsadores de la tapa.
+En la placa perforada, los cables de los *jacks* llegan a los puntos CH1 T (3, 16), CH1 S (3, 18),
+CH2 T (3, 22) y CH2 S (3, 24).
 
 ### 7.8. Gabinete
 
-El gabinete mide 200 × 150 × 75 mm, en ABS, con paredes de 2,5 mm (Ilustración 5). Un tabique de 3 mm
+El gabinete mide 200 × 150 × 75 mm, en ABS, con paredes de 2,5 mm (Ilustración 6). Un tabique de 3 mm
 lo divide en dos compartimentos:
 
 - **Compartimento de red (posterior, unos 40 mm de fondo):** prensaestopas PG7 para el cable de red,
   regleta J4, portafusible F1 y módulo ZMPT101B sobre separadores. El cable de tres hilos hacia J5 pasa
   por un collarín en el tabique, de modo que la distancia de fuga entre zonas supera los 8 mm.
-- **Compartimento de MBT (frontal):** placa perforada sobre cuatro separadores M3 de 10 mm, *jacks* de las
+- **Compartimento de MBT (frontal):** PCB sobre cuatro separadores M3 de 10 mm, *jacks* de las
   pinzas y *jack* de alimentación en la pared izquierda, y ventana para el USB en la pared frontal.
 - **Tapa:** ventana de 26,5 × 15 mm para la pantalla OLED, que queda rehundida 1,5 mm para protegerla
   de golpes, LED de estado, dos pulsadores y el rótulo de advertencia sobre la zona de red.
 
 ![Gabinete](img/gabinete.png)
 
-**Ilustración 5.** Planos del gabinete: vista superior sin tapa y vista exterior de la tapa, con cotas
+**Ilustración 6.** Planos del gabinete: vista superior sin tapa y vista exterior de la tapa, con cotas
 en milímetros. Fuente: elaboración propia en Python y Matplotlib.
 
 ### 7.9. Procedimiento de montaje y verificación antes de energizar
 
 1. Soldar primero las pistas de estaño, luego los componentes de menor a mayor altura y por último los
    espadines del ESP32. **No insertar el ESP32 todavía.**
-2. Con el multímetro en continuidad, recorrer la Tabla 6 y la Ilustración 4 punto por punto. Comprobar
+2. Con el multímetro en continuidad, recorrer la Tabla 8 y la Ilustración 5 punto por punto. Comprobar
    que **no hay continuidad** entre +5V, +3V3, VBIAS y GND.
 3. Alimentar J1 desde una fuente de laboratorio de 5 V **con límite de 200 mA** y sin el ESP32. Verificar
    que el consumo es casi nulo y que llega tensión al pin 5V del zócalo.
@@ -589,7 +674,7 @@ sería cero).
 
 ### 7.10. Prueba de resistencia (*HardExplosion*)
 
-**Tabla 7.** Protocolo de la prueba de resistencia y resultados.
+**Tabla 9.** Protocolo de la prueba de resistencia y resultados.
 
 | # | Ensayo | Procedimiento | Criterio de aprobación | Resultado |
 |---:|---|---|---|---|
@@ -613,7 +698,7 @@ tomacorriente donde se conecta el equipo. No tiene nada más.
 
 #### 7.11.1. Funcionamiento
 
-El esquemático del banco (Ilustración 6) está en
+El esquemático del banco (Ilustración 7) está en
 [`hardware/banco-pruebas.kicad_sch`](hardware/banco-pruebas.kicad_sch) (PDF en
 [`hardware/banco-pruebas.pdf`](hardware/banco-pruebas.pdf)) y su ERC termina con **0 errores y 0
 advertencias** ([`hardware/erc-banco.rpt`](hardware/erc-banco.rpt)).
@@ -631,7 +716,7 @@ medida. La tensión de la red es la misma en los dos tomacorrientes si están en
 
 ![Esquemático del banco de medición](img/banco-esquematico.png)
 
-**Ilustración 6.** Esquemático del banco de medición (hoja A4): clavija, lazo de medición con la pinza y
+**Ilustración 7.** Esquemático del banco de medición (hoja A4): clavija, lazo de medición con la pinza y
 tomacorriente de salida. Fuente: elaboración propia en KiCad 10.
 
 #### 7.11.2. Rango y calibre
@@ -650,16 +735,16 @@ calibrar el canal contra una referencia.
 
 #### 7.11.3. Gabinete y cableado
 
-El banco es una caja plástica de 130 × 90 × 65 mm (Ilustración 7). El tomacorriente va en la tapa, el
+El banco es una caja plástica de 130 × 90 × 65 mm (Ilustración 8). El tomacorriente va en la tapa, el
 cable de red entra por un prensaestopas PG11 con alivio de tracción y el lazo sale y vuelve por dos PG7,
 que también lo sujetan para que no se pueda halar hacia los bornes.
 
 ![Banco de medición](img/banco-pruebas.png)
 
-**Ilustración 7.** Banco de medición: interior sin tapa con el lazo de medición y la pinza (izquierda) y
+**Ilustración 8.** Banco de medición: interior sin tapa con el lazo de medición y la pinza (izquierda) y
 tapa vista desde afuera (derecha). Fuente: elaboración propia en Python y Matplotlib.
 
-**Tabla 8.** Materiales del banco de medición.
+**Tabla 10.** Materiales del banco de medición.
 
 | # | Referencia | Descripción | Cant. |
 |---:|---|---|---:|
@@ -673,7 +758,7 @@ tapa vista desde afuera (derecha). Fuente: elaboración propia en Python y Matpl
 
 Fuente: elaboración propia.
 
-**Tabla 9.** Lista de conductores del banco (todos de 14 AWG).
+**Tabla 11.** Lista de conductores del banco (todos de 14 AWG).
 
 | # | Desde | Hasta | Color | Red |
 |---:|---|---|---|---|
@@ -689,7 +774,7 @@ plateado).
 
 #### 7.11.4. Verificación antes de usar el banco
 
-1. Sin conectar a la red, medir con el multímetro la continuidad de cada fila de la Tabla 9 y comprobar
+1. Sin conectar a la red, medir con el multímetro la continuidad de cada fila de la Tabla 11 y comprobar
    que no hay continuidad entre fase, neutro y tierra.
 2. Comprobar a la vista que la pinza abraza **solo** una pata del lazo y que cierra por completo.
 3. Conectar el plug de la pinza a J2 del medidor **antes** de enchufar el banco (nunca dejar el
@@ -712,7 +797,7 @@ con el criterio de diseño. Los modelos son los mismos supuestos de la sección 
 - Los diodos BAT85 y 1N5819 usan parámetros ajustados a los puntos de sus hojas de datos.
 - La entrada del ADC es una resistencia de 10 MΩ; su condensador de muestreo no se modela.
 
-**Tabla 10.** Casos simulados y resultados.
+**Tabla 12.** Casos simulados y resultados.
 
 | # | Caso | Resultado de la simulación | Criterio | Estado |
 |---:|---|---|---|---|
@@ -741,7 +826,7 @@ Fuente: elaboración propia con ngspice.
 
 ![Resultados de la simulación](img/sim-resultados.png)
 
-**Ilustración 8.** Simulación en ngspice: tensión en el pin del ADC de CH1 y CH2 en corriente
+**Ilustración 9.** Simulación en ngspice: tensión en el pin del ADC de CH1 y CH2 en corriente
 nominal, en el límite lineal y con sobrecorriente (arriba); respuesta en frecuencia de los tres filtros
 y tensión a la entrada del regulador según la corriente de carga (abajo). Fuente: elaboración propia con
 ngspice y Matplotlib.
@@ -778,55 +863,27 @@ en FreeCAD, de modo que los dos modelos comparten la misma geometría.
 
 #### 7.13.1. Placa en KiCad
 
-La placa perforada se pasó a un diseño de placa de KiCad 10
-([`hardware/medidor-energia.kicad_pcb`](hardware/medidor-energia.kicad_pcb)) con el script
-[`herramientas/generar_pcb.py`](herramientas/generar_pcb.py), que usa la interfaz de Python de KiCad
-(`pcbnew`). El script lee la netlist del esquemático y la distribución de la placa perforada de la
-sección 7.7, ya verificada contra esa netlist, y construye la placa así:
-
-- **Contorno y rejilla:** placa de 150 × 90 mm y 1,6 mm de espesor con la rejilla de 59 × 35 agujeros
-  de paso 2,54 mm. Los 1.946 agujeros libres son pads sin red de una huella que solo existe en la placa.
-- **Componentes:** cada componente es la huella de la biblioteca oficial de KiCad con su modelo 3D,
-  girada para que cada pin caiga en su agujero. Donde el paso de la huella no es múltiplo de 2,54 mm
-  (por ejemplo, los condensadores de 5,00 mm), el pad se lleva al agujero, como ocurre al doblar las
-  patas, y el modelo 3D se recentra. Las huellas resultantes se copian al esquemático, de modo que
-  esquemático y placa usan las mismas.
-- **Pistas de estaño:** son pistas de cobre en la cara inferior, con la máscara abierta para que se vean
-  como en la placa real (Ilustración 10).
-- **Puentes de cable aislado:** cada uno es una huella de dos pads unidos como puente (*jumper*),
-  dibujada en la serigrafía superior. Los tres pines GND del DevKitC también se declaran unidos, porque
-  la tarjeta los conecta por su plano de tierra.
-- **ESP32-DevKitC:** su modelo 3D se hizo en FreeCAD
-  ([`herramientas/modelo_devkitc.py`](herramientas/modelo_devkitc.py)) e incluye tarjeta, espadines,
-  conector micro-USB, pulsadores y regulador. El módulo ESP32-WROOM-32 y los dos zócalos 1 × 19 son los
-  modelos de la biblioteca de KiCad.
-
-La verificación de reglas de diseño (DRC) de KiCad con comparación contra el esquemático termina con
-**0 conexiones pendientes, 0 diferencias con el esquemático** y sin violaciones de separación entre
-cobres ([`hardware/drc.rpt`](hardware/drc.rpt)). Las únicas observaciones son 9 superposiciones de
-patios (*courtyards*) entre componentes vecinos, propias de la densidad de una placa perforada; en el
-modelo 3D ningún cuerpo choca con otro. Las reglas que se relajan en el proyecto son las que no aplican
-a una placa perforada: agujeros de la rejilla bajo los componentes, serigrafía sobre pads de la rejilla
-y huellas con el segundo pad ajustado al paso de 2,54 mm.
-
-> **Pendiente de montaje:** la rejilla llega a 1,3 mm de los bordes y no deja agujeros libres para
-> tornillos M3 en las esquinas; la placa se fija con cuatro soportes de esquina (*clips*) o se elige una
-> placa con borde sin perforar.
+La PCB de la sección 7.7.1 lleva el modelo 3D de cada componente: las huellas son las de la biblioteca
+oficial de KiCad con sus modelos STEP. El ESP32-DevKitC se modeló en FreeCAD
+([`herramientas/modelo_devkitc.py`](herramientas/modelo_devkitc.py)) con su tarjeta, espadines,
+conector micro-USB, pulsadores y regulador; el módulo ESP32-WROOM-32 y los dos zócalos 1 × 19 son los
+modelos de la biblioteca de KiCad. Las vistas de las Ilustraciones 10 a 12 las genera
+`kicad-cli` y sirven también como guía de montaje.
 
 ![Placa en 3D, vista en perspectiva](img/3d-placa-iso.png)
 
-**Ilustración 9.** Modelo 3D de la placa perforada generado por KiCad: ESP32-DevKitC sobre sus
-zócalos, canales de corriente y de tensión, alimentación y conectores. Las líneas blancas son los
-puentes de cable aislado. Fuente: elaboración propia en KiCad 10 y FreeCAD.
+**Ilustración 10.** Modelo 3D de la PCB: ESP32-DevKitC sobre sus zócalos, canales de corriente y de
+tensión, alimentación y conectores. Las líneas blancas son los puentes de alambre. Fuente: elaboración
+propia en KiCad 10 y FreeCAD.
 
 ![Placa en 3D, cara inferior](img/3d-placa-abajo.png)
 
-**Ilustración 10.** Cara de soldadura del modelo de KiCad con las pistas de estaño. Fuente:
-elaboración propia en KiCad 10.
+**Ilustración 11.** Cara de cobre de la PCB con el relleno de GND. Fuente: elaboración propia en
+KiCad 10.
 
 ![Placa en 3D, vista superior](img/3d-placa-arriba.png)
 
-**Ilustración 11.** Vista superior del modelo 3D, que sirve de guía de montaje junto con la
+**Ilustración 12.** Vista superior del modelo 3D, que sirve de guía de montaje junto con la
 Tabla 6. Fuente: elaboración propia en KiCad 10.
 
 El modelo completo de la placa con sus componentes se exportó en STEP
@@ -845,23 +902,24 @@ La placa no se dibujó en FreeCAD: el ensamble del medidor importa el STEP que e
 zona de red, con el módulo ZMPT101B, el portafusible F1, la bornera J4 y el prensaestopas PG7, de la
 zona de muy baja tensión. Allí va la placa sobre separadores de 10 mm. Los *jacks* de las pinzas y el de
 alimentación están en la pared izquierda, y la ventana del USB en la pared frontal (Ilustraciones
-12 a 14). La tapa lleva la ventana rehundida de la OLED, el LED, los pulsadores y los rótulos
+13 a 15). La tapa lleva la ventana rehundida de la OLED, el LED, los pulsadores y los rótulos
 grabados.
 
 ![Medidor cerrado](img/3d-medidor-cerrado.png)
 
-**Ilustración 12.** Modelo 3D del medidor cerrado. Fuente: elaboración propia en FreeCAD.
+**Ilustración 13.** Modelo 3D del medidor cerrado. Fuente: elaboración propia en FreeCAD (vista en Blender).
 
 ![Medidor abierto](img/3d-medidor-abierto.png)
 
-**Ilustración 13.** Medidor con la tapa a un lado: placa perforada exportada desde KiCad con el
-ESP32, zona de red tras el tabique y aparatos de la tapa. Fuente: elaboración propia en FreeCAD y KiCad.
+**Ilustración 14.** Medidor con la tapa a un lado: PCB exportada desde KiCad con el
+ESP32, zona de red tras el tabique y aparatos de la tapa. Fuente: elaboración propia en FreeCAD y KiCad
+(vista en Blender).
 
 ![Medidor en planta](img/3d-medidor-planta.png)
 
-**Ilustración 14.** Vista superior del medidor sin tapa: compartimento de red (arriba), paso del
-cable de tres hilos por el collarín y placa perforada (abajo). Fuente: elaboración propia en FreeCAD y
-KiCad.
+**Ilustración 15.** Vista superior del medidor sin tapa: compartimento de red (arriba), paso del
+cable de tres hilos por el collarín y PCB (abajo). Fuente: elaboración propia en FreeCAD y
+KiCad (vista en Blender).
 
 **Banco de medición.** El banco es lo mínimo para medir cualquier equipo sin cortar su cable: una
 clavija NEMA 5-15P que se enchufa a la pared, el cordón SJT 3 × 14 AWG, que entra por un prensaestopas
@@ -871,24 +929,24 @@ sale de la caja por un prensaestopas PG7, forma un lazo exterior de conductor TH
 dos patas paralelas separadas 25 mm, y vuelve a entrar por un segundo PG7 hasta el tornillo de bronce de
 X1. La pinza SCT-013-000 se cierra sobre **una sola pata** del lazo, de modo que mide la corriente del
 equipo conectado sin abrir ningún circuito, y su cable termina en el *plug* de 3,5 mm que va a J2 del
-medidor (Ilustraciones 15 a 17). En el modelo, X1 queda a lo largo de la caja porque su yugo de 107 mm
+medidor (Ilustraciones 16 a 18). En el modelo, X1 queda a lo largo de la caja porque su yugo de 107 mm
 no cabe a lo ancho.
 
 ![Banco cerrado](img/3d-banco-cerrado.png)
 
-**Ilustración 15.** Modelo 3D del banco de medición cerrado: clavija y cordón al frente, tomacorriente X1
+**Ilustración 16.** Modelo 3D del banco de medición cerrado: clavija y cordón al frente, tomacorriente X1
 en la tapa y, detrás, el lazo de fase con la pinza. Fuente: elaboración propia en FreeCAD.
 
 ![Banco abierto](img/3d-banco-abierto.png)
 
-**Ilustración 16.** Banco con la tapa a un lado. El tomacorriente y la pinza se dibujan translúcidos para
+**Ilustración 17.** Banco con la tapa a un lado. El tomacorriente y la pinza se dibujan translúcidos para
 mostrar el cableado: neutro (blanco) y tierra (verde) directo a X1, y la fase (negro) que sale al lazo
 exterior, atraviesa la ventana de la pinza y vuelve al tornillo de bronce. Fuente: elaboración propia en
 FreeCAD.
 
 ![Banco en planta](img/3d-banco-planta.png)
 
-**Ilustración 17.** Vista superior del banco sin tapa, con cada pieza rotulada. Fuente: elaboración propia
+**Ilustración 18.** Vista superior del banco sin tapa, con cada pieza rotulada. Fuente: elaboración propia
 en FreeCAD (rótulos con Matplotlib).
 
 Los ensambles se exportaron en STEP con colores (`freecad/medidor.step` y `freecad/banco.step`), y
@@ -912,9 +970,9 @@ La plataforma ([`plataforma/`](plataforma/)) es una aplicación de **TanStack St
 TypeScript, con rutas por archivo de TanStack Router) que reúne el *frontend* y el *backend* en un solo
 proceso de Node. El ESP32 envía cada segundo un registro ADR-001 de 40 B a `POST /api/ingesta`, y después
 de una caída de Wi-Fi envía en un solo cuerpo los registros que guardó. El servidor los valida, los guarda
-en SQLite y calcula todo lo que muestra el tablero (Tabla 11).
+en SQLite y calcula todo lo que muestra el tablero (Tabla 13).
 
-**Tabla 11.** Funciones del servidor de la plataforma.
+**Tabla 13.** Funciones del servidor de la plataforma.
 
 | Función | Cómo se calcula |
 |---|---|
@@ -927,7 +985,7 @@ en SQLite y calcula todo lo que muestra el tablero (Tabla 11).
 
 Fuente: elaboración propia.
 
-**Tabla 12.** Formato del registro ADR-001 (40 B, *little-endian*, sin relleno), común al *firmware* y a la plataforma.
+**Tabla 14.** Formato del registro ADR-001 (40 B, *little-endian*, sin relleno), común al *firmware* y a la plataforma.
 
 | Byte | Tipo | Campo | Escala |
 |---:|---|---|---|
@@ -943,11 +1001,11 @@ Fuente: elaboración propia.
 
 Fuente: elaboración propia.
 
-El tablero (Ilustración 18) muestra la potencia actual, la energía del día, el factor de potencia y
+El tablero (Ilustración 19) muestra la potencia actual, la energía del día, el factor de potencia y
 la tensión; la potencia de las últimas 24 h de CH1 y CH2 con el pronóstico de las 24 h siguientes y el
 umbral de alerta; el desglose CH1, CH2 y resto; la energía del mes por día con su proyección y costo
 aproximado; y la tabla de alertas, donde cada alerta se marca como revisada o descartada. En el teléfono
-pasa a una sola columna con una barra inferior de secciones (Ilustración 19) y tiene tema claro y
+pasa a una sola columna con una barra inferior de secciones (Ilustración 20) y tiene tema claro y
 oscuro.
 
 Mientras el medidor no esté montado, los datos los genera el simulador (`pnpm simular`), que produce el
@@ -965,22 +1023,22 @@ Además, se enviaron al servidor tramas codificadas con el mismo código del *fi
 
 ![Plataforma web, vista de escritorio](img/ui-tablero-escritorio.png)
 
-**Ilustración 18.** Tablero de la plataforma en vista de escritorio, alimentado por el simulador del
+**Ilustración 19.** Tablero de la plataforma en vista de escritorio, alimentado por el simulador del
 nodo. Fuente: elaboración propia en TanStack Start.
 
 ![Plataforma web, vista móvil](img/ui-tablero-movil.png)
 
-**Ilustración 19.** Tablero en un teléfono de 390 px de ancho: inicio, potencia de 24 h con
+**Ilustración 20.** Tablero en un teléfono de 390 px de ancho: inicio, potencia de 24 h con
 pronóstico y alertas. Fuente: elaboración propia en TanStack Start.
 
 #### 7.14.2. Pantalla OLED y pulsadores
 
 La OLED SSD1306 de 128 × 64 píxeles tiene cuatro pantallas en ciclo y dos que aparecen según el evento
-(Ilustración 20). Se dibujaron píxel por píxel con la misma fuente de 5 × 7 que usará el *firmware*,
-que no tiene tildes. La Tabla 13 resume la función de los pulsadores y del LED, y la Ilustración
-21 muestra la navegación.
+(Ilustración 21). Se dibujaron píxel por píxel con la misma fuente de 5 × 7 que usará el *firmware*,
+que no tiene tildes. La Tabla 15 resume la función de los pulsadores y del LED, y la Ilustración
+22 muestra la navegación.
 
-**Tabla 13.** Función de los pulsadores y del LED de estado.
+**Tabla 15.** Función de los pulsadores y del LED de estado.
 
 | Elemento | Acción | Resultado |
 |---|---|---|
@@ -997,12 +1055,12 @@ Fuente: elaboración propia.
 
 ![Pantallas de la OLED](img/ui-oled-pantallas.png)
 
-**Ilustración 20.** Las seis pantallas de la OLED a tamaño de píxel. Fuente: elaboración propia en
+**Ilustración 21.** Las seis pantallas de la OLED a tamaño de píxel. Fuente: elaboración propia en
 Python.
 
 ![Navegación de la OLED](img/ui-oled-navegacion.png)
 
-**Ilustración 21.** Navegación entre pantallas con SW1 y SW2, y estados del LED. Fuente: elaboración
+**Ilustración 22.** Navegación entre pantallas con SW1 y SW2, y estados del LED. Fuente: elaboración
 propia en Graphviz.
 
 ### 7.15. Modelo inicial de pronóstico (LSTM)
@@ -1023,19 +1081,19 @@ dos.
 La partición es cronológica y nunca mezcla el tiempo: entrenamiento hasta el 30 de junio de 2009 (21.940
 ventanas), validación hasta el 31 de diciembre de 2009 (4.377) y prueba de enero a noviembre de 2010
 (7.528). La normalización se calcula solo con los datos de entrenamiento. El entrenamiento usa Adam con
-parada temprana sobre la validación y tarda unos 6 s en CPU (Ilustración 22).
+parada temprana sobre la validación y tarda unos 6 s en CPU (Ilustración 23).
 
 ![Curvas de aprendizaje](img/lstm-entrenamiento.png)
 
-**Ilustración 22.** Error cuadrático medio por época en entrenamiento y validación. El error de
+**Ilustración 23.** Error cuadrático medio por época en entrenamiento y validación. El error de
 validación queda por debajo del de entrenamiento porque el *dropout* solo actúa al entrenar y porque el
 segundo semestre de 2009 es más regular. Fuente: elaboración propia en Python con PyTorch.
 
 El modelo se comparó con tres líneas base ingenuas: persistencia (repetir la última hora medida),
 ingenuo diario (repetir el último día) e ingenuo semanal (misma hora de la semana anterior). A 24 h y 48 h
-el LSTM pronostica de forma recursiva desde cada medianoche del periodo de prueba (Tabla 14).
+el LSTM pronostica de forma recursiva desde cada medianoche del periodo de prueba (Tabla 16).
 
-**Tabla 14.** Error del pronóstico en el conjunto de prueba (2010), en kWh por hora.
+**Tabla 16.** Error del pronóstico en el conjunto de prueba (2010), en kWh por hora.
 
 | Horizonte | Modelo | MAE | RMSE | MAPE |
 |---|---|---:|---:|---:|
@@ -1057,11 +1115,11 @@ Fuente: elaboración propia. A 24 h se evaluaron 286 pronósticos y a 48 h, 281.
 El LSTM reduce el MAE frente a la mejor línea base en un 15 % a 1 h, un 17 % a 24 h y un 15 % a 48 h. En
 MAPE a 48 h queda prácticamente empatado con el ingenuo diario (70,3 % frente a 70,8 %): el MAPE se
 infla en las horas nocturnas de bajo consumo, por eso se privilegian el MAE y el RMSE. La Ilustración
-23 muestra un caso del conjunto de prueba.
+24 muestra un caso del conjunto de prueba.
 
 ![Pronóstico de 48 h](img/lstm-pronostico.png)
 
-**Ilustración 23.** Consumo medido durante 72 h y pronóstico recursivo de las 48 h siguientes, del 10
+**Ilustración 24.** Consumo medido durante 72 h y pronóstico recursivo de las 48 h siguientes, del 10
 al 12 de marzo de 2010, frente a la línea base semanal. Fuente: elaboración propia en Python con PyTorch.
 
 **Limitaciones.** A 24 h y 48 h la red recibe la temperatura observada de las horas futuras, lo que
@@ -1078,9 +1136,9 @@ columnas `tiempo,kwh,temp`) y los pesos entrenados `lstm.pt`.
 
 El *firmware* ([`firmware/`](firmware/)) está escrito en C++ con PlatformIO y el *framework* Arduino para
 ESP32 (ESP-IDF 4.4). Compila sin errores y ocupa el 30 % de la RAM y el 74 % de la memoria de programa.
-Se reparte en tres tareas de FreeRTOS (Tabla 15).
+Se reparte en tres tareas de FreeRTOS (Tabla 17).
 
-**Tabla 15.** Tareas del *firmware*.
+**Tabla 17.** Tareas del *firmware*.
 
 | Núcleo | Tarea | Función |
 |---|---|---|
@@ -1107,9 +1165,9 @@ El cálculo está en una biblioteca sin dependencias de Arduino (`lib/medicion/`
 
 La biblioteca se probó en el PC con señales sintéticas que reproducen la cadena del *hardware* (pinza,
 resistencia de carga, VBIAS, ADC de 12 bits con ruido de 0,7 códigos y retardo de multiplexado de 12 µs y
-24 µs). La Tabla 16 resume los resultados (`make -C firmware/test`).
+24 µs). La Tabla 18 resume los resultados (`make -C firmware/test`).
 
-**Tabla 16.** Prueba del cálculo con señales sintéticas.
+**Tabla 18.** Prueba del cálculo con señales sintéticas.
 
 | Caso | Magnitud | Esperado | Medido |
 |---|---|---:|---:|
@@ -1148,7 +1206,8 @@ alineadas con los cortes:
 Cada decisión de diseño se verificó con una herramienta y no solo por inspección visual:
 
 - ERC de KiCad sobre los esquemáticos del medidor y del banco de medición.
-- Comparación automática entre la netlist y la distribución de la placa perforada.
+- DRC de KiCad de la PCB con comparación contra el esquemático, y comparación automática entre la
+  netlist y la distribución de la placa perforada alternativa.
 - Cálculos de excursión, filtro y potencia documentados en la sección 7.4.
 - Simulación en ngspice de las entradas analógicas y la alimentación (sección 7.12), que obligó a
   cambiar el filtro de entrada, el divisor de tensión y el adaptador.
@@ -1157,17 +1216,19 @@ Cada decisión de diseño se verificó con una herramienta y no solo por inspecc
 
 ![Cronograma](img/cronograma.png)
 
-**Ilustración 24.** Cronograma de actividades y estado al 16 de octubre de 2026. Fuente: elaboración
+**Ilustración 25.** Cronograma de actividades y estado al 21 de octubre de 2026. Fuente: elaboración
 propia en Python y Matplotlib.
 
-**Tabla 17.** Estado de las actividades.
+**Tabla 19.** Estado de las actividades.
 
 | Actividad | Semanas | Estado |
 |---|---|---|
 | Definición de la idea y requerimientos | 1–3 | Terminada |
 | Arquitectura y selección de componentes | 3–5 | Terminada |
 | Esquemático en KiCad y verificación ERC | 5–8 | Terminada |
-| Distribución en placa perforada | 7–8 | Terminada |
+| Distribución en placa perforada (alternativa) | 7–8 | Terminada |
+| PCB de una cara: diseño, ruteo y archivos de fabricación | 9 | Terminada |
+| Fabricación de la PCB (transferencia de tóner) | 10 | Pendiente |
 | Banco de medición: diseño y esquemático | 8 | Terminada |
 | Simulación SPICE de las entradas y la alimentación | 8 | Terminada |
 | Modelos 3D del medidor y del banco | 8 | Terminada |
@@ -1202,9 +1263,12 @@ Fuente: elaboración propia.
    (reposo de 1,65 V y picos de 1,15 V) salía de la zona lineal del ADC. Se recalcularon la
    polarización y las resistencias de carga (sección 7.4.1).
 5. **PCB fabricada frente a placa perforada.** El primer diseño contemplaba una PCB de dos capas con una
-   ranura fresada de aislamiento, que no era viable en el tiempo disponible. La solución fue sacar por
-   completo la red de la placa: el módulo ZMPT101B queda en un compartimento separado y la placa
-   perforada solo maneja muy baja tensión.
+   ranura fresada de aislamiento, que no era viable en el tiempo disponible. Primero se sacó por
+   completo la red de la placa (el módulo ZMPT101B queda en un compartimento separado) y se distribuyó
+   el circuito en placa perforada. Como la entrega exige una PCB fabricada, después se diseñó una PCB
+   de **una sola cara**, que se puede hacer en el laboratorio con transferencia de tóner. Para que
+   cupiera en una cara sin vías, el ruteo automático usa la cara de componentes como capa de puentes:
+   quedaron 4 puentes de alambre. La placa perforada queda como alternativa.
 6. **Pantalla.** Se compraron pantallas TFT de 4", pero el diseño del gabinete y el consumo favorecen la
    OLED SSD1306 de 0,96" por I2C, que usa solo dos pines. La TFT queda como alternativa.
 7. **Errores encontrados en simulación.** La simulación en ngspice mostró que el filtro de entrada
@@ -1289,17 +1353,20 @@ C2-ABPR/
 │   ├── banco-pruebas.pdf             esquemático del banco en PDF
 │   ├── banco-pruebas.net             netlist del banco
 │   ├── erc-banco.rpt                 ERC del banco
-│   ├── medidor-energia.kicad_pcb     placa perforada en KiCad (con modelos 3D)
-│   ├── Medidor.pretty/, fp-lib-table huellas propias (zócalo del DevKitC, rejilla, cables de jack)
+│   ├── medidor-energia.kicad_pcb     PCB de una cara (con modelos 3D)
+│   ├── ruteo-freerouting.ses         ruteo elegido de Freerouting
+│   ├── fabricacion/                  PDF para tóner, Gerber, taladros, guía de montaje y puentes
+│   ├── Medidor.pretty/, fp-lib-table huellas propias (zócalo del DevKitC, cables de jack, puente)
 │   ├── drc.rpt                       DRC con comparación contra el esquemático
-│   └── 3d/                           modelo del DevKitC y placa completa en STEP
+│   └── 3d/                           modelo del DevKitC, huellas, posición de conectores y STEP
 ├── herramientas/
 │   ├── generar_esquematico.py        genera el esquemático de KiCad
 │   ├── generar_banco.py              genera el esquemático del banco de medición
 │   ├── simulacion.py                 simulación en ngspice y tabla de resultados
-│   ├── generar_pcb.py                placa de KiCad a partir de la netlist y la placa perforada
+│   ├── generar_pcb.py                PCB de una cara a partir de la netlist (Freerouting)
+│   ├── exportar_fabricacion.sh       archivos de fabricación, vistas 3D, STEP y DRC
 │   ├── modelo_devkitc.py             modelo 3D del ESP32-DevKitC (FreeCAD)
-│   ├── placa_perforada.py            distribución en placa, verificación y dibujo
+│   ├── placa_perforada.py            distribución alternativa en placa perforada y su verificación
 │   ├── figuras.py                    diagrama de bloques, gabinetes y cronograma
 │   └── sexpr.py                      lector y escritor del formato de KiCad
 ├── simulacion/                       netlists de ngspice, datos y resultados.md
@@ -1316,10 +1383,11 @@ C2-ABPR/
 └── img/                              ilustraciones del documento
 ```
 
-Para regenerar todo (requiere KiCad 10, FreeCAD 1.1, ngspice, Python 3 con Matplotlib y Pillow, y Graphviz):
+Para regenerar todo (requiere KiCad 10, Freerouting 2.5 y Java solo para rutear de nuevo, FreeCAD 1.1, Blender,
+ngspice, Python 3 con Matplotlib y Pillow, y Graphviz):
 
 ```bash
-cd C2-ABPR/herramientas
+cd herramientas
 python3 generar_esquematico.py
 cd ../hardware
 kicad-cli sch erc -o erc.rpt medidor-energia.kicad_sch
@@ -1338,9 +1406,9 @@ python3 simulacion.py > ../simulacion/resultados.md
 cd ../interfaz && python3 oled.py
 cd ../plataforma && pnpm install && pnpm test && pnpm build && pnpm capturas
 cd ../firmware && make -C test && pio run
-cd ../herramientas && freecadcmd modelo_devkitc.py && python3 generar_pcb.py
-cd ../hardware && kicad-cli pcb drc --schematic-parity -o drc.rpt medidor-energia.kicad_pcb
-kicad-cli pcb export step --subst-models --force -o 3d/medidor-placa.step medidor-energia.kicad_pcb
+cd ../herramientas && freecadcmd modelo_devkitc.py
+python3 generar_pcb.py          # 'rutear' para rutear de nuevo (java + freerouting.jar)
+./exportar_fabricacion.sh       # fabricación, vistas 3D, STEP y DRC
 cd ../freecad && ./generar.sh
 ```
 

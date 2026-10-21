@@ -10,6 +10,8 @@ pronostico/datos/
 plataforma/datos/
 simulacion/*.dat
 *.FCBak
+freecad/.render/
+hardware/fabricacion/ruteo/
 # STEP pesados: se regeneran con kicad-cli y freecad/generar.sh (ver sección 10)
 freecad/*.step
 hardware/3d/medidor-placa.step
