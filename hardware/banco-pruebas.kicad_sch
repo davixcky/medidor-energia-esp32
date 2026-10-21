@@ -6,10 +6,10 @@
 	(paper "A4")
 	(title_block
 		(title "Banco de medición con tomacorriente de entrada y salida")
-		(date "2026-10-16")
-		(rev "C2-A")
-		(company "Universidad de la Costa (CUC) — Sistemas Embebidos 1")
-		(comment 1 "David Orozco · Jose Torres · Leo Rojas")
+		(date "2026-10-21")
+		(rev "B")
+		(company "")
+		(comment 1 "")
 		(comment 2 "Complemento del medidor de energía de dos canales")
 	)
 	(lib_symbols

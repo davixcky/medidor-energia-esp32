@@ -6,11 +6,11 @@
 	(paper "A3")
 	(title_block
 		(title "Medidor de energía de dos canales con ESP32")
-		(date "2026-10-16")
-		(rev "C2-A")
-		(company "Universidad de la Costa (CUC) — Sistemas Embebidos 1")
-		(comment 1 "David Orozco · Jose Torres · Leo Rojas")
-		(comment 2 "Montaje en placa perforada de 2,54 mm")
+		(date "2026-10-21")
+		(rev "B")
+		(company "")
+		(comment 1 "")
+		(comment 2 "PCB de una cara (ver medidor-energia.kicad_pcb)")
 	)
 	(lib_symbols
 		(symbol "Medidor:ESP32-DevKitC-38"

@@ -5,7 +5,7 @@
  */
 import { EventEmitter } from 'node:events'
 import type { Registro } from './adr001'
-import { base } from './db'
+import { type Tx, sql } from './db'
 import { VENTANA, aKwh, recursivo, rmsePorHorizonte, variables } from './lstm'
 
 export const ZONA = -5 * 3600 // Colombia, UTC−5 sin horario de verano
@@ -20,7 +20,8 @@ eventos.setMaxListeners(100)
 interface EstadoCanal { inicio: number | null; pico: number; alertaId: number | null; ultimo: number }
 const ultimoT = new Map<string, number>()
 const estadoAlerta = new Map<string, EstadoCanal>()
-const umbralCache = new Map<string, { valor: number; calculado: number }>()
+// reintento: cuándo volver a calcular el P95 (7 días después, o cuando ya haya un día de datos)
+const umbralCache = new Map<string, { valor: number | null; reintento: number }>()
 
 export function reiniciarEstado() {
   ultimoT.clear()
@@ -29,131 +30,164 @@ export function reiniciarEstado() {
 }
 
 // ---------------------------------------------------------------- umbral P95
-function percentil95(nodo: string, canal: number, hasta: number): number | null {
-  const db = base()
+/** P95 de la potencia del canal en los 21 días previos; null y el primer registro si falta un día de datos. */
+async function percentil95(db: Tx, nodo: string, canal: number, hasta: number) {
   const desde = hasta - 21 * DIA
-  const col = `p${canal}`
-  const { n, t0 } = db.prepare(`SELECT COUNT(*) AS n, MIN(t) AS t0 FROM registros WHERE nodo = ? AND t BETWEEN ? AND ?`)
-    .get(nodo, desde, hasta) as { n: number; t0: number | null }
-  if (!n || t0 === null || hasta - t0 < DIA) return null // se necesita al menos un día de datos
-  const fila = db.prepare(`SELECT ${col} AS p FROM registros WHERE nodo = ? AND t BETWEEN ? AND ? ORDER BY ${col} LIMIT 1 OFFSET ?`)
-    .get(nodo, desde, hasta, Math.floor(0.95 * (n - 1))) as { p: number }
-  return fila.p
+  const col = db(`p${canal}`)
+  const [{ n, t0 }] = await db<{ n: number; t0: number | null }[]>`
+    SELECT COUNT(*)::bigint AS n, MIN(t) AS t0 FROM registros WHERE nodo = ${nodo} AND t BETWEEN ${desde} AND ${hasta}`
+  if (!n || t0 === null || hasta - t0 < DIA) return { p: null, t0: t0 ?? hasta }
+  const [fila] = await db<{ p: number }[]>`
+    SELECT ${col} AS p FROM registros WHERE nodo = ${nodo} AND t BETWEEN ${desde} AND ${hasta}
+    ORDER BY ${col} LIMIT 1 OFFSET ${Math.floor(0.95 * (n - 1))}`
+  return { p: fila.p, t0 }
 }
 
-function umbral(nodo: string, canal: number, t: number): number | null {
+async function umbral(db: Tx, nodo: string, canal: number, t: number): Promise<number | null> {
   const k = `${nodo}:${canal}`
   let u = umbralCache.get(k)
   if (!u) {
-    const fila = base().prepare('SELECT valor, calculado FROM umbrales WHERE nodo = ? AND canal = ?').get(nodo, canal) as
-      | { valor: number; calculado: number } | undefined
-    if (fila) umbralCache.set(k, (u = fila))
+    const [fila] = await db<{ valor: number; calculado: number }[]>`
+      SELECT valor, calculado FROM umbrales WHERE nodo = ${nodo} AND canal = ${canal}`
+    if (fila) umbralCache.set(k, (u = { valor: fila.valor, reintento: fila.calculado + 7 * DIA }))
   }
-  if (!u || t - u.calculado >= 7 * DIA) {
-    const v = percentil95(nodo, canal, t)
-    if (v === null) return u?.valor ?? null
-    base().prepare('INSERT OR REPLACE INTO umbrales (nodo, canal, valor, calculado) VALUES (?, ?, ?, ?)').run(nodo, canal, v, t)
-    umbralCache.set(k, (u = { valor: v, calculado: t }))
+  if (!u || t >= u.reintento) {
+    const { p, t0 } = await percentil95(db, nodo, canal, t)
+    if (p === null) {
+      // Sin un día de datos todavía: se espera a tenerlo en vez de consultar en cada registro.
+      umbralCache.set(k, (u = { valor: u?.valor ?? null, reintento: t0 + DIA }))
+      return u.valor
+    }
+    await db`INSERT INTO umbrales (nodo, canal, valor, calculado) VALUES (${nodo}, ${canal}, ${p}, ${t})
+      ON CONFLICT (nodo, canal) DO UPDATE SET valor = excluded.valor, calculado = excluded.calculado`
+    umbralCache.set(k, (u = { valor: p, reintento: t + 7 * DIA }))
   }
   return u.valor
 }
 
 // ---------------------------------------------------------------- alertas
-function revisarAlerta(nodo: string, canal: number, t: number, p: number) {
+async function revisarAlerta(db: Tx, nodo: string, canal: number, t: number, p: number, abiertas: { nodo: string; canal: number }[]) {
   const k = `${nodo}:${canal}`
   const e = estadoAlerta.get(k) ?? { inicio: null, pico: 0, alertaId: null, ultimo: t }
-  const db = base()
-  const u = umbral(nodo, canal, t)
-  const cortar = () => {
-    if (e.alertaId !== null) db.prepare('UPDATE alertas SET fin = ?, pico = ? WHERE id = ?').run(e.ultimo, e.pico, e.alertaId)
+  const u = await umbral(db, nodo, canal, t)
+  const cortar = async () => {
+    if (e.alertaId !== null) await db`UPDATE alertas SET fin = ${e.ultimo}, pico = ${e.pico} WHERE id = ${e.alertaId}`
     e.inicio = null
     e.alertaId = null
     e.pico = 0
   }
-  if (t - e.ultimo > BRECHA_MAX) cortar()
+  if (t - e.ultimo > BRECHA_MAX) await cortar()
   if (u !== null && p > u) {
     if (e.inicio === null) { e.inicio = t; e.pico = p }
     e.pico = Math.max(e.pico, p)
     if (e.alertaId === null && t - e.inicio >= ALERTA_MIN) {
-      const r = db.prepare('INSERT INTO alertas (nodo, canal, inicio, pico, umbral) VALUES (?, ?, ?, ?, ?)').run(nodo, canal, e.inicio, e.pico, u)
-      e.alertaId = Number(r.lastInsertRowid)
-      eventos.emit('alerta', { nodo, canal })
+      const [r] = await db<{ id: number }[]>`INSERT INTO alertas (nodo, canal, inicio, pico, umbral)
+        VALUES (${nodo}, ${canal}, ${e.inicio}, ${e.pico}, ${u}) RETURNING id`
+      e.alertaId = r.id
+      abiertas.push({ nodo, canal })
     }
-  } else cortar()
+  } else await cortar()
   e.ultimo = t
   estadoAlerta.set(k, e)
 }
 
 // ---------------------------------------------------------------- ingesta
-export function ingerir(nodo: string, fw: string | null, registros: Registro[]): number {
-  const db = base()
-  const ins = db.prepare(`INSERT OR IGNORE INTO registros VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
-  const hora = db.prepare(`INSERT INTO horas (nodo, hora, kwh1, kwh2, kwh3, segundos) VALUES (?, ?, ?, ?, ?, ?)
-    ON CONFLICT (nodo, hora) DO UPDATE SET kwh1 = kwh1 + excluded.kwh1, kwh2 = kwh2 + excluded.kwh2,
-    kwh3 = kwh3 + excluded.kwh3, segundos = segundos + excluded.segundos`)
-  if (!ultimoT.has(nodo)) {
-    const f = db.prepare('SELECT MAX(t) AS t FROM registros WHERE nodo = ?').get(nodo) as { t: number | null }
-    if (f.t !== null) ultimoT.set(nodo, f.t)
-  }
+const COLUMNAS = ['nodo', 't', 'fw', 'v', 'i1', 'i2', 'i3', 'p1', 'p2', 'p3', 'q1', 'q2', 'q3',
+  's1', 's2', 's3', 'fp1', 'fp2', 'fp3', 'f', 'thd'] as const
+
+/**
+ * Guarda un lote de registros en una transacción. Los registros se insertan de una vez y la
+ * energía por hora se acumula en memoria antes de escribirla: con la base en Supabase cada viaje
+ * de ida y vuelta cuesta decenas de milisegundos.
+ */
+export async function ingerir(nodo: string, fw: string | null, registros: Registro[]): Promise<number> {
   const orden = [...registros].sort((a, b) => a.t - b.t)
-  let aceptados = 0
-  db.exec('BEGIN')
-  try {
+  if (!orden.length) return 0
+  const abiertas: { nodo: string; canal: number }[] = []
+  const aceptados = await sql().begin(async (db) => {
+    if (!ultimoT.has(nodo)) {
+      const [f] = await db<{ t: number | null }[]>`SELECT MAX(t) AS t FROM registros WHERE nodo = ${nodo}`
+      if (f.t !== null) ultimoT.set(nodo, f.t)
+    }
+    // Duplicados (el firmware reenvía lo que no confirmó): ON CONFLICT los descarta y RETURNING
+    // dice cuáles entraron.
+    const nuevos = new Set<number>()
+    for (let k = 0; k < orden.length; k += 1000) {
+      const filas = orden.slice(k, k + 1000).map((r) => ({
+        nodo, t: r.t, fw, v: r.v_rms, i1: r.i_rms[0], i2: r.i_rms[1], i3: r.i_rms[2],
+        p1: r.p[0], p2: r.p[1], p3: r.p[2], q1: r.q[0], q2: r.q[1], q3: r.q[2],
+        s1: r.s[0], s2: r.s[1], s3: r.s[2], fp1: r.fp[0], fp2: r.fp[1], fp3: r.fp[2], f: r.f, thd: r.thd,
+      }))
+      const res = await db<{ t: number }[]>`INSERT INTO registros ${db(filas, ...COLUMNAS)}
+        ON CONFLICT (nodo, t) DO NOTHING RETURNING t`
+      for (const x of res) nuevos.add(x.t)
+    }
+    // Energía: potencia × tiempo hasta el registro anterior; brechas largas no se integran.
+    const horas = new Map<number, { kwh1: number; kwh2: number; kwh3: number; segundos: number }>()
+    let n = 0
     for (const r of orden) {
-      const res = ins.run(nodo, r.t, fw, r.v_rms, ...r.i_rms, ...r.p, ...r.q, ...r.s, ...r.fp, r.f, r.thd)
-      if (!res.changes) continue // duplicado (el firmware reenvía lo que no confirmó)
-      aceptados++
-      // Energía: potencia × tiempo hasta el registro anterior; brechas largas no se integran.
+      if (!nuevos.delete(r.t)) continue
+      n++
       const prev = ultimoT.get(nodo)
       const dt = prev !== undefined && r.t > prev && r.t - prev <= BRECHA_MAX ? r.t - prev : 1
       if (prev === undefined || r.t > prev) ultimoT.set(nodo, r.t)
       const h = Math.floor(r.t / 3600) * 3600
-      hora.run(nodo, h, (r.p[0] * dt) / 3.6e6, (r.p[1] * dt) / 3.6e6, (r.p[2] * dt) / 3.6e6, dt)
-      for (const c of CANALES) revisarAlerta(nodo, c, r.t, r.p[c - 1])
+      const acc = horas.get(h) ?? { kwh1: 0, kwh2: 0, kwh3: 0, segundos: 0 }
+      acc.kwh1 += (r.p[0] * dt) / 3.6e6
+      acc.kwh2 += (r.p[1] * dt) / 3.6e6
+      acc.kwh3 += (r.p[2] * dt) / 3.6e6
+      acc.segundos += dt
+      horas.set(h, acc)
+      for (const c of CANALES) await revisarAlerta(db, nodo, c, r.t, r.p[c - 1], abiertas)
     }
-    db.exec('COMMIT')
-  } catch (e) {
-    db.exec('ROLLBACK')
-    throw e
-  }
+    if (horas.size) {
+      const filas = [...horas].map(([hora, a]) => ({ nodo, hora, ...a }))
+      await db`INSERT INTO horas ${db(filas, 'nodo', 'hora', 'kwh1', 'kwh2', 'kwh3', 'segundos')}
+        ON CONFLICT (nodo, hora) DO UPDATE SET kwh1 = horas.kwh1 + excluded.kwh1, kwh2 = horas.kwh2 + excluded.kwh2,
+        kwh3 = horas.kwh3 + excluded.kwh3, segundos = horas.segundos + excluded.segundos`
+    }
+    return n
+  })
+  for (const a of abiertas) eventos.emit('alerta', a)
   if (aceptados) eventos.emit('registro', { nodo, registro: orden[orden.length - 1] })
   return aceptados
 }
 
 // ---------------------------------------------------------------- lecturas
-export function nodos(): string[] {
-  return (base().prepare('SELECT DISTINCT nodo FROM horas ORDER BY nodo').all() as { nodo: string }[]).map((x) => x.nodo)
+export async function nodos(): Promise<string[]> {
+  return (await sql()<{ nodo: string }[]>`SELECT DISTINCT nodo FROM horas ORDER BY nodo`).map((x) => x.nodo)
 }
 
-export function ultimo(nodo: string) {
-  return base().prepare('SELECT * FROM registros WHERE nodo = ? ORDER BY t DESC LIMIT 1').get(nodo) as
-    | Record<string, number | string> | undefined
+export async function ultimo(nodo: string) {
+  const [fila] = await sql()<Record<string, number | string>[]>`
+    SELECT * FROM registros WHERE nodo = ${nodo} ORDER BY t DESC LIMIT 1`
+  return fila
 }
 
 /** Promedios por intervalo de las últimas `horas` (referidas al último registro). */
-export function serie(nodo: string, horas = 24, paso = 300) {
-  const u = ultimo(nodo)
+export async function serie(nodo: string, horas = 24, paso = 300) {
+  const u = await ultimo(nodo)
   if (!u) return []
   const hasta = u.t as number
-  // CAST: node:sqlite enlaza los números de JS como REAL y la división dejaría de ser entera.
-  return base().prepare(`SELECT (t / CAST(?1 AS INTEGER)) * CAST(?1 AS INTEGER) AS t, AVG(p1) AS p1, AVG(p2) AS p2,
-    AVG(v) AS v, AVG(fp1) AS fp1 FROM registros WHERE nodo = ?2 AND t > ?3 GROUP BY 1 ORDER BY 1`)
-    .all(Math.round(paso), nodo, hasta - horas * 3600)
+  const p = Math.round(paso)
+  return sql()<{ t: number; p1: number; p2: number; v: number; fp1: number }[]>`
+    SELECT (t / ${p}::bigint) * ${p}::bigint AS t, AVG(p1) AS p1, AVG(p2) AS p2, AVG(v) AS v, AVG(fp1) AS fp1
+    FROM registros WHERE nodo = ${nodo} AND t > ${hasta - horas * 3600} GROUP BY 1 ORDER BY 1`
 }
 
 const diaLocal = (t: number) => Math.floor((t + ZONA) / DIA)
 
-export function energia(nodo: string) {
-  const u = ultimo(nodo)
+export async function energia(nodo: string) {
+  const u = await ultimo(nodo)
   if (!u) return null
   const ahora = u.t as number
   const hoy = diaLocal(ahora)
   const fechaHoy = new Date((hoy * DIA) * 1000)
   const inicioMes = Date.UTC(fechaHoy.getUTCFullYear(), fechaHoy.getUTCMonth(), 1) / 1000 - ZONA
   const diasMes = new Date(Date.UTC(fechaHoy.getUTCFullYear(), fechaHoy.getUTCMonth() + 1, 0)).getUTCDate()
-  const dias = base().prepare(`SELECT (hora + CAST(? AS INTEGER)) / ${DIA} AS dia, SUM(kwh1) AS kwh1, SUM(kwh2) AS kwh2, SUM(segundos) AS seg
-    FROM horas WHERE nodo = ? AND hora >= ? GROUP BY 1 ORDER BY 1`).all(ZONA, nodo, inicioMes - 40 * DIA) as
-    { dia: number; kwh1: number; kwh2: number; seg: number }[]
+  const dias = await sql()<{ dia: number; kwh1: number; kwh2: number; seg: number }[]>`
+    SELECT (hora + ${ZONA}::bigint) / ${DIA}::bigint AS dia, SUM(kwh1) AS kwh1, SUM(kwh2) AS kwh2, SUM(segundos) AS seg
+    FROM horas WHERE nodo = ${nodo} AND hora >= ${inicioMes - 40 * DIA} GROUP BY 1 ORDER BY 1`
   const delMes = dias.filter((d) => d.dia * DIA >= inicioMes + ZONA)
   const hoyFila = dias.find((d) => d.dia === hoy)
   const ayer = dias.find((d) => d.dia === hoy - 1)
@@ -172,28 +206,32 @@ export function energia(nodo: string) {
   }
   return {
     hoy: { kwh1: hoyFila?.kwh1 ?? 0, kwh2: hoyFila?.kwh2 ?? 0 },
-    ayer_misma_hora: ayer ? horaParcial(nodo, (hoy - 1) * DIA - ZONA, ahora - DIA) : null,
+    ayer_misma_hora: ayer ? await horaParcial(nodo, (hoy - 1) * DIA - ZONA, ahora - DIA) : null,
     mes: { kwh: medidoMes, dias: delMes.map((d) => ({ dia: new Date(d.dia * DIA * 1000).toISOString().slice(0, 10), kwh1: d.kwh1, kwh2: d.kwh2 })), dias_mes: diasMes },
     proyeccion,
   }
 }
 
-function horaParcial(nodo: string, desde: number, hasta: number) {
-  const f = base().prepare('SELECT SUM(kwh1) AS k FROM horas WHERE nodo = ? AND hora >= ? AND hora < ?').get(nodo, desde, hasta) as { k: number | null }
+async function horaParcial(nodo: string, desde: number, hasta: number) {
+  const [f] = await sql()<{ k: number | null }[]>`
+    SELECT SUM(kwh1) AS k FROM horas WHERE nodo = ${nodo} AND hora >= ${desde} AND hora < ${hasta}`
   return f.k ?? 0
 }
 
-export function alertas(nodo: string, limite = 50) {
-  return base().prepare('SELECT * FROM alertas WHERE nodo = ? ORDER BY inicio DESC LIMIT ?').all(nodo, limite)
+export async function alertas(nodo: string, limite = 50) {
+  return sql()<{ id: number; nodo: string; canal: number; inicio: number; fin: number | null; pico: number; umbral: number; estado: string }[]>`
+    SELECT * FROM alertas WHERE nodo = ${nodo} ORDER BY inicio DESC LIMIT ${limite}`
 }
 
-export function cambiarEstado(id: number, estado: string): boolean {
+export async function cambiarEstado(id: number, estado: string): Promise<boolean> {
   if (!['notificada', 'revisada', 'descartada'].includes(estado)) throw new Error('estado inválido')
-  return base().prepare('UPDATE alertas SET estado = ? WHERE id = ?').run(estado, id).changes > 0
+  const r = await sql()`UPDATE alertas SET estado = ${estado} WHERE id = ${id}`
+  return r.count > 0
 }
 
-export function umbrales(nodo: string) {
-  return base().prepare('SELECT canal, valor, calculado FROM umbrales WHERE nodo = ?').all(nodo)
+export async function umbrales(nodo: string) {
+  return sql()<{ canal: number; valor: number; calculado: number }[]>`
+    SELECT canal, valor, calculado FROM umbrales WHERE nodo = ${nodo}`
 }
 
 // ---------------------------------------------------------------- pronóstico
@@ -212,12 +250,13 @@ function rasgos(hora: number) {
   return { h: loc.getUTCHours(), d: (loc.getUTCDay() + 6) % 7 }
 }
 
-export function pronostico(nodo: string, H = 48) {
-  const u = ultimo(nodo)
+export async function pronostico(nodo: string, H = 48) {
+  const u = await ultimo(nodo)
   if (!u) return { disponible: false, motivo: 'sin datos' }
   const horaActual = Math.floor((u.t as number) / 3600) * 3600
-  const filas = base().prepare('SELECT hora, kwh1, segundos FROM horas WHERE nodo = ? AND hora >= ? AND hora < ? ORDER BY hora')
-    .all(nodo, horaActual - VENTANA * 3600, horaActual) as { hora: number; kwh1: number; segundos: number }[]
+  const filas = await sql()<{ hora: number; kwh1: number; segundos: number }[]>`
+    SELECT hora, kwh1, segundos FROM horas WHERE nodo = ${nodo} AND hora >= ${horaActual - VENTANA * 3600}
+    AND hora < ${horaActual} ORDER BY hora`
   const completas = filas.filter((f) => f.segundos >= 0.9 * 3600)
   if (completas.length < VENTANA) {
     return { disponible: false, motivo: `se necesitan ${VENTANA} horas completas; hay ${completas.length}` }
@@ -244,12 +283,11 @@ export function pronostico(nodo: string, H = 48) {
 }
 
 /** Todo lo que necesita el tablero, en una sola lectura. */
-export function tablero(nodoPedido?: string) {
-  const lista = nodos()
+export async function tablero(nodoPedido?: string) {
+  const lista = await nodos()
   const nodo = nodoPedido || lista[0] || 'nodo01'
-  return {
-    nodos: lista, nodo, ultimo: ultimo(nodo) ?? null, serie: serie(nodo, 24, 300), energia: energia(nodo),
-    alertas: alertas(nodo, 20), umbrales: umbrales(nodo), pronostico: pronostico(nodo, 48),
-  }
+  const [u, s, e, a, um, p] = await Promise.all([ultimo(nodo), serie(nodo, 24, 300), energia(nodo),
+    alertas(nodo, 20), umbrales(nodo), pronostico(nodo, 48)])
+  return { nodos: lista, nodo, ultimo: u ?? null, serie: [...s], energia: e, alertas: [...a], umbrales: [...um], pronostico: p }
 }
-export type Tablero = ReturnType<typeof tablero>
+export type Tablero = Awaited<ReturnType<typeof tablero>>

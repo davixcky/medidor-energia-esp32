@@ -25,13 +25,12 @@ Sistemas Embebidos 1 · Ingeniería Electrónica · Universidad de la Costa (CUC
 
 ## 1. Introducción
 
-En una vivienda o un local comercial la única información sobre el consumo eléctrico es la factura: un
-valor mensual, agregado, que llega con hasta treinta días de retraso. Con ese dato no es posible saber qué
-carga consume, a qué hora lo hace ni si una medida de ahorro funcionó. En la región Caribe el problema
-pesa más, porque el aire acondicionado concentra buena parte del consumo y opera de forma continua
-durante todo el año [1].
+Cuando una vivienda o un local comercial no cuenta con medición adicional, la factura informa el
+consumo mensual total con hasta treinta días de retraso. Ese dato no permite identificar el consumo
+por carga ni por hora, y dificulta evaluar las medidas de ahorro. En la región Caribe, el uso del aire
+acondicionado durante el año representa una parte importante del consumo [1].
 
-Este proyecto desarrolla un medidor de energía monofásico de 120 V / 60 Hz basado en el microcontrolador
+Este proyecto tiene como objetivo desarrollar un medidor de energía monofásico de 120 V / 60 Hz basado en el microcontrolador
 **ESP32**. La medida es **no invasiva**: la corriente se obtiene con pinzas de núcleo partido
 **SCT-013-000** que abrazan el conductor de fase sin abrir el circuito, y la tensión con un módulo
 **ZMPT101B** que la reduce mediante un transformador aislado. El sistema tiene **dos canales de
@@ -40,10 +39,11 @@ acondicionado— y **un canal de tensión**. El ESP32 digitaliza las tres señal
 interno, calcula tensión y corriente eficaces, potencia activa, reactiva y aparente y factor de
 potencia, y publica los resultados por Wi-Fi.
 
-Este documento corresponde al segundo avance. Contiene el diseño eléctrico completo en KiCad, los
-cálculos que justifican cada componente, la PCB de una cara lista para fabricar, el gabinete,
-el protocolo de pruebas y el estado del cronograma. El prototipo de este corte integra el *hardware* y el
-microcontrolador; la programación final pertenece al tercer corte.
+Este documento corresponde al segundo avance. Presenta el diseño eléctrico en KiCad, los cálculos de
+los componentes, el diseño y los archivos de fabricación de la PCB de una cara, el diseño del gabinete,
+el protocolo de pruebas y el estado del cronograma. El montaje del prototipo está pendiente. El
+*firmware* y la plataforma se han probado con señales sintéticas y datos simulados; falta validarlos
+con el equipo físico en el tercer corte.
 
 ## 2. Objetivos
 
@@ -71,8 +71,8 @@ factor de potencia por canal, y los publique por Wi-Fi.
 El Sistema Interconectado Nacional sigue aumentando su demanda año tras año, y la región Caribe consume
 una fracción de la energía nacional mayor que su fracción de la población; en los edificios
 comerciales de la región el aire acondicionado representa en promedio cerca de la mitad del consumo
-total [1]. Sin embargo, el usuario residencial o comercial solo recibe un dato: la lectura mensual del
-contador de facturación.
+total [1]. La factura residencial o comercial presenta el consumo mensual registrado por el contador, sin
+desglosarlo por circuito o equipo.
 
 Esa lectura tiene tres limitaciones:
 
@@ -83,10 +83,10 @@ Esa lectura tiene tres limitaciones:
 - **Latencia.** El usuario conoce su consumo hasta treinta días después, y una acción de ahorro no se
   puede verificar antes del siguiente ciclo de facturación.
 
-Los medidores comerciales con Wi-Fi resuelven parte del problema, pero son importados, de arquitectura
-cerrada y no exponen la forma de onda ni el método de cálculo. Para un curso de sistemas embebidos eso
-impide estudiar la cadena completa: sensor, acondicionamiento, conversión analógica-digital,
-procesamiento y comunicación.
+Algunos medidores comerciales con Wi-Fi permiten consultar el consumo, pero tienen una arquitectura
+cerrada y no dan acceso a la forma de onda ni al método de cálculo. Esto limita su uso para estudiar
+la cadena de medición en el curso de sistemas embebidos, desde el sensor y el acondicionamiento hasta
+la conversión analógica-digital, el procesamiento y la comunicación.
 
 **Pregunta del proyecto:** ¿cómo medir, con un microcontrolador de bajo costo y sin intervenir la
 instalación, el consumo de una edificación por circuito y en tiempo casi real, de forma segura para el
@@ -170,7 +170,7 @@ la excursión completa caiga dentro de esa ventana.
 
 El Reglamento Técnico de Instalaciones Eléctricas (RETIE) [8] establece la separación entre circuitos de
 red y de muy baja tensión (MBT), la protección contra sobrecorriente y el código de colores de los
-conductores. En el prototipo se aplican cuatro criterios:
+conductores. El diseño del prototipo contempla cuatro criterios:
 
 1. La red de 120 V nunca entra a la PCB: llega solo al módulo ZMPT101B, ubicado en un
    compartimento separado del gabinete por un tabique.
@@ -194,18 +194,18 @@ características que interesan a este proyecto.
 | IoTaWatt [14] | TC y transformador de tensión externo | 14 | ESP8266 con ADC externo; Wi-Fi | Parcial | *Hardware* y *software* abiertos |
 | OpenEnergyMonitor emonTx [10] | TC SCT-013 y adaptador de CA | 3 a 6 | Microcontrolador AVR; radio | Sí | Referencia de diseño del acondicionamiento con resistencia de carga y divisor de polarización |
 | PZEM-004T v3.0 [15] | TC propio y conexión directa a red | 1 | Integrado; Modbus-RTU | No | Módulo económico, entrega valores ya calculados una vez por segundo |
-| Integrado de metrología ATM90E32AS [16] | Requiere acondicionamiento externo | 3 fases | ADC sigma-delta simultáneos; SPI | No (registros) | Exactitud de contador, pero de caja negra y de importación |
-| **Este proyecto** | **2 SCT-013-000 + ZMPT101B** | **2 + 1 tensión** | **ESP32, ADC1 interno; Wi-Fi y HTTP** | **Sí, 8.000 muestras/s por canal** | **Arquitectura abierta; todo el cálculo es propio** |
+| Integrado de metrología ATM90E32AS [16] | Requiere acondicionamiento externo | 3 fases | ADC sigma-delta simultáneos; SPI | No (registros) | Exactitud de contador; procesamiento interno no accesible; requiere importación |
+| **Este proyecto** | **2 SCT-013-000 + ZMPT101B** | **2 + 1 tensión** | **ESP32, ADC1 interno; Wi-Fi y HTTP** | **Sí, 8.000 muestras/s por canal** | **Arquitectura abierta; cálculo implementado por el grupo** |
 
 Fuente: elaboración propia a partir de la documentación de cada producto.
 
 Del análisis se concluye que:
 
-- Las soluciones comerciales resuelven la medida, pero ocultan las muestras y el método de cálculo.
-  Eso impide estudiar la cadena de adquisición, que es el objetivo académico de la asignatura.
+- Las soluciones comerciales sin acceso a las muestras ni al método de cálculo limitan el estudio
+  de la cadena de adquisición, que forma parte del objetivo académico de la asignatura.
 - Los proyectos abiertos (OpenEnergyMonitor, IoTaWatt) validan el enfoque de **pinza SCT-013 +
   resistencia de carga + divisor de polarización + ADC del microcontrolador**, que es el adoptado aquí.
-- El acceso a las muestras crudas permite en el futuro aplicar técnicas de desagregación de cargas
+- El acceso a las muestras sin procesar permitiría aplicar técnicas de desagregación de cargas
   (NILM) [7], que los módulos cerrados como el PZEM-004T no permiten.
 
 ## 6. Listado de materiales
@@ -296,7 +296,7 @@ Fuente: elaboración propia en KiCad 10.
 | 3 | GPIO36 (VP) | `CH1_ADC` | ADC1 canal 0: corriente CH1 | Solo entrada, ADC1 (funciona con Wi-Fi activo) |
 | 4 | GPIO39 (VN) | `CH2_ADC` | ADC1 canal 3: corriente CH2 | Solo entrada, ADC1 |
 | 6 | GPIO35 | `V_ADC` | ADC1 canal 7: tensión | Solo entrada, ADC1 |
-| 5, 7, 8 | GPIO34, 32, 33 | `RES_IO34/32/33` | Reserva (CH3 a CH5) en J7 | Las tres entradas restantes del ADC1: techo de escalabilidad del nodo |
+| 5, 7, 8 | GPIO34, 32, 33 | `RES_IO34/32/33` | Reserva (CH3 a CH5) en J7 | Tres entradas del ADC1 reservadas para ampliar los canales del nodo |
 | 9 | GPIO25 | `LED_EST` | LED de estado | Pin de ADC2 usado solo como salida digital |
 | 10, 11 | GPIO26, 27 | `SW1`, `SW2` | Pulsadores | Pines de ADC2 usados solo como entradas digitales |
 | 25 | GPIO21 | `I2C_SDA` | Datos de la pantalla OLED | Pin I2C por defecto en el entorno de desarrollo |
@@ -398,7 +398,7 @@ al riel superior y solo puede subir hasta unos 3,5 V, así que el pico útil a l
 
 - **Presupuesto de corriente:** ESP32 con Wi-Fi, 120 mA promedio con picos de hasta 500 mA durante la
   transmisión; módulo ZMPT101B, unos 5 mA; pantalla OLED, unos 20 mA; LED, 3,6 mA. El pico total queda
-  por debajo de 550 mA, de modo que un adaptador de 2 A tiene margen de sobra.
+  por debajo de 550 mA, por lo que un adaptador de 2 A supera la corriente máxima prevista.
 - **F2 (PTC MF-R110):** conduce 1,1 A de forma continua y se abre por encima de unos 2,2 A. Protege el
   adaptador y el cableado ante un cortocircuito y se rearma solo cuando se retira la falla.
 - **D1 (1N5819):** si el adaptador se conecta con la polaridad invertida, el diodo bloquea la corriente.
@@ -474,8 +474,8 @@ Cada cable y cada pista se identifica por su función. El mismo código se usa e
 
 Fuente: elaboración propia; colores de red según el RETIE [8].
 
-Los colores de red coinciden con algunos de MBT (negro, blanco y verde), pero nunca se confunden: los
-conductores de red tienen otro calibre y están confinados al compartimento separado por el tabique.
+Los colores de red coinciden con algunos de MBT (negro, blanco y verde). Para distinguirlos, el diseño
+usa conductores de red de otro calibre y los ubica en el compartimento separado por el tabique.
 
 ### 7.7. Placa de circuito impreso (PCB) de una cara
 
@@ -489,7 +489,7 @@ a partir de la netlist del esquemático, con la interfaz de Python de KiCad (`pc
 
 - **Contorno:** 150 × 90 mm y 1,6 mm de espesor, con cuatro agujeros M3 a 4 mm de las esquinas, que
   coinciden con los separadores del gabinete (sección 7.8).
-- **Cobre solo abajo:** pistas de 0,8 mm (1,2 mm en alimentación), separación mínima de 0,45 mm y
+- **Cobre en la cara inferior:** pistas de 0,8 mm (1,2 mm en alimentación), separación mínima de 0,45 mm y
   pads de al menos 2 mm (ovalados en las filas de 2,54 mm) para que no se desprendan al perforar.
 - **Distribución por bloques:** las entradas de las pinzas y la de 5 V en el borde izquierdo, frente a
   los *jacks* de la pared; la bornera del ZMPT101B en el borde superior, junto al tabique; el ESP32 a la
@@ -633,7 +633,7 @@ CH2 T (3, 22) y CH2 S (3, 24).
 
 ### 7.8. Gabinete
 
-El gabinete mide 200 × 150 × 75 mm, en ABS, con paredes de 2,5 mm (Ilustración 6). Un tabique de 3 mm
+El gabinete está diseñado en ABS, con dimensiones de 200 × 150 × 75 mm y paredes de 2,5 mm (Ilustración 6). Un tabique de 3 mm
 lo divide en dos compartimentos:
 
 - **Compartimento de red (posterior, unos 40 mm de fondo):** prensaestopas PG7 para el cable de red,
@@ -692,9 +692,9 @@ Fuente: elaboración propia. La columna de resultados se completará el día de 
 
 Una pinza solo mide si abraza **un** conductor: si se coloca sobre el cable de un electrodoméstico, que
 lleva fase y neutro juntos, las dos corrientes son iguales y opuestas y la lectura es cero. Para medir
-cualquier equipo sin cortar ni pelar su cable se diseñó un banco de medición mínimo: una clavija que se
-enchufa a un tomacorriente de pared, un cable, un tramo de la fase accesible para la pinza y un
-tomacorriente donde se conecta el equipo. No tiene nada más.
+equipos compatibles con el rango del banco sin cortar ni pelar su cable, se diseñó un banco con una
+clavija para el tomacorriente de pared, un cable, un tramo de fase accesible para la pinza y un
+tomacorriente para conectar el equipo.
 
 #### 7.11.1. Funcionamiento
 
@@ -735,7 +735,7 @@ calibrar el canal contra una referencia.
 
 #### 7.11.3. Gabinete y cableado
 
-El banco es una caja plástica de 130 × 90 × 65 mm (Ilustración 8). El tomacorriente va en la tapa, el
+El diseño del banco utiliza una caja plástica de 130 × 90 × 65 mm (Ilustración 8). El tomacorriente va en la tapa, el
 cable de red entra por un prensaestopas PG11 con alivio de tracción y el lazo sale y vuelve por dos PG7,
 que también lo sujetan para que no se pueda halar hacia los bornes.
 
@@ -777,7 +777,7 @@ plateado).
 1. Sin conectar a la red, medir con el multímetro la continuidad de cada fila de la Tabla 11 y comprobar
    que no hay continuidad entre fase, neutro y tierra.
 2. Comprobar a la vista que la pinza abraza **solo** una pata del lazo y que cierra por completo.
-3. Conectar el plug de la pinza a J2 del medidor **antes** de enchufar el banco (nunca dejar el
+3. Conectar el conector macho de la pinza a J2 del medidor **antes** de enchufar el banco (nunca dejar el
    secundario abierto con carga).
 4. Enchufar el banco y verificar X1 con un probador de tomacorrientes (fase, neutro y tierra correctos).
 5. Conectar una carga resistiva conocida (bombillo incandescente o hervidor) en X1 y comparar la
@@ -831,7 +831,7 @@ nominal, en el límite lineal y con sobrecorriente (arriba); respuesta en frecue
 y tensión a la entrada del regulador según la corriente de carga (abajo). Fuente: elaboración propia con
 ngspice y Matplotlib.
 
-**Lo que cambió por la simulación:**
+**Cambios de diseño a partir de la simulación:**
 
 1. **Protección de las entradas.** Con el primer valor del filtro (1,5 kΩ y 100 nF), el pin pasaba el
    máximo absoluto de 3,6 V con 80 A en CH2 (3,59 V y −0,30 V) y con 200 A en CH1 (3,61 V). Se cambió a
@@ -843,7 +843,7 @@ ngspice y Matplotlib.
 3. **Adaptador.** Con un adaptador en el mínimo de la norma USB (4,75 V), el regulador del DevKitC deja de
    entregar 3,3 V durante las ráfagas de Wi-Fi (fila 18). Se especifica un adaptador de 5,1 V.
 
-**Limitaciones que la simulación muestra y que no se corrigen en este diseño:**
+**Limitaciones del diseño observadas en la simulación:**
 
 - El filtro de primer orden atenúa 9,8 dB el armónico 50 (fila 12). Como la respuesta es conocida, el
   *firmware* la compensa al calcular la distorsión armónica.
@@ -851,9 +851,9 @@ ngspice y Matplotlib.
   de 4 kHz se pliegan atenuadas. En cargas domésticas su amplitud es pequeña, pero un filtro de segundo
   orden sería mejor si se rediseña la entrada.
 
-> **Simulación no es prueba.** Ningún circuito se ha armado todavía. La simulación confirma que los
-> valores calculados funcionan con los modelos supuestos; el procedimiento de la sección 7.9 y la
-> calibración del banco (sección 7.11.4) son los que confirman el funcionamiento real.
+> **Validación física pendiente.** Ningún circuito se ha armado todavía. Los resultados de simulación
+> corresponden a los modelos y supuestos utilizados. Falta verificar el funcionamiento físico mediante
+> el procedimiento de la sección 7.9 y la calibración del banco (sección 7.11.4).
 
 ### 7.13. Modelos 3D
 
@@ -895,8 +895,8 @@ en FreeCAD.
 Los dos equipos se modelaron en **FreeCAD 1.1** con scripts de Python que construyen cada pieza a
 partir de sólidos, operaciones booleanas y redondeos (carpeta [`freecad/`](freecad/)). Cada cota es un
 parámetro del script, de modo que un cambio de medida se propaga a la caja, a la tapa y al ensamble.
-La placa no se dibujó en FreeCAD: el ensamble del medidor importa el STEP que exporta KiCad
-(sección 7.13.1), así que cada componente queda donde va en la placa real.
+El ensamble del medidor en FreeCAD importa el STEP exportado desde KiCad (sección 7.13.1),
+por lo que conserva la posición de cada componente del diseño de la PCB.
 
 **Medidor.** La caja de 200 × 150 × 75 mm tiene paredes de 2,5 mm y el tabique de 3 mm que separa la
 zona de red, con el módulo ZMPT101B, el portafusible F1, la bornera J4 y el prensaestopas PG7, de la
@@ -911,8 +911,8 @@ grabados.
 
 ![Medidor abierto](img/3d-medidor-abierto.png)
 
-**Ilustración 14.** Medidor con la tapa a un lado: PCB exportada desde KiCad con el
-ESP32, zona de red tras el tabique y aparatos de la tapa. Fuente: elaboración propia en FreeCAD y KiCad
+**Ilustración 14.** Modelo 3D del medidor con la tapa a un lado. Se muestran la PCB exportada desde
+KiCad con el ESP32, la zona de red tras el tabique y los componentes de la tapa. Fuente: elaboración propia en FreeCAD y KiCad
 (vista en Blender).
 
 ![Medidor en planta](img/3d-medidor-planta.png)
@@ -921,14 +921,14 @@ ESP32, zona de red tras el tabique y aparatos de la tapa. Fuente: elaboración p
 cable de tres hilos por el collarín y PCB (abajo). Fuente: elaboración propia en FreeCAD y
 KiCad (vista en Blender).
 
-**Banco de medición.** El banco es lo mínimo para medir cualquier equipo sin cortar su cable: una
-clavija NEMA 5-15P que se enchufa a la pared, el cordón SJT 3 × 14 AWG, que entra por un prensaestopas
+**Banco de medición.** El diseño permite medir equipos compatibles con su rango sin cortar su cable.
+Incluye una clavija NEMA 5-15P que se enchufa a la pared, el cordón SJT 3 × 14 AWG, que entra por un prensaestopas
 PG11, y un tomacorriente doble (X1) donde se conecta el equipo, en una caja de 130 × 90 × 65 mm. El
 neutro y la tierra van directo del cordón a los tornillos plateado y verde de X1. La fase, en cambio,
 sale de la caja por un prensaestopas PG7, forma un lazo exterior de conductor THHN 14 AWG aislado, con
 dos patas paralelas separadas 25 mm, y vuelve a entrar por un segundo PG7 hasta el tornillo de bronce de
 X1. La pinza SCT-013-000 se cierra sobre **una sola pata** del lazo, de modo que mide la corriente del
-equipo conectado sin abrir ningún circuito, y su cable termina en el *plug* de 3,5 mm que va a J2 del
+equipo conectado sin abrir ningún circuito, y su cable termina en el conector macho de 3,5 mm que va a J2 del
 medidor (Ilustraciones 16 a 18). En el modelo, X1 queda a lo largo de la caja porque su yugo de 107 mm
 no cabe a lo ancho.
 
@@ -970,7 +970,9 @@ La plataforma ([`plataforma/`](plataforma/)) es una aplicación de **TanStack St
 TypeScript, con rutas por archivo de TanStack Router) que reúne el *frontend* y el *backend* en un solo
 proceso de Node. El ESP32 envía cada segundo un registro ADR-001 de 40 B a `POST /api/ingesta`, y después
 de una caída de Wi-Fi envía en un solo cuerpo los registros que guardó. El servidor los valida, los guarda
-en SQLite y calcula todo lo que muestra el tablero (Tabla 13).
+en una base de datos Postgres alojada en Supabase y calcula todo lo que muestra el tablero (Tabla 13).
+El esquema está en [`plataforma/supabase/migrations/`](plataforma/supabase/migrations/); cada lote se
+guarda en una transacción y los registros repetidos se descartan.
 
 **Tabla 13.** Funciones del servidor de la plataforma.
 
@@ -1008,8 +1010,8 @@ aproximado; y la tabla de alertas, donde cada alerta se marca como revisada o de
 pasa a una sola columna con una barra inferior de secciones (Ilustración 20) y tiene tema claro y
 oscuro.
 
-Mientras el medidor no esté montado, los datos los genera el simulador (`pnpm simular`), que produce el
-consumo de una vivienda de la costa Caribe y envía **las mismas tramas binarias** que enviará el
+Mientras el medidor no esté montado, los datos los genera el simulador (`pnpm simular`), que genera datos de
+consumo simulado de una vivienda de la costa Caribe y envía **las mismas tramas binarias** que enviará el
 *firmware*, con las mismas cabeceras. El tablero muestra un aviso mientras los datos provengan del
 simulador. Las pruebas automáticas (`pnpm test`, 10 pruebas) verifican la decodificación de la trama, la
 equivalencia del LSTM con PyTorch, la integración de energía, el umbral P95, las alertas y el pronóstico.
@@ -1065,7 +1067,7 @@ propia en Graphviz.
 
 ### 7.15. Modelo inicial de pronóstico (LSTM)
 
-Mientras el medidor no tenga registros propios, la red se entrenó con una serie pública real: el conjunto
+Como todavía no hay registros propios del medidor, la red se entrenó con datos públicos del conjunto
 *Individual Household Electric Power Consumption* de la UCI (una vivienda en Sceaux, Francia, medida cada
 minuto entre diciembre de 2006 y noviembre de 2010), agregada a consumo horario en kWh. La temperatura
 horaria del mismo lugar se tomó del archivo histórico de Open-Meteo. Las horas con menos de 30 minutos
@@ -1078,7 +1080,7 @@ capa densa de 1, con **5.281 parámetros**. La capa LSTM se programó con un sol
 compuerta, como en las ecuaciones del primer entregable, porque la implementación estándar de PyTorch usa
 dos.
 
-La partición es cronológica y nunca mezcla el tiempo: entrenamiento hasta el 30 de junio de 2009 (21.940
+Los datos se dividieron en periodos consecutivos: entrenamiento hasta el 30 de junio de 2009 (21.940
 ventanas), validación hasta el 31 de diciembre de 2009 (4.377) y prueba de enero a noviembre de 2010
 (7.528). La normalización se calcula solo con los datos de entrenamiento. El entrenamiento usa Adam con
 parada temprana sobre la validación y tarda unos 6 s en CPU (Ilustración 23).
@@ -1113,8 +1115,8 @@ el LSTM pronostica de forma recursiva desde cada medianoche del periodo de prueb
 Fuente: elaboración propia. A 24 h se evaluaron 286 pronósticos y a 48 h, 281.
 
 El LSTM reduce el MAE frente a la mejor línea base en un 15 % a 1 h, un 17 % a 24 h y un 15 % a 48 h. En
-MAPE a 48 h queda prácticamente empatado con el ingenuo diario (70,3 % frente a 70,8 %): el MAPE se
-infla en las horas nocturnas de bajo consumo, por eso se privilegian el MAE y el RMSE. La Ilustración
+MAPE a 48 h presenta un valor similar al del ingenuo diario (70,3 % frente a 70,8 %). El MAPE aumenta
+en las horas nocturnas de bajo consumo, por lo que la comparación se centra en el MAE y el RMSE. La Ilustración
 24 muestra un caso del conjunto de prueba.
 
 ![Pronóstico de 48 h](img/lstm-pronostico.png)
@@ -1123,8 +1125,8 @@ infla en las horas nocturnas de bajo consumo, por eso se privilegian el MAE y el
 al 12 de marzo de 2010, frente a la línea base semanal. Fuente: elaboración propia en Python con PyTorch.
 
 **Limitaciones.** A 24 h y 48 h la red recibe la temperatura observada de las horas futuras, lo que
-equivale a suponer un pronóstico meteorológico perfecto. La vivienda de la UCI no es la instrumentada, de
-modo que estos números sirven para validar la cadena de entrenamiento y no como resultado del proyecto.
+equivale a suponer un pronóstico meteorológico perfecto. Los datos de la UCI corresponden a otra vivienda. Estos resultados permiten evaluar el proceso de
+entrenamiento, pero no describen el desempeño del modelo con las mediciones propias, aún pendientes.
 El estudio completo del corte 3 (SARIMA y *gradient boosting*, validación por pliegues y prueba de
 Diebold–Mariano) se hará con las mediciones propias.
 
@@ -1142,7 +1144,7 @@ Se reparte en tres tareas de FreeRTOS (Tabla 17).
 
 | Núcleo | Tarea | Función |
 |---|---|---|
-| 1 | Adquisición | Muestrea V, CH1 y CH2 a 8.000 muestras/s por canal con el ADC1 y cierra una ventana de 60 ciclos de red (≈ 1 s). Solo entrega resultados por cola: la red nunca le quita tiempo |
+| 1 | Adquisición | Muestrea V, CH1 y CH2 a 8.000 muestras/s por canal con el ADC1 y cierra una ventana de 60 ciclos de red (≈ 1 s). Entrega los resultados por una cola; falta verificar la estabilidad del muestreo con Wi-Fi activo |
 | 0 | Red | Wi-Fi, hora por NTP, un registro ADR-001 por ventana, búfer de 1.200 registros (20 min sin red) y envío en lotes cada 5 s |
 | 0 | Interfaz | Pantallas de la OLED, pulsadores SW1 y SW2, LED de estado y alerta local |
 
@@ -1185,7 +1187,7 @@ resistencia de carga, VBIAS, ADC de 12 bits con ruido de 0,7 códigos y retardo 
 Fuente: elaboración propia. El último caso muestra por qué hace falta la interpolación: sin ella, el
 retardo de 12 µs produce un error de 0,77 % en la potencia con FP = 0,5.
 
-> **Lo que falta probar en el ESP32 real:** la estabilidad del ritmo de muestreo con Wi-Fi activo, la
+> **Pruebas pendientes en el ESP32:** la estabilidad del ritmo de muestreo con Wi-Fi activo, la
 > linealidad del ADC del ejemplar y las constantes de calibración, que se ajustan en el banco de medición
 > (sección 7.11.4).
 
@@ -1198,12 +1200,12 @@ alineadas con los cortes:
 
 1. **Diseño (corte 1):** definición del problema, requerimientos, arquitectura y materiales. *Cumplida.*
 2. **Implementación del _hardware_ (corte 2):** esquemático, distribución en placa, compra, montaje,
-   gabinete y pruebas. *Diseño cumplido; montaje y pruebas en curso.*
+   gabinete y pruebas. *Diseño terminado; montaje y pruebas físicas pendientes.*
 3. **_Firmware_, comunicación y validación (corte 3):** adquisición, cálculo de magnitudes, envío a la
    plataforma, tablero y comparación contra una referencia. *Adelantada: el* firmware *y la plataforma ya están
    escritos y probados con señales sintéticas y con el simulador; falta probarlos con el* hardware.
 
-Cada decisión de diseño se verificó con una herramienta y no solo por inspección visual:
+El diseño se revisó mediante las siguientes verificaciones y cálculos:
 
 - ERC de KiCad sobre los esquemáticos del medidor y del banco de medición.
 - DRC de KiCad de la PCB con comparación contra el esquemático, y comparación automática entre la
@@ -1236,7 +1238,7 @@ propia en Python y Matplotlib.
 | LSTM inicial con datos públicos | 8 | Terminada |
 | Compra de componentes | 5–9 | En curso, con retraso |
 | Gabinete: diseño y fabricación | 7–10 | En curso |
-| Montaje y soldadura | 9–10 | En curso |
+| Montaje y soldadura | 9–10 | Pendiente |
 | Pruebas eléctricas y *HardExplosion* | 10 | Pendiente |
 | Banco de medición: montaje y calibración | 10–11 | Pendiente |
 | *Firmware*: código y prueba del cálculo en el PC | 8 | Terminada |
@@ -1272,7 +1274,7 @@ Fuente: elaboración propia.
 6. **Pantalla.** Se compraron pantallas TFT de 4", pero el diseño del gabinete y el consumo favorecen la
    OLED SSD1306 de 0,96" por I2C, que usa solo dos pines. La TFT queda como alternativa.
 7. **Errores encontrados en simulación.** La simulación en ngspice mostró que el filtro de entrada
-   original dejaba pasar el máximo absoluto del pin con sobrecorrientes grandes y que un adaptador de
+   original permitía superar la tensión máxima absoluta del pin ante sobrecorrientes grandes y que un adaptador de
    4,75 V no alcanza para el regulador durante las ráfagas de Wi-Fi. Se corrigieron antes de comprar los
    componentes (sección 7.12).
 8. **Medición de equipos sueltos.** Una pinza no mide sobre el cable de un electrodoméstico, porque abraza
@@ -1280,7 +1282,7 @@ Fuente: elaboración propia.
    exterior con la fase separada para colocar la pinza y un tomacorriente. Una primera versión tenía
    *breaker*, piloto, tres tomacorrientes y dos pinzas; se simplificó porque el circuito de pared ya trae
    su protección y para medir un equipo basta una pinza.
-9. **Sin datos propios para el pronóstico.** Mientras el medidor no registre, el LSTM se entrenó con una
+9. **Sin datos propios para el pronóstico.** Como aún no hay registros del medidor, el LSTM se entrenó con una
    serie pública (sección 7.15); el modelo definitivo se entrenará con las mediciones del corte 3.
 
 ## 9. Referencias

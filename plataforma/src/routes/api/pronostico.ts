@@ -6,9 +6,9 @@ import { pronostico } from '#/server/servicio'
 export const Route = createFileRoute('/api/pronostico')({
   server: {
     handlers: {
-      GET: ({ request }) => {
+      GET: async ({ request }) => {
         const h = Math.min(48, Math.max(1, Number(new URL(request.url).searchParams.get('h') ?? 48)))
-        return json(pronostico(nodoDe(request), h))
+        return json(await pronostico(await nodoDe(request), h))
       },
     },
   },

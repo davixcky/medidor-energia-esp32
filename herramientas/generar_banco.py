@@ -149,10 +149,8 @@ def construir():
 
 if __name__ == "__main__":
     e = construir()
-    e.guardar(SALIDA, ["Banco de medición con tomacorriente de entrada y salida", "2026-10-16", "C2-A",
-                       "Universidad de la Costa (CUC) — Sistemas Embebidos 1",
-                       "David Orozco · Jose Torres · Leo Rojas",
-                       "Complemento del medidor de energía de dos canales"], papel="A4")
+    e.guardar(SALIDA, ["Banco de medición con tomacorriente de entrada y salida", "2026-10-21", "B",
+                       "", "", "Complemento del medidor de energía de dos canales"], papel="A4")
     with open(os.path.join(os.path.dirname(SALIDA), "banco-pruebas.kicad_pro"), "w") as f:
         f.write("{}\n")
     print("Esquemático escrito en", os.path.normpath(SALIDA))

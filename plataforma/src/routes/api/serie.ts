@@ -6,11 +6,11 @@ import { serie } from '#/server/servicio'
 export const Route = createFileRoute('/api/serie')({
   server: {
     handlers: {
-      GET: ({ request }) => {
+      GET: async ({ request }) => {
         const q = new URL(request.url).searchParams
         const horas = Math.min(24 * 31, Math.max(1, Number(q.get('horas') ?? 24)))
         const paso = Math.max(1, Number(q.get('paso') ?? 300))
-        return json(serie(nodoDe(request), horas, paso))
+        return json(await serie(await nodoDe(request), horas, paso))
       },
     },
   },

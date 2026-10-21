@@ -6,7 +6,7 @@ import { tablero } from '#/server/servicio'
 export const Route = createFileRoute('/api/tablero')({
   server: {
     handlers: {
-      GET: ({ request }) => json(tablero(new URL(request.url).searchParams.get('nodo') ?? undefined)),
+      GET: async ({ request }) => json(await tablero(new URL(request.url).searchParams.get('nodo') ?? undefined)),
     },
   },
 })

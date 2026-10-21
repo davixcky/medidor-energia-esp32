@@ -610,8 +610,6 @@ def construir():
 
 if __name__ == "__main__":
     e = construir()
-    e.guardar(SALIDA, ["Medidor de energía de dos canales con ESP32", "2026-10-16", "C2-A",
-                       "Universidad de la Costa (CUC) — Sistemas Embebidos 1",
-                       "David Orozco · Jose Torres · Leo Rojas",
-                       "Montaje en placa perforada de 2,54 mm"])
+    e.guardar(SALIDA, ["Medidor de energía de dos canales con ESP32", "2026-10-21", "B",
+                       "", "", "PCB de una cara (ver medidor-energia.kicad_pcb)"])
     print("Esquemático escrito en", os.path.normpath(SALIDA))

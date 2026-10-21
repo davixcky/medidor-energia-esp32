@@ -9,7 +9,7 @@ export const Route = createFileRoute('/api/alertas/$id')({
       PATCH: async ({ request, params }) => {
         try {
           const { estado } = (await request.json()) as { estado: string }
-          if (!cambiarEstado(Number(params.id), estado)) return json({ error: 'no existe' }, 404)
+          if (!(await cambiarEstado(Number(params.id), estado))) return json({ error: 'no existe' }, 404)
           eventos.emit('alerta', { id: Number(params.id), estado })
           return json({ ok: true })
         } catch (e) {

@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "/home/davixcky/dev/.personal/electronica/medidor-energia-esp32/hardware/banco-pruebas.kicad_sch")
-		(date "2026-10-16T17:03:08")
+		(date "2026-10-21T17:05:30")
 		(tool "Eeschema 10.0.0")
 		(sheet
 			(number "1")
@@ -10,13 +10,13 @@
 			(tstamps "/")
 			(title_block
 				(title "Banco de medición con tomacorriente de entrada y salida")
-				(company "Universidad de la Costa (CUC) — Sistemas Embebidos 1")
-				(rev "C2-A")
-				(date "2026-10-16")
+				(company)
+				(rev "B")
+				(date "2026-10-21")
 				(source "banco-pruebas.kicad_sch")
 				(comment
 					(number "1")
-					(value "David Orozco · Jose Torres · Leo Rojas")
+					(value "")
 				)
 				(comment
 					(number "2")

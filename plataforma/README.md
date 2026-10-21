@@ -1,7 +1,7 @@
 # Plataforma del medidor de energía
 
-Aplicación web del medidor: recibe los registros del ESP32, los guarda, calcula la energía, las alertas
-y el pronóstico, y los muestra en un tablero en tiempo real. Está hecha con **TanStack Start** (React 19,
+Aplicación web del medidor: recibe los registros del ESP32, los guarda en Supabase (Postgres), calcula la
+energía, las alertas y el pronóstico, y los muestra en un tablero en tiempo real. Está hecha con **TanStack Start** (React 19,
 TypeScript y rutas por archivo de TanStack Router); el *frontend* y el *backend* viven en la misma
 aplicación y se sirven con un solo proceso de Node.
 
@@ -12,14 +12,20 @@ ESP32 (firmware)  ──POST /api/ingesta (tramas ADR-001 de 40 B)──►  Ser
 pnpm simular      ──────────────── mismo formato ───────────────►   ├─ src/server/adr001.ts    decodificación y validación
                                                                     ├─ src/server/servicio.ts  energía, P95, alertas, pronóstico
                                                                     ├─ src/server/lstm.ts      inferencia del LSTM en TypeScript
-                                                                    ├─ src/server/db.ts        SQLite (node:sqlite) en datos/
+                                                                    ├─ src/server/db.ts        conexión a Supabase (postgres.js)
                                                                     └─ src/routes/api/*        API REST y eventos SSE
 Navegador  ◄── HTML con datos (función de servidor) + /api/eventos (SSE, 1 Hz) ──  src/routes/index.tsx (tablero)
 ```
 
-- **Almacenamiento:** SQLite con el módulo nativo `node:sqlite`, en `datos/medidor.db` (no se sube al
-  repositorio). Tablas: `registros` (cada trama), `horas` (energía integrada por hora y canal),
-  `umbrales` (P95 por canal) y `alertas`.
+- **Almacenamiento:** Postgres en Supabase, con el controlador `postgres` (postgres.js) y la cadena de
+  conexión en `DATABASE_URL`. El esquema está en
+  [`supabase/migrations/20261021000000_medidor.sql`](supabase/migrations/20261021000000_medidor.sql):
+  `registros` (cada trama), `horas` (energía integrada por hora y canal), `umbrales` (P95 por canal) y
+  `alertas`. Las tablas tienen RLS activo y sin políticas, de modo que la API pública de Supabase (clave
+  `anon`) no las puede leer; solo el servidor, que se conecta directamente, lee y escribe.
+- **Ingesta por lotes:** cada `POST /api/ingesta` se guarda en una transacción. Los registros se
+  insertan de una vez (`ON CONFLICT DO NOTHING` descarta los repetidos) y la energía por hora se acumula
+  en memoria antes de escribirla, para no hacer un viaje a la base por cada registro.
 - **Energía:** cada registro aporta $P \cdot \Delta t$, donde $\Delta t$ es el tiempo hasta el registro
   anterior; las brechas de más de 60 s (nodo sin red) no se integran.
 - **Alertas:** se abre una alerta cuando la potencia de un canal supera el umbral durante 5 min o más. El
@@ -37,20 +43,25 @@ Navegador  ◄── HTML con datos (función de servidor) + /api/eventos (SSE, 
 
 ## Cómo ejecutar
 
-Requiere Node 22.13 o superior (probado con Node 25) y pnpm.
+Requiere Node 22.13 o superior (probado con Node 25), pnpm y un proyecto de Supabase.
 
 ```bash
-cd C2-ABPR/plataforma
+cd plataforma
 pnpm install
+cp .env.ejemplo .env                      # poner la cadena de conexión de Supabase en DATABASE_URL
+pnpm db:migrar                            # crea las tablas (o: supabase db push)
 pnpm build && pnpm start                  # servidor de producción en http://localhost:3000
 pnpm simular --dias 21                    # en otra terminal: 21 días de histórico y luego 1 registro/s
 ```
 
 - Desarrollo con recarga en caliente: `pnpm dev`.
 - Pruebas: `pnpm test` (decodificación ADR-001, LSTM frente a PyTorch, energía, P95, alertas y pronóstico).
+  Las del servicio necesitan un Postgres en `DATABASE_URL` y se omiten sin él; no conviene apuntarlas al
+  proyecto de producción porque vacían las tablas. Para un Postgres local de pruebas:
+  `pnpm db:prueba` y luego `DATABASE_URL=postgres://postgres:prueba@localhost:54329/postgres pnpm test`.
 - Capturas del tablero: `pnpm capturas` (usa Chrome instalado; escribe en `../img/ui-tablero-*.png`).
 - Exportar de nuevo los pesos del LSTM tras reentrenarlo: `pnpm exportar-lstm`.
-- Variables: `PORT` (3000), `DATOS_DIR` (carpeta de la base), `TEMP_CONSTANTE`.
+- Variables (en `.env`): `DATABASE_URL` (obligatoria), `PORT` (3000), `DB_CONEXIONES` (5), `TEMP_CONSTANTE`.
 
 El simulador genera el consumo de una vivienda de la costa Caribe (carga base, nevera que cicla, aire
 acondicionado en CH2, picos de cocina) y envía **exactamente** lo que enviará el ESP32: tramas binarias

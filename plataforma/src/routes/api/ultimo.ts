@@ -4,5 +4,5 @@ import { ultimo } from '#/server/servicio'
 
 /** GET /api/ultimo?nodo= — último registro recibido. */
 export const Route = createFileRoute('/api/ultimo')({
-  server: { handlers: { GET: ({ request }) => json(ultimo(nodoDe(request)) ?? null) } },
+  server: { handlers: { GET: async ({ request }) => json((await ultimo(await nodoDe(request))) ?? null) } },
 })

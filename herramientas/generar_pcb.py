@@ -112,7 +112,7 @@ REF_POS = {"J1": (6.5, -1.0)}
 # - pth_inside_courtyard: los extremos de algunos puentes caen bajo el ESP32 (va en zócalo).
 SEVERIDADES = {"lib_footprint_mismatch": "ignore", "silk_over_copper": "ignore",
                "pth_inside_courtyard": "warning"}
-TEXTO_COBRE = [("MEDIDOR DE ENERGÍA ESP32\nCUC · SISTEMAS EMBEBIDOS 1", 1.5),
+TEXTO_COBRE = [("MEDIDOR DE ENERGÍA ESP32\nREV. B", 1.5),
                ("MEDIDOR DE ENERGÍA ESP32", 1.5), ("MEDIDOR ESP32", 1.3)]
 
 

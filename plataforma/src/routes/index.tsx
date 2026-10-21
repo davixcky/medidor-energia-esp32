@@ -296,7 +296,7 @@ function Tablero() {
           </section>
         </main>
       )}
-      <footer>Medidor de energía no invasivo · ESP32 + SCT-013-000 + ZMPT101B · CUC · Sistemas Embebidos 1</footer>
+      <footer>Medidor de energía no invasivo · ESP32 + SCT-013-000 + ZMPT101B</footer>
 
       <nav className="tabs" aria-label="Secciones">
         {[['ahora', 'Ahora'], ['dia', 'Día'], ['mes', 'Mes'], ['circuitos', 'Circuitos'], ['alertas', 'Alertas']].map(([id, t]) => (

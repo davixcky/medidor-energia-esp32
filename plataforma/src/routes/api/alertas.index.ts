@@ -4,5 +4,5 @@ import { alertas } from '#/server/servicio'
 
 /** GET /api/alertas?nodo= — últimas alertas de consumo. */
 export const Route = createFileRoute('/api/alertas/')({
-  server: { handlers: { GET: ({ request }) => json(alertas(nodoDe(request), 100)) } },
+  server: { handlers: { GET: async ({ request }) => json(await alertas(await nodoDe(request), 100)) } },
 })

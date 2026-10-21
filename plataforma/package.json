@@ -6,20 +6,23 @@
     "#/*": "./src/*"
   },
   "scripts": {
-    "dev": "vite dev --port 3000",
+    "dev": "node --env-file-if-exists=.env node_modules/vite/bin/vite.js dev --port 3000",
     "generate-routes": "tsr generate",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "node .output/server/index.mjs",
+    "start": "node --env-file-if-exists=.env .output/server/index.mjs",
     "simular": "node scripts/simular.ts",
-    "test": "vitest run",
+    "test": "node --env-file-if-exists=.env node_modules/vitest/vitest.mjs run",
     "exportar-lstm": "../pronostico/.venv/bin/python scripts/exportar_lstm.py",
-    "capturas": "node scripts/capturas.ts"
+    "capturas": "node scripts/capturas.ts",
+    "db:migrar": "node --env-file-if-exists=.env scripts/migrar.ts",
+    "db:prueba": "docker run -d --rm --name medidor-pg-prueba -e POSTGRES_PASSWORD=prueba -p 54329:5432 postgres:17-alpine"
   },
   "dependencies": {
     "@tanstack/react-router": "1.170.44",
     "@tanstack/react-start": "1.169.2",
     "nitro": "3.0.260610-beta",
+    "postgres": "3.4.9",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "recharts": "3.10.1"

@@ -38,7 +38,7 @@ digraph G {
     res  [label="J7 reserva\nGPIO34 / 32 / 33", fillcolor="#eeeeee"];
     pwr  [label="Adaptador 5 V 2 A\n→ PTC → 1N5819", fillcolor="#ffebee"];
   }
-  nube [label="Plataforma web\nTanStack Start + SQLite\npanel en vivo", shape=cylinder, fillcolor="#ede7f6"];
+  nube [label="Plataforma web\nTanStack Start\nPostgres en Supabase\npanel en vivo", shape=cylinder, fillcolor="#ede7f6"];
 
   red -> fus -> zmpt;
   zmpt -> div [label="0–3,5 V\nreposo 2,5 V", color="#2e7d32"];
@@ -131,7 +131,7 @@ def gabinete():
         b.add_patch(Circle((x, 62.5), 6, fc="#455a64", ec="black"))
         b.add_patch(Circle((x, 62.5), 4.2, fc="#b0bec5", ec="black"))
         b.text(x, 52, n, ha="center", va="top", fontsize=7)
-    b.text(W / 2, 20, "MEDIDOR DE ENERGÍA · CH1 total · CH2 subcircuito\nCUC · Sistemas Embebidos 1", ha="center",
+    b.text(W / 2, 20, "MEDIDOR DE ENERGÍA\nCH1 total · CH2 subcircuito", ha="center",
            fontsize=8.5)
     for cx, cy in ((7, 7), (W - 7, 7), (7, D - 7), (W - 7, D - 7)):
         b.add_patch(Circle((cx, cy), 1.7, fc="white", ec="black"))
@@ -247,7 +247,7 @@ def cronograma():
         ("LSTM inicial con datos públicos", 8, 8, "hecho"),
         ("Compra de componentes", 5, 9, "retraso"),
         ("Gabinete: diseño y fabricación", 7, 10, "curso"),
-        ("Montaje y soldadura", 9, 10, "curso"),
+        ("Montaje y soldadura", 9, 10, "pendiente"),
         ("Pruebas eléctricas y HardExplosion", 10, 10, "pendiente"),
         ("Banco de medición: montaje y calibración", 10, 11, "pendiente"),
         ("Firmware: código y prueba del cálculo en el PC", 8, 8, "hecho"),

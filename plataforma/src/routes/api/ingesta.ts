@@ -30,7 +30,12 @@ export const Route = createFileRoute('/api/ingesta')({
           const motivo = validar(r)
           if (motivo) return json({ error: `registro ${k}: ${motivo}` }, 422)
         }
-        return json({ aceptados: ingerir(nodo, fw, registros) })
+        try {
+          return json({ aceptados: await ingerir(nodo, fw, registros) })
+        } catch (e) {
+          console.error('ingesta:', e)
+          return json({ error: 'no se pudo guardar en la base de datos' }, 503)
+        }
       },
     },
   },
