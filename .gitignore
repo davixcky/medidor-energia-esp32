@@ -1,6 +1,7 @@
 # Dependencias y entornos
 node_modules/
 .venv/
+.venv
 __pycache__/
 .pio/
 .output/
