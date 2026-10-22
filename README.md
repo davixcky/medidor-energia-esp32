@@ -516,15 +516,19 @@ a partir de la netlist del esquemático, con la interfaz de Python de KiCad (`pc
 
 - **Contorno:** 150 × 90 mm y 1,6 mm de espesor, con cuatro agujeros M3 a 4 mm de las esquinas, que
   coinciden con los separadores del gabinete (sección 7.8).
-- **Cobre en la cara inferior:** pistas de 0,8 mm (1,2 mm en alimentación), separación mínima de 0,45 mm y
-  pads de al menos 2 mm (ovalados en las filas de 2,54 mm) para que no se desprendan al perforar.
+- **Cobre en la cara inferior:** pistas de 0,9 mm como mínimo (1,2 mm en alimentación) y 1 mm de
+  separación entre cobres, que son las reglas del taller de CNC que fresa la placa. Los pads miden al
+  menos 2 mm; en las filas de 2,54 mm (ESP32, espadines y *jacks*) quedan ovalados de 1,5 × 2,4 mm para
+  respetar el milímetro entre pads vecinos. Freerouting rutea con 1,1 mm de separación y sin adelgazar
+  las pistas junto a los pines, para que el resultado final no baje de esos mínimos.
 - **Distribución por bloques:** las entradas de las pinzas y la de 5 V en el borde izquierdo, frente a
   los *jacks* de la pared; la bornera del ZMPT101B en el borde superior, junto al tabique; el ESP32 a la
   derecha, sobre zócalos y con el USB hacia el frente; el conector de la LCD a la
   derecha, con sus pines en el mismo orden que los del ESP32, y el LED y los pulsadores en el centro.
 - **Ruteo:** Freerouting 2.5, con la cara de arriba como «capa de puentes». Lo que no cabe en una cara
-  se resuelve con **2 puentes de alambre** del lado de los componentes (Tabla 6), dibujados en
-  la serigrafía como JP1 y JP2. C5 y C6 van girados para que su pata de VBIAS quede a la altura de la
+  se resuelve con **10 puentes de alambre** (13 tramos) del lado de los componentes (Tabla 6), dibujados
+  en la serigrafía como JP1 a JP10. Con las reglas anteriores (0,8 mm y 0,45 mm) bastaban 2: la separación
+  de 1 mm reduce los canales por donde pasan las pistas. C5 y C6 van girados para que su pata de VBIAS quede a la altura de la
   manga (S) de su *jack* y la pista de VBIAS cruce recta.
 - **Relleno de GND** en toda la cara libre: hay menos cobre que disolver y las señales analógicas
   tienen una referencia común. Se deja sin relleno la zona bajo la antena del ESP32.
@@ -532,8 +536,9 @@ a partir de la netlist del esquemático, con la interfaz de Python de KiCad (`pc
 
 La verificación de reglas de diseño (DRC) con comparación contra el esquemático termina con
 **0 conexiones pendientes, 0 diferencias con el esquemático y ninguna violación de separación**
-([`hardware/drc.rpt`](hardware/drc.rpt)). Quedan 2 advertencias que no afectan la fabricación:
-la línea de serigrafía de cada puente (JP1 y JP2) toca su propio nombre. Las reglas que se relajan a propósito son la
+([`hardware/drc.rpt`](hardware/drc.rpt)). Todas las pistas miden 0,9 mm o más y todos los cobres quedan a 1 mm o más. Quedan advertencias que no
+afectan la fabricación: 39 textos de serigrafía que se tocan y 3 extremos de puentes dentro del patio de
+otro componente. Las reglas que se relajan a propósito son la
 diferencia con la huella de biblioteca, porque los pads se agrandaron, y la serigrafía recortada por
 esos pads.
 
@@ -547,8 +552,16 @@ esquina superior izquierda, vista desde los componentes.
 
 | Puente | Red | Desde | Hasta | Largo |
 |---|---|---|---|---|
-| JP1 | LED_EST | (71,2; 40,0) junto a R11 | (74,8; 44,8) junto a R11 | 6 mm |
-| JP2 | V_ADC | (83,0; 18,8) junto a J7 | (83,0; 39,6) junto al ESP32 | 21 mm |
+| JP1 | Entrada de 5 V (J1.1) | (9,5; 73,3) junto a J1 | (10,4; 80,9) junto a J1 | 8 mm |
+| JP2 | +5V | (15,3; 42,6) junto a R6 | (16,0; 68,9) junto a R4 | 26 mm |
+| JP3 | CH1_ADC | (47,1; 40,2) junto a D4 | (74,7; 35,6) junto al ESP32 | 28 mm |
+| JP4 | CH2_ADC | (52,0; 48,9) junto a TP5 | (76,8; 37,8) junto al ESP32 | 27 mm |
+| JP5 | +3V3 (4 tramos) | (61,5; 9,6) junto a D7 | (85,6; 16,4) junto a J7, pasando por (64,8; 18,7), (70,5; 24,8) y (72,1; 15,7) | 40 mm |
+| JP6 | +5V | (62,7; 78,5) junto a R14 | (78,5; 76,7) junto a SW2 | 16 mm |
+| JP7 | Ánodo de D8 | (63,1; 58,5) junto a R13 | (66,2; 69,1) junto a D8 | 11 mm |
+| JP8 | SW1 | (64,6; 62,4) junto a C10 | (69,8; 68,0) junto a C11 | 8 mm |
+| JP9 | RES_IO34 | (69,0; 22,0) junto a J7 | (81,4; 39,4) junto al ESP32 | 21 mm |
+| JP10 | V_ADC | (83,9; 31,3) junto al ESP32 | (85,3; 10,7) junto a TP2 | 21 mm |
 
 Fuente: elaboración propia a partir de [`hardware/fabricacion/PUENTES.md`](hardware/fabricacion/PUENTES.md).
 
@@ -579,7 +592,7 @@ Fuente: elaboración propia.
    cobre entre pistas.
 4. Perforar con brocas de 0,8, 1,0 y 1,3 mm según el archivo de taladros (1,3 mm para las borneras) y
    de 3,2 mm para los agujeros M3.
-5. Soldar primero los **puentes de alambre** (JP1 y JP2), después los componentes de menor a mayor
+5. Soldar primero los **puentes de alambre** (JP1 a JP10), después los componentes de menor a mayor
    altura, los lazos de los puntos de prueba y al final los zócalos del ESP32.
 6. Antes de energizar, seguir la verificación de la sección 7.9.
 
@@ -1408,7 +1421,8 @@ Fuente: elaboración propia.
    el circuito en placa perforada. Como la entrega exige una PCB fabricada, después se diseñó una PCB
    de **una sola cara**, que se puede hacer en el laboratorio con transferencia de tóner. Para que
    cupiera en una cara sin vías, el ruteo automático usa la cara de componentes como capa de puentes:
-   quedaron 2 puentes de alambre. La placa perforada queda como alternativa.
+   quedaron 10 puentes de alambre con las reglas del taller de CNC (pistas de 0,9 mm y 1 mm de
+   separación). La placa perforada queda como alternativa.
 6. **Pantalla.** El diseño empezó con una OLED SSD1306 de 0,96" por I2C. Se cambió por la LCD Waveshare
    de 1,9" (ST7789V2, SPI), que es la que se tiene: es a color, se lee mejor en el gabinete y no necesita
    resistencias de *pull-up*, pero usa seis pines en vez de dos. Hubo que cambiar el conector J6 a 8

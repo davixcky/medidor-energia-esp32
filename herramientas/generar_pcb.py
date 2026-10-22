@@ -5,7 +5,8 @@ Pensada para fabricarse en el laboratorio o en casa, por transferencia de tóner
 
 - cobre solo abajo (B.Cu) y componentes arriba; lo que no cabe en una cara se resuelve con
   puentes de alambre (JPn) del lado de los componentes, dibujados en la serigrafía;
-- pistas de 0,8 mm (1,2 mm en alimentación), separación de 0,5 mm y pads de al menos 2 mm;
+- pistas de 0,9 mm (1,2 mm en alimentación), separación de 1 mm (reglas del taller de CNC) y pads
+  de al menos 2 mm (1,5 mm a lo largo de las filas de 2,54 mm);
 - relleno de GND en toda la cara libre y cuatro agujeros M3 a 4 mm de las esquinas;
 - contorno de 150 × 90 mm (cabe en una baquelita de 10 × 15 cm), el mismo del gabinete.
 
@@ -42,7 +43,11 @@ LIBS = {"Medidor": os.path.join(HW, "Medidor.pretty")}
 FP_SIS = "/usr/share/kicad/footprints"
 
 W, H = 150.0, 90.0
-PISTA, PISTA_ALIM, SEP = 0.8, 1.2, 0.5
+# Reglas del taller de CNC: pistas de 0,9 mm como mínimo y 1 mm de separación entre cobres.
+PISTA, PISTA_ALIM, SEP = 0.9, 1.2, 1.0
+# Freerouting rutea con algo más de separación: a veces adelgaza un tramo junto a un pin y, al
+# devolverlo a 0,9 mm, la separación final sigue quedando en 1 mm o más.
+SEP_RUTA = SEP + float(os.environ.get("MARGEN_SEP", 0.1))
 REDES_ALIM = {"GND", "+5V", "+3V3", "Net-(J1-Pin_1)", "Net-(D1-A)"}
 COSTO_VIA = int(os.environ.get("VIA_COST", 400))        # cada vía es un puente: se encarecen
 COSTO_PUENTE = float(os.environ.get("JUMPER_COST", 20))
@@ -125,7 +130,7 @@ REF_POS = {"J1": (6.5, -1.0)}
 # - pth_inside_courtyard: los extremos de algunos puentes caen bajo el ESP32 (va en zócalo).
 SEVERIDADES = {"lib_footprint_mismatch": "ignore", "silk_over_copper": "ignore",
                "pth_inside_courtyard": "warning"}
-PISTA_MIN = 0.45   # ancho mínimo de la regla del proyecto (min_track_width)
+PISTA_MIN = PISTA  # ancho mínimo de la regla del proyecto (min_track_width)
 TEXTO_COBRE = [("MEDIDOR DE ENERGÍA ESP32\nREV. B", 1.5),
                ("MEDIDOR DE ENERGÍA ESP32", 1.5), ("MEDIDOR ESP32", 1.3)]
 
@@ -168,7 +173,9 @@ def agrandar_pads(fp):
             tx = max(tx, 2.4)
         if dx < 3 and dy >= 5:
             ty = max(ty, 2.4)
-        tx, ty = max(tx, sx), max(ty, sy)
+        # No se achica por debajo de la biblioteca salvo que haga falta para la separación mínima.
+        tx = max(tx, min(sx, dx - SEP - 0.04))
+        ty = max(ty, min(sy, dy - SEP - 0.04))
         if abs(tx - ty) > 0.01 and p.GetShape(pcbnew.F_Cu) == pcbnew.PAD_SHAPE_CIRCLE:
             p.SetShape(pcbnew.F_Cu, pcbnew.PAD_SHAPE_OVAL)
         p.SetSize(pcbnew.F_Cu, VECTOR2I(MM(tx), MM(ty)))
@@ -180,19 +187,19 @@ def construir():
     b.SetCopperLayerCount(2)
     ds = b.GetDesignSettings()
     ds.m_TrackMinWidth = MM(0.6)
-    ds.m_MinClearance = MM(SEP)
+    ds.m_MinClearance = MM(SEP_RUTA)
     ds.m_CopperEdgeClearance = MM(0.5)
     ds.m_ViasMinSize = MM(1.8)
     ds.m_MinThroughDrill = MM(0.8)
     ds.SetBoardThickness(MM(1.6))
     nc = ds.m_NetSettings.GetDefaultNetclass()
     nc.SetTrackWidth(MM(PISTA))
-    nc.SetClearance(MM(SEP))
+    nc.SetClearance(MM(SEP_RUTA))
     nc.SetViaDiameter(MM(2.0))
     nc.SetViaDrill(MM(0.8))
     alim = pcbnew.NETCLASS("Alimentacion")
     alim.SetTrackWidth(MM(PISTA_ALIM))
-    alim.SetClearance(MM(SEP))
+    alim.SetClearance(MM(SEP_RUTA))
     alim.SetViaDiameter(MM(2.0))
     alim.SetViaDrill(MM(0.8))
     ds.m_NetSettings.SetNetclass("Alimentacion", alim)
@@ -341,7 +348,9 @@ def rutear(b):
     if os.path.exists(ses):
         os.remove(ses)
     cmd = ["java", "-jar", FREEROUTING, "-de", dsn, "-do", ses, "-mp", os.environ.get("FR_PASES", "200"),
-           "-mt", os.environ.get("FR_HILOS", "4"), "--gui.enabled=false"]
+           "-mt", os.environ.get("FR_HILOS", "4"), "--gui.enabled=false",
+           # Sin adelgazar las pistas al llegar a los pines: el taller exige 0,9 mm en toda la pista.
+           "--router.automatic_neckdown=false"]
     subprocess.run(cmd, check=True, stdout=open(log, "w"), stderr=subprocess.STDOUT)
     res = re.findall(r"incomplete connections: (\d+)", open(log).read())
     print("freerouting: conexiones sin rutear =", res[-1] if res else "?")
@@ -509,7 +518,7 @@ def relleno_gnd(b):
     o.NewOutline()
     for x, y in ((1, 1), (W - 1, 1), (W - 1, H - 1), (1, H - 1)):
         o.Append(MM(OX + x), MM(OY + y))
-    z.SetLocalClearance(MM(0.8))
+    z.SetLocalClearance(MM(SEP))
     z.SetMinThickness(MM(0.6))
     z.SetThermalReliefGap(MM(0.6))
     z.SetThermalReliefSpokeWidth(MM(1.0))
@@ -552,12 +561,12 @@ def terminar(b):
     for it in list(b.GetFootprints()) + list(b.GetTracks()) + list(b.GetDrawings()):
         it.Move(desp)
     ds = b.GetDesignSettings()
-    # reglas finales (Freerouting deja algunos pasos a 0,45–0,5 mm)
-    ds.m_MinClearance = MM(0.45)
-    ds.m_TrackMinWidth = MM(0.45)
+    # reglas finales: las mismas del ruteo (taller de CNC)
+    ds.m_MinClearance = MM(SEP)
+    ds.m_TrackMinWidth = MM(PISTA)
     ds.m_CopperEdgeClearance = MM(0.4)
     for nc in (ds.m_NetSettings.GetDefaultNetclass(), ds.m_NetSettings.GetNetClassByName("Alimentacion")):
-        nc.SetClearance(MM(0.45))
+        nc.SetClearance(MM(SEP))
     ds.SetAuxOrigin(desp)
     ds.SetGridOrigin(desp)
     relleno_gnd(b)
@@ -567,7 +576,10 @@ def terminar(b):
 def escribir_proyecto():
     ruta = os.path.join(HW, "medidor-energia.kicad_pro")
     pro = json.load(open(ruta, encoding="utf-8"))
-    pro.setdefault("board", {}).setdefault("design_settings", {}).setdefault("rule_severities", {}).update(SEVERIDADES)
+    ds = pro.setdefault("board", {}).setdefault("design_settings", {})
+    ds.setdefault("rule_severities", {}).update(SEVERIDADES)
+    # mínimos del taller de CNC, para que el DRC de KiCad los revise
+    ds.setdefault("rules", {}).update({"min_clearance": SEP, "min_track_width": PISTA})
     json.dump(pro, open(ruta, "w", encoding="utf-8"), indent=2, ensure_ascii=False)
 
 
