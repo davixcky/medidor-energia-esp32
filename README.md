@@ -220,7 +220,7 @@ esquemático de la Ilustración 2.
 | 1 | U1 | Tarjeta ESP32-DevKitC V4, 38 pines (ESP32-WROOM-32) | 1 | Microcontrolador, ADC y Wi-Fi |
 | 2 | — | Pinza de corriente YHDC SCT-013-000, 100 A : 50 mA, sin resistencia de carga | 2 | Medición de corriente CH1 y CH2 |
 | 3 | U2 | Módulo sensor de tensión ZMPT101B (con LM358 y potenciómetro) | 1 | Medición aislada de tensión |
-| 4 | J6 | Pantalla OLED SSD1306 de 0,96", 128 × 64, I2C | 1 | Lectura local |
+| 4 | — | Pantalla LCD Waveshare de 1,9" (ST7789V2, 170 × 320, SPI), con su cable de 8 hilos | 1 | Lectura local |
 | 5 | — | Baquelita de una cara de 10 × 15 cm (FR-2 o FR-4), percloruro férrico, papel de transferencia y alambre UTP para los puentes | 1 | PCB del circuito (sección 7.7) |
 | 6 | — | Adaptador 100–240 V CA a 5,1 V CC (5,0–5,25 V), 2 A o más, con aislamiento certificado | 1 | Alimentación |
 | 7 | — | *Jack* de panel para alimentación de 5,5 × 2,1 mm | 1 | Entrada de 5 V en el gabinete |
@@ -238,7 +238,7 @@ esquemático de la Ilustración 2.
 | 19 | R3 | Resistencia 15 kΩ, 1 % | 1 | Divisor de polarización |
 | 20 | R4, R12, R13 | Resistencia 10 kΩ, 1 % | 3 | Polarización y *pull-up* de pulsadores |
 | 21 | R7, R8 | Resistencia 11 kΩ y 13 kΩ, 1 % (serie E24) | 1 + 1 | Divisor de tensión |
-| 22 | R9, R10 | Resistencia 4,7 kΩ | 2 | *Pull-up* del bus I2C |
+| 22 | J6 | Espadín macho 1 × 8, paso 2,54 mm | 1 | Conexión del cable de la LCD |
 | 23 | R11 | Resistencia 330 Ω | 1 | Limitación de corriente del LED |
 | 24 | C1 | Condensador electrolítico 470 µF, 10 V | 1 | Reserva de energía en 5 V |
 | 25 | C7 | Condensador electrolítico 10 µF, 16 V | 1 | Filtrado de VBIAS |
@@ -279,8 +279,8 @@ El esquemático completo se diseñó en **KiCad 10** (archivo
 [`hardware/medidor-energia.kicad_sch`](hardware/medidor-energia.kicad_sch), versión en PDF en
 [`hardware/medidor-energia.pdf`](hardware/medidor-energia.pdf)). La verificación eléctrica (ERC) termina
 con **0 errores y 0 advertencias** ([`hardware/erc.rpt`](hardware/erc.rpt)). Las conexiones entre bloques
-usan etiquetas de red con el mismo nombre: `CH1_ADC`, `CH2_ADC`, `V_ADC`, `VBIAS`, `ZMPT_OUT`, `I2C_SCL`,
-`I2C_SDA`, `LED_EST`, `SW1`, `SW2` y `RES_IO32/33/34`.
+usan etiquetas de red con el mismo nombre: `CH1_ADC`, `CH2_ADC`, `V_ADC`, `VBIAS`, `ZMPT_OUT`, `LCD_DIN`,
+`LCD_CLK`, `LCD_CS`, `LCD_DC`, `LCD_RST`, `LCD_BL`, `LED_EST`, `SW1`, `SW2` y `RES_IO32/33/34`.
 
 ![Esquemático](img/esquematico.png)
 
@@ -299,9 +299,13 @@ Fuente: elaboración propia en KiCad 10.
 | 5, 7, 8 | GPIO34, 32, 33 | `RES_IO34/32/33` | Reserva (CH3 a CH5) en J7 | Tres entradas del ADC1 reservadas para ampliar los canales del nodo |
 | 9 | GPIO25 | `LED_EST` | LED de estado | Pin de ADC2 usado solo como salida digital |
 | 10, 11 | GPIO26, 27 | `SW1`, `SW2` | Pulsadores | Pines de ADC2 usados solo como entradas digitales |
-| 25 | GPIO21 | `I2C_SDA` | Datos de la pantalla OLED | Pin I2C por defecto en el entorno de desarrollo |
-| 22 | GPIO22 | `I2C_SCL` | Reloj de la pantalla OLED | Pin I2C por defecto |
-| 1 | 3V3 | `+3V3` | Salida del regulador de la tarjeta | Alimenta polarización, diodos de recorte, OLED y *pull-up* |
+| 28 | GPIO18 | `LCD_CLK` | Reloj SPI de la LCD | SCK del bus VSPI |
+| 21 | GPIO23 | `LCD_DIN` | Datos SPI de la LCD | MOSI del bus VSPI; la pantalla no devuelve datos, así que no se usa MISO |
+| 22 | GPIO22 | `LCD_CS` | Selección de la LCD | Se evita GPIO5, el CS por defecto, porque es pin de arranque |
+| 25 | GPIO21 | `LCD_DC` | Dato o comando de la LCD | Salida digital libre |
+| 32 | GPIO4 | `LCD_RST` | Reinicio de la LCD | Salida digital libre |
+| 27 | GPIO19 | `LCD_BL` | Luz de fondo de la LCD | Salida PWM; se apaga tras 60 s sin pulsar |
+| 1 | 3V3 | `+3V3` | Salida del regulador de la tarjeta | Alimenta polarización, diodos de recorte, LCD y *pull-up* |
 | 19 | 5V | `+5V` | Entrada de alimentación | Viene del adaptador a través de F2 y D1 |
 | 14, 20, 26 | GND | `GND` | Tierra | El pin 14 recibe solo el GND analógico (sección 7.4.6) |
 
@@ -397,7 +401,7 @@ al riel superior y solo puede subir hasta unos 3,5 V, así que el pico útil a l
 #### 7.4.5. Alimentación
 
 - **Presupuesto de corriente:** ESP32 con Wi-Fi, 120 mA promedio con picos de hasta 500 mA durante la
-  transmisión; módulo ZMPT101B, unos 5 mA; pantalla OLED, unos 20 mA; LED, 3,6 mA. El pico total queda
+  transmisión; módulo ZMPT101B, unos 5 mA; pantalla LCD con luz de fondo, unos 30 mA; LED, 3,6 mA. El pico total queda
   por debajo de 550 mA, por lo que un adaptador de 2 A supera la corriente máxima prevista.
 - **F2 (PTC MF-R110):** conduce 1,1 A de forma continua y se abre por encima de unos 2,2 A. Protege el
   adaptador y el cableado ante un cortocircuito y se rearma solo cuando se retira la falla.
@@ -423,8 +427,10 @@ señales analógicas. Los tres pines GND se unen dentro del módulo, en su plano
 - **LED:** $I = (3{,}3 - 2{,}1)\ \text{V} / 330\ \Omega = 3{,}6$ mA, muy por debajo de los 40 mA máximos del pin.
 - **Pulsadores:** resistencia de *pull-up* de 10 kΩ y condensador de 100 nF a tierra, que forman un
   filtro contra rebotes de τ = 1 ms. El *firmware* añade un filtro de 20 ms por *software*.
-- **I2C:** las resistencias de *pull-up* de 4,7 kΩ aseguran un tiempo de subida de unos 0,4 µs con
-  100 pF de capacitancia de bus, compatible con el modo estándar de 100 kHz.
+- **LCD:** el módulo trabaja a 3,3 V, igual que los pines del ESP32, así que no necesita adaptador de
+  nivel. El SPI va a 40 MHz: una pantalla completa de 320 × 170 píxeles a 16 bits (109 kB) tarda unos
+  22 ms en enviarse. El *firmware* la dibuja en cinco franjas de 34 filas para no reservar un lienzo
+  completo en la RAM.
 
 ### 7.5. Justificación de cada componente
 
@@ -444,7 +450,6 @@ señales analógicas. Los tres pines GND se unen dentro del módulo, en su plano
 | F2 | PTC 1,1 A | Protege la entrada de 5 V | Un cortocircuito podría quemar pistas o el adaptador |
 | D1 | 1N5819 | Bloquea la polaridad invertida y la realimentación desde el USB | Un adaptador invertido destruiría la tarjeta |
 | C1, C2 | 470 µF / 100 nF | Reserva y desacoplamiento de 5 V | Reinicios del ESP32 durante las ráfagas Wi-Fi |
-| R9, R10 | 4,7 kΩ | Resistencias de *pull-up* del I2C | El bus queda flotante si el módulo OLED no las trae |
 | R11 | 330 Ω | Limita la corriente del LED | Sobrecorriente en el LED y en el pin |
 | R12, R13 + C10, C11 | 10 kΩ + 100 nF | Nivel alto en reposo y filtro contra rebotes | Lecturas falsas por rebote mecánico |
 | J7 | Espadín 1 × 4 | Expone las tres entradas restantes del ADC1 | Agregar un canal obligaría a modificar la placa |
@@ -465,7 +470,7 @@ Cada cable y cada pista se identifica por su función. El mismo código se usa e
 | Violeta | VBIAS (1,32 V) | 22 AWG |
 | Amarillo | Señales de corriente CH1 y CH2 (*jack* hacia la placa y salidas al ADC) | 22 AWG, par trenzado desde cada *jack* |
 | Verde | Señal de tensión (`ZMPT_OUT`, `V_ADC`) | 22 AWG |
-| Azul | Bus I2C (SDA, SCL) | 22 AWG |
+| Azul | Señales SPI de la LCD | 22 AWG |
 | Blanco | LED y pulsadores | 22 AWG |
 | Gris | Reserva del ADC1 (J7) | 22 AWG |
 | **Negro** | **Fase de la red, solo dentro del compartimento de red** | **18 AWG** |
@@ -493,20 +498,19 @@ a partir de la netlist del esquemático, con la interfaz de Python de KiCad (`pc
   pads de al menos 2 mm (ovalados en las filas de 2,54 mm) para que no se desprendan al perforar.
 - **Distribución por bloques:** las entradas de las pinzas y la de 5 V en el borde izquierdo, frente a
   los *jacks* de la pared; la bornera del ZMPT101B en el borde superior, junto al tabique; el ESP32 a la
-  derecha, sobre zócalos y con el USB hacia el frente; la OLED con sus resistencias de *pull-up* a la
-  derecha, y el LED y los pulsadores en el centro.
+  derecha, sobre zócalos y con el USB hacia el frente; el conector de la LCD a la
+  derecha, con sus pines en el mismo orden que los del ESP32, y el LED y los pulsadores en el centro.
 - **Ruteo:** Freerouting 2.5, con la cara de arriba como «capa de puentes». Lo que no cabe en una cara
-  se resuelve con **4 puentes de alambre** del lado de los componentes (Tabla 6), dibujados en
-  la serigrafía como JP1 a JP4.
+  se resuelve con **3 puentes de alambre** del lado de los componentes (Tabla 6), dibujados en
+  la serigrafía como JP1 a JP3.
 - **Relleno de GND** en toda la cara libre: hay menos cobre que disolver y las señales analógicas
   tienen una referencia común. Se deja sin relleno la zona bajo la antena del ESP32.
 - **Texto en el cobre** en espejo: en el papel se lee al revés y en la placa terminada, al derecho.
 
 La verificación de reglas de diseño (DRC) con comparación contra el esquemático termina con
 **0 conexiones pendientes, 0 diferencias con el esquemático y ninguna violación de separación**
-([`hardware/drc.rpt`](hardware/drc.rpt)). Quedan 9 advertencias que no afectan la fabricación:
-5 textos de serigrafía que se tocan y 4 extremos de puentes que caen dentro del patio de otro
-componente (tres bajo el ESP32, que va en zócalo). Las reglas que se relajan a propósito son la
+([`hardware/drc.rpt`](hardware/drc.rpt)). Quedan 3 advertencias que no afectan la fabricación:
+la línea de serigrafía del puente JP3 toca el contorno de J7 y su propio nombre. Las reglas que se relajan a propósito son la
 diferencia con la huella de biblioteca, porque los pads se agrandaron, y la serigrafía recortada por
 esos pads.
 
@@ -520,10 +524,9 @@ esquina superior izquierda, vista desde los componentes.
 
 | Puente | Red | Desde | Hasta | Largo |
 |---|---|---|---|---|
-| JP1 | CH1_ADC | (41,2; 27,8) junto a D2 | (79,4; 30,3) junto al ESP32 | 38 mm |
-| JP2 | CH2_ADC | (44,3; 31,0) junto a D3 | (90,2; 32,7) pin 2 del ESP32 | 46 mm |
-| JP3 | +3V3 | (67,0; 54,9) junto a R12 | (90,1; 66,7) bajo el ESP32 | 26 mm |
-| JP4 | RES_IO34 | (72,5; 24,7) junto a J7 | (80,6; 27,3) junto a J7 | 9 mm |
+| JP1 | CH2_ADC | (43,6; 47,1) junto a D4 | (60,9; 47,1) junto a R11 | 17 mm |
+| JP2 | CH1_ADC | (65,2; 38,6) junto a R11 | (71,3; 38,6) junto a R11 | 6 mm |
+| JP3 | V_ADC | (78,6; 16,5) junto a J7 | (81,8; 40,8) junto al pin 6 del ESP32 | 24 mm |
 
 Fuente: elaboración propia a partir de [`hardware/fabricacion/PUENTES.md`](hardware/fabricacion/PUENTES.md).
 
@@ -566,7 +569,8 @@ Fuente: elaboración propia.
   no se conecta; su pad solo sujeta el hilo.
 - **J1:** bornera que recibe los 5 V del *jack* de alimentación de panel.
 - **J5:** bornera del cable de tres hilos del módulo ZMPT101B, que atraviesa el tabique por un collarín.
-- **J6:** cable de 4 hilos a la pantalla OLED, montada en la tapa.
+- **J6:** espadín de 8 pines para el cable de la LCD, montada en la tapa. El cable del módulo termina en
+  conectores Dupont sueltos; el orden de J6 (VCC, GND, DIN, CS, DC, BL, CLK, RST) está en la serigrafía.
 - **D8, SW1 y SW2:** espadines con cables de dos hilos al LED y a los pulsadores de la tapa.
 
 #### 7.7.2. Alternativa: placa perforada
@@ -600,7 +604,7 @@ exporta KiCad y comprueba tres condiciones:
 2. Dos redes distintas nunca comparten un agujero ni una pista.
 3. Ninguna pista toca un pin marcado como "sin conexión".
 
-El resultado actual es: *"Conectividad verificada: 21 redes del esquemático coinciden con la placa
+El resultado actual es: *"Conectividad verificada: 25 redes del esquemático coinciden con la placa
 perforada"*. (Las piezas que no van en la placa, R1 y R2 en los *jacks* del panel y U2, J4 y F1 en el
 compartimento de red, están marcadas en el esquemático como fuera de la placa, de modo que sus redes
 exclusivas no se cuentan.) Se comprobó además que el programa detecta errores introducidos a propósito: un
@@ -620,11 +624,15 @@ conexión.
 | 7 | (18, 6) salida del canal de tensión | (36, 19) pin 35 | Verde | V_ADC |
 | 8 | (32, 19) J7-2 | (36, 20) pin 32 | Gris | RES_IO32 |
 | 9 | (32, 20) J7-3 | (36, 21) pin 33 | Gris | RES_IO33 |
-| 10 | (46, 16) pin 22 | (50, 16) | Azul | I2C_SCL |
-| 11 | (46, 19) pin 21 | (50, 17) | Azul | I2C_SDA |
-| 12 | (36, 22) pin 25 | (50, 22) R11 | Blanco | LED_EST |
-| 13 | (36, 23) pin 26 | (50, 26) | Blanco | SW1 |
-| 14 | (36, 24) pin 27 | (50, 30) | Blanco | SW2 |
+| 10 | (46, 15) pin 23 | (54, 14) J6-3 | Azul | LCD_DIN |
+| 11 | (46, 16) pin 22 | (54, 15) J6-4 | Azul | LCD_CS |
+| 12 | (46, 19) pin 21 | (54, 16) J6-5 | Azul | LCD_DC |
+| 13 | (46, 21) pin 19 | (54, 17) J6-6 | Azul | LCD_BL |
+| 14 | (46, 22) pin 18 | (54, 18) J6-7 | Azul | LCD_CLK |
+| 15 | (46, 26) pin 4 | (54, 19) J6-8 | Azul | LCD_RST |
+| 16 | (36, 22) pin 25 | (50, 22) R11 | Blanco | LED_EST |
+| 17 | (36, 23) pin 26 | (50, 26) | Blanco | SW1 |
+| 18 | (36, 24) pin 27 | (50, 30) | Blanco | SW2 |
 
 Fuente: elaboración propia.
 
@@ -641,7 +649,7 @@ lo divide en dos compartimentos:
   por un collarín en el tabique, de modo que la distancia de fuga entre zonas supera los 8 mm.
 - **Compartimento de MBT (frontal):** PCB sobre cuatro separadores M3 de 10 mm, *jacks* de las
   pinzas y *jack* de alimentación en la pared izquierda, y ventana para el USB en la pared frontal.
-- **Tapa:** ventana de 26,5 × 15 mm para la pantalla OLED, que queda rehundida 1,5 mm para protegerla
+- **Tapa:** ventana de 44 × 24 mm para la pantalla LCD de 1,9", que queda rehundida 1,5 mm para protegerla
   de golpes, LED de estado, dos pulsadores y el rótulo de advertencia sobre la zona de red.
 
 ![Gabinete](img/gabinete.png)
@@ -902,7 +910,7 @@ por lo que conserva la posición de cada componente del diseño de la PCB.
 zona de red, con el módulo ZMPT101B, el portafusible F1, la bornera J4 y el prensaestopas PG7, de la
 zona de muy baja tensión. Allí va la placa sobre separadores de 10 mm. Los *jacks* de las pinzas y el de
 alimentación están en la pared izquierda, y la ventana del USB en la pared frontal (Ilustraciones
-13 a 15). La tapa lleva la ventana rehundida de la OLED, el LED, los pulsadores y los rótulos
+13 a 15). La tapa lleva la ventana rehundida de la LCD, el LED, los pulsadores y los rótulos
 grabados.
 
 ![Medidor cerrado](img/3d-medidor-cerrado.png)
@@ -960,7 +968,7 @@ cd C2-ABPR/freecad
 
 ### 7.14. Interfaz de usuario
 
-El sistema tiene dos interfaces: la pantalla OLED del gabinete, para leer el medidor en el sitio, y una
+El sistema tiene dos interfaces: la pantalla LCD del gabinete, para leer el medidor en el sitio, y una
 plataforma web, para el histórico, el pronóstico y las alertas. Las dos usan el mismo registro de 40 B del
 contrato ADR-001 que el ESP32 produce una vez por segundo.
 
@@ -1034,34 +1042,40 @@ nodo. Fuente: elaboración propia en TanStack Start.
 **Ilustración 20.** Tablero en un teléfono de 390 px de ancho: inicio, potencia de 24 h con
 pronóstico y alertas. Fuente: elaboración propia en TanStack Start.
 
-#### 7.14.2. Pantalla OLED y pulsadores
+#### 7.14.2. Pantalla LCD y pulsadores
 
-La OLED SSD1306 de 128 × 64 píxeles tiene cuatro pantallas en ciclo y dos que aparecen según el evento
-(Ilustración 21). Se dibujaron píxel por píxel con la misma fuente de 5 × 7 que usará el *firmware*,
-que no tiene tildes. La Tabla 15 resume la función de los pulsadores y del LED, y la Ilustración
-22 muestra la navegación.
+La pantalla es una LCD Waveshare de 1,9" con controlador ST7789V2, de 170 × 320 píxeles a color, que el
+*firmware* usa en horizontal (320 × 170). Tiene cuatro pantallas en ciclo y tres que aparecen según el
+evento: arranque, alerta y tara (Ilustración 21; el arranque aparece en la Ilustración 22). El dibujo está en una biblioteca aparte del
+*firmware* ([`firmware/lib/interfaz/`](firmware/lib/interfaz/)) que solo usa Adafruit GFX, de modo que
+el mismo código se compila también en el PC y escribe las imágenes de este documento
+(`make -C firmware/test pantallas`). La prueba compara además la pantalla completa con la que se arma
+por franjas, como la envía el ESP32, y las dos resultan iguales. Las fuentes de Adafruit GFX no tienen
+tildes, por eso los textos de la pantalla van sin ellas. Los valores de las imágenes son de ejemplo. La
+Tabla 15 resume la función de los pulsadores y del LED, y la Ilustración 22 muestra la navegación.
 
 **Tabla 15.** Función de los pulsadores y del LED de estado.
 
 | Elemento | Acción | Resultado |
 |---|---|---|
-| SW1 | Pulsación corta | Pasa a la siguiente pantalla: Resumen → CH1 → CH2 → Energía y red |
-| SW2 | Sostenido 2 s en CH1 o CH2 | Abre la tara del canal (cero de corriente sin carga) |
-| SW2 | Sostenido 2 s en la tara | Guarda el nuevo cero (SW1 cancela) |
+| SW1 | Pulsación corta | Pasa a la siguiente pantalla: Resumen → CH1 → CH2 → Energía hoy |
+| SW2 | Sostenido 2 s en CH1 o CH2 | Abre la tara del canal |
+| SW2 | Sostenido 2 s en la tara | Mide el ruido del canal sin carga y lo guarda; SW1 vuelve al canal |
 | SW2 | Pulsación en la pantalla de alerta | Reconoce la alerta y vuelve al resumen |
-| SW1 o SW2 | Con la pantalla apagada | Enciende la pantalla (se apaga tras 60 s sin pulsar) |
+| SW1 o SW2 | Con la luz de fondo apagada | La enciende en la misma pantalla (se apaga tras 60 s sin pulsar) |
 | LED D8 | Fijo | Registros entregados a la plataforma en los últimos 15 s |
-| LED D8 | Parpadeo a 1 Hz | Sin red: los registros se guardan en la memoria flash (LittleFS) |
+| LED D8 | Parpadeo a 1 Hz | Sin envío: los registros se guardan en la RAM, hasta 20 min |
 | LED D8 | Parpadeo a 5 Hz | Alerta sin reconocer |
 
 Fuente: elaboración propia.
 
-![Pantallas de la OLED](img/ui-oled-pantallas.png)
+![Pantallas de la LCD](img/ui-lcd-pantallas.png)
 
-**Ilustración 21.** Las seis pantallas de la OLED a tamaño de píxel. Fuente: elaboración propia en
-Python.
+**Ilustración 21.** Pantallas de la LCD dibujadas por el código del *firmware*, dentro del contorno
+del módulo (51,2 × 27,3 mm). Fuente: elaboración propia con
+[`firmware/test/pantallas.cpp`](firmware/test/pantallas.cpp).
 
-![Navegación de la OLED](img/ui-oled-navegacion.png)
+![Navegación de la LCD](img/ui-lcd-navegacion.png)
 
 **Ilustración 22.** Navegación entre pantallas con SW1 y SW2, y estados del LED. Fuente: elaboración
 propia en Graphviz.
@@ -1182,7 +1196,7 @@ columnas `tiempo,kwh,temp`) y los pesos entrenados `lstm.pt`.
 ### 7.16. *Firmware*
 
 El *firmware* ([`firmware/`](firmware/)) está escrito en C++ con PlatformIO y el *framework* Arduino para
-ESP32 (ESP-IDF 4.4). Compila sin errores y ocupa el 30 % de la RAM y el 74 % de la memoria de programa.
+ESP32 (ESP-IDF 4.4). Compila sin errores y ocupa el 30 % de la RAM y el 75 % de la memoria de programa.
 Se reparte en tres tareas de FreeRTOS (Tabla 17).
 
 **Tabla 17.** Tareas del *firmware*.
@@ -1191,7 +1205,7 @@ Se reparte en tres tareas de FreeRTOS (Tabla 17).
 |---|---|---|
 | 1 | Adquisición | Muestrea V, CH1 y CH2 a 8.000 muestras/s por canal con el ADC1 y cierra una ventana de 60 ciclos de red (≈ 1 s). Entrega los resultados por una cola; falta verificar la estabilidad del muestreo con Wi-Fi activo |
 | 0 | Red | Wi-Fi, hora por NTP, un registro ADR-001 por ventana, búfer de 1.200 registros (20 min sin red) y envío en lotes cada 5 s |
-| 0 | Interfaz | Pantallas de la OLED, pulsadores SW1 y SW2, LED de estado y alerta local |
+| 0 | Interfaz | Pantallas de la LCD, pulsadores SW1 y SW2, LED de estado y alerta local |
 
 Fuente: elaboración propia.
 
@@ -1279,7 +1293,7 @@ propia en Python y Matplotlib.
 | Banco de medición: diseño y esquemático | 8 | Terminada |
 | Simulación SPICE de las entradas y la alimentación | 8 | Terminada |
 | Modelos 3D del medidor y del banco | 8 | Terminada |
-| Diseño de la interfaz (tablero web y OLED) | 8 | Terminada |
+| Diseño de la interfaz (tablero web y LCD) | 8 | Terminada |
 | LSTM inicial con datos públicos | 8 | Terminada |
 | Compra de componentes | 5–9 | En curso, con retraso |
 | Gabinete: diseño y fabricación | 7–10 | En curso |
@@ -1315,9 +1329,12 @@ Fuente: elaboración propia.
    el circuito en placa perforada. Como la entrega exige una PCB fabricada, después se diseñó una PCB
    de **una sola cara**, que se puede hacer en el laboratorio con transferencia de tóner. Para que
    cupiera en una cara sin vías, el ruteo automático usa la cara de componentes como capa de puentes:
-   quedaron 4 puentes de alambre. La placa perforada queda como alternativa.
-6. **Pantalla.** Se compraron pantallas TFT de 4", pero el diseño del gabinete y el consumo favorecen la
-   OLED SSD1306 de 0,96" por I2C, que usa solo dos pines. La TFT queda como alternativa.
+   quedaron 3 puentes de alambre. La placa perforada queda como alternativa.
+6. **Pantalla.** El diseño empezó con una OLED SSD1306 de 0,96" por I2C. Se cambió por la LCD Waveshare
+   de 1,9" (ST7789V2, SPI), que es la que se tiene: es a color, se lee mejor en el gabinete y no necesita
+   resistencias de *pull-up*, pero usa seis pines en vez de dos. Hubo que cambiar el conector J6 a 8
+   pines, volver a rutear la PCB (pasó de 4 a 3 puentes), agrandar la ventana de la tapa y rehacer las
+   pantallas del *firmware*.
 7. **Errores encontrados en simulación.** La simulación en ngspice mostró que el filtro de entrada
    original permitía superar la tensión máxima absoluta del pin ante sobrecorrientes grandes y que un adaptador de
    4,75 V no alcanza para el regulador durante las ráfagas de Wi-Fi. Se corrigieron antes de comprar los
@@ -1420,7 +1437,7 @@ C2-ABPR/
 ├── plataforma/                       aplicación TanStack Start (frontend + backend), ver su README
 ├── firmware/                         firmware del ESP32 (PlatformIO), ver su README
 ├── interfaz/
-│   └── oled.py                       pantallas de la OLED y diagrama de navegación
+│   └── navegacion.py                 diagrama de navegación de la LCD
 ├── pronostico/
 │   ├── modelo.py                     datos y red LSTM
 │   ├── train.py                      entrenamiento, evaluación y gráficas
@@ -1450,9 +1467,9 @@ cd ../herramientas
 python3 placa_perforada.py      # falla si la placa no coincide con la netlist
 python3 figuras.py
 python3 simulacion.py > ../simulacion/resultados.md
-cd ../interfaz && python3 oled.py
 cd ../plataforma && pnpm install && pnpm test && pnpm build && pnpm capturas
-cd ../firmware && make -C test && pio run
+cd ../firmware && pio pkg install && make -C test && make -C test pantallas && pio run
+cd ../interfaz && python3 navegacion.py
 cd ../herramientas && freecadcmd modelo_devkitc.py
 python3 generar_pcb.py          # 'rutear' para rutear de nuevo (java + freerouting.jar)
 ./exportar_fabricacion.sh       # fabricación, vistas 3D, STEP y DRC

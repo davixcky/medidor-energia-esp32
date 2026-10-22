@@ -152,7 +152,7 @@ function Tablero() {
       {simulado && (
         <div className="sim" role="note">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: 'var(--warn)', flex: 'none', marginTop: 1 }}><path d="M12 3 2 21h20z" /><path d="M12 10v5M12 18v.5" /></svg>
-          <div><b>Datos del simulador.</b> Los registros llegan del script <code>pnpm simular</code>, que envía a <code>POST /api/ingesta</code> las mismas tramas ADR-001 de 40 B que enviará el ESP32. Cuando el nodo real transmita, el tablero mostrará su versión de <i>firmware</i> y este aviso desaparecerá.</div>
+          <div><b>Datos del simulador.</b> Los registros vienen del simulador, que genera las mismas tramas ADR-001 de 40 B que enviará el ESP32. Cuando el nodo real transmita, el tablero mostrará su versión de <i>firmware</i> y este aviso desaparecerá.</div>
         </div>
       )}
 

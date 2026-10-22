@@ -61,13 +61,38 @@ pnpm simular --dias 21                    # en otra terminal: 21 días de histó
   `pnpm db:prueba` y luego `DATABASE_URL=postgres://postgres:prueba@localhost:54329/postgres pnpm test`.
 - Capturas del tablero: `pnpm capturas` (usa Chrome instalado; escribe en `../img/ui-tablero-*.png`).
 - Exportar de nuevo los pesos del LSTM tras reentrenarlo: `pnpm exportar-lstm`.
-- Variables (en `.env`): `DATABASE_URL` (obligatoria), `PORT` (3000), `DB_CONEXIONES` (5), `TEMP_CONSTANTE`.
+- Variables (en `.env`): `DATABASE_URL` (obligatoria salvo con `DEMO=1`), `DEMO`, `PORT` (3000),
+  `DB_CONEXIONES` (5), `TEMP_CONSTANTE`.
+- Sin Supabase: `DEMO=1 pnpm start` (ver el modo de demostración, abajo).
 
 El simulador genera el consumo de una vivienda de la costa Caribe (carga base, nevera que cicla, aire
 acondicionado en CH2, picos de cocina) y envía **exactamente** lo que enviará el ESP32: tramas binarias
 ADR-001 con las cabeceras `X-Nodo` y `X-Firmware`. Su versión de *firmware* termina en `-sim`, y el
 tablero muestra un aviso mientras los datos vengan del simulador. Opciones: `--url`, `--nodo`, `--dias`,
 `--paso` (segundos entre registros del histórico, 10 por defecto) y `--solo-historico`.
+
+## Modo de demostración y despliegue (Railway / Render)
+
+Con `DEMO=1` el servidor no necesita Supabase. Al primer pedido levanta un Postgres en memoria
+([PGlite](https://pglite.dev)) con la misma migración, carga 21 días del simulador (un registro cada
+30 s, unos 5 s de arranque) a través de la misma función de ingesta que usa el ESP32 y luego agrega un
+registro por segundo. Energía, umbrales P95, alertas y pronóstico salen del mismo código que en
+producción, y el tablero muestra el aviso de datos del simulador. `POST /api/ingesta` sigue
+funcionando, pero lo recibido vive en memoria y se pierde al reiniciar. Los registros de más de 22 días
+se borran cada hora para que la memoria no crezca (el proceso ocupa unos 180 MB).
+
+El `Dockerfile` de esta carpeta construye la imagen (Node 22, pnpm, `pnpm build`) y sirve
+`.output/server/index.mjs`, que escucha en `PORT`.
+
+- **Railway:** *New Project → Deploy from GitHub repo* → elegir el repositorio. En el servicio, *Settings →
+  Source → Root Directory* = `plataforma` (Railway detecta el `Dockerfile`); en *Variables*, `DEMO=1`; en
+  *Settings → Networking*, *Generate Domain*. `railway.json` fija la comprobación de salud en `/api/ultimo`
+  (para que Railway lo lea, *Settings → Config-as-code → Railway Config File* = `/plataforma/railway.json`).
+- **Render:** *New → Blueprint* → elegir el repositorio; usa `render.yaml` de la raíz (servicio web con
+  Docker, carpeta `plataforma`, plan gratuito, `DEMO=1`). El plan gratuito se duerme tras 15 min sin
+  visitas y el primer pedido tarda en despertar; al despertar se vuelven a generar los datos.
+- **Con Supabase en lugar de la demostración:** quitar `DEMO`, poner `DATABASE_URL` y correr una vez
+  `pnpm db:migrar` desde una máquina con esa variable.
 
 ## Contrato ADR-001 (40 B, little-endian, sin relleno)
 

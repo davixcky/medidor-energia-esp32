@@ -2,3 +2,5 @@
 include/secretos.h
 test/prueba
 test/trama
+test/pantallas
+test/salida/

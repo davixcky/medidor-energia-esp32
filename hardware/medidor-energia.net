@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "/home/davixcky/dev/.personal/electronica/medidor-energia-esp32/hardware/medidor-energia.kicad_sch")
-		(date "2026-10-21T17:05:26")
+		(date "2026-10-21T20:32:59")
 		(tool "Eeschema 10.0.0")
 		(sheet
 			(number "1")
@@ -471,7 +471,7 @@
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "62f3acb2-a705-53f1-a6ec-9b2a0441c25f")
+			(tstamps "baf49e18-fd32-5318-9954-75a1a2f3bce6")
 			(units
 				(unit
 					(name "A")
@@ -525,7 +525,7 @@
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "77d2ac9c-8b7e-5ca9-9b91-ae52b6466b47")
+			(tstamps "464e7cb9-af67-5a41-a6c6-280aae2ab414")
 			(units
 				(unit
 					(name "A")
@@ -957,7 +957,7 @@
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "baf49e18-fd32-5318-9954-75a1a2f3bce6")
+			(tstamps "241dec5c-9218-5e62-993b-239faeacc1bd")
 			(units
 				(unit
 					(name "A")
@@ -1253,11 +1253,11 @@
 		)
 		(comp
 			(ref "J6")
-			(value "OLED (GND VCC SCL SDA)")
-			(footprint "Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical")
+			(value "LCD (VCC GND DIN CS DC BL CLK RST)")
+			(footprint "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical")
 			(fields
 				(field
-					(name "Footprint") "Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical")
+					(name "Footprint") "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical")
 				(field
 					(name "Datasheet")
 				)
@@ -1267,8 +1267,8 @@
 			)
 			(libsource
 				(lib "Connector_Generic")
-				(part "Conn_01x04")
-				(description "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)")
+				(part "Conn_01x08")
+				(description "Generic connector, single row, 01x08, script generated (kicad-library-utils/schlib/autogen/connector/)")
 			)
 			(property
 				(name "Sheetname")
@@ -1306,6 +1306,18 @@
 						)
 						(pin
 							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "8")
 						)
 					)
 				)
@@ -1350,7 +1362,7 @@
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "2dd773df-c71d-50b7-87d0-a44da2277845")
+			(tstamps "77d2ac9c-8b7e-5ca9-9b91-ae52b6466b47")
 			(units
 				(unit
 					(name "A")
@@ -1696,114 +1708,6 @@
 			)
 		)
 		(comp
-			(ref "R9")
-			(value "4,7k")
-			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
-			(fields
-				(field
-					(name "Footprint") "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description")
-				)
-			)
-			(libsource
-				(lib "Device")
-				(part "R")
-				(description "Resistor")
-			)
-			(property
-				(name "Sheetname")
-				(value "")
-			)
-			(property
-				(name "Sheetfile")
-				(value "medidor-energia.kicad_sch")
-			)
-			(property
-				(name "ki_keywords")
-				(value "R res resistor")
-			)
-			(property
-				(name "ki_fp_filters")
-				(value "R_*")
-			)
-			(sheetpath
-				(names "/")
-				(tstamps "/")
-			)
-			(tstamps "9612fe72-9139-5763-89af-d8e933b3bd51")
-			(units
-				(unit
-					(name "A")
-					(pins
-						(pin
-							(num "1")
-						)
-						(pin
-							(num "2")
-						)
-					)
-				)
-			)
-		)
-		(comp
-			(ref "R10")
-			(value "4,7k")
-			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
-			(fields
-				(field
-					(name "Footprint") "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
-				(field
-					(name "Datasheet")
-				)
-				(field
-					(name "Description")
-				)
-			)
-			(libsource
-				(lib "Device")
-				(part "R")
-				(description "Resistor")
-			)
-			(property
-				(name "Sheetname")
-				(value "")
-			)
-			(property
-				(name "Sheetfile")
-				(value "medidor-energia.kicad_sch")
-			)
-			(property
-				(name "ki_keywords")
-				(value "R res resistor")
-			)
-			(property
-				(name "ki_fp_filters")
-				(value "R_*")
-			)
-			(sheetpath
-				(names "/")
-				(tstamps "/")
-			)
-			(tstamps "241dec5c-9218-5e62-993b-239faeacc1bd")
-			(units
-				(unit
-					(name "A")
-					(pins
-						(pin
-							(num "1")
-						)
-						(pin
-							(num "2")
-						)
-					)
-				)
-			)
-		)
-		(comp
 			(ref "R11")
 			(value "330")
 			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
@@ -1842,7 +1746,7 @@
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "57ae7d60-5944-5c20-88f6-7349452f0add")
+			(tstamps "9612fe72-9139-5763-89af-d8e933b3bd51")
 			(units
 				(unit
 					(name "A")
@@ -1896,7 +1800,7 @@
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "5db94449-4d4f-5360-bad7-44ae9e28006b")
+			(tstamps "b4a24b88-6271-5c72-af38-5bd278ad178b")
 			(units
 				(unit
 					(name "A")
@@ -1950,7 +1854,7 @@
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "a287e7f4-34ba-590b-af2d-496b28321c30")
+			(tstamps "62f3acb2-a705-53f1-a6ec-9b2a0441c25f")
 			(units
 				(unit
 					(name "A")
@@ -2000,7 +1904,7 @@
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "8b43c920-c98e-5699-8a16-666d9cd23ab3")
+			(tstamps "57ae7d60-5944-5c20-88f6-7349452f0add")
 			(units
 				(unit
 					(name "A")
@@ -2050,7 +1954,7 @@
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "499ce0a1-baa5-55a3-a4d5-4c3efc752e60")
+			(tstamps "d0614082-efa1-5870-be13-d48d8fe1a8ea")
 			(units
 				(unit
 					(name "A")
@@ -2375,6 +2279,70 @@
 				(pin
 					(num "4")
 					(name "Pin_4")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Connector_Generic")
+			(part "Conn_01x08")
+			(description "Generic connector, single row, 01x08, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			(footprints
+				(fp "Connector*:*_1x??_*")
+			)
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "Conn_01x08")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Generic connector, single row, 01x08, script generated (kicad-library-utils/schlib/autogen/connector/)")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "Pin_1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "Pin_2")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "Pin_3")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "Pin_4")
+					(type "passive")
+				)
+				(pin
+					(num "5")
+					(name "Pin_5")
+					(type "passive")
+				)
+				(pin
+					(num "6")
+					(name "Pin_6")
+					(type "passive")
+				)
+				(pin
+					(num "7")
+					(name "Pin_7")
+					(type "passive")
+				)
+				(pin
+					(num "8")
+					(name "Pin_8")
 					(type "passive")
 				)
 			)
@@ -2965,13 +2933,8 @@
 			)
 			(node
 				(ref "J6")
-				(pin "2")
-				(pinfunction "Pin_2_2")
-				(pintype "passive")
-			)
-			(node
-				(ref "R10")
-				(pin "2")
+				(pin "1")
+				(pinfunction "Pin_1_1")
 				(pintype "passive")
 			)
 			(node
@@ -2986,11 +2949,6 @@
 			)
 			(node
 				(ref "R3")
-				(pin "1")
-				(pintype "passive")
-			)
-			(node
-				(ref "R9")
 				(pin "1")
 				(pintype "passive")
 			)
@@ -3102,17 +3060,46 @@
 		)
 		(net
 			(code "5")
-			(name "/I2C_SCL")
+			(name "/LCD_BL")
 			(class "Default")
 			(node
 				(ref "J6")
-				(pin "3")
-				(pinfunction "Pin_3_3")
+				(pin "6")
+				(pinfunction "Pin_6_6")
 				(pintype "passive")
 			)
 			(node
-				(ref "R9")
-				(pin "2")
+				(ref "U1")
+				(pin "27")
+				(pinfunction "IO19_27")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "6")
+			(name "/LCD_CLK")
+			(class "Default")
+			(node
+				(ref "J6")
+				(pin "7")
+				(pinfunction "Pin_7_7")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "28")
+				(pinfunction "IO18_28")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "7")
+			(name "/LCD_CS")
+			(class "Default")
+			(node
+				(ref "J6")
+				(pin "4")
+				(pinfunction "Pin_4_4")
 				(pintype "passive")
 			)
 			(node
@@ -3123,18 +3110,13 @@
 			)
 		)
 		(net
-			(code "6")
-			(name "/I2C_SDA")
+			(code "8")
+			(name "/LCD_DC")
 			(class "Default")
 			(node
 				(ref "J6")
-				(pin "4")
-				(pinfunction "Pin_4_4")
-				(pintype "passive")
-			)
-			(node
-				(ref "R10")
-				(pin "1")
+				(pin "5")
+				(pinfunction "Pin_5_5")
 				(pintype "passive")
 			)
 			(node
@@ -3145,7 +3127,41 @@
 			)
 		)
 		(net
-			(code "7")
+			(code "9")
+			(name "/LCD_DIN")
+			(class "Default")
+			(node
+				(ref "J6")
+				(pin "3")
+				(pinfunction "Pin_3_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "21")
+				(pinfunction "IO23_21")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "10")
+			(name "/LCD_RST")
+			(class "Default")
+			(node
+				(ref "J6")
+				(pin "8")
+				(pinfunction "Pin_8_8")
+				(pintype "passive")
+			)
+			(node
+				(ref "U1")
+				(pin "32")
+				(pinfunction "IO4_32")
+				(pintype "bidirectional")
+			)
+		)
+		(net
+			(code "11")
 			(name "/LED_EST")
 			(class "Default")
 			(node
@@ -3161,7 +3177,7 @@
 			)
 		)
 		(net
-			(code "8")
+			(code "12")
 			(name "/RES_IO32")
 			(class "Default")
 			(node
@@ -3178,7 +3194,7 @@
 			)
 		)
 		(net
-			(code "9")
+			(code "13")
 			(name "/RES_IO33")
 			(class "Default")
 			(node
@@ -3195,7 +3211,7 @@
 			)
 		)
 		(net
-			(code "10")
+			(code "14")
 			(name "/RES_IO34")
 			(class "Default")
 			(node
@@ -3212,7 +3228,7 @@
 			)
 		)
 		(net
-			(code "11")
+			(code "15")
 			(name "/SW1")
 			(class "Default")
 			(node
@@ -3239,7 +3255,7 @@
 			)
 		)
 		(net
-			(code "12")
+			(code "16")
 			(name "/SW2")
 			(class "Default")
 			(node
@@ -3266,7 +3282,7 @@
 			)
 		)
 		(net
-			(code "13")
+			(code "17")
 			(name "/VBIAS")
 			(class "Default")
 			(node
@@ -3301,7 +3317,7 @@
 			)
 		)
 		(net
-			(code "14")
+			(code "18")
 			(name "/V_ADC")
 			(class "Default")
 			(node
@@ -3339,7 +3355,7 @@
 			)
 		)
 		(net
-			(code "15")
+			(code "19")
 			(name "/ZMPT_OUT")
 			(class "Default")
 			(node
@@ -3355,7 +3371,7 @@
 			)
 		)
 		(net
-			(code "16")
+			(code "20")
 			(name "GND")
 			(class "Alimentacion")
 			(node
@@ -3441,8 +3457,8 @@
 			)
 			(node
 				(ref "J6")
-				(pin "1")
-				(pinfunction "Pin_1_1")
+				(pin "2")
+				(pinfunction "Pin_2_2")
 				(pintype "passive")
 			)
 			(node
@@ -3493,7 +3509,7 @@
 			)
 		)
 		(net
-			(code "17")
+			(code "21")
 			(name "Net-(D1-A)")
 			(class "Alimentacion")
 			(node
@@ -3509,7 +3525,7 @@
 			)
 		)
 		(net
-			(code "18")
+			(code "22")
 			(name "Net-(D8-A)")
 			(class "Default")
 			(node
@@ -3525,7 +3541,7 @@
 			)
 		)
 		(net
-			(code "19")
+			(code "23")
 			(name "Net-(J1-Pin_1)")
 			(class "Alimentacion")
 			(node
@@ -3541,7 +3557,7 @@
 			)
 		)
 		(net
-			(code "20")
+			(code "24")
 			(name "Net-(J2-PadT)")
 			(class "Default")
 			(node
@@ -3556,7 +3572,7 @@
 			)
 		)
 		(net
-			(code "21")
+			(code "25")
 			(name "Net-(J3-PadT)")
 			(class "Default")
 			(node
@@ -3571,7 +3587,7 @@
 			)
 		)
 		(net
-			(code "25")
+			(code "29")
 			(name "unconnected-(J2-PadR)")
 			(class "Default")
 			(node
@@ -3581,7 +3597,7 @@
 			)
 		)
 		(net
-			(code "26")
+			(code "30")
 			(name "unconnected-(J3-PadR)")
 			(class "Default")
 			(node
@@ -3591,7 +3607,7 @@
 			)
 		)
 		(net
-			(code "27")
+			(code "31")
 			(name "unconnected-(U1-CLK{slash}IO6-Pad38)")
 			(class "Default")
 			(node
@@ -3602,7 +3618,7 @@
 			)
 		)
 		(net
-			(code "28")
+			(code "32")
 			(name "unconnected-(U1-CMD{slash}IO11-Pad18)")
 			(class "Default")
 			(node
@@ -3613,7 +3629,7 @@
 			)
 		)
 		(net
-			(code "29")
+			(code "33")
 			(name "unconnected-(U1-EN-Pad2)")
 			(class "Default")
 			(node
@@ -3624,7 +3640,7 @@
 			)
 		)
 		(net
-			(code "30")
+			(code "34")
 			(name "unconnected-(U1-IO0-Pad33)")
 			(class "Default")
 			(node
@@ -3635,7 +3651,7 @@
 			)
 		)
 		(net
-			(code "31")
+			(code "35")
 			(name "unconnected-(U1-IO2-Pad34)")
 			(class "Default")
 			(node
@@ -3646,18 +3662,7 @@
 			)
 		)
 		(net
-			(code "32")
-			(name "unconnected-(U1-IO4-Pad32)")
-			(class "Default")
-			(node
-				(ref "U1")
-				(pin "32")
-				(pinfunction "IO4_32")
-				(pintype "bidirectional+no_connect")
-			)
-		)
-		(net
-			(code "33")
+			(code "36")
 			(name "unconnected-(U1-IO5-Pad29)")
 			(class "Default")
 			(node
@@ -3668,7 +3673,7 @@
 			)
 		)
 		(net
-			(code "34")
+			(code "37")
 			(name "unconnected-(U1-IO12-Pad13)")
 			(class "Default")
 			(node
@@ -3679,7 +3684,7 @@
 			)
 		)
 		(net
-			(code "35")
+			(code "38")
 			(name "unconnected-(U1-IO13-Pad15)")
 			(class "Default")
 			(node
@@ -3690,7 +3695,7 @@
 			)
 		)
 		(net
-			(code "36")
+			(code "39")
 			(name "unconnected-(U1-IO14-Pad12)")
 			(class "Default")
 			(node
@@ -3701,7 +3706,7 @@
 			)
 		)
 		(net
-			(code "37")
+			(code "40")
 			(name "unconnected-(U1-IO15-Pad35)")
 			(class "Default")
 			(node
@@ -3712,7 +3717,7 @@
 			)
 		)
 		(net
-			(code "38")
+			(code "41")
 			(name "unconnected-(U1-IO16-Pad31)")
 			(class "Default")
 			(node
@@ -3723,46 +3728,13 @@
 			)
 		)
 		(net
-			(code "39")
+			(code "42")
 			(name "unconnected-(U1-IO17-Pad30)")
 			(class "Default")
 			(node
 				(ref "U1")
 				(pin "30")
 				(pinfunction "IO17_30")
-				(pintype "bidirectional+no_connect")
-			)
-		)
-		(net
-			(code "40")
-			(name "unconnected-(U1-IO18-Pad28)")
-			(class "Default")
-			(node
-				(ref "U1")
-				(pin "28")
-				(pinfunction "IO18_28")
-				(pintype "bidirectional+no_connect")
-			)
-		)
-		(net
-			(code "41")
-			(name "unconnected-(U1-IO19-Pad27)")
-			(class "Default")
-			(node
-				(ref "U1")
-				(pin "27")
-				(pinfunction "IO19_27")
-				(pintype "bidirectional+no_connect")
-			)
-		)
-		(net
-			(code "42")
-			(name "unconnected-(U1-IO23-Pad21)")
-			(class "Default")
-			(node
-				(ref "U1")
-				(pin "21")
-				(pinfunction "IO23_21")
 				(pintype "bidirectional+no_connect")
 			)
 		)

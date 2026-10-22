@@ -12,9 +12,15 @@ constexpr adc1_channel_t ADC_V   = ADC1_CHANNEL_7;  // GPIO35, ZMPT101B
 constexpr int PIN_LED = 25;
 constexpr int PIN_SW1 = 26;   // menú / canal (activo en bajo, pull-up externo de 10 kΩ)
 constexpr int PIN_SW2 = 27;   // confirmar / tara
-constexpr int PIN_SDA = 21;
-constexpr int PIN_SCL = 22;
-constexpr uint8_t OLED_DIR = 0x3C;
+// LCD Waveshare de 1,9" (ST7789V2, 170 × 320) por SPI. Todos los pines están en el mismo lado
+// de la tarjeta (J3 del DevKitC); se evitan GPIO5 y GPIO15, que son pines de arranque.
+constexpr int PIN_LCD_CLK = 18;   // SCK del VSPI
+constexpr int PIN_LCD_DIN = 23;   // MOSI del VSPI
+constexpr int PIN_LCD_CS = 22;
+constexpr int PIN_LCD_DC = 21;
+constexpr int PIN_LCD_RST = 4;
+constexpr int PIN_LCD_BL = 19;    // luz de fondo, con PWM
+constexpr uint32_t LCD_SPI_HZ = 40000000;
 
 // ---- Muestreo
 constexpr uint32_t FS_HZ = 8000;        // muestras por segundo y por canal

@@ -33,7 +33,7 @@ digraph G {
     bias [label="VBIAS 1,32 V\ndivisor 15k/10k", fillcolor="#f3e5f5"];
     div  [label="Divisor 11k/13k\n+ C 27 nF\n+ recorte BAT85", fillcolor="#e8f5e9"];
     esp  [label="U1  ESP32-DevKitC V4\nADC1 12 bit · Wi-Fi\nGPIO36 / 39 / 35", fillcolor="#e3f2fd", penwidth=2];
-    oled [label="OLED SSD1306\nI2C 0x3C", fillcolor="#e3f2fd"];
+    oled [label="LCD 1,9\" ST7789V2\n170 × 320, SPI", fillcolor="#e3f2fd"];
     hmi  [label="LED de estado\nSW1, SW2", fillcolor="#e3f2fd"];
     res  [label="J7 reserva\nGPIO34 / 32 / 33", fillcolor="#eeeeee"];
     pwr  [label="Adaptador 5 V 2 A\n→ PTC → 1N5819", fillcolor="#ffebee"];
@@ -50,7 +50,7 @@ digraph G {
   b1 -> esp [label="CH1_ADC\nGPIO36", color="#b8860b"];
   b2 -> esp [label="CH2_ADC\nGPIO39", color="#b8860b"];
   div -> esp [label="V_ADC\nGPIO35", color="#2e7d32"];
-  esp -> oled [dir=both, color="#1565c0", label="GPIO21/22"];
+  esp -> oled [color="#1565c0", label="SPI\nGPIO18/23/22/21/4/19"];
   esp -> hmi [dir=both, label="GPIO25/26/27"];
   esp -> res [style=dashed];
   pwr -> esp [label="+5 V", color="#c62828"];
@@ -122,9 +122,9 @@ def gabinete():
     b.add_patch(Rectangle((0, yp), W, D - yp, fc="#ffcdd2", ec="none", alpha=0.6))
     b.text(W / 2, D - 20, "⚠ RIESGO ELÉCTRICO 120 V — NO ABRIR ENERGIZADO", ha="center", color="#b71c1c",
            fontsize=9, weight="bold")
-    b.add_patch(Rectangle((40, 55), 26.5, 15, fc="#0d1b2a", ec="black", lw=1.5))
-    b.text(53.25, 62.5, "OLED", color="#80deea", ha="center", va="center", fontsize=8)
-    b.text(53.25, 50, "ventana 26,5 × 15 mm\n(pantalla rehundida 1,5 mm)", ha="center", va="top", fontsize=7)
+    b.add_patch(Rectangle((33, 50.5), 44, 24, fc="#0d1b2a", ec="black", lw=1.5))
+    b.text(55, 62.5, "LCD 1,9\"", color="#80deea", ha="center", va="center", fontsize=8)
+    b.text(55, 46, "ventana 44 × 24 mm\n(pantalla rehundida 1,5 mm)", ha="center", va="top", fontsize=7)
     b.add_patch(Circle((95, 62.5), 4, fc="#66bb6a", ec="black"))
     b.text(95, 54, "D8 LED 5 mm", ha="center", va="top", fontsize=7)
     for x, n in ((125, "SW1\nmenú / canal"), (155, "SW2\nconfirmar / tara")):
@@ -243,7 +243,7 @@ def cronograma():
         ("Banco de medición: diseño y esquemático", 8, 8, "hecho"),
         ("Simulación SPICE de las entradas y la alimentación", 8, 8, "hecho"),
         ("Modelos 3D del medidor y del banco", 8, 8, "hecho"),
-        ("Diseño de la interfaz (tablero web y OLED)", 8, 8, "hecho"),
+        ("Diseño de la interfaz (tablero web y LCD)", 8, 8, "hecho"),
         ("LSTM inicial con datos públicos", 8, 8, "hecho"),
         ("Compra de componentes", 5, 9, "retraso"),
         ("Gabinete: diseño y fabricación", 7, 10, "curso"),

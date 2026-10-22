@@ -33,7 +33,7 @@ COLOR = {
     "VBIAS": "#8e44ad",   # violeta
     "CORR": "#e6c200",    # amarillo
     "TENS": "#2ca02c",    # verde
-    "I2C": "#1f5fbf",     # azul
+    "LCD": "#1f5fbf",     # azul
     "DIG": "#bdbdbd",     # blanco (gris claro para que se vea sobre el fondo)
     "RES": "#7f7f7f",     # gris
     "PRE": "#d62728",     # entrada de 5 V antes del diodo (rojo)
@@ -53,8 +53,8 @@ def clase_de_red(red):
         return "CORR"
     if red in ("ZMPT_OUT", "V_ADC"):
         return "TENS"
-    if red.startswith("I2C"):
-        return "I2C"
+    if red.startswith("LCD"):
+        return "LCD"
     if red.startswith("RES_"):
         return "RES"
     return "DIG"
@@ -178,16 +178,12 @@ def definir():
     puente((32, 20), (36, 21), "RES")
     pista((32, 21), (30, 21), (30, 20))
 
-    # ---- pantalla OLED J6 y resistencias de pull-up del I2C
-    pieza("J6", "hembra4v", {"1": (52, 14), "2": (52, 15), "3": (52, 16), "4": (52, 17)}, "J6 OLED")
-    pista((48, 14), (52, 14))
-    pista((52, 15), (57, 15))
-    puente((46, 16), (50, 16), "I2C")
-    pista((50, 16), (53, 16))
-    puente((46, 19), (50, 17), "I2C")
-    pista((50, 17), (53, 17))
-    pieza("R9", "res", {"2": (53, 16), "1": (57, 16)}, "R9")
-    pieza("R10", "res", {"1": (53, 17), "2": (57, 17)}, "R10")
+    # ---- pantalla LCD J6 (espadín macho 1×8; el cable del módulo termina en Dupont hembra)
+    # J6: 1 VCC, 2 GND, 3 DIN, 4 CS, 5 DC, 6 BL, 7 CLK, 8 RST. El pin 1 cae sobre el bus de +3V3.
+    pieza("J6", "macho8v", {str(k + 1): (54, 12 + k) for k in range(8)}, "J6 LCD")
+    pista((48, 14), (48, 13), (54, 13))    # GND
+    for pin_esp, pin_j6 in ((21, 3), (22, 4), (25, 5), (27, 6), (28, 7), (32, 8)):
+        puente((46, 14 + pin_esp - 20), (54, 11 + pin_j6), "LCD")
 
     # ---- LED de estado (LED en el panel, cable a un espadín de 2 pines)
     puente((36, 22), (50, 22), "DIG")
@@ -365,7 +361,7 @@ def dibujar(grupo_de_red, uf, ruta, espejo=False):
               else "Cara de componentes — placa perforada 9 × 15 cm, paso 2,54 mm")
     ax.set_title(titulo, fontsize=12, weight="bold")
     leyenda = [("+5 V", "5V"), ("+3,3 V", "3V3"), ("GND", "GND"), ("VBIAS 1,32 V", "VBIAS"),
-               ("Señal de corriente", "CORR"), ("Señal de tensión", "TENS"), ("I2C", "I2C"),
+               ("Señal de corriente", "CORR"), ("Señal de tensión", "TENS"), ("LCD (SPI)", "LCD"),
                ("LED y pulsadores", "DIG"), ("Reserva ADC1", "RES")]
     for i, (t, k) in enumerate(leyenda):
         x0 = 1 + i * 6.3
@@ -466,7 +462,7 @@ def dibujar_piezas(ax, X, Y):
                 ax.add_patch(Circle((x - 0.6, y), 0.5, fc="#bdc3c7", ec="#555", zorder=6))
                 ax.plot([x - 0.9, x - 0.3], [y, y], color="#555", lw=1, zorder=7)
             ax.text(min(xs) + 1.0, y1 + 0.9, texto, fontsize=7, weight="bold", zorder=6)
-        elif tipo in ("hembra4v", "macho2v"):
+        elif tipo in ("hembra4v", "macho2v", "macho8v"):
             y0, y1 = min(ys), max(ys)
             ax.add_patch(Rectangle((xs[0] - 0.5, y0 - 0.5), 1.0, (y1 - y0) + 1.0,
                                    fc="#212121" if tipo == "hembra4v" else "#424242", ec="black", zorder=5))

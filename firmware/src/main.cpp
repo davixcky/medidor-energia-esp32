@@ -2,21 +2,21 @@
 //
 // Núcleo 1: tarea de adquisición. Muestrea V, I1 e I2 a 8 kS/s por canal y calcula una
 // ventana de 60 ciclos (≈ 1 s). Solo entrega resultados por cola: nunca toca la red.
-// Núcleo 0: red (Wi-Fi, NTP, POST de registros ADR-001 en lotes), pantalla OLED, pulsadores
+// Núcleo 0: red (Wi-Fi, NTP, POST de registros ADR-001 en lotes), pantalla LCD, pulsadores
 // y LED de estado.
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
+#include <Adafruit_ST7789.h>
 #include <Arduino.h>
 #include <HTTPClient.h>
 #include <Preferences.h>
 #include <WiFi.h>
-#include <Wire.h>
+#include <SPI.h>
 #include <esp_adc_cal.h>
 #include <esp_timer.h>
 #include <time.h>
 
 #include "adr001.h"
 #include "config.h"
+#include "interfaz.h"
 #include "medicion.h"
 #include "secretos.h"
 
@@ -33,6 +33,8 @@ static volatile bool pedir_tara = false;
 static volatile int canal_tara = 0;
 
 static double energia_hoy_wh = 0;
+static float energia_hora_wh[24] = {};
+static int hora_actual = -1;
 static int dia_actual = -1;
 static uint32_t inicio_alerta = 0;
 static bool alerta_activa = false, alerta_reconocida = false;
@@ -43,7 +45,9 @@ static int rssi = 0;
 static uint8_t bufer[BUFER_REGISTROS][adr001::TAMANO];
 static size_t cabeza = 0, cantidad = 0;
 
-Adafruit_SSD1306 oled(128, 64, &Wire, -1);
+Adafruit_ST7789 lcd(PIN_LCD_CS, PIN_LCD_DC, PIN_LCD_RST);
+constexpr int16_t ALTO_FRANJA = 34;   // 5 franjas de 34 filas = 170 filas; 21,8 kB de RAM
+static interfaz::Franja franja(ALTO_FRANJA);
 Preferences prefs;
 
 // ---------------------------------------------------------------- adquisición (núcleo 1)
@@ -149,8 +153,14 @@ static void actualizar_energia_y_alerta(const medicion::Resultado& r) {
   if (t > 1700000000 && local.tm_yday != dia_actual) {
     dia_actual = local.tm_yday;
     energia_hoy_wh = 0;
+    for (float& e : energia_hora_wh) e = 0;
   }
-  energia_hoy_wh += r.p[0] * (r.muestras / (float)FS_HZ) / 3600.0;
+  double wh = r.p[0] * (r.muestras / (float)FS_HZ) / 3600.0;
+  energia_hoy_wh += wh;
+  if (t > 1700000000) {
+    hora_actual = local.tm_hour;
+    energia_hora_wh[hora_actual] += wh;
+  }
   if (r.p[0] > UMBRAL_ALERTA_W) {
     if (inicio_alerta == 0) inicio_alerta = millis();
     if (!alerta_activa && millis() - inicio_alerta >= ALERTA_SOSTENIDA_S * 1000UL) {
@@ -195,115 +205,34 @@ static void tarea_red(void*) {
 }
 
 // ---------------------------------------------------------------- interfaz local (núcleo 0)
-enum Pantalla { RESUMEN, CH1, CH2, ENERGIA, N_CICLO, ALERTA, TARA };
-static Pantalla pantalla = RESUMEN;
+using interfaz::Pantalla;
+static Pantalla pantalla = interfaz::RESUMEN;
 static uint32_t ultima_pulsacion = 0;
 
-static void encabezado(const char* titulo, int pagina) {
-  oled.fillRect(0, 0, 128, 10, SSD1306_WHITE);
-  oled.setTextColor(SSD1306_BLACK);
-  oled.setTextSize(1);
-  oled.setCursor(2, 1);
-  oled.print(titulo);
-  if (pagina > 0) {
-    oled.setCursor(104, 1);
-    oled.printf("%d/4", pagina);
+static void dibujar(const medicion::Resultado& r) {
+  interfaz::Datos d{};
+  d.r = r;
+  d.energia_hoy_kwh = energia_hoy_wh / 1000.0;
+  for (int h = 0; h < 24; ++h) d.energia_hora_kwh[h] = energia_hora_wh[h] / 1000.0f;
+  d.hora = hora_actual;
+  d.wifi = WiFi.status() == WL_CONNECTED;
+  d.rssi = rssi;
+  d.servidor_ok = millis() - ultimo_envio_ok < 15000;
+  d.bufer = cantidad;
+  d.umbral_w = UMBRAL_ALERTA_W;
+  d.alerta_min = inicio_alerta ? (millis() - inicio_alerta) / 60000 : 0;
+  d.canal_tara = canal_tara;
+  d.ruido_tara = cal.ruido_i[canal_tara];
+  d.version = FW_VERSION;
+  // Se dibuja la pantalla completa en cada franja y se envía solo la parte que le toca.
+  for (int16_t y0 = 0; y0 < interfaz::ALTO; y0 += ALTO_FRANJA) {
+    franja.origen(y0);
+    interfaz::dibujar(franja, pantalla, d);
+    lcd.drawRGBBitmap(0, y0, franja.getBuffer(), interfaz::ANCHO, ALTO_FRANJA);
   }
-  oled.setTextColor(SSD1306_WHITE);
 }
 
-static void dibujar(const medicion::Resultado& r) {
-  oled.clearDisplay();
-  char b[24];
-  switch (pantalla) {
-    case RESUMEN:
-      encabezado("RESUMEN", 1);
-      oled.setTextSize(2);
-      snprintf(b, sizeof b, "%.0f W", r.p[0]);
-      oled.setCursor((128 - strlen(b) * 12) / 2, 14);
-      oled.print(b);
-      oled.setTextSize(1);
-      oled.setCursor(0, 34);
-      oled.printf("V %.1fV  I %.2fA", r.v_rms, r.i_rms[0]);
-      oled.setCursor(0, 44);
-      oled.printf("FP %.2f  f %.2fHz", r.fp[0], r.f_hz);
-      oled.setCursor(0, 54);
-      oled.printf("CH2 %.0fW RES %.0fW", r.p[1], r.p[0] - r.p[1]);
-      break;
-    case CH1:
-    case CH2: {
-      int c = pantalla == CH1 ? 0 : 1;
-      encabezado(c == 0 ? "CH1 TOTAL" : "CH2 SUBCIRC.", c + 2);
-      oled.setTextSize(2);
-      snprintf(b, sizeof b, "%.2f A", r.i_rms[c]);
-      oled.setCursor((128 - strlen(b) * 12) / 2, 14);
-      oled.print(b);
-      oled.setTextSize(1);
-      oled.setCursor(0, 32);
-      oled.printf("P  %6.0f W", r.p[c]);
-      oled.setCursor(0, 41);
-      oled.printf("S  %6.0f VA", r.s[c]);
-      oled.setCursor(0, 50);
-      if (c == 0) oled.printf("FP %.2f THD %.1f%%", r.fp[c], r.thd_i1);
-      else oled.printf("FP %.2f", r.fp[c]);
-      float escala = c == 0 ? 60.0f : 30.0f;
-      oled.drawRect(26, 58, 100, 6, SSD1306_WHITE);
-      oled.fillRect(26, 58, (int)constrain(r.i_rms[c] / escala * 100, 0, 100), 6, SSD1306_WHITE);
-      oled.setCursor(0, 58);
-      oled.printf("%.0fA", escala);
-      break;
-    }
-    case ENERGIA: {
-      encabezado("ENERGIA HOY", 4);
-      oled.setTextSize(2);
-      snprintf(b, sizeof b, "%.2fkWh", energia_hoy_wh / 1000.0);
-      oled.setCursor((128 - strlen(b) * 12) / 2, 14);
-      oled.print(b);
-      oled.setTextSize(1);
-      oled.setCursor(0, 34);
-      if (WiFi.status() == WL_CONNECTED) oled.printf("WIFI %ddBm OK", rssi);
-      else oled.print("WIFI SIN RED");
-      oled.setCursor(0, 44);
-      oled.print(millis() - ultimo_envio_ok < 15000 ? "SERVIDOR OK" : "SERVIDOR SIN ENVIO");
-      oled.setCursor(0, 54);
-      oled.printf("BUFER %u REG", (unsigned)cantidad);
-      break;
-    }
-    case ALERTA:
-      encabezado("! ALERTA CH1", 0);
-      oled.setTextSize(2);
-      snprintf(b, sizeof b, "%.0f W", r.p[0]);
-      oled.setCursor((128 - strlen(b) * 12) / 2, 14);
-      oled.print(b);
-      oled.setTextSize(1);
-      oled.setCursor(0, 34);
-      oled.printf("SOBRE UMBRAL %.0fW", UMBRAL_ALERTA_W);
-      oled.setCursor(0, 44);
-      oled.printf("DURANTE %lu min", (unsigned long)((millis() - inicio_alerta) / 60000));
-      oled.fillRect(0, 54, 128, 10, SSD1306_WHITE);
-      oled.setTextColor(SSD1306_BLACK);
-      oled.setCursor(2, 55);
-      oled.print("SW2: RECONOCER");
-      oled.setTextColor(SSD1306_WHITE);
-      break;
-    case TARA:
-      encabezado(canal_tara == 0 ? "TARA CH1" : "TARA CH2", 0);
-      oled.setCursor(0, 14);
-      oled.print("RETIRE LA CARGA");
-      oled.setCursor(0, 24);
-      oled.print("RUIDO ACTUAL");
-      oled.setTextSize(2);
-      oled.setCursor(10, 34);
-      oled.printf("%.2f A", cal.ruido_i[canal_tara]);
-      oled.setTextSize(1);
-      oled.setCursor(0, 56);
-      oled.print("SW2 2s:OK SW1:SALIR");
-      break;
-    default:
-      break;
-  }
-  oled.display();
-}
+static void luz_fondo(bool encendida) { ledcWrite(0, encendida ? 200 : 0); }
 
 struct Boton {
   explicit Boton(int p) : pin(p) {}
@@ -331,6 +260,7 @@ static int leer(Boton& b) {
 }
 
 static void tarea_interfaz(void*) {
+  using namespace interfaz;
   Boton sw1(PIN_SW1), sw2(PIN_SW2);
   bool apagada = false;
   uint32_t ultimo_dibujo = 0;
@@ -340,7 +270,7 @@ static void tarea_interfaz(void*) {
       ultima_pulsacion = millis();
       if (apagada) {
         apagada = false;
-        oled.ssd1306_command(SSD1306_DISPLAYON);
+        luz_fondo(true);
         e1 = e2 = 0;
       }
     }
@@ -366,7 +296,7 @@ static void tarea_interfaz(void*) {
     }
     if (!apagada && millis() - ultima_pulsacion > 60000 && pantalla != ALERTA) {
       apagada = true;
-      oled.ssd1306_command(SSD1306_DISPLAYOFF);
+      luz_fondo(false);
     }
     // LED: fijo = servidor al día, 1 Hz = sin red, 5 Hz = alerta sin reconocer.
     uint32_t m = millis();
@@ -375,7 +305,7 @@ static void tarea_interfaz(void*) {
     else if (m - ultimo_envio_ok < 15000) led = true;
     else led = (m / 500) % 2;
     digitalWrite(PIN_LED, led);
-    if (!apagada && m - ultimo_dibujo > 250) {
+    if (!apagada && m - ultimo_dibujo > 500) {
       ultimo_dibujo = m;
       medicion::Resultado r;
       portENTER_CRITICAL(&mux);
@@ -410,18 +340,27 @@ void setup() {
   cal.ruido_i[1] = prefs.getFloat("ruido2", 0.0f);
   medir_retardo_multiplexado();
 
-  Wire.begin(PIN_SDA, PIN_SCL);
-  if (!oled.begin(SSD1306_SWITCHCAPVCC, OLED_DIR)) Serial.println("OLED no encontrada");
-  oled.clearDisplay();
-  oled.setTextColor(SSD1306_WHITE);
-  oled.setCursor(0, 0);
-  oled.printf("Medidor de energia\n%s\nIniciando...", FW_VERSION);
-  oled.display();
+  ledcSetup(0, 5000, 8);   // luz de fondo de la LCD
+  ledcAttachPin(PIN_LCD_BL, 0);
+  luz_fondo(true);
+  SPI.begin(PIN_LCD_CLK, -1, PIN_LCD_DIN, PIN_LCD_CS);
+  lcd.init(170, 320);
+  lcd.setSPISpeed(LCD_SPI_HZ);
+  lcd.setRotation(1);      // horizontal, 320 × 170, con el conector a la izquierda
+  {
+    interfaz::Datos d{};
+    d.version = FW_VERSION;
+    for (int16_t y0 = 0; y0 < interfaz::ALTO; y0 += ALTO_FRANJA) {
+      franja.origen(y0);
+      interfaz::dibujar(franja, interfaz::ARRANQUE, d);
+      lcd.drawRGBBitmap(0, y0, franja.getBuffer(), interfaz::ANCHO, ALTO_FRANJA);
+    }
+  }
 
   cola_resultados = xQueueCreate(8, sizeof(medicion::Resultado));
   xTaskCreatePinnedToCore(tarea_adquisicion, "adquisicion", 6144, nullptr, 20, nullptr, 1);
   xTaskCreatePinnedToCore(tarea_red, "red", 8192, nullptr, 5, nullptr, 0);
-  xTaskCreatePinnedToCore(tarea_interfaz, "interfaz", 4096, nullptr, 3, nullptr, 0);
+  xTaskCreatePinnedToCore(tarea_interfaz, "interfaz", 6144, nullptr, 3, nullptr, 0);
 }
 
 void loop() {

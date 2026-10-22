@@ -99,10 +99,8 @@ COLOCACION = {
     "D8": (62.0, 72.0, 90),
     "SW1": (69.0, 72.0, 90),
     "SW2": (76.0, 72.0, 90),
-    # OLED (I2C) a la derecha del ESP32 con sus resistencias de pull-up
-    "J6": (128.0, 34.0, 0),
-    "R9": (122.0, 52.0, 0),
-    "R10": (122.0, 57.0, 0),
+    # LCD (SPI) a la derecha del ESP32: los pines de J6 siguen el orden de los del DevKitC
+    "J6": (124.0, 24.92, 0),
 }
 # referencias que quedarían fuera del borde: desplazamiento (mm) desde el origen de la huella
 REF_POS = {"J1": (6.5, -1.0)}

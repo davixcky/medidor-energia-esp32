@@ -332,6 +332,7 @@ H_BORNE2 = "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.
 H_BORNE3 = "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal"
 H_JACK = "Connector_Audio:Jack_3.5mm_CUI_SJ1-3523N_Horizontal"
 H_PH4 = "Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical"
+H_PH8 = "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical"
 
 
 def canal_corriente(sch, n, y0, r_burden, nota_burden):
@@ -505,7 +506,8 @@ def construir():
     usados_izq = {1: ("pwr", "+3V3"), 3: ("lbl", "CH1_ADC"), 4: ("lbl", "CH2_ADC"), 5: ("lbl", "RES_IO34"),
                   6: ("lbl", "V_ADC"), 7: ("lbl", "RES_IO32"), 8: ("lbl", "RES_IO33"), 9: ("lbl", "LED_EST"),
                   10: ("lbl", "SW1"), 11: ("lbl", "SW2"), 14: ("gnd", None), 19: ("pwr", "+5V")}
-    usados_der = {20: ("gnd", None), 22: ("lbl", "I2C_SCL"), 25: ("lbl", "I2C_SDA"), 26: ("gnd", None)}
+    usados_der = {20: ("gnd", None), 21: ("lbl", "LCD_DIN"), 22: ("lbl", "LCD_CS"), 25: ("lbl", "LCD_DC"),
+                  26: ("gnd", None), 27: ("lbl", "LCD_BL"), 28: ("lbl", "LCD_CLK"), 32: ("lbl", "LCD_RST")}
     u1 = sch.colocar("Medidor:ESP32-DevKitC-38", "U1", "ESP32-DevKitC V4 (38 pines)", ux, uy,
                      ref_at=(ux - 2.54, uy - 27.94), val_at=(ux - 15.24, uy + 29.21),
                      nc=[str(k) for k in range(1, 39) if k not in usados_izq and k not in usados_der])
@@ -521,7 +523,8 @@ def construir():
             sch.power("GND", xe, p[1], rot=270)
     for k, (tipo, nombre) in usados_der.items():
         p = u1[str(k)]
-        xe = p[0] + 10.16
+        # GND más cerca del pin para que su texto no tape las etiquetas de los pines vecinos.
+        xe = p[0] + (12.7 if tipo == "lbl" else 5.08)
         sch.cable(p, (xe, p[1]))
         if tipo == "lbl":
             sch.etiqueta(nombre, xe, p[1])
@@ -530,27 +533,21 @@ def construir():
     sch.texto("Analógicas solo en ADC1 (GPIO32–39):\nel ADC2 no funciona con Wi-Fi activo.\nGPIO6–11 = flash interna: no se usan.",
               236.22, 190.5, 1.1)
 
-    # ---------------- pantalla OLED
-    sch.texto("PANTALLA OLED SSD1306 128×64 (I2C, 0x3C)", 299.72, 83.82, 1.8, True)
-    j6 = sch.colocar("Connector_Generic:Conn_01x04", "J6", "OLED (GND VCC SCL SDA)", 342.9, 101.6,
-                     huella=H_PH4, ref_at=(345.44, 96.52), val_at=(345.44, 109.22))
-    g, v, scl, sda = j6["1"], j6["2"], j6["3"], j6["4"]
-    sch.cable(g, (330.2, g[1]), (330.2, 93.98))
-    sch.power("GND", 330.2, 93.98, rot=180)
-    sch.cable(v, (325.12, v[1]), (325.12, 93.98))
-    sch.power("+3V3", 325.12, 93.98)
-    r9 = sch.colocar("Device:R", "R9", "4,7k", 312.42, 100.33, huella=H_R,
-                     ref_at=(314.96, 99.06), val_at=(314.96, 101.6))
-    r10 = sch.colocar("Device:R", "R10", "4,7k", 317.5, 110.49, huella=H_R,
-                      ref_at=(320.04, 111.76), val_at=(320.04, 114.3))
-    sch.power("+3V3", 312.42, r9["1"][1])
-    sch.power("+3V3", 317.5, r10["2"][1], rot=180)
-    sch.cable((302.26, scl[1]), (312.42, scl[1]), scl)
-    sch.cable(r9["2"], (312.42, scl[1]))
-    sch.cable((302.26, sda[1]), (317.5, sda[1]), sda)
-    sch.cable(r10["1"], (317.5, sda[1]))
-    sch.etiqueta("I2C_SCL", 302.26, scl[1], "izq")
-    sch.etiqueta("I2C_SDA", 302.26, sda[1], "izq")
+    # ---------------- pantalla LCD
+    sch.texto("PANTALLA LCD 1,9\" ST7789V2 170×320 (SPI)", 299.72, 83.82, 1.8, True)
+    # Orden de pines igual al del lado derecho del ESP32, para que las pistas de la placa de una cara
+    # salgan rectas; el cable del módulo termina en conectores Dupont sueltos y se conecta hilo a hilo.
+    j6 = sch.colocar("Connector_Generic:Conn_01x08", "J6", "LCD (VCC GND DIN CS DC BL CLK RST)", 342.9, 104.14,
+                     huella=H_PH8, ref_at=(347.98, 101.6), val_at=(347.98, 106.68))
+    v, g = j6["1"], j6["2"]
+    sch.cable(v, (330.2, v[1]), (330.2, 91.44))
+    sch.power("+3V3", 330.2, 91.44)
+    sch.cable(g, (325.12, g[1]), (325.12, 91.44))
+    sch.power("GND", 325.12, 91.44, rot=180)
+    for k, nombre in enumerate(("LCD_DIN", "LCD_CS", "LCD_DC", "LCD_BL", "LCD_CLK", "LCD_RST")):
+        p = j6[str(k + 3)]
+        sch.cable(p, (320.04, p[1]))
+        sch.etiqueta(nombre, 320.04, p[1], "izq")
 
     # ---------------- LED de estado
     sch.texto("LED DE ESTADO", 299.72, 125.73, 1.8, True)

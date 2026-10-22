@@ -1,0 +1,13 @@
+# Blueprint de Render: New → Blueprint → este repositorio.
+services:
+  - type: web
+    name: medidor-energia
+    runtime: docker
+    rootDir: plataforma
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /api/ultimo
+    envVars:
+      - key: DEMO
+        value: "1"

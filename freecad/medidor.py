@@ -34,7 +34,7 @@ RESPALDO = {
     "J2": {"T": (3, 43), "S": (3, 45.2)},
     "J3": {"T": (3, 57), "S": (3, 59.2)},
     "J5": {"1": (5, 10), "2": (6.8, 10), "3": (8.6, 10)},
-    "J6": {str(k + 1): (128, 34 + k * 2.54) for k in range(4)},
+    "J6": {str(k + 1): (124, 24.92 + k * 2.54) for k in range(8)},
     "D8": {"1": (62, 72), "2": (64.54, 72)},
     "SW1": {"1": (69, 72), "2": (71.54, 72)},
     "SW2": {"1": (76, 72), "2": (78.54, 72)},
@@ -114,14 +114,14 @@ def tapa():
         t = t.cut(cilindro(3.4, 10, x, y, H_CUERPO - 5)).cut(Part.makeCone(1.7, 3.3, 1.6, V(x, y, H_CUERPO + E_TAPA - 1.6)))
         # el labio se recorta alrededor de los postes
         t = t.cut(cilindro(10, 4.5, x, y, H_CUERPO - 4.5))
-    # ventana OLED 26,5 × 15 con rebaje de 1,5 mm
-    t = t.cut(Part.makeBox(26.5, 15, 10, V(40, 55, H_CUERPO - 1)))
-    t = t.cut(Part.makeBox(32.5, 21, 1.5, V(37, 52, H_CUERPO + E_TAPA - 1.5)))
+    # ventana de la LCD de 1,9" (área activa 42,72 × 22,70) con rebaje de 1,5 mm
+    t = t.cut(Part.makeBox(44, 24, 10, V(33, 50.5, H_CUERPO - 1)))
+    t = t.cut(Part.makeBox(50, 30, 1.5, V(30, 47.5, H_CUERPO + E_TAPA - 1.5)))
     t = t.cut(cilindro(5.2, 10, 95, 62.5, H_CUERPO - 1))          # LED de estado
     for x in (125, 155):                                          # pulsadores de 12 mm
         t = t.cut(cilindro(12.2, 10, x, 62.5, H_CUERPO - 1))
     # rótulos grabados 0,6 mm
-    for s, tam, x, y in (("OLED", 4, 53.25, 47), ("ESTADO", 3.5, 95, 52), ("SW1", 3.5, 125, 52), ("SW2", 3.5, 155, 52),
+    for s, tam, x, y in (("PANTALLA", 3.5, 55, 42), ("ESTADO", 3.5, 95, 52), ("SW1", 3.5, 125, 52), ("SW2", 3.5, 155, 52),
                          ("MEDIDOR DE ENERGÍA", 6, 100, 22), ("CH1 TOTAL  -  CH2 SUBCIRCUITO", 3.5, 100, 14)):
         t = t.cut(texto(s, tam, x, y, H_CUERPO + E_TAPA - 0.6, 1))
     return t.removeSplitter()
@@ -245,23 +245,24 @@ def interior(m):
         usb = Part.makeBox(8, 6, 3.4, V(X_USB - 4, y_usb - 1, Z_USB - 1.7))
         usb = usb.cut(Part.makeBox(6.8, 5, 2.2, V(X_USB - 3.4, y_usb - 1.1, Z_USB - 1.1)))
         m.agregar("USB_DevKit_auxiliar", usb, "metal")
-    # bajo la tapa: OLED, LED y pulsadores
+    # bajo la tapa: LCD Waveshare de 1,9" (módulo de 51,2 × 27,3 mm), LED y pulsadores
     zt = H_CUERPO
-    m.agregar("OLED_modulo", Part.makeBox(27.3, 27.8, 1.6, V(39.6, 49.6, zt - 4.6)), "azul", "tapa")
-    m.agregar("OLED_pantalla", Part.makeBox(26.5, 15, 1.4, V(40, 55, zt - 3.0)), "oled", "tapa")
+    m.agregar("LCD_modulo", Part.makeBox(51.2, 27.3, 1.6, V(29.4, 48.85, zt - 4.6)), "azul", "tapa")
+    m.agregar("LCD_pantalla", Part.makeBox(42.72, 22.7, 1.4, V(33.64, 51.15, zt - 3.0)), "oled", "tapa")
     m.agregar("D8_LED", cilindro(5, 8, 95, 62.5, zt - 5).fuse(Part.makeSphere(2.5, V(95, 62.5, zt + 3))), "verde_led", "tapa")
     for nombre, x in (("SW1", 125), ("SW2", 155)):
         cu = cilindro(12, 12, x, 62.5, zt - 12)
         ta = cilindro(9, 4, x, 62.5, zt + 1)
         tu = cilindro(16, 2, x, 62.5, zt - 2.5).cut(cilindro(12, 3, x, 62.5, zt - 3))
         m.agregar(nombre, cu.fuse([ta, tu]), "gris", "tapa")
-    # Soportes del OLED unidos a la cara inferior de la tapa.
-    for x in (40.8, 65.5):
-        for y in (51, 76):
-            m.agregar(f"Soporte_OLED_{x}_{y}", cilindro(2.2, 3, x, y, zt - 3), "tapa", "tapa")
+    # Topes que sujetan el módulo de la LCD contra la cara inferior de la tapa.
+    for x in (27.6, 82.4):
+        for y in (52, 73):
+            m.agregar(f"Soporte_LCD_{x}_{y}", cilindro(2.2, 4.6, x, y, zt - 4.6), "tapa", "tapa")
     # Mazos de servicio: reserva de longitud por encima de los componentes.
     for ref, colores, destino in (
-        ("J6", ("negro", "rojo", "azul", "verde_led"), (48, 76, zt - 4.6)),
+        # J6: VCC, GND, DIN, CS, DC, BL, CLK, RST (cable del módulo con terminales Dupont)
+        ("J6", ("rojo", "negro", "azul", "naranja", "gris", "blanco", "verde_led", "naranja"), (44, 74, zt - 4.6)),
         ("D8", ("verde_led", "negro"), (94, 62.5, zt - 5)),
         ("SW1", ("verde_led", "negro"), (124, 62.5, zt - 12)),
         ("SW2", ("verde_led", "negro"), (154, 62.5, zt - 12)),
@@ -269,21 +270,21 @@ def interior(m):
         for k, col in enumerate(colores):
             inicio = pad(ref, k + 1, 8.5)
             fin = (destino[0] + k * 2.54, destino[1], destino[2])
-            carril = 65 + ("J6", "D8", "SW1", "SW2").index(ref) * 8 + k * 1.5
-            puntos = [inicio, (inicio[0], inicio[1], 43), (178 + k * 2, inicio[1], 46),
-                      (185 + k * 2, carril, 52), (165, 96 - k * 2, 55),
+            carril = {"J6": 56, "D8": 70, "SW1": 76, "SW2": 82}[ref] + k * 1.5
+            puntos = [inicio, (inicio[0], inicio[1], 43), (178 + k * 1.2, inicio[1], 46),
+                      (185 + k * 1.2, carril, 52), (165, 96 - k * 1.5, 55),
                       (fin[0], carril, 57), fin]
             o = m.agregar(f"Mazo_{ref}_{k}", tubo(puntos, 1.1), col)
             o.addProperty("Part::PropertyPartShape", "FormaAbierta", "Render")
             o.FormaAbierta = tubo([inicio, (inicio[0], inicio[1], 43),
-                                  (178 + k * 2, inicio[1], 46), (190, carril, 80 + k * 1.5),
+                                  (178 + k * 1.2, inicio[1], 46), (190, carril, 80 + k * 1.5),
                                   (220, carril, 83 + k * 1.5),
                                   (232, carril, -16),
                                   (fin[0] + W + 40, fin[1], -16),
                                   (fin[0] + W + 40, fin[1], fin[2] - H_CUERPO)], 1.1)
     # Pintura en el fondo del grabado para leer las leyendas en la presentación.
     for k, (leyenda, tam, x, y) in enumerate((
-        ("OLED", 4, 53.25, 47), ("ESTADO", 3.5, 95, 52),
+        ("PANTALLA", 3.5, 55, 42), ("ESTADO", 3.5, 95, 52),
         ("SW1", 3.5, 125, 52), ("SW2", 3.5, 155, 52),
         ("MEDIDOR DE ENERGÍA", 6, 100, 22),
         ("CH1 TOTAL  -  CH2 SUBCIRCUITO", 3.5, 100, 14),
