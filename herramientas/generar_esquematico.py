@@ -374,7 +374,10 @@ def canal_corriente(sch, n, y0, r_burden, nota_burden):
     sch.cable(pa["2"], (xc, yr), (xd, yr), (xf, yr))
     sch.etiqueta(adc, xf, yr)
     sch.power("+3V3", xd, pd1["1"][1])
-    sch.power("GND", xc, pc["2"][1])
+    # El condensador vuelve a VBIAS, el mismo nodo donde cierra la pinza: su corriente no pasa por C7–C8.
+    yvb = pc["2"][1] + 2.54
+    sch.cable(pc["2"], (xc, yvb))
+    sch.etiqueta("VBIAS", xc, yvb)
     sch.power("GND", xd, pd2["2"][1])
 
 
@@ -437,7 +440,7 @@ def construir():
     sch.etiqueta("VBIAS", xr - 7.62, 107.95, "izq")
     sch.power("GND", xr + 12.7, c7["2"][1])
     sch.power("GND", xr + 27.94, c8["2"][1])
-    sch.texto("La corriente de la pinza circula solo por el burden;\nVBIAS solo ve la corriente de entrada del ADC,\npor eso un divisor sirve a los dos canales.",
+    sch.texto("La corriente de la pinza y la del filtro (C5, C6)\ncierran en VBIAS; al divisor solo llega la corriente\nde entrada del ADC: un divisor sirve a los dos canales.",
               139.7, 127.0, 1.1)
 
     # ---------------- canal de tensión
@@ -635,7 +638,7 @@ def construir():
              "2. Los burden R1 y R2 se sueldan directamente en los terminales T y S del jack de panel, nunca en el cable.\n"
              "3. Nunca desenchufar una pinza mientras abraza un conductor energizado (secundario abierto).\n"
              "4. Las pinzas abrazan solo el conductor de fase; jamás fase y neutro juntos.\n"
-             "5. Tierra en estrella: el GND analógico llega solo al pin 14 del DevKitC; alimentación y parte digital retornan por los pines 20 y 26.\n"
+             "5. Un solo plano de GND en la PCB; el pin 14 del DevKitC recibe la tierra de los canales analógicos y los pines 20 y 26 la de alimentación y la parte digital.\n"
              "6. ADC con atenuación de 11 dB: zona lineal 0,15–2,45 V; la señal queda en 0,32–2,32 V.")
     sch.texto(notas, 22.86, 250.19, 1.3)
     return sch

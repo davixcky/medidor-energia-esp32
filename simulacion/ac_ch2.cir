@@ -4,7 +4,7 @@ Vb vb 0 1.32
 Ict vb t AC 1
 Rb t vb 47
 R5 t a 3.3k
-C5 a 0 47n
+C5 a vb 47n
 .ac dec 200 10 20k
 
 
@@ -15,6 +15,6 @@ C5 a 0 47n
 set wr_singlescale
 set wr_vecnames
 run
-wrdata /home/davixcky/dev/.personal/electronica/sistemas-embebidos-1/C2-ABPR/herramientas/../simulacion/ac_ch2.dat vm(a) vp(a)
+wrdata /home/davixcky/dev/.personal/electronica/medidor-energia-esp32/herramientas/../simulacion/ac_ch2.dat vm(a) vp(a)
 .endc
 .end

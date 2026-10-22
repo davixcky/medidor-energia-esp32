@@ -56,7 +56,7 @@ def correr(nombre, cuerpo, columnas):
 
 # ---------------------------------------------------------------- canales de corriente
 def canal_corriente(nombre, rb, i_rms, armonico3=0.0):
-    """Transitorio de un canal: pinza → burden → RC 3,3 kΩ / 47 nF → BAT85 → ADC."""
+    """Transitorio de un canal: pinza → burden → RC 3,3 kΩ / 47 nF (a VBIAS) → BAT85 → ADC."""
     ipk = i_rms * math.sqrt(2) / 2000
     fuente = f"SIN(0 {ipk} 60)"
     extra = f"Ih3 vb t SIN(0 {ipk * armonico3} 180)\n" if armonico3 else ""
@@ -69,7 +69,7 @@ C8 vb 0 100n
 Ict vb t {fuente}
 {extra}Rb t vb {rb}
 R5 t a 3.3k
-C5 a 0 47n
+C5 a vb 47n
 Dsup a v33 BAT85
 Dinf 0 a BAT85
 Radc a 0 10Meg
@@ -86,7 +86,7 @@ Vb vb 0 1.32
 Ict vb t AC 1
 Rb t vb {rb}
 R5 t a 3.3k
-C5 a 0 47n
+C5 a vb 47n
 .ac dec 200 10 20k
 """
     d = correr(nombre, cuerpo, ["vm(a)", "vp(a)"])

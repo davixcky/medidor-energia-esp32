@@ -11,14 +11,21 @@ namespace medicion {
 
 constexpr int N_CANALES = 2;
 constexpr int N_ARMONICOS = 40;   // THD hasta el armónico 40 (2,4 kHz)
+// Historia de tensión: la corriente se usa con DEMORA_I muestras de atraso, de modo que la
+// tensión emparejada puede tomarse entre DEMORA_I − (HISTORIA − 1) y DEMORA_I muestras después.
+constexpr int HISTORIA = 8;
+constexpr int DEMORA_I = 4;
+constexpr float RETARDO_MIN = -(HISTORIA - 1 - DEMORA_I);   // −3 muestras ≈ −8,1° a 60 Hz
+constexpr float RETARDO_MAX = DEMORA_I;                      // +4 muestras ≈ +10,8° a 60 Hz
 
 struct Calibracion {
   float voltios_por_codigo;        // escala del ADC (de esp_adc_cal en el ESP32)
   float k_v;                       // V de red por voltio en el pin
   float k_i[N_CANALES];            // A de primario por voltio en el pin
-  // Fracción de periodo de muestreo (0..1) en que la tensión se interpola hacia el
-  // instante de cada corriente: compensa el retardo del multiplexado y la fase de la pinza.
-  float alfa[N_CANALES];
+  // Desplazamiento, en periodos de muestreo, del instante de tensión que se empareja con cada
+  // corriente: compensa el retardo del multiplexado, la fase de la pinza y la del ZMPT101B.
+  // Positivo = la tensión se toma más tarde. Rango [RETARDO_MIN, RETARDO_MAX].
+  float retardo[N_CANALES];
   float tau_filtro_s;              // constante de tiempo del antialias (compensación de THD)
   float ruido_i[N_CANALES];        // piso de ruido medido con la tara (A eficaces)
 };
@@ -61,9 +68,16 @@ class Ventana {
   bool positivo_ = false;
   bool sincronizada_ = false;
   int cruces_ = 0;
-  int v_prev_ = 0;
-  int i_prev_[N_CANALES] = {};
-  bool hay_prev_ = false;
+  // Sin cruces (ZMPT101B desconectado o F1 abierto) la ventana se cierra por cantidad de muestras
+  // para seguir midiendo corriente; la tensión, la potencia y la frecuencia salen en cero.
+  bool libre_ = false;
+  int32_t sin_cruce_ = 0;
+
+  // Historias circulares de tensión y de corrientes.
+  int hv_[HISTORIA] = {};
+  int hi_[N_CANALES][HISTORIA] = {};
+  int pos_ = 0;
+  int llenas_ = 0;
 
   // Sumas exactas en enteros: rms y potencia se calculan quitando la media de la ventana.
   int64_t n_ = 0;

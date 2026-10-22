@@ -1,28 +1,16 @@
 ** Drc report for medidor-energia.kicad_pcb **
-** Created on 2026-10-22T07:58:55 **
+** Created on 2026-10-22T09:09:34 **
 ** Report includes: Errors, Warnings **
 
-** Found 5 DRC violations **
+** Found 2 DRC violations **
 [silk_overlap]: Silkscreen clearance
     Rule: board setup constraints silk; warning
-    @(34.2000 mm, 84.4300 mm): Segment of JP1 on F.Silkscreen
-    @(34.2000 mm, 90.1300 mm): Reference field of JP1
+    @(96.2400 mm, 64.9600 mm): Segment of JP1 on F.Silkscreen
+    @(98.0050 mm, 66.1800 mm): Reference field of JP1
 [silk_overlap]: Silkscreen clearance
     Rule: board setup constraints silk; warning
-    @(26.1800 mm, 93.2600 mm): Segment of J1 on F.Silkscreen
-    @(34.2000 mm, 84.4300 mm): Segment of JP1 on F.Silkscreen
-[silk_overlap]: Silkscreen clearance
-    Rule: board setup constraints silk; warning
-    @(34.2000 mm, 84.4300 mm): Segment of JP1 on F.Silkscreen
-    @(34.1000 mm, 103.6600 mm): Segment of J1 on F.Silkscreen
-[silk_overlap]: Silkscreen clearance
-    Rule: board setup constraints silk; warning
-    @(108.0100 mm, 43.8400 mm): Segment of JP3 on F.Silkscreen
-    @(108.0100 mm, 53.0000 mm): Reference field of JP3
-[pth_inside_courtyard]: PTH inside courtyard
-    Local override; warning
-    @(34.2000 mm, 98.2300 mm): PTH pad 1 [+5V] of JP1
-    @(31.5000 mm, 101.0000 mm): Footprint J1
+    @(108.0200 mm, 43.8400 mm): Segment of JP2 on F.Silkscreen
+    @(108.0200 mm, 53.0250 mm): Reference field of JP2
 
 ** Found 0 unconnected pads **
 

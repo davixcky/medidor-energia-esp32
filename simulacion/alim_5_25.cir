@@ -15,6 +15,6 @@ Iload v5 0 0
 set wr_singlescale
 set wr_vecnames
 run
-wrdata /home/davixcky/dev/.personal/electronica/sistemas-embebidos-1/C2-ABPR/herramientas/../simulacion/alim_5_25.dat v(v5)
+wrdata /home/davixcky/dev/.personal/electronica/medidor-energia-esp32/herramientas/../simulacion/alim_5_25.dat v(v5)
 .endc
 .end

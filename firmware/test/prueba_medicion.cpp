@@ -18,6 +18,8 @@ struct Caso {
   double i1_rms, fp1, i1_h3;       // CH1: corriente fundamental, FP de desplazamiento, h3 relativo
   double i2_rms, fp2;
   bool compensar_multiplexado;
+  double v_adelanto_grados = 0;    // fase propia del canal de tensión (ZMPT101B), se compensa
+  bool sin_tension = false;        // ZMPT101B desconectado: el pin queda en 0 V
 };
 
 int fallas = 0;
@@ -36,8 +38,10 @@ Resultado correr(const Caso& k, double* p1_exacta, double* p2_exacta, double* th
   cal.k_v = 482.0f;
   cal.k_i[0] = 2000.0f / 22;
   cal.k_i[1] = 2000.0f / 47;
-  cal.alfa[0] = k.compensar_multiplexado ? (float)(d1 * fs) : 0.0f;
-  cal.alfa[1] = k.compensar_multiplexado ? (float)(d2 * fs) : 0.0f;
+  // Retardo en muestras: multiplexado (δ·fs) menos el adelanto del canal de tensión.
+  const double adelanto_muestras = k.v_adelanto_grados / 360.0 / k.f * fs;
+  cal.retardo[0] = k.compensar_multiplexado ? (float)(d1 * fs - adelanto_muestras) : 0.0f;
+  cal.retardo[1] = k.compensar_multiplexado ? (float)(d2 * fs - adelanto_muestras) : 0.0f;
   cal.tau_filtro_s = 0.0f;                     // las señales sintéticas no pasan por el filtro
   Ventana w(cal, 60, (float)fs);
 
@@ -63,7 +67,9 @@ Resultado correr(const Caso& k, double* p1_exacta, double* p2_exacta, double* th
   int ventanas = 0;
   for (long n = 0; n < (long)(fs * 4); ++n) {
     double t = n / fs;
-    int v = adc(1.35 + v_de(t) / cal.k_v);
+    // El canal de tensión adelanta: el pin muestra la tensión de un instante posterior.
+    const double t_v = t + k.v_adelanto_grados / 360.0 / k.f;
+    int v = k.sin_tension ? adc(0.0) : adc(1.35 + v_de(t_v) / cal.k_v);
     int i1 = adc(1.32 + i1_de(t + d1) / cal.k_i[0]);
     int i2 = adc(1.32 + i2_de(t + d2) / cal.k_i[1]);
     if (w.muestra(v, i1, i2) && ++ventanas >= 2) ultimo = w.resultado();  // la primera estima el reposo
@@ -77,6 +83,8 @@ int main() {
       {"Motor FP 0,8 + armónicos", 60.0, 121, 0.025, 20.0, 0.8, 0.30, 5.0, 0.6, true},
       {"Red a 59,8 Hz, carga baja", 59.8, 118, 0.0, 1.0, 0.95, 0.0, 0.5, 1.0, true},
       {"Sin compensar multiplexado", 60.0, 120, 0.0, 20.0, 0.5, 0.0, 5.0, 0.5, false},
+      {"ZMPT adelanta 6°, compensado", 60.0, 120, 0.0, 15.0, 0.8, 0.0, 5.0, 0.6, true, 6.0},
+      {"ZMPT desconectado", 60.0, 0, 0.0, 10.0, 1.0, 0.0, 3.0, 1.0, true, 0.0, true},
   };
   for (const auto& k : casos) {
     double p1, p2, thd;
@@ -87,6 +95,12 @@ int main() {
     comprobar("V eficaz (V)", r.v_rms, v_esp, 0.005);
     comprobar("I eficaz CH1 (A)", r.i_rms[0], i1_esp, 0.01, 0.05);
     comprobar("I eficaz CH2 (A)", r.i_rms[1], k.i2_rms, 0.01, 0.05);
+    if (k.sin_tension) {
+      // Sin tensión no hay cruces: ventanas de longitud fija, solo corriente.
+      comprobar("Frecuencia (0 = sin red)", r.f_hz, 0.0, 0.0, 0.001);
+      comprobar("P CH1 (W)", r.p[0], 0.0, 0.0, 0.001);
+      continue;
+    }
     if (k.compensar_multiplexado) {
       comprobar("P CH1 (W)", r.p[0], p1, 0.01, 6);
       comprobar("P CH2 (W)", r.p[1], p2, 0.01, 6);

@@ -68,12 +68,12 @@ COLOCACION = {
     "J3": (5.0, 48.0, 0),
     # CH1: resistencia serie, condensador del filtro y diodos de recorte
     "R5": (12.0, 30.0, 0),
-    "C5": (27.0, 30.0, 0),
+    "C5": (27.0, 30.0, 270),
     "D2": (36.0, 26.5, 0),
     "D3": (36.0, 33.5, 0),
     # CH2
     "R6": (12.0, 48.0, 0),
-    "C6": (27.0, 48.0, 0),
+    "C6": (27.0, 48.0, 270),
     "D4": (36.0, 44.5, 0),
     "D5": (36.0, 51.5, 0),
     # polarización VBIAS (1,32 V) junto al retorno S de los jacks

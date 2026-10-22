@@ -18,6 +18,6 @@ Radc v 0 10Meg
 set wr_singlescale
 set wr_vecnames
 run
-wrdata /home/davixcky/dev/.personal/electronica/sistemas-embebidos-1/C2-ABPR/herramientas/../simulacion/v_1_0.dat v(v)
+wrdata /home/davixcky/dev/.personal/electronica/medidor-energia-esp32/herramientas/../simulacion/v_1_0.dat v(v)
 .endc
 .end

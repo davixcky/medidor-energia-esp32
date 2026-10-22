@@ -4590,8 +4590,8 @@
 	)
 	(wire
 		(pts
-			(xy 45.72 144.78)
-			(xy 48.26 144.78)
+			(xy 81.28 115.57)
+			(xy 81.28 118.11)
 		)
 		(stroke
 			(width 0)
@@ -4601,8 +4601,8 @@
 	)
 	(wire
 		(pts
+			(xy 45.72 144.78)
 			(xy 48.26 144.78)
-			(xy 48.26 140.97)
 		)
 		(stroke
 			(width 0)
@@ -4612,8 +4612,8 @@
 	)
 	(wire
 		(pts
+			(xy 48.26 144.78)
 			(xy 48.26 140.97)
-			(xy 55.88 140.97)
 		)
 		(stroke
 			(width 0)
@@ -4623,8 +4623,8 @@
 	)
 	(wire
 		(pts
+			(xy 48.26 140.97)
 			(xy 55.88 140.97)
-			(xy 55.88 143.51)
 		)
 		(stroke
 			(width 0)
@@ -4635,13 +4635,24 @@
 	(wire
 		(pts
 			(xy 55.88 140.97)
-			(xy 60.96 140.97)
+			(xy 55.88 143.51)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "556e9097-bd27-5836-a59d-73328963911e")
+	)
+	(wire
+		(pts
+			(xy 55.88 140.97)
+			(xy 60.96 140.97)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d7fc8b8e-b9da-5575-bc93-eea6478b6ec8")
 	)
 	(wire
 		(pts
@@ -4652,7 +4663,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "d7fc8b8e-b9da-5575-bc93-eea6478b6ec8")
+		(uuid "180de88c-bfb0-5eda-86cc-8cd7ae35fb96")
 	)
 	(wire
 		(pts
@@ -4663,7 +4674,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "180de88c-bfb0-5eda-86cc-8cd7ae35fb96")
+		(uuid "47d3b785-d635-5ff5-b455-9426d5078710")
 	)
 	(wire
 		(pts
@@ -4674,7 +4685,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "47d3b785-d635-5ff5-b455-9426d5078710")
+		(uuid "37ce94c0-5217-5b25-bd64-9a2f05da817e")
 	)
 	(wire
 		(pts
@@ -4685,7 +4696,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "37ce94c0-5217-5b25-bd64-9a2f05da817e")
+		(uuid "b268dd7b-45ba-5b20-9b76-ba8f0b166279")
 	)
 	(wire
 		(pts
@@ -4696,7 +4707,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "b268dd7b-45ba-5b20-9b76-ba8f0b166279")
+		(uuid "345a3c29-4802-5aab-9406-30d25ee99ea0")
 	)
 	(wire
 		(pts
@@ -4707,7 +4718,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "345a3c29-4802-5aab-9406-30d25ee99ea0")
+		(uuid "5e623103-7fd3-5ef4-9904-ddd3bdf920b9")
 	)
 	(wire
 		(pts
@@ -4718,7 +4729,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "5e623103-7fd3-5ef4-9904-ddd3bdf920b9")
+		(uuid "3f862088-c3b9-541e-9ee7-4105e1b579d7")
 	)
 	(wire
 		(pts
@@ -4729,7 +4740,18 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "3f862088-c3b9-541e-9ee7-4105e1b579d7")
+		(uuid "b90c3d47-24c6-51c4-ba7b-01b3655af9de")
+	)
+	(wire
+		(pts
+			(xy 81.28 161.29)
+			(xy 81.28 163.83)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9de1314f-f066-50ac-a4fe-0cc69517b761")
 	)
 	(wire
 		(pts
@@ -4740,7 +4762,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "b90c3d47-24c6-51c4-ba7b-01b3655af9de")
+		(uuid "4cb3fd86-6eb2-5164-bf2e-f4866dc421ab")
 	)
 	(wire
 		(pts
@@ -4751,7 +4773,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "9de1314f-f066-50ac-a4fe-0cc69517b761")
+		(uuid "4e7e390d-018e-5e52-a084-ceb72f7e683b")
 	)
 	(wire
 		(pts
@@ -4762,7 +4784,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "4cb3fd86-6eb2-5164-bf2e-f4866dc421ab")
+		(uuid "9605012a-cff6-5fcb-80d5-fae48c121555")
 	)
 	(wire
 		(pts
@@ -4773,7 +4795,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "4e7e390d-018e-5e52-a084-ceb72f7e683b")
+		(uuid "3a4511a5-cbf5-5aea-8f80-0c3b342e4d8f")
 	)
 	(wire
 		(pts
@@ -4784,7 +4806,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "9605012a-cff6-5fcb-80d5-fae48c121555")
+		(uuid "6edf7320-d937-5694-845d-46c730271ace")
 	)
 	(wire
 		(pts
@@ -4795,7 +4817,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "3a4511a5-cbf5-5aea-8f80-0c3b342e4d8f")
+		(uuid "30d9ab9e-0e4b-5b05-bfe2-fe7b9ff6e1ad")
 	)
 	(wire
 		(pts
@@ -4806,7 +4828,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "6edf7320-d937-5694-845d-46c730271ace")
+		(uuid "541c6a68-4d03-5291-9f99-c1d869563f41")
 	)
 	(wire
 		(pts
@@ -4817,7 +4839,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "30d9ab9e-0e4b-5b05-bfe2-fe7b9ff6e1ad")
+		(uuid "903aebc5-2d2e-5e61-a87b-a4683b9fe43a")
 	)
 	(wire
 		(pts
@@ -4828,7 +4850,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "541c6a68-4d03-5291-9f99-c1d869563f41")
+		(uuid "9ff74b36-1763-5185-8f55-e424da765378")
 	)
 	(wire
 		(pts
@@ -4839,7 +4861,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "903aebc5-2d2e-5e61-a87b-a4683b9fe43a")
+		(uuid "98855c55-998e-5e99-b589-482d1fcdde97")
 	)
 	(wire
 		(pts
@@ -4850,7 +4872,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "9ff74b36-1763-5185-8f55-e424da765378")
+		(uuid "2dd0c03d-eddf-57e5-b4da-2dd96d80b89f")
 	)
 	(wire
 		(pts
@@ -4861,7 +4883,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "98855c55-998e-5e99-b589-482d1fcdde97")
+		(uuid "63cc06a5-84a3-56cf-b62f-4a5a40ad8134")
 	)
 	(wire
 		(pts
@@ -4872,7 +4894,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "2dd0c03d-eddf-57e5-b4da-2dd96d80b89f")
+		(uuid "dbb42589-a91b-520e-9c34-c47a3aab073b")
 	)
 	(wire
 		(pts
@@ -4883,7 +4905,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "63cc06a5-84a3-56cf-b62f-4a5a40ad8134")
+		(uuid "c6938006-16ce-5048-8941-78453b0c6420")
 	)
 	(wire
 		(pts
@@ -4894,7 +4916,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "dbb42589-a91b-520e-9c34-c47a3aab073b")
+		(uuid "bbf58b58-430b-5910-bd90-56aafeba0be5")
 	)
 	(wire
 		(pts
@@ -4905,7 +4927,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "c6938006-16ce-5048-8941-78453b0c6420")
+		(uuid "4047f459-3ff6-5e6f-ac44-69e00b4a80da")
 	)
 	(wire
 		(pts
@@ -4916,7 +4938,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "bbf58b58-430b-5910-bd90-56aafeba0be5")
+		(uuid "d216f9b9-9918-547c-bbda-5bb9e8f0a919")
 	)
 	(wire
 		(pts
@@ -4927,7 +4949,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "4047f459-3ff6-5e6f-ac44-69e00b4a80da")
+		(uuid "6fc7717f-51a0-5204-8bd1-72223e4426cf")
 	)
 	(wire
 		(pts
@@ -4938,7 +4960,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "d216f9b9-9918-547c-bbda-5bb9e8f0a919")
+		(uuid "280bfd4e-5dfd-5b97-aa55-b40336713fbd")
 	)
 	(wire
 		(pts
@@ -4949,7 +4971,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "6fc7717f-51a0-5204-8bd1-72223e4426cf")
+		(uuid "25bd3ecd-9fa2-5bd3-8128-f11b0af1f764")
 	)
 	(wire
 		(pts
@@ -4960,7 +4982,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "280bfd4e-5dfd-5b97-aa55-b40336713fbd")
+		(uuid "51098a69-d097-5d3f-a7e1-1dfc0c785ac8")
 	)
 	(wire
 		(pts
@@ -4971,7 +4993,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "25bd3ecd-9fa2-5bd3-8128-f11b0af1f764")
+		(uuid "e6586460-fbfe-5b89-b721-165fba95e31e")
 	)
 	(wire
 		(pts
@@ -4982,7 +5004,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "51098a69-d097-5d3f-a7e1-1dfc0c785ac8")
+		(uuid "7261896c-b9d5-5437-9018-9233e7062c07")
 	)
 	(wire
 		(pts
@@ -4993,7 +5015,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "e6586460-fbfe-5b89-b721-165fba95e31e")
+		(uuid "7a236e23-a02a-5b81-9ab5-616633d252d2")
 	)
 	(wire
 		(pts
@@ -5004,7 +5026,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "7261896c-b9d5-5437-9018-9233e7062c07")
+		(uuid "a7f7a870-fb81-54c0-95b3-a4539ba76bec")
 	)
 	(wire
 		(pts
@@ -5015,7 +5037,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "7a236e23-a02a-5b81-9ab5-616633d252d2")
+		(uuid "7ec1854b-09a3-50a3-b025-4d58bfb6b869")
 	)
 	(wire
 		(pts
@@ -5026,7 +5048,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "a7f7a870-fb81-54c0-95b3-a4539ba76bec")
+		(uuid "1dbdb9f9-eb47-5dca-b2fa-3dfb7595bf97")
 	)
 	(wire
 		(pts
@@ -5037,7 +5059,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "7ec1854b-09a3-50a3-b025-4d58bfb6b869")
+		(uuid "b035831f-5b86-54e5-8ccc-eb0b57780a5b")
 	)
 	(wire
 		(pts
@@ -5048,7 +5070,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "1dbdb9f9-eb47-5dca-b2fa-3dfb7595bf97")
+		(uuid "7b44c165-83a5-5138-af8c-5b56001c2747")
 	)
 	(wire
 		(pts
@@ -5059,7 +5081,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "b035831f-5b86-54e5-8ccc-eb0b57780a5b")
+		(uuid "208e0290-230c-5645-a098-9b4993d09f17")
 	)
 	(wire
 		(pts
@@ -5070,7 +5092,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "7b44c165-83a5-5138-af8c-5b56001c2747")
+		(uuid "4b2ce188-4f27-504d-a97c-e160fc644f27")
 	)
 	(wire
 		(pts
@@ -5081,7 +5103,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "208e0290-230c-5645-a098-9b4993d09f17")
+		(uuid "320acb59-356f-50b3-b72c-32b94d1b65a0")
 	)
 	(wire
 		(pts
@@ -5092,7 +5114,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "4b2ce188-4f27-504d-a97c-e160fc644f27")
+		(uuid "7ef39764-d14b-5639-b011-4d3bee77a4cd")
 	)
 	(wire
 		(pts
@@ -5103,7 +5125,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "320acb59-356f-50b3-b72c-32b94d1b65a0")
+		(uuid "9da1bcec-4ebc-5fb6-a052-489cec8b34d6")
 	)
 	(wire
 		(pts
@@ -5114,7 +5136,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "7ef39764-d14b-5639-b011-4d3bee77a4cd")
+		(uuid "c4ce99f0-97d1-547a-8718-ff935d52be71")
 	)
 	(wire
 		(pts
@@ -5125,7 +5147,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "9da1bcec-4ebc-5fb6-a052-489cec8b34d6")
+		(uuid "35243621-238b-5887-996c-5624c27f56c2")
 	)
 	(wire
 		(pts
@@ -5136,7 +5158,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "c4ce99f0-97d1-547a-8718-ff935d52be71")
+		(uuid "7b981846-d408-5bd5-926e-0d639ee1a37d")
 	)
 	(wire
 		(pts
@@ -5147,7 +5169,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "35243621-238b-5887-996c-5624c27f56c2")
+		(uuid "5e1004cc-8c77-5250-ad62-48a2f444d6b7")
 	)
 	(wire
 		(pts
@@ -5158,7 +5180,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "7b981846-d408-5bd5-926e-0d639ee1a37d")
+		(uuid "5183f1ba-11e5-5e56-bd89-fc6fb7bc2c6e")
 	)
 	(wire
 		(pts
@@ -5169,7 +5191,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "5e1004cc-8c77-5250-ad62-48a2f444d6b7")
+		(uuid "58a553b0-2073-5d39-9d52-a67aa7f2c117")
 	)
 	(wire
 		(pts
@@ -5180,7 +5202,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "5183f1ba-11e5-5e56-bd89-fc6fb7bc2c6e")
+		(uuid "573bb779-1de3-5831-97ac-0f18d14fa54c")
 	)
 	(wire
 		(pts
@@ -5191,7 +5213,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "58a553b0-2073-5d39-9d52-a67aa7f2c117")
+		(uuid "d641cce0-c0cd-548b-aefe-c145776fa0af")
 	)
 	(wire
 		(pts
@@ -5202,7 +5224,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "573bb779-1de3-5831-97ac-0f18d14fa54c")
+		(uuid "5c498eb0-6dd7-5d8d-bacc-654acfaec65c")
 	)
 	(wire
 		(pts
@@ -5213,7 +5235,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "d641cce0-c0cd-548b-aefe-c145776fa0af")
+		(uuid "44e30ec7-cd6b-55bd-89ce-b7d35a230246")
 	)
 	(wire
 		(pts
@@ -5224,7 +5246,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "5c498eb0-6dd7-5d8d-bacc-654acfaec65c")
+		(uuid "7d04ed54-1609-503e-9ae9-35c78adea771")
 	)
 	(wire
 		(pts
@@ -5235,7 +5257,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "44e30ec7-cd6b-55bd-89ce-b7d35a230246")
+		(uuid "6e4dee9e-3271-5fb9-bc6a-a06a154f7009")
 	)
 	(wire
 		(pts
@@ -5246,7 +5268,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "7d04ed54-1609-503e-9ae9-35c78adea771")
+		(uuid "45461a5f-4b1f-5df8-919b-35a160954712")
 	)
 	(wire
 		(pts
@@ -5257,7 +5279,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "6e4dee9e-3271-5fb9-bc6a-a06a154f7009")
+		(uuid "2c9702e9-a5e4-5064-8bf8-0a6506ec901f")
 	)
 	(wire
 		(pts
@@ -5268,7 +5290,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "45461a5f-4b1f-5df8-919b-35a160954712")
+		(uuid "1354a3ed-f733-5886-bf11-908d879bc6aa")
 	)
 	(wire
 		(pts
@@ -5279,7 +5301,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "2c9702e9-a5e4-5064-8bf8-0a6506ec901f")
+		(uuid "3361266c-7e12-545d-a862-6b3ffed1db15")
 	)
 	(wire
 		(pts
@@ -5290,7 +5312,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "1354a3ed-f733-5886-bf11-908d879bc6aa")
+		(uuid "646ae66a-64be-5caa-a5aa-fbcc03dc1538")
 	)
 	(wire
 		(pts
@@ -5301,7 +5323,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "3361266c-7e12-545d-a862-6b3ffed1db15")
+		(uuid "11fe368d-8488-5261-95d8-3dab7a88d1da")
 	)
 	(wire
 		(pts
@@ -5312,7 +5334,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "646ae66a-64be-5caa-a5aa-fbcc03dc1538")
+		(uuid "44838a42-78f2-5213-9d24-f104e557e48c")
 	)
 	(wire
 		(pts
@@ -5323,7 +5345,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "11fe368d-8488-5261-95d8-3dab7a88d1da")
+		(uuid "f941faa0-7c29-520a-8c21-16a535f54926")
 	)
 	(wire
 		(pts
@@ -5334,7 +5356,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "44838a42-78f2-5213-9d24-f104e557e48c")
+		(uuid "75b57d81-8a01-5841-827c-24d8976b060c")
 	)
 	(wire
 		(pts
@@ -5345,7 +5367,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "f941faa0-7c29-520a-8c21-16a535f54926")
+		(uuid "9f66f336-f291-5fe0-b88d-0c106f37b4cf")
 	)
 	(wire
 		(pts
@@ -5356,7 +5378,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "75b57d81-8a01-5841-827c-24d8976b060c")
+		(uuid "b06db50f-1363-5bb6-9e36-74e4e044ab79")
 	)
 	(wire
 		(pts
@@ -5367,7 +5389,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "9f66f336-f291-5fe0-b88d-0c106f37b4cf")
+		(uuid "c9fb8c94-3e5f-523c-b8bb-92d3a5820109")
 	)
 	(wire
 		(pts
@@ -5378,7 +5400,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "b06db50f-1363-5bb6-9e36-74e4e044ab79")
+		(uuid "23adcf84-8c8f-5061-a375-6de81f612a91")
 	)
 	(wire
 		(pts
@@ -5389,7 +5411,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "c9fb8c94-3e5f-523c-b8bb-92d3a5820109")
+		(uuid "51bef3d1-1dc9-57b7-a93e-dddd34779ff6")
 	)
 	(wire
 		(pts
@@ -5400,7 +5422,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "23adcf84-8c8f-5061-a375-6de81f612a91")
+		(uuid "5b7e9bf0-186d-52a2-aaa9-f3380fdda150")
 	)
 	(wire
 		(pts
@@ -5411,7 +5433,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "51bef3d1-1dc9-57b7-a93e-dddd34779ff6")
+		(uuid "e6b3a4e3-66f9-5697-a7c9-15984128607a")
 	)
 	(wire
 		(pts
@@ -5422,7 +5444,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "5b7e9bf0-186d-52a2-aaa9-f3380fdda150")
+		(uuid "e28fcc87-fae8-5345-b6ff-4069c08b3bcd")
 	)
 	(wire
 		(pts
@@ -5433,7 +5455,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "e6b3a4e3-66f9-5697-a7c9-15984128607a")
+		(uuid "07ffd3a0-542e-5481-9809-d46bc049f22e")
 	)
 	(wire
 		(pts
@@ -5444,7 +5466,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "e28fcc87-fae8-5345-b6ff-4069c08b3bcd")
+		(uuid "cb5eddcc-9a6f-57fa-adb5-1590d3e4d0da")
 	)
 	(wire
 		(pts
@@ -5455,7 +5477,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "07ffd3a0-542e-5481-9809-d46bc049f22e")
+		(uuid "4da7f54d-e185-5719-85cb-76c89a4e9185")
 	)
 	(wire
 		(pts
@@ -5466,7 +5488,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "cb5eddcc-9a6f-57fa-adb5-1590d3e4d0da")
+		(uuid "78e12201-9c7d-5b9c-8bb9-1c71c976a547")
 	)
 	(wire
 		(pts
@@ -5477,7 +5499,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "4da7f54d-e185-5719-85cb-76c89a4e9185")
+		(uuid "5a4b9690-c8d7-5d85-8f25-3ce81a21a91a")
 	)
 	(wire
 		(pts
@@ -5488,7 +5510,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "78e12201-9c7d-5b9c-8bb9-1c71c976a547")
+		(uuid "60489368-f9a6-5f2a-b1b0-237634a5d6de")
 	)
 	(wire
 		(pts
@@ -5499,7 +5521,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "5a4b9690-c8d7-5d85-8f25-3ce81a21a91a")
+		(uuid "2a30ace0-b119-5ee7-93c5-c5f8bd65693f")
 	)
 	(wire
 		(pts
@@ -5510,7 +5532,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "60489368-f9a6-5f2a-b1b0-237634a5d6de")
+		(uuid "0ddf76d1-6ca1-544e-8fbb-1ded05ee7bce")
 	)
 	(wire
 		(pts
@@ -5521,7 +5543,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "2a30ace0-b119-5ee7-93c5-c5f8bd65693f")
+		(uuid "67cdc74e-a774-578f-b536-ae97cdf42109")
 	)
 	(wire
 		(pts
@@ -5532,7 +5554,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "0ddf76d1-6ca1-544e-8fbb-1ded05ee7bce")
+		(uuid "8cbee3cc-41c6-556a-9e54-222c32f55138")
 	)
 	(wire
 		(pts
@@ -5543,7 +5565,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "67cdc74e-a774-578f-b536-ae97cdf42109")
+		(uuid "dd46f610-96df-5069-8f1c-062ee4e7ce96")
 	)
 	(wire
 		(pts
@@ -5554,7 +5576,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "8cbee3cc-41c6-556a-9e54-222c32f55138")
+		(uuid "b3b06151-eecf-535f-ab29-4c6316d9dfdd")
 	)
 	(wire
 		(pts
@@ -5565,7 +5587,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "dd46f610-96df-5069-8f1c-062ee4e7ce96")
+		(uuid "a1f3e475-8e5d-5ebf-9aa6-a48aed235b5b")
 	)
 	(wire
 		(pts
@@ -5576,7 +5598,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "b3b06151-eecf-535f-ab29-4c6316d9dfdd")
+		(uuid "3ef0bbd8-244b-5730-954f-179717549926")
 	)
 	(wire
 		(pts
@@ -5587,7 +5609,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "a1f3e475-8e5d-5ebf-9aa6-a48aed235b5b")
+		(uuid "65079be6-db46-533e-b72d-a4cdd79e6564")
 	)
 	(wire
 		(pts
@@ -5598,7 +5620,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "3ef0bbd8-244b-5730-954f-179717549926")
+		(uuid "eaeb11bc-a4c2-5a8d-9c4e-b8b18a09f248")
 	)
 	(wire
 		(pts
@@ -5609,7 +5631,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "65079be6-db46-533e-b72d-a4cdd79e6564")
+		(uuid "39f10ab8-b130-5ca9-94a6-64d7232ecde8")
 	)
 	(wire
 		(pts
@@ -5620,7 +5642,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "eaeb11bc-a4c2-5a8d-9c4e-b8b18a09f248")
+		(uuid "8ea13930-14c0-5e97-87ec-6768eb9be76f")
 	)
 	(wire
 		(pts
@@ -5631,7 +5653,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "39f10ab8-b130-5ca9-94a6-64d7232ecde8")
+		(uuid "544aa8f2-9375-545a-a4be-148cee7619a5")
 	)
 	(wire
 		(pts
@@ -5642,7 +5664,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "8ea13930-14c0-5e97-87ec-6768eb9be76f")
+		(uuid "926ad39e-8165-5e99-82dd-25f016eb81b3")
 	)
 	(wire
 		(pts
@@ -5653,7 +5675,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "544aa8f2-9375-545a-a4be-148cee7619a5")
+		(uuid "b01170a7-4d74-5d0c-8faf-9b18babe1a50")
 	)
 	(wire
 		(pts
@@ -5664,7 +5686,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "926ad39e-8165-5e99-82dd-25f016eb81b3")
+		(uuid "78542bd1-c2fc-50db-b163-8b3a6f81a41d")
 	)
 	(wire
 		(pts
@@ -5675,7 +5697,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "b01170a7-4d74-5d0c-8faf-9b18babe1a50")
+		(uuid "b0c60978-93ed-5cce-a705-118f93da5b12")
 	)
 	(wire
 		(pts
@@ -5686,7 +5708,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "78542bd1-c2fc-50db-b163-8b3a6f81a41d")
+		(uuid "6e3f27b8-b999-5ef1-b401-5e26e0d7d1ca")
 	)
 	(wire
 		(pts
@@ -5697,7 +5719,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "b0c60978-93ed-5cce-a705-118f93da5b12")
+		(uuid "06af459e-55bd-580a-8939-56e18b5dd211")
 	)
 	(wire
 		(pts
@@ -5708,7 +5730,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "6e3f27b8-b999-5ef1-b401-5e26e0d7d1ca")
+		(uuid "78e52587-e780-5769-bed8-d5bfad911637")
 	)
 	(wire
 		(pts
@@ -5719,7 +5741,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "06af459e-55bd-580a-8939-56e18b5dd211")
+		(uuid "de23bd46-3630-5fcf-a171-456156b7ed31")
 	)
 	(text "ALIMENTACIÓN 5 V (adaptador externo aislado 100–240 V CA / 5 V 2 A)"
 		(exclude_from_sim no)
@@ -6847,61 +6869,15 @@
 			)
 		)
 	)
-	(symbol
-		(lib_id "power:GND")
-		(at 81.28 115.57 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "811cdd24-e596-50e4-a105-4189bd733010")
-		(property "Reference" "#PWR006"
-			(at 81.28 115.57 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
+	(label "VBIAS"
+		(at 81.28 118.11 0)
+		(effects
+			(font
+				(size 1.27 1.27)
 			)
+			(justify left bottom)
 		)
-		(property "Value" "GND"
-			(at 81.28 118.97 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 81.28 115.57 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 81.28 115.57 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "499385a0-b167-57f5-bc57-a6f0aea6b8f3")
-		)
-		(instances
-			(project "medidor-energia"
-				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR006")
-					(unit 1)
-				)
-			)
-		)
+		(uuid "952968b0-ee76-577f-8ddc-8262fa2d51e2")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -6911,8 +6887,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "b1fb9917-a94f-5b4f-97e6-5b925b434441")
-		(property "Reference" "#PWR007"
+		(uuid "811cdd24-e596-50e4-a105-4189bd733010")
+		(property "Reference" "#PWR006"
 			(at 96.52 115.57 0)
 			(effects
 				(font
@@ -6948,12 +6924,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "5f8b15ed-ee32-5cc6-ab93-9217f41ad390")
+			(uuid "499385a0-b167-57f5-bc57-a6f0aea6b8f3")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR007")
+					(reference "#PWR006")
 					(unit 1)
 				)
 			)
@@ -6990,7 +6966,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "c4c5223e-0050-5e66-aaa8-3fd919a0f5f1")
+		(uuid "b1fb9917-a94f-5b4f-97e6-5b925b434441")
 		(property "Reference" "J3"
 			(at 33.02 140.97 0)
 			(effects
@@ -7028,13 +7004,13 @@
 			)
 		)
 		(pin "R"
-			(uuid "038e1452-d54a-500f-88f8-dec7e802f8a1")
+			(uuid "5f8b15ed-ee32-5cc6-ab93-9217f41ad390")
 		)
 		(pin "S"
-			(uuid "32516770-5fe0-5ef0-8f33-4a388571b32b")
+			(uuid "038e1452-d54a-500f-88f8-dec7e802f8a1")
 		)
 		(pin "T"
-			(uuid "c82a9b3c-50eb-59c9-ae35-e6b7307892f9")
+			(uuid "32516770-5fe0-5ef0-8f33-4a388571b32b")
 		)
 		(instances
 			(project "medidor-energia"
@@ -7057,7 +7033,7 @@
 		(in_bom yes)
 		(on_board no)
 		(dnp no)
-		(uuid "5427a2fc-76c2-554e-89c2-399c0e929ef6")
+		(uuid "c4c5223e-0050-5e66-aaa8-3fd919a0f5f1")
 		(property "Reference" "R2"
 			(at 58.42 146.82 0)
 			(effects
@@ -7095,10 +7071,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "89cc9743-70f2-5561-9342-7048cb3df2ff")
+			(uuid "c82a9b3c-50eb-59c9-ae35-e6b7307892f9")
 		)
 		(pin "2"
-			(uuid "c997673a-9a83-5fa0-a9d7-9b3153c63063")
+			(uuid "89cc9743-70f2-5561-9342-7048cb3df2ff")
 		)
 		(instances
 			(project "medidor-energia"
@@ -7117,7 +7093,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "952968b0-ee76-577f-8ddc-8262fa2d51e2")
+		(uuid "67315094-4bce-5a44-9c93-ecbf0ac52f8e")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -7127,7 +7103,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "ab426c99-099d-58b7-82eb-af9d427a7f9e")
+		(uuid "5427a2fc-76c2-554e-89c2-399c0e929ef6")
 		(property "Reference" "R6"
 			(at 65.4 151.67 90)
 			(effects
@@ -7165,10 +7141,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "6eb13e5d-816f-5085-8f76-b84c748796a8")
+			(uuid "c997673a-9a83-5fa0-a9d7-9b3153c63063")
 		)
 		(pin "2"
-			(uuid "1068d808-dcca-5ad3-a3ec-8bf453c7ed23")
+			(uuid "6eb13e5d-816f-5085-8f76-b84c748796a8")
 		)
 		(instances
 			(project "medidor-energia"
@@ -7187,7 +7163,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "6ee3d7d3-b1ed-5b77-b229-74c9a6eed82c")
+		(uuid "ab426c99-099d-58b7-82eb-af9d427a7f9e")
 		(property "Reference" "C6"
 			(at 83.82 156.21 0)
 			(effects
@@ -7225,10 +7201,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "33e61750-4a31-5afe-81f7-a31e2ed5c6d6")
+			(uuid "1068d808-dcca-5ad3-a3ec-8bf453c7ed23")
 		)
 		(pin "2"
-			(uuid "8d6bd7df-e4b5-5dac-a810-3f720b971e74")
+			(uuid "33e61750-4a31-5afe-81f7-a31e2ed5c6d6")
 		)
 		(instances
 			(project "medidor-energia"
@@ -7247,7 +7223,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "52df8e03-463e-58ce-a088-301c282e38c4")
+		(uuid "6ee3d7d3-b1ed-5b77-b229-74c9a6eed82c")
 		(property "Reference" "D4"
 			(at 99.06 149.07 270)
 			(effects
@@ -7285,10 +7261,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "d694e4f6-e3b0-5e9e-a10c-3270a725cb1a")
+			(uuid "8d6bd7df-e4b5-5dac-a810-3f720b971e74")
 		)
 		(pin "2"
-			(uuid "b20bc5b7-e2f1-59c8-918e-891a3813c595")
+			(uuid "d694e4f6-e3b0-5e9e-a10c-3270a725cb1a")
 		)
 		(instances
 			(project "medidor-energia"
@@ -7307,7 +7283,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "8c0680fa-b71d-55a0-8063-c6a8a614b097")
+		(uuid "52df8e03-463e-58ce-a088-301c282e38c4")
 		(property "Reference" "D5"
 			(at 99.06 156.87 270)
 			(effects
@@ -7345,10 +7321,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "de16a7c9-4173-584e-88af-bb5e751927d8")
+			(uuid "b20bc5b7-e2f1-59c8-918e-891a3813c595")
 		)
 		(pin "2"
-			(uuid "2006c469-1ff5-5cb1-a393-9f81f476e883")
+			(uuid "de16a7c9-4173-584e-88af-bb5e751927d8")
 		)
 		(instances
 			(project "medidor-energia"
@@ -7367,7 +7343,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "67315094-4bce-5a44-9c93-ecbf0ac52f8e")
+		(uuid "24438e5e-8433-5e61-984d-d6153f6c3c7a")
 	)
 	(symbol
 		(lib_id "power:+3V3")
@@ -7377,8 +7353,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "ea60f84b-9e09-5bb1-aad4-5fa23ce1d9d1")
-		(property "Reference" "#PWR008"
+		(uuid "8c0680fa-b71d-55a0-8063-c6a8a614b097")
+		(property "Reference" "#PWR007"
 			(at 96.52 146.05 0)
 			(effects
 				(font
@@ -7414,72 +7390,26 @@
 			)
 		)
 		(pin "1"
-			(uuid "b90158c5-9f4c-5a28-9d15-3dc0ba0a9681")
+			(uuid "2006c469-1ff5-5cb1-a393-9f81f476e883")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR008")
+					(reference "#PWR007")
 					(unit 1)
 				)
 			)
 		)
 	)
-	(symbol
-		(lib_id "power:GND")
-		(at 81.28 161.29 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "df54ae2c-ef85-5ed5-8fc7-61b39060e245")
-		(property "Reference" "#PWR009"
-			(at 81.28 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
+	(label "VBIAS"
+		(at 81.28 163.83 0)
+		(effects
+			(font
+				(size 1.27 1.27)
 			)
+			(justify left bottom)
 		)
-		(property "Value" "GND"
-			(at 81.28 164.69 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 81.28 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 81.28 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "0dccb390-ec57-558f-a2e7-2a7bc55f3136")
-		)
-		(instances
-			(project "medidor-energia"
-				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR009")
-					(unit 1)
-				)
-			)
-		)
+		(uuid "061bb19d-d20a-5b25-b4d5-df1418948d2e")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -7489,8 +7419,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "da4ca375-5cee-5374-95fc-b38c59fd43fb")
-		(property "Reference" "#PWR010"
+		(uuid "ea60f84b-9e09-5bb1-aad4-5fa23ce1d9d1")
+		(property "Reference" "#PWR008"
 			(at 96.52 161.29 0)
 			(effects
 				(font
@@ -7526,12 +7456,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "2dfa952d-39a8-5f00-85ba-510b18f9ba18")
+			(uuid "b90158c5-9f4c-5a28-9d15-3dc0ba0a9681")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR010")
+					(reference "#PWR008")
 					(unit 1)
 				)
 			)
@@ -7557,8 +7487,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "3fac2e46-a7a2-5163-92df-d11fcb22ea21")
-		(property "Reference" "#PWR011"
+		(uuid "df54ae2c-ef85-5ed5-8fc7-61b39060e245")
+		(property "Reference" "#PWR009"
 			(at 149.86 95.25 0)
 			(effects
 				(font
@@ -7594,12 +7524,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "a542cf60-c9d3-5b38-8d1b-b2e9ff225a44")
+			(uuid "0dccb390-ec57-558f-a2e7-2a7bc55f3136")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR011")
+					(reference "#PWR009")
 					(unit 1)
 				)
 			)
@@ -7613,7 +7543,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "64825393-3e4f-5dfd-b851-ec619b4a8aed")
+		(uuid "da4ca375-5cee-5374-95fc-b38c59fd43fb")
 		(property "Reference" "R3"
 			(at 152.4 100.33 0)
 			(effects
@@ -7651,10 +7581,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "b8b006d6-a8c5-55aa-ac33-e0591adf884f")
+			(uuid "2dfa952d-39a8-5f00-85ba-510b18f9ba18")
 		)
 		(pin "2"
-			(uuid "8655fbb0-249e-52fe-b86c-7404b536a6e7")
+			(uuid "a542cf60-c9d3-5b38-8d1b-b2e9ff225a44")
 		)
 		(instances
 			(project "medidor-energia"
@@ -7673,7 +7603,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "94989e00-b17c-516f-8619-c969d63535e9")
+		(uuid "3fac2e46-a7a2-5163-92df-d11fcb22ea21")
 		(property "Reference" "R4"
 			(at 152.4 110.49 0)
 			(effects
@@ -7711,10 +7641,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "a8089220-b73e-546d-8aa6-643c9adef7d6")
+			(uuid "b8b006d6-a8c5-55aa-ac33-e0591adf884f")
 		)
 		(pin "2"
-			(uuid "aa82831f-1e23-5473-8577-c20897e3337f")
+			(uuid "8655fbb0-249e-52fe-b86c-7404b536a6e7")
 		)
 		(instances
 			(project "medidor-energia"
@@ -7733,8 +7663,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "fe0433fc-b1e4-5bb9-a35b-8b60183fa228")
-		(property "Reference" "#PWR012"
+		(uuid "64825393-3e4f-5dfd-b851-ec619b4a8aed")
+		(property "Reference" "#PWR010"
 			(at 149.86 115.57 0)
 			(effects
 				(font
@@ -7770,12 +7700,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "ca34aeac-da3d-5eee-81b3-7757653198d8")
+			(uuid "a8089220-b73e-546d-8aa6-643c9adef7d6")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR012")
+					(reference "#PWR010")
 					(unit 1)
 				)
 			)
@@ -7789,7 +7719,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "8b8f2078-c7a8-5070-84f3-bd76b30c61f6")
+		(uuid "94989e00-b17c-516f-8619-c969d63535e9")
 		(property "Reference" "C7"
 			(at 165.1 110.49 0)
 			(effects
@@ -7827,10 +7757,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "def747e4-8bdb-5614-b7f5-c7eb10182e28")
+			(uuid "aa82831f-1e23-5473-8577-c20897e3337f")
 		)
 		(pin "2"
-			(uuid "9c9c42aa-3172-5005-8715-9b705b7a37b2")
+			(uuid "ca34aeac-da3d-5eee-81b3-7757653198d8")
 		)
 		(instances
 			(project "medidor-energia"
@@ -7849,7 +7779,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "3e4603fb-2ba0-5544-9c8f-876843d68096")
+		(uuid "fe0433fc-b1e4-5bb9-a35b-8b60183fa228")
 		(property "Reference" "C8"
 			(at 180.34 110.49 0)
 			(effects
@@ -7887,10 +7817,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "1fab8641-c30e-5c9d-80ec-afc73073d9d3")
+			(uuid "def747e4-8bdb-5614-b7f5-c7eb10182e28")
 		)
 		(pin "2"
-			(uuid "2c0bb546-cc69-55ab-afc6-12eb4f666c4e")
+			(uuid "9c9c42aa-3172-5005-8715-9b705b7a37b2")
 		)
 		(instances
 			(project "medidor-energia"
@@ -7909,7 +7839,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "24438e5e-8433-5e61-984d-d6153f6c3c7a")
+		(uuid "a82660d7-5fa0-5cb2-8781-bb0e525d240d")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -7919,8 +7849,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "0a540441-1a94-5095-b0f6-02f021e9cb17")
-		(property "Reference" "#PWR013"
+		(uuid "8b8f2078-c7a8-5070-84f3-bd76b30c61f6")
+		(property "Reference" "#PWR011"
 			(at 162.56 115.57 0)
 			(effects
 				(font
@@ -7956,12 +7886,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "edecc990-866f-57e6-a032-d0e71ec45b0c")
+			(uuid "1fab8641-c30e-5c9d-80ec-afc73073d9d3")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR013")
+					(reference "#PWR011")
 					(unit 1)
 				)
 			)
@@ -7975,8 +7905,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "d35fe675-ea3e-55c3-8dab-3a71f2387389")
-		(property "Reference" "#PWR014"
+		(uuid "3e4603fb-2ba0-5544-9c8f-876843d68096")
+		(property "Reference" "#PWR012"
 			(at 177.8 115.57 0)
 			(effects
 				(font
@@ -8012,18 +7942,18 @@
 			)
 		)
 		(pin "1"
-			(uuid "e8d56391-8c0c-5fe4-92ce-3044955b5882")
+			(uuid "2c0bb546-cc69-55ab-afc6-12eb4f666c4e")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR014")
+					(reference "#PWR012")
 					(unit 1)
 				)
 			)
 		)
 	)
-	(text "La corriente de la pinza circula solo por el burden;\nVBIAS solo ve la corriente de entrada del ADC,\npor eso un divisor sirve a los dos canales."
+	(text "La corriente de la pinza y la del filtro (C5, C6)\ncierran en VBIAS; al divisor solo llega la corriente\nde entrada del ADC: un divisor sirve a los dos canales."
 		(exclude_from_sim no)
 		(at 139.7 127 0)
 		(effects
@@ -8080,7 +8010,7 @@
 		(in_bom yes)
 		(on_board no)
 		(dnp no)
-		(uuid "164050db-3196-55a8-aadd-b869d2568605")
+		(uuid "0a540441-1a94-5095-b0f6-02f021e9cb17")
 		(property "Reference" "J4"
 			(at 25.4 207.01 0)
 			(effects
@@ -8118,10 +8048,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "13991be8-dcd6-5382-8982-91f75a8d7c87")
+			(uuid "edecc990-866f-57e6-a032-d0e71ec45b0c")
 		)
 		(pin "2"
-			(uuid "85f6ef6d-6595-5710-86bc-50579dfa5ed2")
+			(uuid "e8d56391-8c0c-5fe4-92ce-3044955b5882")
 		)
 		(instances
 			(project "medidor-energia"
@@ -8162,7 +8092,7 @@
 		(in_bom yes)
 		(on_board no)
 		(dnp no)
-		(uuid "f5e20977-b13a-5269-a0ce-d05c924c764e")
+		(uuid "d35fe675-ea3e-55c3-8dab-3a71f2387389")
 		(property "Reference" "F1"
 			(at 44 207.5 90)
 			(effects
@@ -8200,10 +8130,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "24ab07cf-1f07-5dc4-b72e-03256d0ee227")
+			(uuid "13991be8-dcd6-5382-8982-91f75a8d7c87")
 		)
 		(pin "2"
-			(uuid "a3de9950-a725-5f8a-a07d-dc3b16630971")
+			(uuid "85f6ef6d-6595-5710-86bc-50579dfa5ed2")
 		)
 		(instances
 			(project "medidor-energia"
@@ -8222,7 +8152,7 @@
 		(in_bom yes)
 		(on_board no)
 		(dnp no)
-		(uuid "5de550c3-8f89-5c68-9c72-03befbcfb8f9")
+		(uuid "164050db-3196-55a8-aadd-b869d2568605")
 		(property "Reference" "U2"
 			(at 76.2 203.2 0)
 			(effects
@@ -8260,19 +8190,19 @@
 			)
 		)
 		(pin "1"
-			(uuid "66461079-6387-57b9-8be4-68d79720b3fe")
+			(uuid "24ab07cf-1f07-5dc4-b72e-03256d0ee227")
 		)
 		(pin "2"
-			(uuid "faf43b66-3846-58ab-a89a-1a6c59301cee")
+			(uuid "a3de9950-a725-5f8a-a07d-dc3b16630971")
 		)
 		(pin "3"
-			(uuid "e4f70621-738d-5ded-8896-0d45cc04477f")
+			(uuid "66461079-6387-57b9-8be4-68d79720b3fe")
 		)
 		(pin "4"
-			(uuid "6e105202-8026-5a02-aba1-c267d2f90f11")
+			(uuid "faf43b66-3846-58ab-a89a-1a6c59301cee")
 		)
 		(pin "5"
-			(uuid "4405481e-e720-589b-9074-2d8dba8416e6")
+			(uuid "e4f70621-738d-5ded-8896-0d45cc04477f")
 		)
 		(instances
 			(project "medidor-energia"
@@ -8291,8 +8221,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "aedea8dc-9d89-50ce-a24c-5db9f27ecb29")
-		(property "Reference" "#PWR015"
+		(uuid "f5e20977-b13a-5269-a0ce-d05c924c764e")
+		(property "Reference" "#PWR013"
 			(at 91.44 210.82 0)
 			(effects
 				(font
@@ -8328,12 +8258,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "89f49ba1-df9b-58c9-b61f-084c7a49a4a3")
+			(uuid "6e105202-8026-5a02-aba1-c267d2f90f11")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR015")
+					(reference "#PWR013")
 					(unit 1)
 				)
 			)
@@ -8347,7 +8277,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "061bb19d-d20a-5b25-b4d5-df1418948d2e")
+		(uuid "7c00f4c7-807b-5e02-a0cb-c1938e56b318")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -8357,8 +8287,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "63ec9fa0-e5ca-524e-90f5-f3075722ff5c")
-		(property "Reference" "#PWR016"
+		(uuid "5de550c3-8f89-5c68-9c72-03befbcfb8f9")
+		(property "Reference" "#PWR014"
 			(at 88.9 220.98 0)
 			(effects
 				(font
@@ -8394,12 +8324,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "86f7077d-d95f-5753-a164-85252ba31109")
+			(uuid "4405481e-e720-589b-9074-2d8dba8416e6")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR016")
+					(reference "#PWR014")
 					(unit 1)
 				)
 			)
@@ -8425,7 +8355,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "299a0f6a-4c19-5760-b1e7-61ff59ecf5fe")
+		(uuid "aedea8dc-9d89-50ce-a24c-5db9f27ecb29")
 		(property "Reference" "J5"
 			(at 111.76 206 0)
 			(effects
@@ -8463,13 +8393,13 @@
 			)
 		)
 		(pin "1"
-			(uuid "66600e2c-33aa-5aab-8a27-3e57113df91c")
+			(uuid "89f49ba1-df9b-58c9-b61f-084c7a49a4a3")
 		)
 		(pin "2"
-			(uuid "3415fb9d-7774-53b8-a4a7-58bd1dd31c51")
+			(uuid "86f7077d-d95f-5753-a164-85252ba31109")
 		)
 		(pin "3"
-			(uuid "c8d80228-2861-5c18-ba22-50cbab7bcc8b")
+			(uuid "66600e2c-33aa-5aab-8a27-3e57113df91c")
 		)
 		(instances
 			(project "medidor-energia"
@@ -8488,8 +8418,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "1dfe4991-288d-58ee-a179-d93e751639c1")
-		(property "Reference" "#PWR017"
+		(uuid "63ec9fa0-e5ca-524e-90f5-f3075722ff5c")
+		(property "Reference" "#PWR015"
 			(at 127 210.82 0)
 			(effects
 				(font
@@ -8525,12 +8455,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "33485ee1-1b2b-5be2-abb3-88f7dfac5a15")
+			(uuid "3415fb9d-7774-53b8-a4a7-58bd1dd31c51")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR017")
+					(reference "#PWR015")
 					(unit 1)
 				)
 			)
@@ -8544,8 +8474,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "9e120e46-bd81-50af-a750-17a1ee4e83a8")
-		(property "Reference" "#PWR018"
+		(uuid "299a0f6a-4c19-5760-b1e7-61ff59ecf5fe")
+		(property "Reference" "#PWR016"
 			(at 124.46 223.52 0)
 			(effects
 				(font
@@ -8581,12 +8511,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "8bca5734-8491-5124-aa87-b00b3e35990e")
+			(uuid "c8d80228-2861-5c18-ba22-50cbab7bcc8b")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR018")
+					(reference "#PWR016")
 					(unit 1)
 				)
 			)
@@ -8600,7 +8530,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "a82660d7-5fa0-5cb2-8781-bb0e525d240d")
+		(uuid "0db0f05b-09b3-5ad5-b299-f6b66786a1b4")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -8610,7 +8540,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "2eedc19b-ba7a-5d85-9627-714fb8f12c9d")
+		(uuid "1dfe4991-288d-58ee-a179-d93e751639c1")
 		(property "Reference" "R7"
 			(at 147.3 211.6 90)
 			(effects
@@ -8648,10 +8578,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "b5a91f71-e1ce-520c-99f2-92d0c0f01c52")
+			(uuid "33485ee1-1b2b-5be2-abb3-88f7dfac5a15")
 		)
 		(pin "2"
-			(uuid "43aee0d5-be17-5084-be5c-271048d19ef7")
+			(uuid "8bca5734-8491-5124-aa87-b00b3e35990e")
 		)
 		(instances
 			(project "medidor-energia"
@@ -8670,7 +8600,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "d41a2521-f93d-576f-905b-e965f6074b16")
+		(uuid "9e120e46-bd81-50af-a750-17a1ee4e83a8")
 		(property "Reference" "R8"
 			(at 162.56 215.9 0)
 			(effects
@@ -8708,10 +8638,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "be0f6807-39ec-50f4-8638-7ce124029bfc")
+			(uuid "b5a91f71-e1ce-520c-99f2-92d0c0f01c52")
 		)
 		(pin "2"
-			(uuid "b1327734-8ce4-53ad-a89e-00e5169b6d6b")
+			(uuid "43aee0d5-be17-5084-be5c-271048d19ef7")
 		)
 		(instances
 			(project "medidor-energia"
@@ -8730,7 +8660,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "9095238f-8f15-5131-b7e7-c71805344296")
+		(uuid "2eedc19b-ba7a-5d85-9627-714fb8f12c9d")
 		(property "Reference" "C9"
 			(at 175.26 215.9 0)
 			(effects
@@ -8768,10 +8698,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "d6bb26c6-ad05-573a-87c5-d66d186be7b0")
+			(uuid "be0f6807-39ec-50f4-8638-7ce124029bfc")
 		)
 		(pin "2"
-			(uuid "3a52cbec-07f7-5e9d-bfa2-1d540b5e3982")
+			(uuid "b1327734-8ce4-53ad-a89e-00e5169b6d6b")
 		)
 		(instances
 			(project "medidor-energia"
@@ -8790,7 +8720,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "d1cd1f37-6529-582c-9142-24106fc40575")
+		(uuid "d41a2521-f93d-576f-905b-e965f6074b16")
 		(property "Reference" "D6"
 			(at 190.5 208.28 270)
 			(effects
@@ -8828,10 +8758,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "83b01cea-ced6-5ef3-ac9a-3a0efec1077a")
+			(uuid "d6bb26c6-ad05-573a-87c5-d66d186be7b0")
 		)
 		(pin "2"
-			(uuid "e58c861f-b4b2-51ed-a7fc-44f738248d9b")
+			(uuid "3a52cbec-07f7-5e9d-bfa2-1d540b5e3982")
 		)
 		(instances
 			(project "medidor-energia"
@@ -8850,7 +8780,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "e58d6f4d-8eac-575b-a8f6-7695f94b7178")
+		(uuid "9095238f-8f15-5131-b7e7-c71805344296")
 		(property "Reference" "D7"
 			(at 190.5 215.9 270)
 			(effects
@@ -8888,10 +8818,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "644aa08c-a41f-5da9-9e6a-9f5231006a48")
+			(uuid "83b01cea-ced6-5ef3-ac9a-3a0efec1077a")
 		)
 		(pin "2"
-			(uuid "5ceaf22c-4f1e-5ee4-8120-ff962a2276a0")
+			(uuid "e58c861f-b4b2-51ed-a7fc-44f738248d9b")
 		)
 		(instances
 			(project "medidor-energia"
@@ -8910,7 +8840,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "7c00f4c7-807b-5e02-a0cb-c1938e56b318")
+		(uuid "171f8a3c-060d-5f51-9d28-860d798818c3")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -8920,8 +8850,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "c5b28a3e-709f-5e54-8980-b345019321ce")
-		(property "Reference" "#PWR019"
+		(uuid "d1cd1f37-6529-582c-9142-24106fc40575")
+		(property "Reference" "#PWR017"
 			(at 160.02 220.98 0)
 			(effects
 				(font
@@ -8957,12 +8887,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "5862d2bc-b7b9-52d0-a773-b91914ccfdd4")
+			(uuid "644aa08c-a41f-5da9-9e6a-9f5231006a48")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR019")
+					(reference "#PWR017")
 					(unit 1)
 				)
 			)
@@ -8976,8 +8906,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "4df5090f-2363-52cb-b29e-6c2c5729a1db")
-		(property "Reference" "#PWR020"
+		(uuid "e58d6f4d-8eac-575b-a8f6-7695f94b7178")
+		(property "Reference" "#PWR018"
 			(at 172.72 220.98 0)
 			(effects
 				(font
@@ -9013,12 +8943,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "92c0a1db-1958-50f0-b63a-c85f5c2e438a")
+			(uuid "5ceaf22c-4f1e-5ee4-8120-ff962a2276a0")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR020")
+					(reference "#PWR018")
 					(unit 1)
 				)
 			)
@@ -9032,8 +8962,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "ee938330-be26-57fd-9402-18628ed18475")
-		(property "Reference" "#PWR021"
+		(uuid "c5b28a3e-709f-5e54-8980-b345019321ce")
+		(property "Reference" "#PWR019"
 			(at 187.96 220.98 0)
 			(effects
 				(font
@@ -9069,12 +8999,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "bbcccaee-c1d9-57b7-bb00-c163a1f590e0")
+			(uuid "5862d2bc-b7b9-52d0-a773-b91914ccfdd4")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR021")
+					(reference "#PWR019")
 					(unit 1)
 				)
 			)
@@ -9088,8 +9018,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "9a64974c-fca9-502b-88dc-d94dc96eaf06")
-		(property "Reference" "#PWR022"
+		(uuid "4df5090f-2363-52cb-b29e-6c2c5729a1db")
+		(property "Reference" "#PWR020"
 			(at 187.96 205.74 0)
 			(effects
 				(font
@@ -9125,12 +9055,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "401f3829-e4d0-544b-a329-689589c5d5c6")
+			(uuid "92c0a1db-1958-50f0-b63a-c85f5c2e438a")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR022")
+					(reference "#PWR020")
 					(unit 1)
 				)
 			)
@@ -9167,7 +9097,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "897915c4-41ae-5def-a001-4df4a60d1984")
+		(uuid "ee938330-be26-57fd-9402-18628ed18475")
 		(property "Reference" "U1"
 			(at 251.46 124.46 0)
 			(effects
@@ -9205,118 +9135,118 @@
 			)
 		)
 		(pin "1"
-			(uuid "11d1c1eb-aaea-5172-9861-88f44ba72740")
+			(uuid "bbcccaee-c1d9-57b7-bb00-c163a1f590e0")
 		)
 		(pin "2"
-			(uuid "a49ab9fe-32a2-5e13-838a-7fa6cacc4345")
+			(uuid "401f3829-e4d0-544b-a329-689589c5d5c6")
 		)
 		(pin "3"
-			(uuid "fd98a334-6ebe-57bf-8f51-314ba019992a")
+			(uuid "11d1c1eb-aaea-5172-9861-88f44ba72740")
 		)
 		(pin "4"
-			(uuid "ee5a62f1-9e01-5cb1-95ec-998f107b06de")
+			(uuid "a49ab9fe-32a2-5e13-838a-7fa6cacc4345")
 		)
 		(pin "5"
-			(uuid "5ed7f16a-b53d-529f-bc55-44f5c1bab56b")
+			(uuid "fd98a334-6ebe-57bf-8f51-314ba019992a")
 		)
 		(pin "6"
-			(uuid "7e3668ab-f895-5658-8e09-fb64c99f96a8")
+			(uuid "ee5a62f1-9e01-5cb1-95ec-998f107b06de")
 		)
 		(pin "7"
-			(uuid "23815b7f-5293-5f1c-b8c3-5ae7c490fd0c")
+			(uuid "5ed7f16a-b53d-529f-bc55-44f5c1bab56b")
 		)
 		(pin "8"
-			(uuid "fcfbe407-4625-5cc3-aaa8-eedf6f086a0c")
+			(uuid "7e3668ab-f895-5658-8e09-fb64c99f96a8")
 		)
 		(pin "9"
-			(uuid "ed32b263-7bd8-57b7-bbd5-7d51116af67f")
+			(uuid "23815b7f-5293-5f1c-b8c3-5ae7c490fd0c")
 		)
 		(pin "10"
-			(uuid "ca0b97d3-96ea-5f52-80a0-cdd248620afe")
+			(uuid "fcfbe407-4625-5cc3-aaa8-eedf6f086a0c")
 		)
 		(pin "11"
-			(uuid "b77d7658-dc56-55bc-864b-73c7ebf1d149")
+			(uuid "ed32b263-7bd8-57b7-bbd5-7d51116af67f")
 		)
 		(pin "12"
-			(uuid "49663d04-18b7-5760-b7b4-7b2e56f1ed66")
+			(uuid "ca0b97d3-96ea-5f52-80a0-cdd248620afe")
 		)
 		(pin "13"
-			(uuid "93ec4ac5-c7c2-5f6a-8016-84381191fc7b")
+			(uuid "b77d7658-dc56-55bc-864b-73c7ebf1d149")
 		)
 		(pin "14"
-			(uuid "ba112343-bc42-5515-9b16-58462133ca99")
+			(uuid "49663d04-18b7-5760-b7b4-7b2e56f1ed66")
 		)
 		(pin "15"
-			(uuid "ec94c6e2-0cef-575d-b625-e5f4a25cf8e7")
+			(uuid "93ec4ac5-c7c2-5f6a-8016-84381191fc7b")
 		)
 		(pin "16"
-			(uuid "d4fcde02-7fb3-5237-b5c2-9be965f71888")
+			(uuid "ba112343-bc42-5515-9b16-58462133ca99")
 		)
 		(pin "17"
-			(uuid "e93f8162-4137-592f-bc04-b7be8d09eac4")
+			(uuid "ec94c6e2-0cef-575d-b625-e5f4a25cf8e7")
 		)
 		(pin "18"
-			(uuid "4ebc6fe3-1460-584a-9c23-b7a959f1cab5")
+			(uuid "d4fcde02-7fb3-5237-b5c2-9be965f71888")
 		)
 		(pin "19"
-			(uuid "6b3d439e-1797-5d87-b8f5-f1d6333f3f4c")
+			(uuid "e93f8162-4137-592f-bc04-b7be8d09eac4")
 		)
 		(pin "20"
-			(uuid "90a41212-a163-58f5-9f0d-46d43e518f93")
+			(uuid "4ebc6fe3-1460-584a-9c23-b7a959f1cab5")
 		)
 		(pin "21"
-			(uuid "06877b2b-7a12-5559-9a29-3bc61a0c7fdf")
+			(uuid "6b3d439e-1797-5d87-b8f5-f1d6333f3f4c")
 		)
 		(pin "22"
-			(uuid "e4087bd5-fc2c-5ef4-844c-cacbf0e400d7")
+			(uuid "90a41212-a163-58f5-9f0d-46d43e518f93")
 		)
 		(pin "23"
-			(uuid "11a55a26-9cab-58bc-87d0-d2a89356868b")
+			(uuid "06877b2b-7a12-5559-9a29-3bc61a0c7fdf")
 		)
 		(pin "24"
-			(uuid "5ad884ee-def2-5772-943b-7a1e8152db2a")
+			(uuid "e4087bd5-fc2c-5ef4-844c-cacbf0e400d7")
 		)
 		(pin "25"
-			(uuid "464ed7ca-1639-52ca-b622-df479ba653fe")
+			(uuid "11a55a26-9cab-58bc-87d0-d2a89356868b")
 		)
 		(pin "26"
-			(uuid "0c6491fb-66a0-5514-9790-a13f05bcaad4")
+			(uuid "5ad884ee-def2-5772-943b-7a1e8152db2a")
 		)
 		(pin "27"
-			(uuid "da7a9b27-8113-5405-a0db-8db6352953c4")
+			(uuid "464ed7ca-1639-52ca-b622-df479ba653fe")
 		)
 		(pin "28"
-			(uuid "38db8ec5-d260-560f-83f4-d01787d258ce")
+			(uuid "0c6491fb-66a0-5514-9790-a13f05bcaad4")
 		)
 		(pin "29"
-			(uuid "2739e28e-219f-585c-98d5-3d74da2b977a")
+			(uuid "da7a9b27-8113-5405-a0db-8db6352953c4")
 		)
 		(pin "30"
-			(uuid "d48873ac-1673-5df6-baab-03862668f0d2")
+			(uuid "38db8ec5-d260-560f-83f4-d01787d258ce")
 		)
 		(pin "31"
-			(uuid "e179cf1a-aee3-514c-bb84-9bfe4d237740")
+			(uuid "2739e28e-219f-585c-98d5-3d74da2b977a")
 		)
 		(pin "32"
-			(uuid "8bfbd311-2190-5328-a183-c908bf03e210")
+			(uuid "d48873ac-1673-5df6-baab-03862668f0d2")
 		)
 		(pin "33"
-			(uuid "6337824c-4677-571e-9d7e-385575da4151")
+			(uuid "e179cf1a-aee3-514c-bb84-9bfe4d237740")
 		)
 		(pin "34"
-			(uuid "f9f6f571-7435-5b3c-89fb-8a4d036f6d7c")
+			(uuid "8bfbd311-2190-5328-a183-c908bf03e210")
 		)
 		(pin "35"
-			(uuid "400b734a-af84-5487-b918-16bbbd7dcf56")
+			(uuid "6337824c-4677-571e-9d7e-385575da4151")
 		)
 		(pin "36"
-			(uuid "095e8c17-0a65-5229-a6e0-287ff57de96b")
+			(uuid "f9f6f571-7435-5b3c-89fb-8a4d036f6d7c")
 		)
 		(pin "37"
-			(uuid "e47bd413-936e-5e47-910a-8bab0f4f7384")
+			(uuid "400b734a-af84-5487-b918-16bbbd7dcf56")
 		)
 		(pin "38"
-			(uuid "53e31b62-a945-5378-a4ac-073befcd4b74")
+			(uuid "095e8c17-0a65-5229-a6e0-287ff57de96b")
 		)
 		(instances
 			(project "medidor-energia"
@@ -9407,8 +9337,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "69a5a7e5-d704-5820-a02b-118191a8dfe9")
-		(property "Reference" "#PWR023"
+		(uuid "9a64974c-fca9-502b-88dc-d94dc96eaf06")
+		(property "Reference" "#PWR021"
 			(at 226.06 129.54 0)
 			(effects
 				(font
@@ -9444,12 +9374,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "a50cc8f1-6d86-579c-860a-e90240361b1d")
+			(uuid "e47bd413-936e-5e47-910a-8bab0f4f7384")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR023")
+					(reference "#PWR021")
 					(unit 1)
 				)
 			)
@@ -9463,7 +9393,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "0db0f05b-09b3-5ad5-b299-f6b66786a1b4")
+		(uuid "0ac0eea2-08db-5860-b248-c3b9dfec4505")
 	)
 	(label "CH2_ADC"
 		(at 226.06 137.16 180)
@@ -9473,7 +9403,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "171f8a3c-060d-5f51-9d28-860d798818c3")
+		(uuid "398d34bc-b520-5e63-af54-30a7dd2a9836")
 	)
 	(label "RES_IO34"
 		(at 226.06 139.7 180)
@@ -9483,7 +9413,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "0ac0eea2-08db-5860-b248-c3b9dfec4505")
+		(uuid "ae60a9a5-6064-5e06-b23d-e8a2270b73bf")
 	)
 	(label "V_ADC"
 		(at 226.06 142.24 180)
@@ -9493,7 +9423,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "398d34bc-b520-5e63-af54-30a7dd2a9836")
+		(uuid "4bc6a59c-b7a7-556b-9477-d7e96eca6056")
 	)
 	(label "RES_IO32"
 		(at 226.06 144.78 180)
@@ -9503,7 +9433,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "ae60a9a5-6064-5e06-b23d-e8a2270b73bf")
+		(uuid "e4a681c7-2148-5a82-9210-23d7f75ff4fd")
 	)
 	(label "RES_IO33"
 		(at 226.06 147.32 180)
@@ -9513,7 +9443,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "4bc6a59c-b7a7-556b-9477-d7e96eca6056")
+		(uuid "fdeb8fe3-21b6-5eb7-8992-bd4a7e35a205")
 	)
 	(label "LED_EST"
 		(at 226.06 149.86 180)
@@ -9523,7 +9453,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "e4a681c7-2148-5a82-9210-23d7f75ff4fd")
+		(uuid "e9981787-3b19-573c-91b6-e634fadc3ea9")
 	)
 	(label "SW1"
 		(at 226.06 152.4 180)
@@ -9533,7 +9463,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "fdeb8fe3-21b6-5eb7-8992-bd4a7e35a205")
+		(uuid "81c94458-ce92-53b6-a49a-9290b47a8b00")
 	)
 	(label "SW2"
 		(at 226.06 154.94 180)
@@ -9543,7 +9473,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "e9981787-3b19-573c-91b6-e634fadc3ea9")
+		(uuid "62ce41d8-6cec-52ff-9413-1baa6b4b0fb2")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -9553,8 +9483,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "4b98deb1-f6a2-5579-b14c-3dd305265f1d")
-		(property "Reference" "#PWR024"
+		(uuid "897915c4-41ae-5def-a001-4df4a60d1984")
+		(property "Reference" "#PWR022"
 			(at 226.06 162.56 0)
 			(effects
 				(font
@@ -9590,12 +9520,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "1298770f-5579-5b42-b176-71a1f7d967a4")
+			(uuid "53e31b62-a945-5378-a4ac-073befcd4b74")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR024")
+					(reference "#PWR022")
 					(unit 1)
 				)
 			)
@@ -9609,8 +9539,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "aa0fcb9a-90ec-5665-b7fb-a9bb96d69cc5")
-		(property "Reference" "#PWR025"
+		(uuid "69a5a7e5-d704-5820-a02b-118191a8dfe9")
+		(property "Reference" "#PWR023"
 			(at 226.06 175.26 0)
 			(effects
 				(font
@@ -9646,12 +9576,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "6ef7c521-f10b-5c39-891f-f47a58cb7541")
+			(uuid "a50cc8f1-6d86-579c-860a-e90240361b1d")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR025")
+					(reference "#PWR023")
 					(unit 1)
 				)
 			)
@@ -9665,8 +9595,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "4c9d9eba-4539-5312-ae1f-8fd93decdd1b")
-		(property "Reference" "#PWR026"
+		(uuid "4b98deb1-f6a2-5579-b14c-3dd305265f1d")
+		(property "Reference" "#PWR024"
 			(at 276.86 129.54 0)
 			(effects
 				(font
@@ -9702,12 +9632,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "5425541c-df9e-5af3-b89a-6455b77ee0cb")
+			(uuid "1298770f-5579-5b42-b176-71a1f7d967a4")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR026")
+					(reference "#PWR024")
 					(unit 1)
 				)
 			)
@@ -9721,7 +9651,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "81c94458-ce92-53b6-a49a-9290b47a8b00")
+		(uuid "893a5c25-f3b8-56ad-8046-eed5d28444bf")
 	)
 	(label "LCD_CS"
 		(at 284.48 134.62 0)
@@ -9731,7 +9661,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "62ce41d8-6cec-52ff-9413-1baa6b4b0fb2")
+		(uuid "400a2d3a-3c0e-54b8-b919-44e5c72484fb")
 	)
 	(label "LCD_DC"
 		(at 284.48 142.24 0)
@@ -9741,7 +9671,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "893a5c25-f3b8-56ad-8046-eed5d28444bf")
+		(uuid "869248a5-ecce-5a23-9fe4-c9d6d46a62a5")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -9751,8 +9681,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "fc43c375-8b38-50c6-84ac-d9092fe39127")
-		(property "Reference" "#PWR027"
+		(uuid "aa0fcb9a-90ec-5665-b7fb-a9bb96d69cc5")
+		(property "Reference" "#PWR025"
 			(at 276.86 144.78 0)
 			(effects
 				(font
@@ -9788,12 +9718,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "7cf274a3-f34c-5a56-baf7-10f90356a26a")
+			(uuid "6ef7c521-f10b-5c39-891f-f47a58cb7541")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR027")
+					(reference "#PWR025")
 					(unit 1)
 				)
 			)
@@ -9807,7 +9737,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "400a2d3a-3c0e-54b8-b919-44e5c72484fb")
+		(uuid "cb6db35c-16d6-50f4-93bb-a5572a1024df")
 	)
 	(label "LCD_CLK"
 		(at 284.48 149.86 0)
@@ -9817,7 +9747,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "869248a5-ecce-5a23-9fe4-c9d6d46a62a5")
+		(uuid "baa1256f-7ea4-57f4-868b-6f12816e0bed")
 	)
 	(label "LCD_RST"
 		(at 284.48 160.02 0)
@@ -9827,7 +9757,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "cb6db35c-16d6-50f4-93bb-a5572a1024df")
+		(uuid "b983c83b-4c5a-5b41-94f5-fa9e6239c79a")
 	)
 	(text "Analógicas solo en ADC1 (GPIO32–39):\nel ADC2 no funciona con Wi-Fi activo.\nGPIO6–11 = flash interna: no se usan."
 		(exclude_from_sim no)
@@ -9860,7 +9790,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "feb1c582-a4d0-538e-b73e-5b3a295c6263")
+		(uuid "4c9d9eba-4539-5312-ae1f-8fd93decdd1b")
 		(property "Reference" "J6"
 			(at 347.98 101.6 0)
 			(effects
@@ -9898,28 +9828,28 @@
 			)
 		)
 		(pin "1"
-			(uuid "9be7a6ac-4bd6-549e-921d-9aa6c4381a35")
+			(uuid "5425541c-df9e-5af3-b89a-6455b77ee0cb")
 		)
 		(pin "2"
-			(uuid "cb609ef3-c979-51fa-983a-9aec520b83fd")
+			(uuid "7cf274a3-f34c-5a56-baf7-10f90356a26a")
 		)
 		(pin "3"
-			(uuid "0195e5b3-9150-5d53-a6cb-516dc25de644")
+			(uuid "9be7a6ac-4bd6-549e-921d-9aa6c4381a35")
 		)
 		(pin "4"
-			(uuid "42957cda-46c4-5fbc-8617-11785f6d9f7d")
+			(uuid "cb609ef3-c979-51fa-983a-9aec520b83fd")
 		)
 		(pin "5"
-			(uuid "548e864a-7b2e-5250-b008-f61e81d06488")
+			(uuid "0195e5b3-9150-5d53-a6cb-516dc25de644")
 		)
 		(pin "6"
-			(uuid "38750130-1ac0-5589-9d6b-e0b3929c82ae")
+			(uuid "42957cda-46c4-5fbc-8617-11785f6d9f7d")
 		)
 		(pin "7"
-			(uuid "db5d5159-cea3-5fba-9036-490b2c1e8c1c")
+			(uuid "548e864a-7b2e-5250-b008-f61e81d06488")
 		)
 		(pin "8"
-			(uuid "d2b584ec-4c2b-5491-a40a-5aad278e63b7")
+			(uuid "38750130-1ac0-5589-9d6b-e0b3929c82ae")
 		)
 		(instances
 			(project "medidor-energia"
@@ -9938,8 +9868,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "b3b6a8ad-0c05-5c0e-bd96-902d2ec84b96")
-		(property "Reference" "#PWR028"
+		(uuid "fc43c375-8b38-50c6-84ac-d9092fe39127")
+		(property "Reference" "#PWR026"
 			(at 330.2 91.44 0)
 			(effects
 				(font
@@ -9975,12 +9905,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "b7b8d905-c81e-5370-b81d-7aed6870b2b7")
+			(uuid "db5d5159-cea3-5fba-9036-490b2c1e8c1c")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR028")
+					(reference "#PWR026")
 					(unit 1)
 				)
 			)
@@ -9994,8 +9924,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "f0685570-c9e5-5bae-a077-8f00cd19021e")
-		(property "Reference" "#PWR029"
+		(uuid "feb1c582-a4d0-538e-b73e-5b3a295c6263")
+		(property "Reference" "#PWR027"
 			(at 325.12 91.44 0)
 			(effects
 				(font
@@ -10031,12 +9961,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "086d58bb-9d4e-5763-86c8-c0be68a447c4")
+			(uuid "d2b584ec-4c2b-5491-a40a-5aad278e63b7")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR029")
+					(reference "#PWR027")
 					(unit 1)
 				)
 			)
@@ -10050,7 +9980,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "baa1256f-7ea4-57f4-868b-6f12816e0bed")
+		(uuid "c4cadc2c-142b-5de8-9390-33144c1d92c5")
 	)
 	(label "LCD_CS"
 		(at 320.04 104.14 180)
@@ -10060,7 +9990,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "b983c83b-4c5a-5b41-94f5-fa9e6239c79a")
+		(uuid "8e5ee01a-0a27-5a74-8cd2-598a72cbe27c")
 	)
 	(label "LCD_DC"
 		(at 320.04 106.68 180)
@@ -10070,7 +10000,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "c4cadc2c-142b-5de8-9390-33144c1d92c5")
+		(uuid "1098cba2-a9e1-541a-9ee7-35bf6927a20e")
 	)
 	(label "LCD_BL"
 		(at 320.04 109.22 180)
@@ -10080,7 +10010,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "8e5ee01a-0a27-5a74-8cd2-598a72cbe27c")
+		(uuid "5d265983-2119-5398-a51e-f08dd274cf63")
 	)
 	(label "LCD_CLK"
 		(at 320.04 111.76 180)
@@ -10090,7 +10020,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "1098cba2-a9e1-541a-9ee7-35bf6927a20e")
+		(uuid "66a3dd70-2dee-5ad2-81e0-9550a55a7b1f")
 	)
 	(label "LCD_RST"
 		(at 320.04 114.3 180)
@@ -10100,7 +10030,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "5d265983-2119-5398-a51e-f08dd274cf63")
+		(uuid "e7a00617-d7d3-5ccc-afc5-f231a37e7ec0")
 	)
 	(text "PUNTOS DE PRUEBA E INDICADORES DE ALIMENTACIÓN"
 		(exclude_from_sim no)
@@ -10133,7 +10063,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "9612fe72-9139-5763-89af-d8e933b3bd51")
+		(uuid "b3b6a8ad-0c05-5c0e-bd96-902d2ec84b96")
 		(property "Reference" "TP1"
 			(at 143.51 53.34 0)
 			(effects
@@ -10171,7 +10101,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "79766f0d-438b-5bd5-9a63-5f97581930b3")
+			(uuid "b7b8d905-c81e-5370-b81d-7aed6870b2b7")
 		)
 		(instances
 			(project "medidor-energia"
@@ -10190,8 +10120,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "241dec5c-9218-5e62-993b-239faeacc1bd")
-		(property "Reference" "#PWR030"
+		(uuid "f0685570-c9e5-5bae-a077-8f00cd19021e")
+		(property "Reference" "#PWR028"
 			(at 142.24 63.5 0)
 			(effects
 				(font
@@ -10227,12 +10157,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "e2efc8df-2480-57f4-a6b4-3e5beeeb17d0")
+			(uuid "086d58bb-9d4e-5763-86c8-c0be68a447c4")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR030")
+					(reference "#PWR028")
 					(unit 1)
 				)
 			)
@@ -10246,7 +10176,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "f175ff92-772a-53e6-a98c-2c0bf6c28d07")
+		(uuid "9612fe72-9139-5763-89af-d8e933b3bd51")
 		(property "Reference" "TP2"
 			(at 161.29 53.34 0)
 			(effects
@@ -10284,7 +10214,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "d74e1e6e-8745-586d-8057-146e45f7b27a")
+			(uuid "79766f0d-438b-5bd5-9a63-5f97581930b3")
 		)
 		(instances
 			(project "medidor-energia"
@@ -10303,8 +10233,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "b4a24b88-6271-5c72-af38-5bd278ad178b")
-		(property "Reference" "#PWR031"
+		(uuid "241dec5c-9218-5e62-993b-239faeacc1bd")
+		(property "Reference" "#PWR029"
 			(at 160.02 63.5 0)
 			(effects
 				(font
@@ -10340,12 +10270,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "80e660be-bfbd-53da-aa4e-f3141205a794")
+			(uuid "e2efc8df-2480-57f4-a6b4-3e5beeeb17d0")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR031")
+					(reference "#PWR029")
 					(unit 1)
 				)
 			)
@@ -10359,7 +10289,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "57ae7d60-5944-5c20-88f6-7349452f0add")
+		(uuid "f175ff92-772a-53e6-a98c-2c0bf6c28d07")
 		(property "Reference" "TP3"
 			(at 179.07 53.34 0)
 			(effects
@@ -10397,7 +10327,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "1fcec18b-eef2-5eed-aac2-4b9be84aa920")
+			(uuid "d74e1e6e-8745-586d-8057-146e45f7b27a")
 		)
 		(instances
 			(project "medidor-energia"
@@ -10416,7 +10346,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "66a3dd70-2dee-5ad2-81e0-9550a55a7b1f")
+		(uuid "1de414bb-4a04-5335-b9e7-774b80e5d171")
 	)
 	(symbol
 		(lib_id "Connector:TestPoint")
@@ -10426,7 +10356,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "baf49e18-fd32-5318-9954-75a1a2f3bce6")
+		(uuid "b4a24b88-6271-5c72-af38-5bd278ad178b")
 		(property "Reference" "TP4"
 			(at 196.85 53.34 0)
 			(effects
@@ -10464,7 +10394,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "4721029c-49c5-5720-a98f-d72d4b1304ea")
+			(uuid "80e660be-bfbd-53da-aa4e-f3141205a794")
 		)
 		(instances
 			(project "medidor-energia"
@@ -10483,7 +10413,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "e7a00617-d7d3-5ccc-afc5-f231a37e7ec0")
+		(uuid "387dad2e-38ab-50e1-89a9-eab6849f39f3")
 	)
 	(symbol
 		(lib_id "Connector:TestPoint")
@@ -10493,7 +10423,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "962a961b-c59a-54ac-85d3-a94221afa23d")
+		(uuid "57ae7d60-5944-5c20-88f6-7349452f0add")
 		(property "Reference" "TP5"
 			(at 214.63 53.34 0)
 			(effects
@@ -10531,7 +10461,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "0c710690-365c-58cf-bd99-59f92d633ed1")
+			(uuid "1fcec18b-eef2-5eed-aac2-4b9be84aa920")
 		)
 		(instances
 			(project "medidor-energia"
@@ -10550,7 +10480,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "1de414bb-4a04-5335-b9e7-774b80e5d171")
+		(uuid "903e5c98-cc98-590a-8a67-67c3bb1a031a")
 	)
 	(symbol
 		(lib_id "Connector:TestPoint")
@@ -10560,7 +10490,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "5db94449-4d4f-5360-bad7-44ae9e28006b")
+		(uuid "baf49e18-fd32-5318-9954-75a1a2f3bce6")
 		(property "Reference" "TP6"
 			(at 232.41 53.34 0)
 			(effects
@@ -10598,7 +10528,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "ab823250-1e45-5801-b860-4c4cc5451ff6")
+			(uuid "4721029c-49c5-5720-a98f-d72d4b1304ea")
 		)
 		(instances
 			(project "medidor-energia"
@@ -10617,7 +10547,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "387dad2e-38ab-50e1-89a9-eab6849f39f3")
+		(uuid "aa7b2403-f83f-5307-b9fd-8c40acab6170")
 	)
 	(symbol
 		(lib_id "Connector:TestPoint")
@@ -10627,7 +10557,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "8b43c920-c98e-5699-8a16-666d9cd23ab3")
+		(uuid "962a961b-c59a-54ac-85d3-a94221afa23d")
 		(property "Reference" "TP7"
 			(at 250.19 53.34 0)
 			(effects
@@ -10665,7 +10595,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "4670fffa-30a8-580c-b912-47a2e8ecbb74")
+			(uuid "0c710690-365c-58cf-bd99-59f92d633ed1")
 		)
 		(instances
 			(project "medidor-energia"
@@ -10684,7 +10614,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "903e5c98-cc98-590a-8a67-67c3bb1a031a")
+		(uuid "9764f803-20c2-5f61-a9d0-ee7c9492102a")
 	)
 	(symbol
 		(lib_id "Connector:TestPoint")
@@ -10694,7 +10624,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "62f3acb2-a705-53f1-a6ec-9b2a0441c25f")
+		(uuid "5db94449-4d4f-5360-bad7-44ae9e28006b")
 		(property "Reference" "TP8"
 			(at 267.97 53.34 0)
 			(effects
@@ -10732,7 +10662,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "3c153a0b-35fd-5646-97a1-d23f76c6fae9")
+			(uuid "ab823250-1e45-5801-b860-4c4cc5451ff6")
 		)
 		(instances
 			(project "medidor-energia"
@@ -10751,8 +10681,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "d0614082-efa1-5870-be13-d48d8fe1a8ea")
-		(property "Reference" "#PWR032"
+		(uuid "8b43c920-c98e-5699-8a16-666d9cd23ab3")
+		(property "Reference" "#PWR030"
 			(at 266.7 63.5 0)
 			(effects
 				(font
@@ -10788,12 +10718,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "90d0ee92-d1ff-5fb1-a178-7af7608115f5")
+			(uuid "4670fffa-30a8-580c-b912-47a2e8ecbb74")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR032")
+					(reference "#PWR030")
 					(unit 1)
 				)
 			)
@@ -10807,7 +10737,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "464e7cb9-af67-5a41-a6c6-280aae2ab414")
+		(uuid "62f3acb2-a705-53f1-a6ec-9b2a0441c25f")
 		(property "Reference" "TP9"
 			(at 285.75 53.34 0)
 			(effects
@@ -10845,7 +10775,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "6586d30a-a596-5e9e-9397-953f7a4e1f58")
+			(uuid "3c153a0b-35fd-5646-97a1-d23f76c6fae9")
 		)
 		(instances
 			(project "medidor-energia"
@@ -10864,8 +10794,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "63f19721-dc3d-53d0-9183-b499be289a7c")
-		(property "Reference" "#PWR033"
+		(uuid "d0614082-efa1-5870-be13-d48d8fe1a8ea")
+		(property "Reference" "#PWR031"
 			(at 284.48 63.5 0)
 			(effects
 				(font
@@ -10901,12 +10831,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "cc3f0d7b-22d5-5672-92ae-0616c0e2d504")
+			(uuid "90d0ee92-d1ff-5fb1-a178-7af7608115f5")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR033")
+					(reference "#PWR031")
 					(unit 1)
 				)
 			)
@@ -10920,8 +10850,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "a287e7f4-34ba-590b-af2d-496b28321c30")
-		(property "Reference" "#PWR034"
+		(uuid "464e7cb9-af67-5a41-a6c6-280aae2ab414")
+		(property "Reference" "#PWR032"
 			(at 142.24 73.66 0)
 			(effects
 				(font
@@ -10957,12 +10887,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "b11cebf2-a7bb-5cc7-a4cf-bd0a4b8b17e0")
+			(uuid "6586d30a-a596-5e9e-9397-953f7a4e1f58")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR034")
+					(reference "#PWR032")
 					(unit 1)
 				)
 			)
@@ -10976,7 +10906,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "499ce0a1-baa5-55a3-a4d5-4c3efc752e60")
+		(uuid "63f19721-dc3d-53d0-9183-b499be289a7c")
 		(property "Reference" "R14"
 			(at 147.98 71.66 90)
 			(effects
@@ -11014,10 +10944,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "c1181896-d34e-52e2-8b41-ddb399338da7")
+			(uuid "cc3f0d7b-22d5-5672-92ae-0616c0e2d504")
 		)
 		(pin "2"
-			(uuid "b2ed38b1-1a1a-5ca4-ad4e-b2a89fd335c8")
+			(uuid "b11cebf2-a7bb-5cc7-a4cf-bd0a4b8b17e0")
 		)
 		(instances
 			(project "medidor-energia"
@@ -11036,7 +10966,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "77d2ac9c-8b7e-5ca9-9b91-ae52b6466b47")
+		(uuid "a287e7f4-34ba-590b-af2d-496b28321c30")
 		(property "Reference" "D9"
 			(at 163.83 67.66 0)
 			(effects
@@ -11074,10 +11004,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "7adc0e34-39ee-5ab9-b373-8232cc0f9018")
+			(uuid "c1181896-d34e-52e2-8b41-ddb399338da7")
 		)
 		(pin "2"
-			(uuid "c919d70a-58d6-534a-b65d-f59c85bfc53b")
+			(uuid "b2ed38b1-1a1a-5ca4-ad4e-b2a89fd335c8")
 		)
 		(instances
 			(project "medidor-energia"
@@ -11096,8 +11026,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "e4f43f1d-3bd4-55ef-a5b2-291313c38a72")
-		(property "Reference" "#PWR035"
+		(uuid "499ce0a1-baa5-55a3-a4d5-4c3efc752e60")
+		(property "Reference" "#PWR033"
 			(at 170.18 76.2 0)
 			(effects
 				(font
@@ -11133,12 +11063,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "ce7333a5-0562-56c0-bd1f-a96e2636f8e3")
+			(uuid "7adc0e34-39ee-5ab9-b373-8232cc0f9018")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR035")
+					(reference "#PWR033")
 					(unit 1)
 				)
 			)
@@ -11152,8 +11082,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "5c78afd4-2a66-513e-9093-efc8f9078e68")
-		(property "Reference" "#PWR036"
+		(uuid "77d2ac9c-8b7e-5ca9-9b91-ae52b6466b47")
+		(property "Reference" "#PWR034"
 			(at 198.12 73.66 0)
 			(effects
 				(font
@@ -11189,12 +11119,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "feb308a7-8f24-5980-bb60-1674dd5af907")
+			(uuid "c919d70a-58d6-534a-b65d-f59c85bfc53b")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR036")
+					(reference "#PWR034")
 					(unit 1)
 				)
 			)
@@ -11208,7 +11138,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "10cd9a6b-531e-583d-82d7-89d2c73fecb3")
+		(uuid "e4f43f1d-3bd4-55ef-a5b2-291313c38a72")
 		(property "Reference" "R15"
 			(at 203.86 71.66 90)
 			(effects
@@ -11246,10 +11176,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "f36dbd1d-0891-57ab-a762-12fe719e61ab")
+			(uuid "ce7333a5-0562-56c0-bd1f-a96e2636f8e3")
 		)
 		(pin "2"
-			(uuid "3a1ab6d5-9ee8-54b0-b1d2-1b792f84f3f5")
+			(uuid "feb308a7-8f24-5980-bb60-1674dd5af907")
 		)
 		(instances
 			(project "medidor-energia"
@@ -11268,7 +11198,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "2dd773df-c71d-50b7-87d0-a44da2277845")
+		(uuid "5c78afd4-2a66-513e-9093-efc8f9078e68")
 		(property "Reference" "D10"
 			(at 219.71 67.66 0)
 			(effects
@@ -11306,10 +11236,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "31b0a195-e5e5-5ab4-8357-985754345b68")
+			(uuid "f36dbd1d-0891-57ab-a762-12fe719e61ab")
 		)
 		(pin "2"
-			(uuid "75ecefbf-c13a-5600-bf44-f6fed585dff7")
+			(uuid "3a1ab6d5-9ee8-54b0-b1d2-1b792f84f3f5")
 		)
 		(instances
 			(project "medidor-energia"
@@ -11328,8 +11258,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "e8e83626-7ad2-513c-a2ea-7cfa9df69d65")
-		(property "Reference" "#PWR037"
+		(uuid "10cd9a6b-531e-583d-82d7-89d2c73fecb3")
+		(property "Reference" "#PWR035"
 			(at 226.06 76.2 0)
 			(effects
 				(font
@@ -11365,12 +11295,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "a9eb758f-7e2f-5a48-8f04-01f37383f3b3")
+			(uuid "31b0a195-e5e5-5ab4-8357-985754345b68")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR037")
+					(reference "#PWR035")
 					(unit 1)
 				)
 			)
@@ -11407,7 +11337,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "aa7b2403-f83f-5307-b9fd-8c40acab6170")
+		(uuid "7377c5e3-dc0f-5166-95c9-d475ce446deb")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -11417,7 +11347,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "441a0518-60ac-533e-be7d-fea1e66d73f7")
+		(uuid "2dd773df-c71d-50b7-87d0-a44da2277845")
 		(property "Reference" "R11"
 			(at 308 132.62 90)
 			(effects
@@ -11455,10 +11385,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "7b82e1de-212f-5834-a904-ec957eb7ccf4")
+			(uuid "75ecefbf-c13a-5600-bf44-f6fed585dff7")
 		)
 		(pin "2"
-			(uuid "e5a92989-15b7-522e-8d11-4bf212910e1e")
+			(uuid "a9eb758f-7e2f-5a48-8f04-01f37383f3b3")
 		)
 		(instances
 			(project "medidor-energia"
@@ -11477,7 +11407,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "e1604692-5063-5578-b172-f8aade8621c1")
+		(uuid "e8e83626-7ad2-513c-a2ea-7cfa9df69d65")
 		(property "Reference" "D8"
 			(at 323.85 128.62 0)
 			(effects
@@ -11515,10 +11445,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "228f9a24-5269-599e-832a-b8b17d84c35a")
+			(uuid "7b82e1de-212f-5834-a904-ec957eb7ccf4")
 		)
 		(pin "2"
-			(uuid "a25c11d0-a50b-5c26-876f-097f38b7bdab")
+			(uuid "e5a92989-15b7-522e-8d11-4bf212910e1e")
 		)
 		(instances
 			(project "medidor-energia"
@@ -11537,8 +11467,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "4a62d4a0-2250-5526-b615-f1ca49050fff")
-		(property "Reference" "#PWR038"
+		(uuid "441a0518-60ac-533e-be7d-fea1e66d73f7")
+		(property "Reference" "#PWR036"
 			(at 330.2 137.16 0)
 			(effects
 				(font
@@ -11574,12 +11504,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "296e4f25-3431-5966-bfe5-e6ebac2600ed")
+			(uuid "228f9a24-5269-599e-832a-b8b17d84c35a")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR038")
+					(reference "#PWR036")
 					(unit 1)
 				)
 			)
@@ -11605,7 +11535,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "70435c0c-6caf-58bb-a130-5b1df67b9770")
+		(uuid "e1604692-5063-5578-b172-f8aade8621c1")
 		(property "Reference" "R12"
 			(at 312.42 152.4 0)
 			(effects
@@ -11643,10 +11573,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "c5e02c76-2394-55dd-b42d-df2cd14dc9d1")
+			(uuid "a25c11d0-a50b-5c26-876f-097f38b7bdab")
 		)
 		(pin "2"
-			(uuid "cf602372-1803-5f40-91bb-b099924c92a2")
+			(uuid "296e4f25-3431-5966-bfe5-e6ebac2600ed")
 		)
 		(instances
 			(project "medidor-energia"
@@ -11665,7 +11595,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "69c93167-bdfa-5c4a-8723-d37dd575468c")
+		(uuid "4a62d4a0-2250-5526-b615-f1ca49050fff")
 		(property "Reference" "SW1"
 			(at 327.66 152.4 0)
 			(effects
@@ -11703,10 +11633,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "2faf8658-fb83-52da-a19b-154d91456b53")
+			(uuid "c5e02c76-2394-55dd-b42d-df2cd14dc9d1")
 		)
 		(pin "2"
-			(uuid "25a219da-4625-57b8-ad91-8db02c418b89")
+			(uuid "cf602372-1803-5f40-91bb-b099924c92a2")
 		)
 		(instances
 			(project "medidor-energia"
@@ -11725,7 +11655,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "d70bd010-aad9-5586-973e-4d1511564179")
+		(uuid "70435c0c-6caf-58bb-a130-5b1df67b9770")
 		(property "Reference" "C10"
 			(at 320.04 162.56 0)
 			(effects
@@ -11763,10 +11693,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "a5743fab-d003-5637-aedc-b62e060127f4")
+			(uuid "2faf8658-fb83-52da-a19b-154d91456b53")
 		)
 		(pin "2"
-			(uuid "3dff840a-311b-5124-a0ac-ecd651e8b150")
+			(uuid "25a219da-4625-57b8-ad91-8db02c418b89")
 		)
 		(instances
 			(project "medidor-energia"
@@ -11785,7 +11715,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "9764f803-20c2-5f61-a9d0-ee7c9492102a")
+		(uuid "67597849-08e3-5ff5-9380-cf0480ade545")
 	)
 	(symbol
 		(lib_id "power:+3V3")
@@ -11795,8 +11725,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "19e23957-9971-5683-9779-bce6160ac1bb")
-		(property "Reference" "#PWR039"
+		(uuid "69c93167-bdfa-5c4a-8723-d37dd575468c")
+		(property "Reference" "#PWR037"
 			(at 309.88 149.86 0)
 			(effects
 				(font
@@ -11832,12 +11762,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "306ecb6c-55eb-5d83-b26b-34d6cc49650f")
+			(uuid "a5743fab-d003-5637-aedc-b62e060127f4")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR039")
+					(reference "#PWR037")
 					(unit 1)
 				)
 			)
@@ -11851,8 +11781,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "ad94402d-53a3-5375-b932-ca3de1dcfe30")
-		(property "Reference" "#PWR040"
+		(uuid "d70bd010-aad9-5586-973e-4d1511564179")
+		(property "Reference" "#PWR038"
 			(at 317.5 165.1 0)
 			(effects
 				(font
@@ -11888,12 +11818,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "86493560-ee99-5e8a-a2bf-3e6961ddfc83")
+			(uuid "3dff840a-311b-5124-a0ac-ecd651e8b150")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR040")
+					(reference "#PWR038")
 					(unit 1)
 				)
 			)
@@ -11907,8 +11837,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "08863777-65cd-515e-b3af-0e85d3024e77")
-		(property "Reference" "#PWR041"
+		(uuid "19e23957-9971-5683-9779-bce6160ac1bb")
+		(property "Reference" "#PWR039"
 			(at 340.36 160.02 0)
 			(effects
 				(font
@@ -11944,12 +11874,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "0f1460f2-0872-5806-adba-b938271a4418")
+			(uuid "306ecb6c-55eb-5d83-b26b-34d6cc49650f")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR041")
+					(reference "#PWR039")
 					(unit 1)
 				)
 			)
@@ -11975,7 +11905,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "0b0f9b5a-82ee-50d0-ab4a-72478d2f2e73")
+		(uuid "ad94402d-53a3-5375-b932-ca3de1dcfe30")
 		(property "Reference" "R13"
 			(at 312.42 180.34 0)
 			(effects
@@ -12013,10 +11943,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "1b16ef7c-9450-5316-86c6-ec43f8b24057")
+			(uuid "86493560-ee99-5e8a-a2bf-3e6961ddfc83")
 		)
 		(pin "2"
-			(uuid "e70332b1-3776-5053-a408-442883fb1ff7")
+			(uuid "0f1460f2-0872-5806-adba-b938271a4418")
 		)
 		(instances
 			(project "medidor-energia"
@@ -12035,7 +11965,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "829cfb11-0170-551c-b790-d9cb1da0cec4")
+		(uuid "08863777-65cd-515e-b3af-0e85d3024e77")
 		(property "Reference" "SW2"
 			(at 327.66 180.34 0)
 			(effects
@@ -12073,10 +12003,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "f9f2b557-1a7e-5272-aa25-b1a0b5cda0e8")
+			(uuid "1b16ef7c-9450-5316-86c6-ec43f8b24057")
 		)
 		(pin "2"
-			(uuid "2c25d934-8a17-594c-bcab-c646bbc7aef8")
+			(uuid "e70332b1-3776-5053-a408-442883fb1ff7")
 		)
 		(instances
 			(project "medidor-energia"
@@ -12095,7 +12025,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "defbb213-4382-5cea-9e5e-0c6bc8b5e472")
+		(uuid "0b0f9b5a-82ee-50d0-ab4a-72478d2f2e73")
 		(property "Reference" "C11"
 			(at 320.04 190.5 0)
 			(effects
@@ -12133,10 +12063,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "1b91c028-27bf-5e10-b59b-2d091296c4a2")
+			(uuid "f9f2b557-1a7e-5272-aa25-b1a0b5cda0e8")
 		)
 		(pin "2"
-			(uuid "f1f6caf6-828b-5970-b0a5-71bc6390af2b")
+			(uuid "2c25d934-8a17-594c-bcab-c646bbc7aef8")
 		)
 		(instances
 			(project "medidor-energia"
@@ -12155,7 +12085,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "7377c5e3-dc0f-5166-95c9-d475ce446deb")
+		(uuid "d14bae4b-778c-540c-9a05-503d609eaa24")
 	)
 	(symbol
 		(lib_id "power:+3V3")
@@ -12165,8 +12095,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "74269b4d-4279-58fe-964d-54a7290d1c5d")
-		(property "Reference" "#PWR042"
+		(uuid "829cfb11-0170-551c-b790-d9cb1da0cec4")
+		(property "Reference" "#PWR040"
 			(at 309.88 177.8 0)
 			(effects
 				(font
@@ -12202,12 +12132,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "a69c9d98-fb5d-5f3b-9aa5-7a8f9edb17c0")
+			(uuid "1b91c028-27bf-5e10-b59b-2d091296c4a2")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR042")
+					(reference "#PWR040")
 					(unit 1)
 				)
 			)
@@ -12221,8 +12151,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "08f5dd81-1a82-5014-83f2-9501860334dd")
-		(property "Reference" "#PWR043"
+		(uuid "defbb213-4382-5cea-9e5e-0c6bc8b5e472")
+		(property "Reference" "#PWR041"
 			(at 317.5 193.04 0)
 			(effects
 				(font
@@ -12258,12 +12188,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "bdb79394-67de-5b2e-82b4-ac00b139190c")
+			(uuid "f1f6caf6-828b-5970-b0a5-71bc6390af2b")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR043")
+					(reference "#PWR041")
 					(unit 1)
 				)
 			)
@@ -12277,8 +12207,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "45432189-0448-5925-832c-f4f80408da84")
-		(property "Reference" "#PWR044"
+		(uuid "74269b4d-4279-58fe-964d-54a7290d1c5d")
+		(property "Reference" "#PWR042"
 			(at 340.36 187.96 0)
 			(effects
 				(font
@@ -12314,12 +12244,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "be77a891-49f5-505c-b306-127441a30d16")
+			(uuid "a69c9d98-fb5d-5f3b-9aa5-7a8f9edb17c0")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR044")
+					(reference "#PWR042")
 					(unit 1)
 				)
 			)
@@ -12345,7 +12275,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "490dc56f-afa6-5017-b71b-d0f86ba4c4c2")
+		(uuid "08f5dd81-1a82-5014-83f2-9501860334dd")
 		(property "Reference" "J7"
 			(at 345.44 213.36 0)
 			(effects
@@ -12383,16 +12313,16 @@
 			)
 		)
 		(pin "1"
-			(uuid "ca6e9190-c077-506f-a245-d9e94fc046bc")
+			(uuid "bdb79394-67de-5b2e-82b4-ac00b139190c")
 		)
 		(pin "2"
-			(uuid "26bd1317-c94d-5e74-8734-9644f02579b5")
+			(uuid "be77a891-49f5-505c-b306-127441a30d16")
 		)
 		(pin "3"
-			(uuid "6358eb3d-7084-522c-9137-69a9ec5965f2")
+			(uuid "ca6e9190-c077-506f-a245-d9e94fc046bc")
 		)
 		(pin "4"
-			(uuid "516c7e2b-78c4-5b93-a9e4-75f125f4269d")
+			(uuid "26bd1317-c94d-5e74-8734-9644f02579b5")
 		)
 		(instances
 			(project "medidor-energia"
@@ -12411,7 +12341,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "67597849-08e3-5ff5-9380-cf0480ade545")
+		(uuid "2ab4227f-5f0f-5ddd-ad47-c6099979c395")
 	)
 	(label "RES_IO32"
 		(at 317.5 218.44 180)
@@ -12421,7 +12351,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "d14bae4b-778c-540c-9a05-503d609eaa24")
+		(uuid "647e87b1-f509-5e13-a4a9-e552c2fbfa84")
 	)
 	(label "RES_IO33"
 		(at 317.5 220.98 180)
@@ -12431,7 +12361,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "2ab4227f-5f0f-5ddd-ad47-c6099979c395")
+		(uuid "29fabb24-0038-5161-a274-52f6e0b95c0d")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -12441,8 +12371,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "da3a11cc-5b07-5cfa-a5a5-2baf28574c0e")
-		(property "Reference" "#PWR045"
+		(uuid "45432189-0448-5925-832c-f4f80408da84")
+		(property "Reference" "#PWR043"
 			(at 330.2 226.06 0)
 			(effects
 				(font
@@ -12478,18 +12408,18 @@
 			)
 		)
 		(pin "1"
-			(uuid "3a0d59ea-8e3c-5792-a657-d45d66c67c4d")
+			(uuid "6358eb3d-7084-522c-9137-69a9ec5965f2")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR045")
+					(reference "#PWR043")
 					(unit 1)
 				)
 			)
 		)
 	)
-	(text "NOTAS\n1. Todo lo que está fuera del recuadro rojo es muy baja tensión (MBT, ≤ 5 V CC). J2, J3, D8, SW1 y SW2 van en el panel del gabinete.\n2. Los burden R1 y R2 se sueldan directamente en los terminales T y S del jack de panel, nunca en el cable.\n3. Nunca desenchufar una pinza mientras abraza un conductor energizado (secundario abierto).\n4. Las pinzas abrazan solo el conductor de fase; jamás fase y neutro juntos.\n5. Tierra en estrella: el GND analógico llega solo al pin 14 del DevKitC; alimentación y parte digital retornan por los pines 20 y 26.\n6. ADC con atenuación de 11 dB: zona lineal 0,15–2,45 V; la señal queda en 0,32–2,32 V."
+	(text "NOTAS\n1. Todo lo que está fuera del recuadro rojo es muy baja tensión (MBT, ≤ 5 V CC). J2, J3, D8, SW1 y SW2 van en el panel del gabinete.\n2. Los burden R1 y R2 se sueldan directamente en los terminales T y S del jack de panel, nunca en el cable.\n3. Nunca desenchufar una pinza mientras abraza un conductor energizado (secundario abierto).\n4. Las pinzas abrazan solo el conductor de fase; jamás fase y neutro juntos.\n5. Un solo plano de GND en la PCB; el pin 14 del DevKitC recibe la tierra de los canales analógicos y los pines 20 y 26 la de alimentación y la parte digital.\n6. ADC con atenuación de 11 dB: zona lineal 0,15–2,45 V; la señal queda en 0,32–2,32 V."
 		(exclude_from_sim no)
 		(at 22.86 250.19 0)
 		(effects

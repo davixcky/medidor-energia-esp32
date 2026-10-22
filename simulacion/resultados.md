@@ -1,14 +1,14 @@
 | # | Caso | Resultado de la simulación | Criterio | Estado |
 |---:|---|---|---|---|
-| 1 | CH1, 60 A eficaces (nominal) | 0,392 V a 2,246 V | dentro de 0,15–2,45 V | Cumple |
-| 2 | CH1, 72,6 A eficaces (límite) | 0,197 V a 2,441 V | máximo ≤ 2,45 V + 0,01 | Cumple |
-| 3 | CH2, 30 A eficaces (nominal) | 0,329 V a 2,309 V | dentro de 0,15–2,45 V | Cumple |
-| 4 | CH2, 34 A eficaces (límite) | 0,197 V a 2,441 V | máximo ≤ 2,45 V + 0,01 | Cumple |
-| 5 | CH1, sobrecorriente de 150 A | -0,273 V a 3,543 V | entre −0,3 V y 3,6 V (máximo absoluto) | Cumple |
+| 1 | CH1, 60 A eficaces (nominal) | 0,387 V a 2,250 V | dentro de 0,15–2,45 V | Cumple |
+| 2 | CH1, 72,6 A eficaces (límite) | 0,192 V a 2,446 V | máximo ≤ 2,45 V + 0,01 | Cumple |
+| 3 | CH2, 30 A eficaces (nominal) | 0,324 V a 2,314 V | dentro de 0,15–2,45 V | Cumple |
+| 4 | CH2, 34 A eficaces (límite) | 0,191 V a 2,447 V | máximo ≤ 2,45 V + 0,01 | Cumple |
+| 5 | CH1, sobrecorriente de 150 A | -0,273 V a 3,544 V | entre −0,3 V y 3,6 V (máximo absoluto) | Cumple |
 | 6 | CH1, sobrecorriente de 200 A | -0,295 V a 3,586 V | entre −0,3 V y 3,6 V (máximo absoluto) | Cumple |
 | 7 | CH2, sobrecorriente de 80 A | -0,284 V a 3,569 V | entre −0,3 V y 3,6 V (máximo absoluto) | Cumple |
 | 8 | CH2, sobrecorriente de 100 A | -0,299 V a 3,592 V | entre −0,3 V y 3,6 V (máximo absoluto) | Cumple |
-| 9 | CH2, 20 A con 60 % de tercer armónico | 0,555 V a 2,083 V | dentro de 0,15–2,45 V | Cumple |
+| 9 | CH2, 20 A con 60 % de tercer armónico | 0,551 V a 2,086 V | dentro de 0,15–2,45 V | Cumple |
 | 10 | VBIAS en reposo | 1,3194 V | 1,32 V ± 1 % | Cumple |
 | 11 | CH1, ganancia a 60 Hz | 21,962 V/A en el secundario (10,98 mV por A de primario) | 22 Ω (sin pérdida en el filtro) | Cumple |
 | 12 | CH1, atenuación en el armónico 50 (3 kHz) | -9,84 dB | atenuación conocida: el *firmware* la compensa | Informativo |

@@ -14,6 +14,6 @@ C9 v 0 27n
 set wr_singlescale
 set wr_vecnames
 run
-wrdata /home/davixcky/dev/.personal/electronica/sistemas-embebidos-1/C2-ABPR/herramientas/../simulacion/ac_v.dat vm(v) vp(v)
+wrdata /home/davixcky/dev/.personal/electronica/medidor-energia-esp32/herramientas/../simulacion/ac_v.dat vm(v) vp(v)
 .endc
 .end

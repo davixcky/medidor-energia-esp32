@@ -363,12 +363,22 @@ $$V_{BIAS} = 3{,}3\ \text{V} \cdot \frac{R_4}{R_3 + R_4} = 3{,}3 \cdot \frac{10\
   500 ms después del encendido.
 - Consumo del divisor: $3{,}3\ \text{V} / 25\ \text{k}\Omega = 132\ \mu$A.
 
-Un solo divisor sirve a los dos canales: la corriente de cada pinza circula únicamente por su
-resistencia de carga, y el nodo VBIAS solo entrega la pequeña corriente de muestreo del ADC.
+Un solo divisor sirve a los dos canales. La corriente de cada pinza circula por su resistencia de
+carga, entre la punta (T) y la manga (S) del *jack*, y la manga va a VBIAS. Los condensadores del
+filtro antialias, C5 y C6, también vuelven a VBIAS y no a GND: así la corriente del filtro se cierra
+dentro del lazo de la pinza y el nodo VBIAS solo entrega la pequeña corriente de muestreo del ADC.
+
+> **Corrección por la revisión del diseño.** En la versión anterior C5 y C6 iban a GND. La corriente del
+> filtro volvía entonces por C7‖C8, que con C5 forman un divisor capacitivo: en VBIAS aparecía el
+> $C_5/(C_7 + C_8) = 47\ \text{nF} / 10{,}1\ \mu\text{F} \approx 0{,}47$ % de la tensión de cada resistencia de
+> carga, y por VBIAS pasaba al otro canal. CH1 habría contado un 1 % menos de la carga de CH2 (0,30 A con
+> 30 A) y CH2 habría mostrado 0,13 A fantasma con 60 A en CH1. Como depende de la carga, ni la tara ni la
+> calibración lo quitan. La simulación no lo mostraba porque cada canal se simuló por separado.
 
 #### 7.4.3. Filtro antialias y protección de las entradas
 
-- **Canales de corriente:** R5 = R6 = 3,3 kΩ y C5 = C6 = 47 nF.
+- **Canales de corriente:** R5 = R6 = 3,3 kΩ y C5 = C6 = 47 nF, conectados entre la entrada del ADC y
+  VBIAS (sección 7.4.2).
   $f_c = 1/(2\pi \cdot 3{,}3\ \text{k}\Omega \cdot 47\ \text{nF}) = 1{,}03$ kHz, que deja pasar los armónicos de interés
   y atenúa lo que se plegaría desde los 8 kHz de muestreo. Contando la resistencia de carga en serie,
   las constantes de tiempo son τ = 156 µs (CH1) y 157 µs (CH2).
@@ -398,16 +408,21 @@ al riel superior y solo puede subir hasta unos 3,5 V, así que el pico útil a l
 - **Filtro:** la resistencia equivalente es $R_7 \parallel R_8 = 5{,}96$ kΩ; con C9 = 27 nF,
   τ = 161 µs y $f_c = 0{,}99$ kHz. Los valores de R7 y R8 (serie E24) se eligieron para que τ quede junto
   a los 156 y 157 µs de los canales de corriente: el desfase a 60 Hz es de 3,47° en tensión, frente a
-  3,37° en CH1 y 3,40° en CH2. La diferencia máxima (0,10°) produce un error en $P$ de 0,06 % con
-  FP = 0,95 y se compensa en el *firmware* junto con el desfase propio del transformador.
+  3,37° en CH1 y 3,40° en CH2. La diferencia nominal (0,10°) produce un error en $P$ de 0,06 % con
+  FP = 0,95. Con la tolerancia de ±5 % de los condensadores la diferencia puede llegar a ±0,35°, y el
+  transformador y el LM358 del ZMPT101B suman varios grados más. Todo eso se mide en el banco con una
+  carga inductiva y se compensa en el *firmware* (sección 7.16), que puede correr la tensión entre −8° y
+  +11° respecto de cada corriente.
 
 #### 7.4.5. Alimentación
 
 - **Presupuesto de corriente:** ESP32 con Wi-Fi, 120 mA promedio con picos de hasta 500 mA durante la
   transmisión; módulo ZMPT101B, unos 5 mA; pantalla LCD con luz de fondo, unos 30 mA; LED, 3,6 mA. El pico total queda
   por debajo de 550 mA, por lo que un adaptador de 2 A supera la corriente máxima prevista.
-- **F2 (PTC MF-R110):** conduce 1,1 A de forma continua y se abre por encima de unos 2,2 A. Protege el
-  adaptador y el cableado ante un cortocircuito y se rearma solo cuando se retira la falla.
+- **F2 (PTC MF-R110):** conduce 1,1 A de forma continua y se abre por encima de unos 2,2 A. Con el
+  adaptador de 2 A, ante un cortocircuito actúa primero el límite de corriente del propio adaptador; F2
+  protege las pistas si se usa un adaptador o una fuente de más corriente, y se rearma solo al retirar
+  la falla.
 - **D1 (1N5819):** si el adaptador se conecta con la polaridad invertida, el diodo bloquea la corriente.
   También impide que, al conectar el USB para programar, el DevKitC alimente al adaptador en sentido
   inverso. La simulación (sección 7.12) da 4,56 V en el pin de 5 V con un adaptador de 5,0 V y 500 mA,
@@ -417,13 +432,17 @@ al riel superior y solo puede subir hasta unos 3,5 V, así que el pico útil a l
   adaptador de 5,1 V.
 - **C1 (470 µF) y C2 (100 nF):** el primero sostiene la tensión durante las ráfagas de transmisión
   Wi-Fi y el segundo filtra las frecuencias altas.
+- **USB y adaptador:** D1 evita que el USB alimente al adaptador, pero con el USB conectado y el
+  adaptador desconectado el pin 5V del DevKitC sí alimenta la red +5V de la placa (el módulo ZMPT101B y
+  el LED D9 encienden). Espressif indica alimentar la tarjeta desde una sola fuente a la vez: para
+  programar se desconecta el adaptador.
 
-#### 7.4.6. Tierra en estrella
+#### 7.4.6. Tierra
 
-La tierra analógica (canales, polarización y módulo ZMPT101B) se une al DevKitC **solo en el pin 14**.
-La corriente de alimentación y la de la parte digital (pantalla, LED y pulsadores) retornan por los
-pines 20 y 26. Así las corrientes del radio Wi-Fi no circulan por la tierra de referencia de las
-señales analógicas. Los tres pines GND se unen dentro del módulo, en su plano de tierra.
+La PCB tiene un solo plano de GND en la cara de cobre, que une los tres pines GND del DevKitC (14, 20 y
+26). No es una tierra en estrella: el plano es ancho y de baja impedancia, y las corrientes de mayor
+valor (el radio Wi-Fi) circulan dentro del propio módulo ESP32. Las señales analógicas se miden
+respecto de VBIAS y no de GND (sección 7.4.2), lo que reduce el efecto del ruido en el plano.
 
 #### 7.4.7. Interfaz local
 
@@ -504,17 +523,17 @@ a partir de la netlist del esquemático, con la interfaz de Python de KiCad (`pc
   derecha, sobre zócalos y con el USB hacia el frente; el conector de la LCD a la
   derecha, con sus pines en el mismo orden que los del ESP32, y el LED y los pulsadores en el centro.
 - **Ruteo:** Freerouting 2.5, con la cara de arriba como «capa de puentes». Lo que no cabe en una cara
-  se resuelve con **3 puentes de alambre** del lado de los componentes (Tabla 6), dibujados en
-  la serigrafía como JP1 a JP3.
+  se resuelve con **2 puentes de alambre** del lado de los componentes (Tabla 6), dibujados en
+  la serigrafía como JP1 y JP2. C5 y C6 van girados para que su pata de VBIAS quede a la altura de la
+  manga (S) de su *jack* y la pista de VBIAS cruce recta.
 - **Relleno de GND** en toda la cara libre: hay menos cobre que disolver y las señales analógicas
   tienen una referencia común. Se deja sin relleno la zona bajo la antena del ESP32.
 - **Texto en el cobre** en espejo: en el papel se lee al revés y en la placa terminada, al derecho.
 
 La verificación de reglas de diseño (DRC) con comparación contra el esquemático termina con
 **0 conexiones pendientes, 0 diferencias con el esquemático y ninguna violación de separación**
-([`hardware/drc.rpt`](hardware/drc.rpt)). Quedan 3 advertencias que no afectan la fabricación:
-cuatro líneas de serigrafía de los puentes JP1 y JP3 que tocan el contorno de J1 o J7 y su propio nombre,
-y un extremo de JP1 dentro del patio de J1. Las reglas que se relajan a propósito son la
+([`hardware/drc.rpt`](hardware/drc.rpt)). Quedan 2 advertencias que no afectan la fabricación:
+la línea de serigrafía de cada puente (JP1 y JP2) toca su propio nombre. Las reglas que se relajan a propósito son la
 diferencia con la huella de biblioteca, porque los pads se agrandaron, y la serigrafía recortada por
 esos pads.
 
@@ -528,9 +547,8 @@ esquina superior izquierda, vista desde los componentes.
 
 | Puente | Red | Desde | Hasta | Largo |
 |---|---|---|---|---|
-| JP1 | +5V | (9,2; 59,4) junto a R3 | (9,2; 73,2) junto a J1 | 14 mm |
-| JP2 | CH2_ADC | (55,7; 44,7) junto a R11 | (60,0; 44,7) junto a R11 | 4 mm |
-| JP3 | V_ADC | (83,0; 18,8) junto a J7 | (83,0; 39,6) junto al ESP32 | 21 mm |
+| JP1 | LED_EST | (71,2; 40,0) junto a R11 | (74,8; 44,8) junto a R11 | 6 mm |
+| JP2 | V_ADC | (83,0; 18,8) junto a J7 | (83,0; 39,6) junto al ESP32 | 21 mm |
 
 Fuente: elaboración propia a partir de [`hardware/fabricacion/PUENTES.md`](hardware/fabricacion/PUENTES.md).
 
@@ -561,7 +579,7 @@ Fuente: elaboración propia.
    cobre entre pistas.
 4. Perforar con brocas de 0,8, 1,0 y 1,3 mm según el archivo de taladros (1,3 mm para las borneras) y
    de 3,2 mm para los agujeros M3.
-5. Soldar primero los **puentes de alambre** (JP1 a JP3), después los componentes de menor a mayor
+5. Soldar primero los **puentes de alambre** (JP1 y JP2), después los componentes de menor a mayor
    altura, los lazos de los puntos de prueba y al final los zócalos del ESP32.
 6. Antes de energizar, seguir la verificación de la sección 7.9.
 
@@ -581,7 +599,8 @@ Fuente: elaboración propia.
 del osciloscopio o del multímetro sin tocar las patas de los componentes, cada uno junto al circuito de
 su red y con el nombre de la red en la serigrafía. TP8 y TP9 son de tierra y reciben el caimán de la
 punta. Dos LED muestran la alimentación sin instrumentos: D9 (rojo, 3 mA con R14 de 1 kΩ) se enciende
-cuando llegan los 5 V del adaptador después de F2 y D1, y D10 (verde, 2,8 mA con R15 de 470 Ω) cuando
+cuando hay 5 V en la placa, del adaptador después de F2 y D1 o, si solo está conectado el USB, del
+propio DevKitC (sección 7.4.5), y D10 (verde, 2,8 mA con R15 de 470 Ω) cuando
 funciona el regulador de 3,3 V del DevKitC. La Tabla 8 da los valores esperados.
 
 **Tabla 8.** Puntos de prueba de la PCB y valores esperados.
@@ -678,6 +697,18 @@ lo divide en dos compartimentos:
 - **Tapa:** ventana de 44 × 24 mm para la pantalla LCD de 1,9", que queda rehundida 1,5 mm para protegerla
   de golpes, LED de estado, dos pulsadores y el rótulo de advertencia sobre la zona de red.
 
+**Aislamiento.** Lo único que separa la red de lo que se puede tocar (los *jacks* de las pinzas, el
+USB conectado a un computador y el cable de MBT) es el propio módulo ZMPT101B: su transformador y la
+separación en su placa entre la bornera de red y el lado del LM358. Los módulos económicos no declaran
+esa separación, así que el montaje exige:
+
+- medir en el módulo la distancia entre el cobre de red y el de baja tensión y aceptar solo 3 mm o más
+  (si es menor, ranurar la placa entre las dos zonas o cambiar el módulo);
+- fijar el módulo con tornillos y separadores de nailon, para que ningún tornillo quede unido a su
+  cobre;
+- cubrir con funda termoencogible el tramo del cable de MBT que pasa por el compartimento de red;
+- usar una clavija polarizada, para que el fusible F1 (en J4.1) quede siempre en la fase.
+
 ![Gabinete](img/gabinete.png)
 
 **Ilustración 6.** Planos del gabinete: vista superior sin tapa y vista exterior de la tapa, con cotas
@@ -695,7 +726,8 @@ en milímetros. Fuente: elaboración propia en Python y Matplotlib.
    y **VBIAS = 1,32 V ± 0,03 V** en TP3.
 5. Con el módulo ZMPT101B **desconectado de la red**, medir 2,5 V en TP6 y 1,35 V en TP7.
 6. **Verificación de aislamiento**, firmada por dos integrantes: con un megóhmetro a 500 V CC entre los
-   bornes de red (L y N unidos) y el GND de MBT, la resistencia debe ser de 1 MΩ o más. Revisar que el
+   bornes de red (L y N unidos) y el GND de MBT, la resistencia debe ser de 100 MΩ o más (un aislamiento sano marca
+   cientos de MΩ; 1 MΩ indicaría un camino de fuga). Revisar que el
    fusible F1 esté colocado y que el tabique no tenga cables que lo crucen fuera del collarín.
 7. Energizar la red con el gabinete cerrado. Con el osciloscopio, comprobar una sinusoide de unos
    0,35 V pico centrada en 1,35 V en TP7, y ajustar el potenciómetro del módulo si hace falta.
@@ -716,7 +748,7 @@ sería cero).
 | 2 | Vibración y sacudida | Agitar el gabinete cerrado durante 1 min en los tres ejes | Sin reinicios del ESP32 ni falsos contactos | Pendiente |
 | 3 | Tirón de cables | Tirar con 20 N del cable de red y de cada cable de pinza | El prensaestopas y los *jacks* no ceden y ningún hilo se suelta | Pendiente |
 | 4 | Polaridad invertida | Conectar los 5 V invertidos en el *jack* de alimentación | El equipo no enciende y no sufre daño (D1 bloquea) | Pendiente |
-| 5 | Cortocircuito en 5 V | Cortocircuitar +5V a GND con fuente de 2 A | F2 se abre y se rearma al retirar la falla | Pendiente |
+| 5 | Cortocircuito en 5 V | Cortocircuitar +5V a GND con el adaptador de 2 A | El adaptador limita la corriente, nada se calienta y el equipo vuelve a encender al retirar la falla (F2 solo se abre con una fuente de más de 2,2 A) | Pendiente |
 | 6 | Sobrecorriente en pinza | Pasar por la pinza de CH2 más de 34 A (o varias vueltas de conductor) | La señal recorta en los BAT85 y el ESP32 sigue funcionando | Pendiente |
 | 7 | Operación continua | 2 h energizado con carga | Temperatura interna menor de 45 °C y sin reinicios | Pendiente |
 
@@ -816,7 +848,12 @@ plateado).
 4. Enchufar el banco y verificar X1 con un probador de tomacorrientes (fase, neutro y tierra correctos).
 5. Conectar una carga resistiva conocida (bombillo incandescente o hervidor) en X1 y comparar la
    corriente con una pinza amperimétrica colocada en la otra pata del lazo, o con el PZEM-004T. Con esa
-   medida se ajusta la constante de calibración del canal.
+   medida se ajusta la constante de calibración del canal (`cal ki1` o `cal ki2` en la consola serie) y
+   la de tensión contra un multímetro (`cal kv`).
+6. **Fase:** con carga resistiva el error de fase no se ve, porque el FP es 1. Conectar una carga
+   inductiva (un ventilador o un motor, FP de 0,6 a 0,8) y comparar la potencia activa con la del
+   PZEM-004T. Ajustar `cal fv` (fase del ZMPT101B) hasta que coincidan, y después `cal f1` o `cal f2`
+   si una pinza necesita su propia corrección. Los valores quedan guardados en el ESP32.
 
 ### 7.12. Simulación del circuito
 
@@ -835,15 +872,15 @@ con el criterio de diseño. Los modelos son los mismos supuestos de la sección 
 
 | # | Caso | Resultado de la simulación | Criterio | Estado |
 |---:|---|---|---|---|
-| 1 | CH1, 60 A eficaces (nominal) | 0,392 V a 2,246 V | dentro de 0,15–2,45 V | Cumple |
-| 2 | CH1, 72,6 A eficaces (límite) | 0,197 V a 2,441 V | máximo ≤ 2,45 V + 0,01 | Cumple |
-| 3 | CH2, 30 A eficaces (nominal) | 0,329 V a 2,309 V | dentro de 0,15–2,45 V | Cumple |
-| 4 | CH2, 34 A eficaces (límite) | 0,197 V a 2,441 V | máximo ≤ 2,45 V + 0,01 | Cumple |
-| 5 | CH1, sobrecorriente de 150 A | -0,273 V a 3,543 V | entre −0,3 V y 3,6 V (máximo absoluto) | Cumple |
+| 1 | CH1, 60 A eficaces (nominal) | 0,387 V a 2,250 V | dentro de 0,15–2,45 V | Cumple |
+| 2 | CH1, 72,6 A eficaces (límite) | 0,192 V a 2,446 V | máximo ≤ 2,45 V + 0,01 | Cumple |
+| 3 | CH2, 30 A eficaces (nominal) | 0,324 V a 2,314 V | dentro de 0,15–2,45 V | Cumple |
+| 4 | CH2, 34 A eficaces (límite) | 0,191 V a 2,447 V | máximo ≤ 2,45 V + 0,01 | Cumple |
+| 5 | CH1, sobrecorriente de 150 A | -0,273 V a 3,544 V | entre −0,3 V y 3,6 V (máximo absoluto) | Cumple |
 | 6 | CH1, sobrecorriente de 200 A | -0,295 V a 3,586 V | entre −0,3 V y 3,6 V (máximo absoluto) | Cumple |
 | 7 | CH2, sobrecorriente de 80 A | -0,284 V a 3,569 V | entre −0,3 V y 3,6 V (máximo absoluto) | Cumple |
 | 8 | CH2, sobrecorriente de 100 A | -0,299 V a 3,592 V | entre −0,3 V y 3,6 V (máximo absoluto) | Cumple |
-| 9 | CH2, 20 A con 60 % de tercer armónico | 0,555 V a 2,083 V | dentro de 0,15–2,45 V | Cumple |
+| 9 | CH2, 20 A con 60 % de tercer armónico | 0,551 V a 2,086 V | dentro de 0,15–2,45 V | Cumple |
 | 10 | VBIAS en reposo | 1,3194 V | 1,32 V ± 1 % | Cumple |
 | 11 | CH1, ganancia a 60 Hz | 21,962 V/A en el secundario (10,98 mV por A de primario) | 22 Ω (sin pérdida en el filtro) | Cumple |
 | 12 | CH1, atenuación en el armónico 50 (3 kHz) | -9,84 dB | atenuación conocida: el *firmware* la compensa | Informativo |
@@ -1222,14 +1259,14 @@ columnas `tiempo,kwh,temp`) y los pesos entrenados `lstm.pt`.
 ### 7.16. *Firmware*
 
 El *firmware* ([`firmware/`](firmware/)) está escrito en C++ con PlatformIO y el *framework* Arduino para
-ESP32 (ESP-IDF 4.4). Compila sin errores y ocupa el 30 % de la RAM y el 75 % de la memoria de programa.
+ESP32 (ESP-IDF 4.4). Compila sin errores y ocupa el 30 % de la RAM y el 77 % de la memoria de programa.
 Se reparte en tres tareas de FreeRTOS (Tabla 18).
 
 **Tabla 18.** Tareas del *firmware*.
 
 | Núcleo | Tarea | Función |
 |---|---|---|
-| 1 | Adquisición | Muestrea V, CH1 y CH2 a 8.000 muestras/s por canal con el ADC1 y cierra una ventana de 60 ciclos de red (≈ 1 s). Entrega los resultados por una cola; falta verificar la estabilidad del muestreo con Wi-Fi activo |
+| 1 | Adquisición | Un temporizador de hardware la despierta cada 125 µs: muestrea V, CH1 y CH2 a 8.000 muestras/s por canal con el ADC1 y cierra una ventana de 60 ciclos de red (≈ 1 s). Entrega los resultados por una cola; falta verificar la estabilidad del muestreo con Wi-Fi activo |
 | 0 | Red | Wi-Fi, hora por NTP, un registro ADR-001 por ventana, búfer de 1.200 registros (20 min sin red) y envío en lotes cada 5 s |
 | 0 | Interfaz | Pantallas de la LCD, pulsadores SW1 y SW2, LED de estado y alerta local |
 
@@ -1242,7 +1279,15 @@ El cálculo está en una biblioteca sin dependencias de Arduino (`lib/medicion/`
 - Los valores eficaces y la potencia activa se obtienen de sumas enteras exactas, quitando la media de
   la propia ventana; por eso no hace falta conocer el valor exacto de VBIAS.
 - Como el ADC convierte V, I1 e I2 en secuencia, la tensión se interpola al instante de cada corriente.
-  El retardo de conversión se mide al arrancar.
+  El retardo de conversión se mide al arrancar. La corriente se usa con 4 muestras de atraso y la
+  tensión se toma de una historia de 8 muestras, así que la corrección puede ir de −3 a +4 muestras
+  (−8° a +11° a 60 Hz) y cubre también la fase de las pinzas y del ZMPT101B.
+- Si la tensión no cruza por cero durante medio segundo (ZMPT101B desconectado o F1 abierto), las
+  ventanas se cierran por cantidad de muestras: la corriente se sigue midiendo y la tensión, la
+  potencia y la frecuencia se informan en cero.
+- Las constantes de calibración (`K_V`, `K_I1`, `K_I2` y las tres fases) se guardan en la memoria no
+  volátil desde la consola serie (comando `cal`), sin recompilar. Los valores de `config.h` son los de
+  partida.
 - $S = V I$, $Q = \sqrt{S^2 - P^2}$ y $FP = P/S$; la frecuencia sale de los ciclos sobre la duración real
   de la ventana.
 - El THD de la corriente de CH1 se calcula con el algoritmo de Goertzel hasta el armónico 40,
@@ -1268,9 +1313,14 @@ resistencia de carga, VBIAS, ADC de 12 bits con ruido de 0,7 códigos y retardo 
 | Red a 59,8 Hz con carga de 1 A | Frecuencia | 59,800 Hz | 59,798 Hz |
 | | P CH1 | 112,10 W | 112,17 W |
 | Sin compensar el multiplexado, FP 0,5 | Error en P CH1 | — | 0,77 % |
+| Canal de tensión adelantado 6°, compensado, FP 0,8 | P CH1 | 1.440,0 W | 1.439,8 W |
+| ZMPT101B desconectado, carga de 10 A | I eficaz CH1 | 10,000 A | 10,000 A |
+| | Frecuencia y P | 0 | 0 |
 
 Fuente: elaboración propia. El último caso muestra por qué hace falta la interpolación: sin ella, el
-retardo de 12 µs produce un error de 0,77 % en la potencia con FP = 0,5.
+retardo de 12 µs produce un error de 0,77 % en la potencia con FP = 0,5. Sin corregir, un adelanto de
+6° del canal de tensión daría un error de unos 8 % en la potencia con FP = 0,8; con la historia de
+tensión el error queda en 0,01 %.
 
 > **Pruebas pendientes en el ESP32:** la estabilidad del ritmo de muestreo con Wi-Fi activo, la
 > linealidad del ADC del ejemplar y las constantes de calibración, que se ajustan en el banco de medición
@@ -1298,6 +1348,9 @@ El diseño se revisó mediante las siguientes verificaciones y cálculos:
 - Cálculos de excursión, filtro y potencia documentados en la sección 7.4.
 - Simulación en ngspice de las entradas analógicas y la alimentación (sección 7.12), que obligó a
   cambiar el filtro de entrada, el divisor de tensión y el adaptador.
+- Revisión completa del diseño (esquemático, PCB y *firmware*) antes de fabricar, que corrigió el
+  arranque del *firmware*, el retorno de C5 y C6, la corrección de fase y el criterio de aislamiento
+  (sección 8.3).
 
 ### 8.2. Cronograma
 
@@ -1355,7 +1408,7 @@ Fuente: elaboración propia.
    el circuito en placa perforada. Como la entrega exige una PCB fabricada, después se diseñó una PCB
    de **una sola cara**, que se puede hacer en el laboratorio con transferencia de tóner. Para que
    cupiera en una cara sin vías, el ruteo automático usa la cara de componentes como capa de puentes:
-   quedaron 3 puentes de alambre. La placa perforada queda como alternativa.
+   quedaron 2 puentes de alambre. La placa perforada queda como alternativa.
 6. **Pantalla.** El diseño empezó con una OLED SSD1306 de 0,96" por I2C. Se cambió por la LCD Waveshare
    de 1,9" (ST7789V2, SPI), que es la que se tiene: es a color, se lee mejor en el gabinete y no necesita
    resistencias de *pull-up*, pero usa seis pines en vez de dos. Hubo que cambiar el conector J6 a 8
@@ -1372,6 +1425,17 @@ Fuente: elaboración propia.
    su protección y para medir un equipo basta una pinza.
 9. **Sin datos propios para el pronóstico.** Como aún no hay registros del medidor, el LSTM se entrenó con una
    serie pública (sección 7.15); el modelo definitivo se entrenará con las mediciones del corte 3.
+10. **Errores encontrados en la revisión del diseño.** Una revisión completa del esquemático, la PCB y el
+   *firmware*, hecha antes de fabricar, encontró cuatro problemas que ninguna verificación automática
+   había detectado:
+   - el *firmware* se quedaba detenido al arrancar, porque la tarea de adquisición esperaba de forma
+     activa en el mismo núcleo que el arranque y nunca le cedía el procesador; ahora la despierta un
+     temporizador de hardware;
+   - C5 y C6 volvían a GND y acoplaban los dos canales por VBIAS (sección 7.4.2); ahora vuelven a VBIAS;
+   - la corrección de fase solo cubría una fracción de muestra (2,7°) y no se podía calibrar con carga
+     resistiva; ahora cubre de −8° a +11° y se calibra con una carga inductiva (sección 7.11.4);
+   - el criterio de aislamiento de 1 MΩ era demasiado bajo; ahora es de 100 MΩ, con revisión de la
+     separación en el módulo ZMPT101B (sección 7.8).
 
 ## 9. Referencias
 

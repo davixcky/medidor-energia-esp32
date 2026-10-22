@@ -27,16 +27,21 @@ constexpr uint32_t FS_HZ = 8000;        // muestras por segundo y por canal
 constexpr int CICLOS_VENTANA = 60;      // ventana de 60 ciclos enteros (1 s a 60 Hz)
 constexpr uint32_t DESCARTE_MS = 500;   // espera a que se estabilice VBIAS al encender
 
-// ---- Calibración nominal (se ajusta en banco contra una carga resistiva conocida)
+// ---- Calibración nominal. Son los valores por omisión: los que se miden en el banco se guardan en
+// la memoria no volátil desde la consola serie (comando «cal», ver README del firmware) y no hace
+// falta recompilar.
 // Corriente: A de primario por voltio en el pin = relación 2000 / resistencia de carga.
 constexpr float K_I1 = 2000.0f / 22.0f;   // CH1, burden 22 Ω
 constexpr float K_I2 = 2000.0f / 47.0f;   // CH2, burden 47 Ω
 // Tensión: V de red por voltio en el pin. 120 V eficaces → 0,352 V pico en el pin
 // (potenciómetro del módulo en 0,65 V pico y divisor 13/24): 169,7 / 0,352 = 482.
 constexpr float K_V = 482.0f;
-// Corrección de fase de cada pinza, en grados a 60 Hz (positivo = la corriente adelanta).
+// Corrección de fase en grados a 60 Hz: de cada pinza (positivo = la corriente adelanta) y del
+// canal de tensión, transformador y LM358 del ZMPT101B (positivo = la tensión adelanta). Se mide
+// en el banco con una carga inductiva o contra el PZEM-004T; con carga resistiva no se ve.
 constexpr float FASE_CT1_GRADOS = 0.0f;
 constexpr float FASE_CT2_GRADOS = 0.0f;
+constexpr float FASE_V_GRADOS = 0.0f;
 // Constante de tiempo de los filtros antialias (para compensar armónicos en el THD).
 constexpr float TAU_FILTRO_S = 156e-6f;
 

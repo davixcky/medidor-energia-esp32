@@ -46,6 +46,30 @@ DC → GPIO21, BL → GPIO19, CLK → GPIO18, RST → GPIO4.
 
 ## Calibración
 
-Las constantes nominales están en `include/config.h` (`K_V`, `K_I1`, `K_I2`, `FASE_CT1_GRADOS`,
-`FASE_CT2_GRADOS`). Se ajustan en el banco de medición con una carga resistiva conocida (FP ≈ 1),
-comparando contra una pinza amperimétrica o el PZEM-004T.
+Las constantes de partida están en `include/config.h` (`K_V`, `K_I1`, `K_I2`, `FASE_V_GRADOS`,
+`FASE_CT1_GRADOS`, `FASE_CT2_GRADOS`). Los valores medidos en el banco se guardan en la memoria no
+volátil del ESP32 desde la consola serie (115200 baudios), sin recompilar:
+
+```
+cal                 muestra los valores actuales y el retardo en muestras de cada canal
+cal kv 482.5        V de red por voltio en el pin (contra un multímetro)
+cal ki1 91.2        A por voltio de CH1 (contra una pinza amperimétrica o el PZEM-004T)
+cal ki2 42.4        A por voltio de CH2
+cal fv 4.5          fase del ZMPT101B en grados (positivo = la tensión adelanta)
+cal f1 0.3          fase de la pinza de CH1 (positivo = la corriente adelanta)
+cal f2 0.3          fase de la pinza de CH2
+cal borrar          vuelve a los valores de config.h
+```
+
+Las ganancias se ajustan con una carga resistiva conocida (FP ≈ 1). La fase no se ve con carga
+resistiva: se ajusta con una carga inductiva (ventilador o motor) comparando la potencia activa con el
+PZEM-004T. El *firmware* acepta un retardo total de −3 a +4 muestras (−8° a +11° a 60 Hz); si un ajuste
+lo saca de ese rango, lo avisa por la consola y lo recorta.
+
+## Muestreo
+
+Un temporizador de hardware interrumpe cada 125 µs y despierta la tarea de adquisición (núcleo 1,
+prioridad 20), que lee V, I1 e I2 y vuelve a bloquearse. Así el núcleo 1 queda libre entre muestras.
+Los eventos de Wi-Fi corren en el núcleo 0 (`-DARDUINO_EVENT_RUNNING_CORE=0` en `platformio.ini`).
+Si la tensión no cruza por cero durante 0,5 s, las ventanas se cierran por cantidad de muestras y se
+sigue midiendo la corriente.

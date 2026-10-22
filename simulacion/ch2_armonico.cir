@@ -9,7 +9,7 @@ Ict vb t SIN(0 0.01414213562373095 60)
 Ih3 vb t SIN(0 0.00848528137423857 180)
 Rb t vb 47
 R5 t a 3.3k
-C5 a 0 47n
+C5 a vb 47n
 Dsup a v33 BAT85
 Dinf 0 a BAT85
 Radc a 0 10Meg
@@ -24,6 +24,6 @@ Radc a 0 10Meg
 set wr_singlescale
 set wr_vecnames
 run
-wrdata /home/davixcky/dev/.personal/electronica/sistemas-embebidos-1/C2-ABPR/herramientas/../simulacion/ch2_armonico.dat v(a) v(vb) i(V33)
+wrdata /home/davixcky/dev/.personal/electronica/medidor-energia-esp32/herramientas/../simulacion/ch2_armonico.dat v(a) v(vb) i(V33)
 .endc
 .end

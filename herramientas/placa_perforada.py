@@ -140,7 +140,7 @@ def definir():
     pieza("R5", "res", {"1": (10, 16), "2": (14, 16)}, "R5")
     pista((14, 16), (36, 16))              # CH1_ADC -> GPIO36
     pieza("C5", "disco", {"1": (16, 16), "2": (16, 18)}, "C5")
-    pista((16, 18), (16, 20))
+    pista((13, 18), (16, 18))              # C5 vuelve a VBIAS, donde cierra la pinza
     pieza("D2", "diodo35", {"2": (18, 16), "1": (18, 14)}, "D2")
     pieza("D3", "diodo35", {"1": (20, 16), "2": (20, 18)}, "D3")
     pista((20, 18), (20, 20))
@@ -153,7 +153,8 @@ def definir():
     pista((3, 22), (10, 22))
     pieza("R6", "res", {"1": (10, 22), "2": (14, 22)}, "R6")
     pista((14, 22), (22, 22))
-    pieza("C6", "disco", {"1": (17, 22), "2": (17, 20)}, "C6")
+    pieza("C6", "disco", {"1": (17, 22), "2": (17, 24)}, "C6")
+    pista((3, 24), (17, 24))               # C6 vuelve a VBIAS por el punto S de CH2
     pieza("D4", "diodo35", {"2": (18, 22), "1": (18, 25)}, "D4")
     pieza("D5", "diodo35", {"1": (21, 22), "2": (21, 20)}, "D5")
     puente((22, 22), (36, 17), "CORR")     # CH2_ADC -> GPIO39
