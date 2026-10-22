@@ -99,6 +99,21 @@ COLOCACION = {
     "D8": (62.0, 72.0, 90),
     "SW1": (69.0, 72.0, 90),
     "SW2": (76.0, 72.0, 90),
+    # puntos de prueba (lazos para la punta del osciloscopio), junto al circuito de cada red
+    "TP1": (66.0, 86.0, 0),     # +5V
+    "TP2": (76.0, 15.0, 0),     # +3V3
+    "TP3": (44.0, 62.5, 0),     # VBIAS
+    "TP4": (47.0, 30.0, 0),     # CH1_ADC
+    "TP5": (47.0, 48.0, 0),     # CH2_ADC
+    "TP6": (30.0, 19.0, 0),     # ZMPT_OUT
+    "TP7": (72.0, 9.5, 0),      # V_ADC
+    "TP8": (47.0, 70.0, 0),     # GND
+    "TP9": (72.0, 86.0, 0),     # GND
+    # LED de +5 V junto a la entrada y LED de +3,3 V arriba a la derecha
+    "R14": (56.0, 79.0, 0),
+    "D9": (70.0, 79.0, 0),
+    "R15": (100.0, 8.0, 0),
+    "D10": (114.0, 8.0, 0),
     # LCD (SPI) a la derecha del ESP32: los pines de J6 siguen el orden de los del DevKitC
     "J6": (124.0, 24.92, 0),
 }
@@ -110,6 +125,7 @@ REF_POS = {"J1": (6.5, -1.0)}
 # - pth_inside_courtyard: los extremos de algunos puentes caen bajo el ESP32 (va en zócalo).
 SEVERIDADES = {"lib_footprint_mismatch": "ignore", "silk_over_copper": "ignore",
                "pth_inside_courtyard": "warning"}
+PISTA_MIN = 0.45   # ancho mínimo de la regla del proyecto (min_track_width)
 TEXTO_COBRE = [("MEDIDOR DE ENERGÍA ESP32\nREV. B", 1.5),
                ("MEDIDOR DE ENERGÍA ESP32", 1.5), ("MEDIDOR ESP32", 1.3)]
 
@@ -203,12 +219,22 @@ def construir():
             red = red_de_pin.get((ref, p.GetNumber()))
             if red in redes:
                 p.SetNet(redes[red])
+            # Los lazos de tierra y los LED se unen al relleno sin alivio térmico: los rayos del
+            # alivio quedan cortados por las pistas vecinas.
+            if red == "GND" and (ref.startswith("TP") or ref in ("D9", "D10")):
+                p.SetLocalZoneConnection(pcbnew.ZONE_CONNECTION_FULL)
         x, y, rot = COLOCACION[ref]
         b.Add(fp)
         fp.SetPosition(VECTOR2I(MM(x), MM(y)))
         fp.SetOrientationDegrees(rot)
         fp.Reference().SetVisible(True)
         fp.Value().SetVisible(False)
+        if ref.startswith("TP"):
+            # En los puntos de prueba se rotula la red, que es lo que se busca al medir.
+            fp.Reference().SetVisible(False)
+            fp.Value().SetVisible(True)
+            fp.Value().SetLayer(pcbnew.F_SilkS)
+            fp.Value().SetPosition(VECTOR2I(MM(x), MM(y - 2.8)))
         if ref in REF_POS:
             fp.Reference().SetPosition(VECTOR2I(MM(x + REF_POS[ref][0]), MM(y + REF_POS[ref][1])))
 
@@ -557,6 +583,10 @@ def main():
             raise SystemExit("no hay sesión de Freerouting guardada; usar «rutear»")
     if modo in ("rutear", "importar"):
         puentes = hacer_puentes(b)
+        # Freerouting adelgaza a veces un tramo corto junto a un obstáculo: se lleva al mínimo de la regla.
+        for t in b.GetTracks():
+            if t.Type() == pcbnew.PCB_TRACE_T and t.GetWidth() < MM(PISTA_MIN):
+                t.SetWidth(MM(PISTA_MIN))
     b.Save(SALIDA)
     # el relleno falla sobre una placa recién creada en memoria: se recarga desde el archivo
     b = pcbnew.LoadBoard(SALIDA)

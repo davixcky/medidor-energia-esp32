@@ -3478,6 +3478,129 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Connector:TestPoint"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.762)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "TP"
+				(at 0 6.858 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "TestPoint"
+				(at 0 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 5.08 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 5.08 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "test point"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "test point tp"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "Pin* Test*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "TestPoint_0_1"
+				(circle
+					(center 0 3.302)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "TestPoint_1_1"
+				(pin passive line
+					(at 0 0 90)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Device:LED"
 			(pin_numbers
 				(hide yes)
@@ -5204,6 +5327,193 @@
 	)
 	(wire
 		(pts
+			(xy 142.24 58.42)
+			(xy 142.24 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "44838a42-78f2-5213-9d24-f104e557e48c")
+	)
+	(wire
+		(pts
+			(xy 160.02 58.42)
+			(xy 160.02 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f941faa0-7c29-520a-8c21-16a535f54926")
+	)
+	(wire
+		(pts
+			(xy 177.8 58.42)
+			(xy 177.8 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "75b57d81-8a01-5841-827c-24d8976b060c")
+	)
+	(wire
+		(pts
+			(xy 195.58 58.42)
+			(xy 195.58 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9f66f336-f291-5fe0-b88d-0c106f37b4cf")
+	)
+	(wire
+		(pts
+			(xy 213.36 58.42)
+			(xy 213.36 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b06db50f-1363-5bb6-9e36-74e4e044ab79")
+	)
+	(wire
+		(pts
+			(xy 231.14 58.42)
+			(xy 231.14 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c9fb8c94-3e5f-523c-b8bb-92d3a5820109")
+	)
+	(wire
+		(pts
+			(xy 248.92 58.42)
+			(xy 248.92 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "23adcf84-8c8f-5061-a375-6de81f612a91")
+	)
+	(wire
+		(pts
+			(xy 266.7 58.42)
+			(xy 266.7 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "51bef3d1-1dc9-57b7-a93e-dddd34779ff6")
+	)
+	(wire
+		(pts
+			(xy 284.48 58.42)
+			(xy 284.48 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5b7e9bf0-186d-52a2-aaa9-f3380fdda150")
+	)
+	(wire
+		(pts
+			(xy 142.24 73.66)
+			(xy 146.05 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e6b3a4e3-66f9-5697-a7c9-15984128607a")
+	)
+	(wire
+		(pts
+			(xy 153.67 73.66)
+			(xy 157.48 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e28fcc87-fae8-5345-b6ff-4069c08b3bcd")
+	)
+	(wire
+		(pts
+			(xy 165.1 73.66)
+			(xy 170.18 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "07ffd3a0-542e-5481-9809-d46bc049f22e")
+	)
+	(wire
+		(pts
+			(xy 170.18 73.66)
+			(xy 170.18 76.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cb5eddcc-9a6f-57fa-adb5-1590d3e4d0da")
+	)
+	(wire
+		(pts
+			(xy 198.12 73.66)
+			(xy 201.93 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4da7f54d-e185-5719-85cb-76c89a4e9185")
+	)
+	(wire
+		(pts
+			(xy 209.55 73.66)
+			(xy 213.36 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "78e12201-9c7d-5b9c-8bb9-1c71c976a547")
+	)
+	(wire
+		(pts
+			(xy 220.98 73.66)
+			(xy 226.06 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5a4b9690-c8d7-5d85-8f25-3ce81a21a91a")
+	)
+	(wire
+		(pts
+			(xy 226.06 73.66)
+			(xy 226.06 76.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "60489368-f9a6-5f2a-b1b0-237634a5d6de")
+	)
+	(wire
+		(pts
 			(xy 302.26 134.62)
 			(xy 306.07 134.62)
 		)
@@ -5211,7 +5521,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "44838a42-78f2-5213-9d24-f104e557e48c")
+		(uuid "2a30ace0-b119-5ee7-93c5-c5f8bd65693f")
 	)
 	(wire
 		(pts
@@ -5222,7 +5532,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "f941faa0-7c29-520a-8c21-16a535f54926")
+		(uuid "0ddf76d1-6ca1-544e-8fbb-1ded05ee7bce")
 	)
 	(wire
 		(pts
@@ -5233,7 +5543,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "75b57d81-8a01-5841-827c-24d8976b060c")
+		(uuid "67cdc74e-a774-578f-b536-ae97cdf42109")
 	)
 	(wire
 		(pts
@@ -5244,7 +5554,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "9f66f336-f291-5fe0-b88d-0c106f37b4cf")
+		(uuid "8cbee3cc-41c6-556a-9e54-222c32f55138")
 	)
 	(wire
 		(pts
@@ -5255,7 +5565,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "b06db50f-1363-5bb6-9e36-74e4e044ab79")
+		(uuid "dd46f610-96df-5069-8f1c-062ee4e7ce96")
 	)
 	(wire
 		(pts
@@ -5266,7 +5576,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "c9fb8c94-3e5f-523c-b8bb-92d3a5820109")
+		(uuid "b3b06151-eecf-535f-ab29-4c6316d9dfdd")
 	)
 	(wire
 		(pts
@@ -5277,7 +5587,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "23adcf84-8c8f-5061-a375-6de81f612a91")
+		(uuid "a1f3e475-8e5d-5ebf-9aa6-a48aed235b5b")
 	)
 	(wire
 		(pts
@@ -5288,7 +5598,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "51bef3d1-1dc9-57b7-a93e-dddd34779ff6")
+		(uuid "3ef0bbd8-244b-5730-954f-179717549926")
 	)
 	(wire
 		(pts
@@ -5299,7 +5609,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "5b7e9bf0-186d-52a2-aaa9-f3380fdda150")
+		(uuid "65079be6-db46-533e-b72d-a4cdd79e6564")
 	)
 	(wire
 		(pts
@@ -5310,7 +5620,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "e6b3a4e3-66f9-5697-a7c9-15984128607a")
+		(uuid "eaeb11bc-a4c2-5a8d-9c4e-b8b18a09f248")
 	)
 	(wire
 		(pts
@@ -5321,7 +5631,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "e28fcc87-fae8-5345-b6ff-4069c08b3bcd")
+		(uuid "39f10ab8-b130-5ca9-94a6-64d7232ecde8")
 	)
 	(wire
 		(pts
@@ -5332,7 +5642,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "07ffd3a0-542e-5481-9809-d46bc049f22e")
+		(uuid "8ea13930-14c0-5e97-87ec-6768eb9be76f")
 	)
 	(wire
 		(pts
@@ -5343,7 +5653,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "cb5eddcc-9a6f-57fa-adb5-1590d3e4d0da")
+		(uuid "544aa8f2-9375-545a-a4be-148cee7619a5")
 	)
 	(wire
 		(pts
@@ -5354,7 +5664,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "4da7f54d-e185-5719-85cb-76c89a4e9185")
+		(uuid "926ad39e-8165-5e99-82dd-25f016eb81b3")
 	)
 	(wire
 		(pts
@@ -5365,7 +5675,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "78e12201-9c7d-5b9c-8bb9-1c71c976a547")
+		(uuid "b01170a7-4d74-5d0c-8faf-9b18babe1a50")
 	)
 	(wire
 		(pts
@@ -5376,7 +5686,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "5a4b9690-c8d7-5d85-8f25-3ce81a21a91a")
+		(uuid "78542bd1-c2fc-50db-b163-8b3a6f81a41d")
 	)
 	(wire
 		(pts
@@ -5387,7 +5697,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "60489368-f9a6-5f2a-b1b0-237634a5d6de")
+		(uuid "b0c60978-93ed-5cce-a705-118f93da5b12")
 	)
 	(wire
 		(pts
@@ -5398,7 +5708,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "2a30ace0-b119-5ee7-93c5-c5f8bd65693f")
+		(uuid "6e3f27b8-b999-5ef1-b401-5e26e0d7d1ca")
 	)
 	(wire
 		(pts
@@ -5409,7 +5719,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "0ddf76d1-6ca1-544e-8fbb-1ded05ee7bce")
+		(uuid "06af459e-55bd-580a-8939-56e18b5dd211")
 	)
 	(text "ALIMENTACIÓN 5 V (adaptador externo aislado 100–240 V CA / 5 V 2 A)"
 		(exclude_from_sim no)
@@ -9792,6 +10102,1291 @@
 		)
 		(uuid "5d265983-2119-5398-a51e-f08dd274cf63")
 	)
+	(text "PUNTOS DE PRUEBA E INDICADORES DE ALIMENTACIÓN"
+		(exclude_from_sim no)
+		(at 139.7 40.64 0)
+		(effects
+			(font
+				(size 1.8 1.8)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+		(uuid "3d9c9255-ed54-5691-a1e8-43d375c7b1db")
+	)
+	(text "Lazos de alambre para el gancho de la punta del osciloscopio o del multímetro;\nTP8 y TP9 reciben el caimán de tierra de la punta."
+		(exclude_from_sim no)
+		(at 139.7 45.72 0)
+		(effects
+			(font
+				(size 1.1 1.1)
+			)
+			(justify left bottom)
+		)
+		(uuid "98783ed8-c7cd-5fc2-b882-422ecab7ae97")
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 142.24 58.42 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "9612fe72-9139-5763-89af-d8e933b3bd51")
+		(property "Reference" "TP1"
+			(at 143.51 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "+5V"
+			(at 143.51 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+			(at 142.24 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 142.24 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "79766f0d-438b-5bd5-9a63-5f97581930b3")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "TP1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 142.24 63.5 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "241dec5c-9218-5e62-993b-239faeacc1bd")
+		(property "Reference" "#PWR030"
+			(at 142.24 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 142.24 66.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 142.24 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 142.24 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e2efc8df-2480-57f4-a6b4-3e5beeeb17d0")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "#PWR030")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 160.02 58.42 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f175ff92-772a-53e6-a98c-2c0bf6c28d07")
+		(property "Reference" "TP2"
+			(at 161.29 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 161.29 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+			(at 160.02 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 160.02 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d74e1e6e-8745-586d-8057-146e45f7b27a")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "TP2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 160.02 63.5 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "b4a24b88-6271-5c72-af38-5bd278ad178b")
+		(property "Reference" "#PWR031"
+			(at 160.02 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 160.02 66.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 160.02 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 160.02 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "80e660be-bfbd-53da-aa4e-f3141205a794")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "#PWR031")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 177.8 58.42 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "57ae7d60-5944-5c20-88f6-7349452f0add")
+		(property "Reference" "TP3"
+			(at 179.07 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "VBIAS"
+			(at 179.07 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+			(at 177.8 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 177.8 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "1fcec18b-eef2-5eed-aac2-4b9be84aa920")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "TP3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "VBIAS"
+		(at 177.8 63.5 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "66a3dd70-2dee-5ad2-81e0-9550a55a7b1f")
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 195.58 58.42 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "baf49e18-fd32-5318-9954-75a1a2f3bce6")
+		(property "Reference" "TP4"
+			(at 196.85 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "CH1_ADC"
+			(at 196.85 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+			(at 195.58 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 195.58 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4721029c-49c5-5720-a98f-d72d4b1304ea")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "TP4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "CH1_ADC"
+		(at 195.58 63.5 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e7a00617-d7d3-5ccc-afc5-f231a37e7ec0")
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 213.36 58.42 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "962a961b-c59a-54ac-85d3-a94221afa23d")
+		(property "Reference" "TP5"
+			(at 214.63 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "CH2_ADC"
+			(at 214.63 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+			(at 213.36 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 213.36 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "0c710690-365c-58cf-bd99-59f92d633ed1")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "TP5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "CH2_ADC"
+		(at 213.36 63.5 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "1de414bb-4a04-5335-b9e7-774b80e5d171")
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 231.14 58.42 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "5db94449-4d4f-5360-bad7-44ae9e28006b")
+		(property "Reference" "TP6"
+			(at 232.41 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "ZMPT_OUT"
+			(at 232.41 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+			(at 231.14 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 231.14 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ab823250-1e45-5801-b860-4c4cc5451ff6")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "TP6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "ZMPT_OUT"
+		(at 231.14 63.5 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "387dad2e-38ab-50e1-89a9-eab6849f39f3")
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 248.92 58.42 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "8b43c920-c98e-5699-8a16-666d9cd23ab3")
+		(property "Reference" "TP7"
+			(at 250.19 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "V_ADC"
+			(at 250.19 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+			(at 248.92 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 248.92 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4670fffa-30a8-580c-b912-47a2e8ecbb74")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "TP7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "V_ADC"
+		(at 248.92 63.5 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "903e5c98-cc98-590a-8a67-67c3bb1a031a")
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 266.7 58.42 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "62f3acb2-a705-53f1-a6ec-9b2a0441c25f")
+		(property "Reference" "TP8"
+			(at 267.97 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "GND"
+			(at 267.97 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+			(at 266.7 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 266.7 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3c153a0b-35fd-5646-97a1-d23f76c6fae9")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "TP8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 266.7 63.5 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "d0614082-efa1-5870-be13-d48d8fe1a8ea")
+		(property "Reference" "#PWR032"
+			(at 266.7 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 266.7 66.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 266.7 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 266.7 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "90d0ee92-d1ff-5fb1-a178-7af7608115f5")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "#PWR032")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 284.48 58.42 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "464e7cb9-af67-5a41-a6c6-280aae2ab414")
+		(property "Reference" "TP9"
+			(at 285.75 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "GND"
+			(at 285.75 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+			(at 284.48 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 284.48 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6586d30a-a596-5e9e-9397-953f7a4e1f58")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "TP9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 284.48 63.5 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "63f19721-dc3d-53d0-9183-b499be289a7c")
+		(property "Reference" "#PWR033"
+			(at 284.48 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 284.48 66.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 284.48 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 284.48 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "cc3f0d7b-22d5-5672-92ae-0616c0e2d504")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "#PWR033")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 142.24 73.66 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "a287e7f4-34ba-590b-af2d-496b28321c30")
+		(property "Reference" "#PWR034"
+			(at 142.24 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 137.04 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 142.24 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 142.24 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b11cebf2-a7bb-5cc7-a4cf-bd0a4b8b17e0")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "#PWR034")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 149.86 73.66 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "499ce0a1-baa5-55a3-a4d5-4c3efc752e60")
+		(property "Reference" "R14"
+			(at 147.98 71.66 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1k"
+			(at 147.98 77.26 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
+			(at 149.86 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 149.86 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c1181896-d34e-52e2-8b41-ddb399338da7")
+		)
+		(pin "2"
+			(uuid "b2ed38b1-1a1a-5ca4-ad4e-b2a89fd335c8")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "R14")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:LED")
+		(at 161.29 73.66 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "77d2ac9c-8b7e-5ca9-9b91-ae52b6466b47")
+		(property "Reference" "D9"
+			(at 163.83 67.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "LED rojo 3 mm"
+			(at 170.18 70.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "LED_THT:LED_D3.0mm"
+			(at 161.29 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 161.29 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "7adc0e34-39ee-5ab9-b373-8232cc0f9018")
+		)
+		(pin "2"
+			(uuid "c919d70a-58d6-534a-b65d-f59c85bfc53b")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "D9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 170.18 76.2 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "e4f43f1d-3bd4-55ef-a5b2-291313c38a72")
+		(property "Reference" "#PWR035"
+			(at 170.18 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 170.18 79.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 170.18 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 170.18 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ce7333a5-0562-56c0-bd1f-a96e2636f8e3")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "#PWR035")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 198.12 73.66 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "5c78afd4-2a66-513e-9093-efc8f9078e68")
+		(property "Reference" "#PWR036"
+			(at 198.12 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 192.92 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 198.12 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 198.12 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "feb308a7-8f24-5980-bb60-1674dd5af907")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "#PWR036")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 205.74 73.66 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "10cd9a6b-531e-583d-82d7-89d2c73fecb3")
+		(property "Reference" "R15"
+			(at 203.86 71.66 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "470"
+			(at 203.86 77.26 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
+			(at 205.74 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 205.74 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f36dbd1d-0891-57ab-a762-12fe719e61ab")
+		)
+		(pin "2"
+			(uuid "3a1ab6d5-9ee8-54b0-b1d2-1b792f84f3f5")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "R15")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:LED")
+		(at 217.17 73.66 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "2dd773df-c71d-50b7-87d0-a44da2277845")
+		(property "Reference" "D10"
+			(at 219.71 67.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "LED verde 3 mm"
+			(at 226.06 70.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "LED_THT:LED_D3.0mm"
+			(at 217.17 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 217.17 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "31b0a195-e5e5-5ab4-8357-985754345b68")
+		)
+		(pin "2"
+			(uuid "75ecefbf-c13a-5600-bf44-f6fed585dff7")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "D10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 226.06 76.2 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "e8e83626-7ad2-513c-a2ea-7cfa9df69d65")
+		(property "Reference" "#PWR037"
+			(at 226.06 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 226.06 79.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 226.06 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 226.06 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a9eb758f-7e2f-5a48-8f04-01f37383f3b3")
+		)
+		(instances
+			(project "medidor-energia"
+				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
+					(reference "#PWR037")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(text "D9: (5 − 2) V / 1 kΩ = 3 mA, llega el adaptador.\nD10: (3,3 − 2) V / 470 Ω = 2,8 mA, funciona el\nregulador del DevKitC."
+		(exclude_from_sim no)
+		(at 233.68 71.12 0)
+		(effects
+			(font
+				(size 1.1 1.1)
+			)
+			(justify left bottom)
+		)
+		(uuid "64b2822d-6a0d-5652-8b54-2efe9b31ab80")
+	)
 	(text "LED DE ESTADO"
 		(exclude_from_sim no)
 		(at 299.72 125.73 0)
@@ -9802,7 +11397,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "3d9c9255-ed54-5691-a1e8-43d375c7b1db")
+		(uuid "cac177cf-0419-5ca8-b412-8565d2704000")
 	)
 	(label "LED_EST"
 		(at 302.26 134.62 180)
@@ -9812,7 +11407,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "66a3dd70-2dee-5ad2-81e0-9550a55a7b1f")
+		(uuid "aa7b2403-f83f-5307-b9fd-8c40acab6170")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -9822,7 +11417,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "9612fe72-9139-5763-89af-d8e933b3bd51")
+		(uuid "441a0518-60ac-533e-be7d-fea1e66d73f7")
 		(property "Reference" "R11"
 			(at 308 132.62 90)
 			(effects
@@ -9860,10 +11455,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "79766f0d-438b-5bd5-9a63-5f97581930b3")
+			(uuid "7b82e1de-212f-5834-a904-ec957eb7ccf4")
 		)
 		(pin "2"
-			(uuid "e2efc8df-2480-57f4-a6b4-3e5beeeb17d0")
+			(uuid "e5a92989-15b7-522e-8d11-4bf212910e1e")
 		)
 		(instances
 			(project "medidor-energia"
@@ -9882,7 +11477,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "241dec5c-9218-5e62-993b-239faeacc1bd")
+		(uuid "e1604692-5063-5578-b172-f8aade8621c1")
 		(property "Reference" "D8"
 			(at 323.85 128.62 0)
 			(effects
@@ -9920,10 +11515,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "d74e1e6e-8745-586d-8057-146e45f7b27a")
+			(uuid "228f9a24-5269-599e-832a-b8b17d84c35a")
 		)
 		(pin "2"
-			(uuid "80e660be-bfbd-53da-aa4e-f3141205a794")
+			(uuid "a25c11d0-a50b-5c26-876f-097f38b7bdab")
 		)
 		(instances
 			(project "medidor-energia"
@@ -9942,8 +11537,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "f175ff92-772a-53e6-a98c-2c0bf6c28d07")
-		(property "Reference" "#PWR030"
+		(uuid "4a62d4a0-2250-5526-b615-f1ca49050fff")
+		(property "Reference" "#PWR038"
 			(at 330.2 137.16 0)
 			(effects
 				(font
@@ -9979,12 +11574,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "1fcec18b-eef2-5eed-aac2-4b9be84aa920")
+			(uuid "296e4f25-3431-5966-bfe5-e6ebac2600ed")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR030")
+					(reference "#PWR038")
 					(unit 1)
 				)
 			)
@@ -10000,7 +11595,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "98783ed8-c7cd-5fc2-b882-422ecab7ae97")
+		(uuid "54b907af-073e-5b63-a049-cfdf46e64c66")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -10010,7 +11605,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "b4a24b88-6271-5c72-af38-5bd278ad178b")
+		(uuid "70435c0c-6caf-58bb-a130-5b1df67b9770")
 		(property "Reference" "R12"
 			(at 312.42 152.4 0)
 			(effects
@@ -10048,10 +11643,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "4721029c-49c5-5720-a98f-d72d4b1304ea")
+			(uuid "c5e02c76-2394-55dd-b42d-df2cd14dc9d1")
 		)
 		(pin "2"
-			(uuid "0c710690-365c-58cf-bd99-59f92d633ed1")
+			(uuid "cf602372-1803-5f40-91bb-b099924c92a2")
 		)
 		(instances
 			(project "medidor-energia"
@@ -10070,7 +11665,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "57ae7d60-5944-5c20-88f6-7349452f0add")
+		(uuid "69c93167-bdfa-5c4a-8723-d37dd575468c")
 		(property "Reference" "SW1"
 			(at 327.66 152.4 0)
 			(effects
@@ -10108,10 +11703,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "ab823250-1e45-5801-b860-4c4cc5451ff6")
+			(uuid "2faf8658-fb83-52da-a19b-154d91456b53")
 		)
 		(pin "2"
-			(uuid "4670fffa-30a8-580c-b912-47a2e8ecbb74")
+			(uuid "25a219da-4625-57b8-ad91-8db02c418b89")
 		)
 		(instances
 			(project "medidor-energia"
@@ -10130,7 +11725,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "baf49e18-fd32-5318-9954-75a1a2f3bce6")
+		(uuid "d70bd010-aad9-5586-973e-4d1511564179")
 		(property "Reference" "C10"
 			(at 320.04 162.56 0)
 			(effects
@@ -10168,10 +11763,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "3c153a0b-35fd-5646-97a1-d23f76c6fae9")
+			(uuid "a5743fab-d003-5637-aedc-b62e060127f4")
 		)
 		(pin "2"
-			(uuid "90d0ee92-d1ff-5fb1-a178-7af7608115f5")
+			(uuid "3dff840a-311b-5124-a0ac-ecd651e8b150")
 		)
 		(instances
 			(project "medidor-energia"
@@ -10190,7 +11785,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "e7a00617-d7d3-5ccc-afc5-f231a37e7ec0")
+		(uuid "9764f803-20c2-5f61-a9d0-ee7c9492102a")
 	)
 	(symbol
 		(lib_id "power:+3V3")
@@ -10200,8 +11795,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "962a961b-c59a-54ac-85d3-a94221afa23d")
-		(property "Reference" "#PWR031"
+		(uuid "19e23957-9971-5683-9779-bce6160ac1bb")
+		(property "Reference" "#PWR039"
 			(at 309.88 149.86 0)
 			(effects
 				(font
@@ -10237,12 +11832,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "6586d30a-a596-5e9e-9397-953f7a4e1f58")
+			(uuid "306ecb6c-55eb-5d83-b26b-34d6cc49650f")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR031")
+					(reference "#PWR039")
 					(unit 1)
 				)
 			)
@@ -10256,8 +11851,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "5db94449-4d4f-5360-bad7-44ae9e28006b")
-		(property "Reference" "#PWR032"
+		(uuid "ad94402d-53a3-5375-b932-ca3de1dcfe30")
+		(property "Reference" "#PWR040"
 			(at 317.5 165.1 0)
 			(effects
 				(font
@@ -10293,12 +11888,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "cc3f0d7b-22d5-5672-92ae-0616c0e2d504")
+			(uuid "86493560-ee99-5e8a-a2bf-3e6961ddfc83")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR032")
+					(reference "#PWR040")
 					(unit 1)
 				)
 			)
@@ -10312,8 +11907,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "8b43c920-c98e-5699-8a16-666d9cd23ab3")
-		(property "Reference" "#PWR033"
+		(uuid "08863777-65cd-515e-b3af-0e85d3024e77")
+		(property "Reference" "#PWR041"
 			(at 340.36 160.02 0)
 			(effects
 				(font
@@ -10349,12 +11944,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "b11cebf2-a7bb-5cc7-a4cf-bd0a4b8b17e0")
+			(uuid "0f1460f2-0872-5806-adba-b938271a4418")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR033")
+					(reference "#PWR041")
 					(unit 1)
 				)
 			)
@@ -10370,7 +11965,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "64b2822d-6a0d-5652-8b54-2efe9b31ab80")
+		(uuid "d4a5158c-71f7-58d3-9a04-dd6d73bb753a")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -10380,7 +11975,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "62f3acb2-a705-53f1-a6ec-9b2a0441c25f")
+		(uuid "0b0f9b5a-82ee-50d0-ab4a-72478d2f2e73")
 		(property "Reference" "R13"
 			(at 312.42 180.34 0)
 			(effects
@@ -10418,10 +12013,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "c1181896-d34e-52e2-8b41-ddb399338da7")
+			(uuid "1b16ef7c-9450-5316-86c6-ec43f8b24057")
 		)
 		(pin "2"
-			(uuid "b2ed38b1-1a1a-5ca4-ad4e-b2a89fd335c8")
+			(uuid "e70332b1-3776-5053-a408-442883fb1ff7")
 		)
 		(instances
 			(project "medidor-energia"
@@ -10440,7 +12035,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "d0614082-efa1-5870-be13-d48d8fe1a8ea")
+		(uuid "829cfb11-0170-551c-b790-d9cb1da0cec4")
 		(property "Reference" "SW2"
 			(at 327.66 180.34 0)
 			(effects
@@ -10478,10 +12073,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "7adc0e34-39ee-5ab9-b373-8232cc0f9018")
+			(uuid "f9f2b557-1a7e-5272-aa25-b1a0b5cda0e8")
 		)
 		(pin "2"
-			(uuid "c919d70a-58d6-534a-b65d-f59c85bfc53b")
+			(uuid "2c25d934-8a17-594c-bcab-c646bbc7aef8")
 		)
 		(instances
 			(project "medidor-energia"
@@ -10500,7 +12095,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "464e7cb9-af67-5a41-a6c6-280aae2ab414")
+		(uuid "defbb213-4382-5cea-9e5e-0c6bc8b5e472")
 		(property "Reference" "C11"
 			(at 320.04 190.5 0)
 			(effects
@@ -10538,10 +12133,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "ce7333a5-0562-56c0-bd1f-a96e2636f8e3")
+			(uuid "1b91c028-27bf-5e10-b59b-2d091296c4a2")
 		)
 		(pin "2"
-			(uuid "feb308a7-8f24-5980-bb60-1674dd5af907")
+			(uuid "f1f6caf6-828b-5970-b0a5-71bc6390af2b")
 		)
 		(instances
 			(project "medidor-energia"
@@ -10560,7 +12155,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "1de414bb-4a04-5335-b9e7-774b80e5d171")
+		(uuid "7377c5e3-dc0f-5166-95c9-d475ce446deb")
 	)
 	(symbol
 		(lib_id "power:+3V3")
@@ -10570,8 +12165,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "63f19721-dc3d-53d0-9183-b499be289a7c")
-		(property "Reference" "#PWR034"
+		(uuid "74269b4d-4279-58fe-964d-54a7290d1c5d")
+		(property "Reference" "#PWR042"
 			(at 309.88 177.8 0)
 			(effects
 				(font
@@ -10607,12 +12202,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "f36dbd1d-0891-57ab-a762-12fe719e61ab")
+			(uuid "a69c9d98-fb5d-5f3b-9aa5-7a8f9edb17c0")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR034")
+					(reference "#PWR042")
 					(unit 1)
 				)
 			)
@@ -10626,8 +12221,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "a287e7f4-34ba-590b-af2d-496b28321c30")
-		(property "Reference" "#PWR035"
+		(uuid "08f5dd81-1a82-5014-83f2-9501860334dd")
+		(property "Reference" "#PWR043"
 			(at 317.5 193.04 0)
 			(effects
 				(font
@@ -10663,12 +12258,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "3a1ab6d5-9ee8-54b0-b1d2-1b792f84f3f5")
+			(uuid "bdb79394-67de-5b2e-82b4-ac00b139190c")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR035")
+					(reference "#PWR043")
 					(unit 1)
 				)
 			)
@@ -10682,8 +12277,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "499ce0a1-baa5-55a3-a4d5-4c3efc752e60")
-		(property "Reference" "#PWR036"
+		(uuid "45432189-0448-5925-832c-f4f80408da84")
+		(property "Reference" "#PWR044"
 			(at 340.36 187.96 0)
 			(effects
 				(font
@@ -10719,12 +12314,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "31b0a195-e5e5-5ab4-8357-985754345b68")
+			(uuid "be77a891-49f5-505c-b306-127441a30d16")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR036")
+					(reference "#PWR044")
 					(unit 1)
 				)
 			)
@@ -10740,7 +12335,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "cac177cf-0419-5ca8-b412-8565d2704000")
+		(uuid "82588c3f-583c-5e81-85fd-10884f19be91")
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x04")
@@ -10750,7 +12345,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "77d2ac9c-8b7e-5ca9-9b91-ae52b6466b47")
+		(uuid "490dc56f-afa6-5017-b71b-d0f86ba4c4c2")
 		(property "Reference" "J7"
 			(at 345.44 213.36 0)
 			(effects
@@ -10788,16 +12383,16 @@
 			)
 		)
 		(pin "1"
-			(uuid "75ecefbf-c13a-5600-bf44-f6fed585dff7")
+			(uuid "ca6e9190-c077-506f-a245-d9e94fc046bc")
 		)
 		(pin "2"
-			(uuid "a9eb758f-7e2f-5a48-8f04-01f37383f3b3")
+			(uuid "26bd1317-c94d-5e74-8734-9644f02579b5")
 		)
 		(pin "3"
-			(uuid "7b82e1de-212f-5834-a904-ec957eb7ccf4")
+			(uuid "6358eb3d-7084-522c-9137-69a9ec5965f2")
 		)
 		(pin "4"
-			(uuid "e5a92989-15b7-522e-8d11-4bf212910e1e")
+			(uuid "516c7e2b-78c4-5b93-a9e4-75f125f4269d")
 		)
 		(instances
 			(project "medidor-energia"
@@ -10816,7 +12411,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "387dad2e-38ab-50e1-89a9-eab6849f39f3")
+		(uuid "67597849-08e3-5ff5-9380-cf0480ade545")
 	)
 	(label "RES_IO32"
 		(at 317.5 218.44 180)
@@ -10826,7 +12421,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "903e5c98-cc98-590a-8a67-67c3bb1a031a")
+		(uuid "d14bae4b-778c-540c-9a05-503d609eaa24")
 	)
 	(label "RES_IO33"
 		(at 317.5 220.98 180)
@@ -10836,7 +12431,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "aa7b2403-f83f-5307-b9fd-8c40acab6170")
+		(uuid "2ab4227f-5f0f-5ddd-ad47-c6099979c395")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -10846,8 +12441,8 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "e4f43f1d-3bd4-55ef-a5b2-291313c38a72")
-		(property "Reference" "#PWR037"
+		(uuid "da3a11cc-5b07-5cfa-a5a5-2baf28574c0e")
+		(property "Reference" "#PWR045"
 			(at 330.2 226.06 0)
 			(effects
 				(font
@@ -10883,12 +12478,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "228f9a24-5269-599e-832a-b8b17d84c35a")
+			(uuid "3a0d59ea-8e3c-5792-a657-d45d66c67c4d")
 		)
 		(instances
 			(project "medidor-energia"
 				(path "/e0bfbefd-4796-5ef7-be4e-44c91b12d996"
-					(reference "#PWR037")
+					(reference "#PWR045")
 					(unit 1)
 				)
 			)
@@ -10903,7 +12498,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "54b907af-073e-5b63-a049-cfdf46e64c66")
+		(uuid "a98e884e-13a1-5047-88b3-ee7de0d8fdca")
 	)
 	(sheet_instances
 		(path "/"

@@ -333,6 +333,8 @@ H_BORNE3 = "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.
 H_JACK = "Connector_Audio:Jack_3.5mm_CUI_SJ1-3523N_Horizontal"
 H_PH4 = "Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical"
 H_PH8 = "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical"
+H_TP = "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+H_LED3 = "LED_THT:LED_D3.0mm"
 
 
 def canal_corriente(sch, n, y0, r_burden, nota_burden):
@@ -548,6 +550,40 @@ def construir():
         p = j6[str(k + 3)]
         sch.cable(p, (320.04, p[1]))
         sch.etiqueta(nombre, 320.04, p[1], "izq")
+
+    # ---------------- puntos de prueba e indicadores de alimentación
+    sch.texto("PUNTOS DE PRUEBA E INDICADORES DE ALIMENTACIÓN", 139.7, 40.64, 1.8, True)
+    sch.texto("Lazos de alambre para el gancho de la punta del osciloscopio o del multímetro;\n"
+              "TP8 y TP9 reciben el caimán de tierra de la punta.", 139.7, 45.72, 1.1)
+    for k, (red, nombre) in enumerate((("+5V", "+5V"), ("+3V3", "+3V3"), ("VBIAS", "VBIAS"),
+                                       ("CH1_ADC", "CH1_ADC"), ("CH2_ADC", "CH2_ADC"), ("ZMPT_OUT", "ZMPT_OUT"),
+                                       ("V_ADC", "V_ADC"), ("GND", "GND"), ("GND", "GND"))):
+        xt = 142.24 + k * 17.78
+        tp = sch.colocar("Connector:TestPoint", f"TP{k + 1}", nombre, xt, 58.42, huella=H_TP,
+                         ref_at=(xt + 1.27, 53.34), val_at=(xt + 1.27, 50.8))
+        fin = (xt, 63.5)
+        sch.cable(tp["1"], fin)
+        if red == "GND":
+            sch.power("GND", xt, fin[1])
+        elif red.startswith("+"):
+            sch.power(red, xt, fin[1], rot=180)
+        else:
+            sch.etiqueta(red, xt, fin[1])
+    for k, (red, r, valor, d, color) in enumerate((("+5V", "R14", "1k", "D9", "LED rojo 3 mm"),
+                                                   ("+3V3", "R15", "470", "D10", "LED verde 3 mm"))):
+        yl = 73.66
+        x0 = 142.24 + k * 55.88
+        sch.power(red, x0, yl, rot=90)
+        rr = sch.colocar("Device:R", r, valor, x0 + 7.62, yl, rot=90, huella=H_R,
+                         ref_at=(x0 + 5.74, yl - 2.0), val_at=(x0 + 5.74, yl + 3.6))
+        dd = sch.colocar("Device:LED", d, color, x0 + 19.05, yl, rot=180, huella=H_LED3,
+                         ref_at=(x0 + 21.59, yl - 6.0), val_at=(x0 + 27.94, yl - 3.3))
+        sch.cable((x0, yl), rr["1"])
+        sch.cable(rr["2"], dd["2"])
+        sch.cable(dd["1"], (x0 + 27.94, yl), (x0 + 27.94, yl + 2.54))
+        sch.power("GND", x0 + 27.94, yl + 2.54)
+    sch.texto("D9: (5 − 2) V / 1 kΩ = 3 mA, llega el adaptador.\n"
+              "D10: (3,3 − 2) V / 470 Ω = 2,8 mA, funciona el\nregulador del DevKitC.", 233.68, 71.12, 1.1)
 
     # ---------------- LED de estado
     sch.texto("LED DE ESTADO", 299.72, 125.73, 1.8, True)

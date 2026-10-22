@@ -248,7 +248,7 @@ esquemático de la Ilustración 2.
 | 29 | D8 | LED verde de 5 mm con soporte de panel | 1 | Indicador de estado |
 | 30 | SW1, SW2 | Pulsador de panel de 12 mm, normalmente abierto | 2 | Interfaz de usuario |
 | 31 | — | Espadín hembra 1 × 19 | 2 | Zócalo del ESP32 |
-| 32 | J6, J7 | Espadín hembra 1 × 4 | 2 | Pantalla y reserva |
+| 32 | J7 | Espadín hembra 1 × 4 | 1 | Reserva del ADC1 |
 | 33 | — | Espadín macho 1 × 2 | 3 | Cables del LED y los pulsadores |
 | 34 | — | Gabinete de 200 × 150 × 75 mm en ABS (impreso en FDM o caja comercial) con tabique de 3 mm | 1 | Estructura del sistema |
 | 35 | — | Prensaestopas PG7 | 1 | Entrada del cable de red con alivio de tracción |
@@ -256,6 +256,9 @@ esquemático de la Ilustración 2.
 | 37 | — | Cable 22 AWG en rojo, naranja, negro, violeta, amarillo, verde, azul, blanco y gris | 1 juego | Puentes y cableado de MBT |
 | 38 | — | Cable 18 AWG en negro, blanco y verde | 1 m | Cableado de la zona de red |
 | 39 | — | Alambre estañado 22 AWG, tubo termoencogible y estaño | — | Pistas de la cara de soldadura |
+| 40 | TP1–TP9 | Punto de prueba de lazo de alambre, agujero de 1 mm (o alambre de cobre de 0,8 mm doblado) | 9 | Medición con osciloscopio y multímetro |
+| 41 | D9, D10 | LED de 3 mm, rojo (D9) y verde (D10) | 1 + 1 | Indicadores de +5 V y +3,3 V en la placa |
+| 42 | R14, R15 | Resistencia 1 kΩ y 470 Ω | 1 + 1 | Limitación de corriente de D9 y D10 |
 
 Fuente: elaboración propia.
 
@@ -510,7 +513,8 @@ a partir de la netlist del esquemático, con la interfaz de Python de KiCad (`pc
 La verificación de reglas de diseño (DRC) con comparación contra el esquemático termina con
 **0 conexiones pendientes, 0 diferencias con el esquemático y ninguna violación de separación**
 ([`hardware/drc.rpt`](hardware/drc.rpt)). Quedan 3 advertencias que no afectan la fabricación:
-la línea de serigrafía del puente JP3 toca el contorno de J7 y su propio nombre. Las reglas que se relajan a propósito son la
+cuatro líneas de serigrafía de los puentes JP1 y JP3 que tocan el contorno de J1 o J7 y su propio nombre,
+y un extremo de JP1 dentro del patio de J1. Las reglas que se relajan a propósito son la
 diferencia con la huella de biblioteca, porque los pads se agrandaron, y la serigrafía recortada por
 esos pads.
 
@@ -524,9 +528,9 @@ esquina superior izquierda, vista desde los componentes.
 
 | Puente | Red | Desde | Hasta | Largo |
 |---|---|---|---|---|
-| JP1 | CH2_ADC | (43,6; 47,1) junto a D4 | (60,9; 47,1) junto a R11 | 17 mm |
-| JP2 | CH1_ADC | (65,2; 38,6) junto a R11 | (71,3; 38,6) junto a R11 | 6 mm |
-| JP3 | V_ADC | (78,6; 16,5) junto a J7 | (81,8; 40,8) junto al pin 6 del ESP32 | 24 mm |
+| JP1 | +5V | (9,2; 59,4) junto a R3 | (9,2; 73,2) junto a J1 | 14 mm |
+| JP2 | CH2_ADC | (55,7; 44,7) junto a R11 | (60,0; 44,7) junto a R11 | 4 mm |
+| JP3 | V_ADC | (83,0; 18,8) junto a J7 | (83,0; 39,6) junto al ESP32 | 21 mm |
 
 Fuente: elaboración propia a partir de [`hardware/fabricacion/PUENTES.md`](hardware/fabricacion/PUENTES.md).
 
@@ -557,8 +561,8 @@ Fuente: elaboración propia.
    cobre entre pistas.
 4. Perforar con brocas de 0,8, 1,0 y 1,3 mm según el archivo de taladros (1,3 mm para las borneras) y
    de 3,2 mm para los agujeros M3.
-5. Soldar primero los **puentes de alambre** (JP2 y JP3 quedan bajo el ESP32), después los componentes
-   de menor a mayor altura y al final los zócalos del ESP32.
+5. Soldar primero los **puentes de alambre** (JP1 a JP3), después los componentes de menor a mayor
+   altura, los lazos de los puntos de prueba y al final los zócalos del ESP32.
 6. Antes de energizar, seguir la verificación de la sección 7.9.
 
 **Conexiones que salen de la placa.**
@@ -572,6 +576,28 @@ Fuente: elaboración propia.
 - **J6:** espadín de 8 pines para el cable de la LCD, montada en la tapa. El cable del módulo termina en
   conectores Dupont sueltos; el orden de J6 (VCC, GND, DIN, CS, DC, BL, CLK, RST) está en la serigrafía.
 - **D8, SW1 y SW2:** espadines con cables de dos hilos al LED y a los pulsadores de la tapa.
+
+**Puntos de prueba e indicadores.** La placa tiene nueve lazos de alambre donde se engancha la punta
+del osciloscopio o del multímetro sin tocar las patas de los componentes, cada uno junto al circuito de
+su red y con el nombre de la red en la serigrafía. TP8 y TP9 son de tierra y reciben el caimán de la
+punta. Dos LED muestran la alimentación sin instrumentos: D9 (rojo, 3 mA con R14 de 1 kΩ) se enciende
+cuando llegan los 5 V del adaptador después de F2 y D1, y D10 (verde, 2,8 mA con R15 de 470 Ω) cuando
+funciona el regulador de 3,3 V del DevKitC. La Tabla 8 da los valores esperados.
+
+**Tabla 8.** Puntos de prueba de la PCB y valores esperados.
+
+| Punto | Red | Sin red ni carga | Con 120 V y carga | Qué indica si falla |
+|---|---|---|---|---|
+| TP1 | +5V | 4,7 a 4,9 V CC (5 V menos la caída de D1) | Igual | Adaptador, PTC F2 abierto o D1 invertido |
+| TP2 | +3V3 | 3,30 V ± 0,1 V | Igual | Regulador del DevKitC o corto en el bus de 3,3 V |
+| TP3 | VBIAS | 1,32 V ± 0,03 V | Igual | Divisor R3–R4 o C7 en corto |
+| TP4 | CH1_ADC | 1,32 V CC | Sinusoide centrada en 1,32 V; 0,93 V pico con 60 A | Pinza, *burden* R1 o filtro R5–C5 |
+| TP5 | CH2_ADC | 1,32 V CC | Sinusoide centrada en 1,32 V; 1,00 V pico con 30 A | Pinza, *burden* R2 o filtro R6–C6 |
+| TP6 | ZMPT_OUT | 2,5 V CC (módulo alimentado) | Sinusoide de unos 0,65 V pico centrada en 2,5 V | Módulo ZMPT101B o su potenciómetro |
+| TP7 | V_ADC | 1,35 V CC | Sinusoide de 0,35 V pico centrada en 1,35 V | Divisor R7–R8 o C9 |
+| TP8, TP9 | GND | Referencia | Referencia | — |
+
+Fuente: elaboración propia a partir de los cálculos de la sección 7.4.
 
 #### 7.7.2. Alternativa: placa perforada
 
@@ -604,14 +630,14 @@ exporta KiCad y comprueba tres condiciones:
 2. Dos redes distintas nunca comparten un agujero ni una pista.
 3. Ninguna pista toca un pin marcado como "sin conexión".
 
-El resultado actual es: *"Conectividad verificada: 25 redes del esquemático coinciden con la placa
+El resultado actual es: *"Conectividad verificada: 27 redes del esquemático coinciden con la placa
 perforada"*. (Las piezas que no van en la placa, R1 y R2 en los *jacks* del panel y U2, J4 y F1 en el
 compartimento de red, están marcadas en el esquemático como fuera de la placa, de modo que sus redes
 exclusivas no se cuentan.) Se comprobó además que el programa detecta errores introducidos a propósito: un
 cortocircuito entre `CH1_ADC` y GND, un puente faltante en `V_ADC` y una pista sobre un pin sin
 conexión.
 
-**Tabla 8.** Puentes de cable aislado de la placa perforada (cara superior).
+**Tabla 9.** Puentes de cable aislado de la placa perforada (cara superior).
 
 | # | Desde | Hasta | Color | Red |
 |---:|---|---|---|---|
@@ -661,20 +687,20 @@ en milímetros. Fuente: elaboración propia en Python y Matplotlib.
 
 1. Soldar primero las pistas de estaño, luego los componentes de menor a mayor altura y por último los
    espadines del ESP32. **No insertar el ESP32 todavía.**
-2. Con el multímetro en continuidad, recorrer la Tabla 8 y la Ilustración 5 punto por punto. Comprobar
+2. Con el multímetro en continuidad, recorrer la Tabla 9 y la Ilustración 5 punto por punto. Comprobar
    que **no hay continuidad** entre +5V, +3V3, VBIAS y GND.
 3. Alimentar J1 desde una fuente de laboratorio de 5 V **con límite de 200 mA** y sin el ESP32. Verificar
-   que el consumo es casi nulo y que llega tensión al pin 5V del zócalo.
-4. Insertar el ESP32 alimentado solo por USB, sin red. Medir 3,3 V en el bus naranja y
-   **VBIAS = 1,32 V ± 0,03 V**.
-5. Con el módulo ZMPT101B **desconectado de la red**, medir 1,35 V en GPIO35.
+   que D9 enciende, que el consumo es de pocos miliamperios y que TP1 marca de 4,7 a 4,9 V.
+4. Insertar el ESP32 alimentado solo por USB, sin red. Comprobar que D10 enciende y medir 3,3 V en TP2
+   y **VBIAS = 1,32 V ± 0,03 V** en TP3.
+5. Con el módulo ZMPT101B **desconectado de la red**, medir 2,5 V en TP6 y 1,35 V en TP7.
 6. **Verificación de aislamiento**, firmada por dos integrantes: con un megóhmetro a 500 V CC entre los
    bornes de red (L y N unidos) y el GND de MBT, la resistencia debe ser de 1 MΩ o más. Revisar que el
    fusible F1 esté colocado y que el tabique no tenga cables que lo crucen fuera del collarín.
 7. Energizar la red con el gabinete cerrado. Con el osciloscopio, comprobar una sinusoide de unos
-   0,35 V pico centrada en 1,35 V en GPIO35, y ajustar el potenciómetro del módulo si hace falta.
+   0,35 V pico centrada en 1,35 V en TP7, y ajustar el potenciómetro del módulo si hace falta.
 8. Instalar una pinza sobre el conductor de fase de una carga resistiva conocida (por ejemplo, un
-   calentador de 1.000 W) y comprobar la sinusoide en GPIO36.
+   calentador de 1.000 W) y comprobar la sinusoide en TP4.
 
 **Regla de seguridad:** nunca desenchufar una pinza mientras abraza un conductor con carga, nunca abrir
 el gabinete con la red conectada y nunca colocar la pinza alrededor de fase y neutro juntos (la medida
@@ -682,7 +708,7 @@ sería cero).
 
 ### 7.10. Prueba de resistencia (*HardExplosion*)
 
-**Tabla 9.** Protocolo de la prueba de resistencia y resultados.
+**Tabla 10.** Protocolo de la prueba de resistencia y resultados.
 
 | # | Ensayo | Procedimiento | Criterio de aprobación | Resultado |
 |---:|---|---|---|---|
@@ -752,7 +778,7 @@ que también lo sujetan para que no se pueda halar hacia los bornes.
 **Ilustración 8.** Banco de medición: interior sin tapa con el lazo de medición y la pinza (izquierda) y
 tapa vista desde afuera (derecha). Fuente: elaboración propia en Python y Matplotlib.
 
-**Tabla 10.** Materiales del banco de medición.
+**Tabla 11.** Materiales del banco de medición.
 
 | # | Referencia | Descripción | Cant. |
 |---:|---|---|---:|
@@ -766,7 +792,7 @@ tapa vista desde afuera (derecha). Fuente: elaboración propia en Python y Matpl
 
 Fuente: elaboración propia.
 
-**Tabla 11.** Lista de conductores del banco (todos de 14 AWG).
+**Tabla 12.** Lista de conductores del banco (todos de 14 AWG).
 
 | # | Desde | Hasta | Color | Red |
 |---:|---|---|---|---|
@@ -782,7 +808,7 @@ plateado).
 
 #### 7.11.4. Verificación antes de usar el banco
 
-1. Sin conectar a la red, medir con el multímetro la continuidad de cada fila de la Tabla 11 y comprobar
+1. Sin conectar a la red, medir con el multímetro la continuidad de cada fila de la Tabla 12 y comprobar
    que no hay continuidad entre fase, neutro y tierra.
 2. Comprobar a la vista que la pinza abraza **solo** una pata del lazo y que cierra por completo.
 3. Conectar el conector macho de la pinza a J2 del medidor **antes** de enchufar el banco (nunca dejar el
@@ -805,7 +831,7 @@ con el criterio de diseño. Los modelos son los mismos supuestos de la sección 
 - Los diodos BAT85 y 1N5819 usan parámetros ajustados a los puntos de sus hojas de datos.
 - La entrada del ADC es una resistencia de 10 MΩ; su condensador de muestreo no se modela.
 
-**Tabla 12.** Casos simulados y resultados.
+**Tabla 13.** Casos simulados y resultados.
 
 | # | Caso | Resultado de la simulación | Criterio | Estado |
 |---:|---|---|---|---|
@@ -978,11 +1004,11 @@ La plataforma ([`plataforma/`](plataforma/)) es una aplicación de **TanStack St
 TypeScript, con rutas por archivo de TanStack Router) que reúne el *frontend* y el *backend* en un solo
 proceso de Node. El ESP32 envía cada segundo un registro ADR-001 de 40 B a `POST /api/ingesta`, y después
 de una caída de Wi-Fi envía en un solo cuerpo los registros que guardó. El servidor los valida, los guarda
-en una base de datos Postgres alojada en Supabase y calcula todo lo que muestra el tablero (Tabla 13).
+en una base de datos Postgres alojada en Supabase y calcula todo lo que muestra el tablero (Tabla 14).
 El esquema está en [`plataforma/supabase/migrations/`](plataforma/supabase/migrations/); cada lote se
 guarda en una transacción y los registros repetidos se descartan.
 
-**Tabla 13.** Funciones del servidor de la plataforma.
+**Tabla 14.** Funciones del servidor de la plataforma.
 
 | Función | Cómo se calcula |
 |---|---|
@@ -995,7 +1021,7 @@ guarda en una transacción y los registros repetidos se descartan.
 
 Fuente: elaboración propia.
 
-**Tabla 14.** Formato del registro ADR-001 (40 B, *little-endian*, sin relleno), común al *firmware* y a la plataforma.
+**Tabla 15.** Formato del registro ADR-001 (40 B, *little-endian*, sin relleno), común al *firmware* y a la plataforma.
 
 | Byte | Tipo | Campo | Escala |
 |---:|---|---|---|
@@ -1052,9 +1078,9 @@ el mismo código se compila también en el PC y escribe las imágenes de este do
 (`make -C firmware/test pantallas`). La prueba compara además la pantalla completa con la que se arma
 por franjas, como la envía el ESP32, y las dos resultan iguales. Las fuentes de Adafruit GFX no tienen
 tildes, por eso los textos de la pantalla van sin ellas. Los valores de las imágenes son de ejemplo. La
-Tabla 15 resume la función de los pulsadores y del LED, y la Ilustración 22 muestra la navegación.
+Tabla 16 resume la función de los pulsadores y del LED, y la Ilustración 22 muestra la navegación.
 
-**Tabla 15.** Función de los pulsadores y del LED de estado.
+**Tabla 16.** Función de los pulsadores y del LED de estado.
 
 | Elemento | Acción | Resultado |
 |---|---|---|
@@ -1142,9 +1168,9 @@ entrenada sobre el 10 de febrero de 2010. Fuente: elaboración propia con
 
 El modelo se comparó con tres líneas base ingenuas: persistencia (repetir la última hora medida),
 ingenuo diario (repetir el último día) e ingenuo semanal (misma hora de la semana anterior). A 24 h y 48 h
-el LSTM pronostica de forma recursiva desde cada medianoche del periodo de prueba (Tabla 16).
+el LSTM pronostica de forma recursiva desde cada medianoche del periodo de prueba (Tabla 17).
 
-**Tabla 16.** Error del pronóstico en el conjunto de prueba (2010), en kWh por hora.
+**Tabla 17.** Error del pronóstico en el conjunto de prueba (2010), en kWh por hora.
 
 | Horizonte | Modelo | MAE | RMSE | MAPE |
 |---|---|---:|---:|---:|
@@ -1197,9 +1223,9 @@ columnas `tiempo,kwh,temp`) y los pesos entrenados `lstm.pt`.
 
 El *firmware* ([`firmware/`](firmware/)) está escrito en C++ con PlatformIO y el *framework* Arduino para
 ESP32 (ESP-IDF 4.4). Compila sin errores y ocupa el 30 % de la RAM y el 75 % de la memoria de programa.
-Se reparte en tres tareas de FreeRTOS (Tabla 17).
+Se reparte en tres tareas de FreeRTOS (Tabla 18).
 
-**Tabla 17.** Tareas del *firmware*.
+**Tabla 18.** Tareas del *firmware*.
 
 | Núcleo | Tarea | Función |
 |---|---|---|
@@ -1226,9 +1252,9 @@ El cálculo está en una biblioteca sin dependencias de Arduino (`lib/medicion/`
 
 La biblioteca se probó en el PC con señales sintéticas que reproducen la cadena del *hardware* (pinza,
 resistencia de carga, VBIAS, ADC de 12 bits con ruido de 0,7 códigos y retardo de multiplexado de 12 µs y
-24 µs). La Tabla 18 resume los resultados (`make -C firmware/test`).
+24 µs). La Tabla 19 resume los resultados (`make -C firmware/test`).
 
-**Tabla 18.** Prueba del cálculo con señales sintéticas.
+**Tabla 19.** Prueba del cálculo con señales sintéticas.
 
 | Caso | Magnitud | Esperado | Medido |
 |---|---|---:|---:|
@@ -1280,7 +1306,7 @@ El diseño se revisó mediante las siguientes verificaciones y cálculos:
 **Ilustración 29.** Cronograma de actividades y estado al 21 de octubre de 2026. Fuente: elaboración
 propia en Python y Matplotlib.
 
-**Tabla 19.** Estado de las actividades.
+**Tabla 20.** Estado de las actividades.
 
 | Actividad | Semanas | Estado |
 |---|---|---|

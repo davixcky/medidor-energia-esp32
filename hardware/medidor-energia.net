@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "/home/davixcky/dev/.personal/electronica/medidor-energia-esp32/hardware/medidor-energia.kicad_sch")
-		(date "2026-10-21T20:32:59")
+		(date "2026-10-22T07:53:32")
 		(tool "Eeschema 10.0.0")
 		(sheet
 			(number "1")
@@ -471,7 +471,7 @@
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "baf49e18-fd32-5318-9954-75a1a2f3bce6")
+			(tstamps "d70bd010-aad9-5586-973e-4d1511564179")
 			(units
 				(unit
 					(name "A")
@@ -525,7 +525,7 @@
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "464e7cb9-af67-5a41-a6c6-280aae2ab414")
+			(tstamps "defbb213-4382-5cea-9e5e-0c6bc8b5e472")
 			(units
 				(unit
 					(name "A")
@@ -957,7 +957,115 @@
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "241dec5c-9218-5e62-993b-239faeacc1bd")
+			(tstamps "e1604692-5063-5578-b172-f8aade8621c1")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D9")
+			(value "LED rojo 3 mm")
+			(footprint "LED_THT:LED_D3.0mm")
+			(fields
+				(field
+					(name "Footprint") "LED_THT:LED_D3.0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "LED")
+				(description "Light emitting diode")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "medidor-energia.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "LED diode")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "LED* LED_SMD:* LED_THT:*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "77d2ac9c-8b7e-5ca9-9b91-ae52b6466b47")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "D10")
+			(value "LED verde 3 mm")
+			(footprint "LED_THT:LED_D3.0mm")
+			(fields
+				(field
+					(name "Footprint") "LED_THT:LED_D3.0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "LED")
+				(description "Light emitting diode")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "medidor-energia.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "LED diode")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "LED* LED_SMD:* LED_THT:*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "2dd773df-c71d-50b7-87d0-a44da2277845")
 			(units
 				(unit
 					(name "A")
@@ -1362,7 +1470,7 @@
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "77d2ac9c-8b7e-5ca9-9b91-ae52b6466b47")
+			(tstamps "490dc56f-afa6-5017-b71b-d0f86ba4c4c2")
 			(units
 				(unit
 					(name "A")
@@ -1746,7 +1854,7 @@
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "9612fe72-9139-5763-89af-d8e933b3bd51")
+			(tstamps "441a0518-60ac-533e-be7d-fea1e66d73f7")
 			(units
 				(unit
 					(name "A")
@@ -1800,7 +1908,7 @@
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "b4a24b88-6271-5c72-af38-5bd278ad178b")
+			(tstamps "70435c0c-6caf-58bb-a130-5b1df67b9770")
 			(units
 				(unit
 					(name "A")
@@ -1854,7 +1962,115 @@
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "62f3acb2-a705-53f1-a6ec-9b2a0441c25f")
+			(tstamps "0b0f9b5a-82ee-50d0-ab4a-72478d2f2e73")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R14")
+			(value "1k")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
+			(fields
+				(field
+					(name "Footprint") "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "medidor-energia.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "499ce0a1-baa5-55a3-a4d5-4c3efc752e60")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R15")
+			(value "470")
+			(footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
+			(fields
+				(field
+					(name "Footprint") "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Device")
+				(part "R")
+				(description "Resistor")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "medidor-energia.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "R res resistor")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "R_*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "10cd9a6b-531e-583d-82d7-89d2c73fecb3")
 			(units
 				(unit
 					(name "A")
@@ -1904,7 +2120,7 @@
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "57ae7d60-5944-5c20-88f6-7349452f0add")
+			(tstamps "69c93167-bdfa-5c4a-8723-d37dd575468c")
 			(units
 				(unit
 					(name "A")
@@ -1954,7 +2170,7 @@
 				(names "/")
 				(tstamps "/")
 			)
-			(tstamps "d0614082-efa1-5870-be13-d48d8fe1a8ea")
+			(tstamps "829cfb11-0170-551c-b790-d9cb1da0cec4")
 			(units
 				(unit
 					(name "A")
@@ -1964,6 +2180,465 @@
 						)
 						(pin
 							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP1")
+			(value "+5V")
+			(footprint "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm")
+			(fields
+				(field
+					(name "Footprint") "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "medidor-energia.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "9612fe72-9139-5763-89af-d8e933b3bd51")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP2")
+			(value "+3V3")
+			(footprint "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm")
+			(fields
+				(field
+					(name "Footprint") "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "medidor-energia.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "f175ff92-772a-53e6-a98c-2c0bf6c28d07")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP3")
+			(value "VBIAS")
+			(footprint "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm")
+			(fields
+				(field
+					(name "Footprint") "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "medidor-energia.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "57ae7d60-5944-5c20-88f6-7349452f0add")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP4")
+			(value "CH1_ADC")
+			(footprint "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm")
+			(fields
+				(field
+					(name "Footprint") "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "medidor-energia.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "baf49e18-fd32-5318-9954-75a1a2f3bce6")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP5")
+			(value "CH2_ADC")
+			(footprint "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm")
+			(fields
+				(field
+					(name "Footprint") "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "medidor-energia.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "962a961b-c59a-54ac-85d3-a94221afa23d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP6")
+			(value "ZMPT_OUT")
+			(footprint "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm")
+			(fields
+				(field
+					(name "Footprint") "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "medidor-energia.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "5db94449-4d4f-5360-bad7-44ae9e28006b")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP7")
+			(value "V_ADC")
+			(footprint "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm")
+			(fields
+				(field
+					(name "Footprint") "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "medidor-energia.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "8b43c920-c98e-5699-8a16-666d9cd23ab3")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP8")
+			(value "GND")
+			(footprint "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm")
+			(fields
+				(field
+					(name "Footprint") "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "medidor-energia.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "62f3acb2-a705-53f1-a6ec-9b2a0441c25f")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "TP9")
+			(value "GND")
+			(footprint "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm")
+			(fields
+				(field
+					(name "Footprint") "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Connector")
+				(part "TestPoint")
+				(description "test point")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "medidor-energia.kicad_sch")
+			)
+			(property
+				(name "ki_keywords")
+				(value "test point tp")
+			)
+			(property
+				(name "ki_fp_filters")
+				(value "Pin* Test*")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "464e7cb9-af67-5a41-a6c6-280aae2ab414")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
 						)
 					)
 				)
@@ -2196,6 +2871,36 @@
 				(pin
 					(num "3")
 					(name "Pin_3")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "Connector")
+			(part "TestPoint")
+			(description "test point")
+			(footprints
+				(fp "Pin*")
+				(fp "Test*")
+			)
+			(fields
+				(field
+					(name "Reference") "TP")
+				(field
+					(name "Value") "TestPoint")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "test point")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
 					(type "passive")
 				)
 			)
@@ -2948,8 +3653,19 @@
 				(pintype "passive")
 			)
 			(node
+				(ref "R15")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
 				(ref "R3")
 				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP2")
+				(pin "1")
+				(pinfunction "1_1")
 				(pintype "passive")
 			)
 			(node
@@ -2986,6 +3702,17 @@
 				(pintype "passive")
 			)
 			(node
+				(ref "R14")
+				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP1")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
 				(ref "U1")
 				(pin "19")
 				(pinfunction "5V_19")
@@ -3019,6 +3746,12 @@
 				(pintype "passive")
 			)
 			(node
+				(ref "TP4")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
 				(ref "U1")
 				(pin "3")
 				(pinfunction "VP/IO36_3")
@@ -3049,6 +3782,12 @@
 			(node
 				(ref "R6")
 				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP5")
+				(pin "1")
+				(pinfunction "1_1")
 				(pintype "passive")
 			)
 			(node
@@ -3315,6 +4054,12 @@
 				(pin "1")
 				(pintype "passive")
 			)
+			(node
+				(ref "TP3")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
 		)
 		(net
 			(code "18")
@@ -3348,6 +4093,12 @@
 				(pintype "passive")
 			)
 			(node
+				(ref "TP7")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
 				(ref "U1")
 				(pin "6")
 				(pinfunction "IO35_6")
@@ -3367,6 +4118,12 @@
 			(node
 				(ref "R7")
 				(pin "1")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP6")
+				(pin "1")
+				(pinfunction "1_1")
 				(pintype "passive")
 			)
 		)
@@ -3420,6 +4177,12 @@
 				(pintype "passive")
 			)
 			(node
+				(ref "D10")
+				(pin "1")
+				(pinfunction "K_1")
+				(pintype "passive")
+			)
+			(node
 				(ref "D3")
 				(pin "2")
 				(pinfunction "A_2")
@@ -3439,6 +4202,12 @@
 			)
 			(node
 				(ref "D8")
+				(pin "1")
+				(pinfunction "K_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "D9")
 				(pin "1")
 				(pinfunction "K_1")
 				(pintype "passive")
@@ -3487,6 +4256,18 @@
 				(ref "SW2")
 				(pin "2")
 				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP8")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "TP9")
+				(pin "1")
+				(pinfunction "1_1")
 				(pintype "passive")
 			)
 			(node
@@ -3542,6 +4323,38 @@
 		)
 		(net
 			(code "23")
+			(name "Net-(D9-A)")
+			(class "Default")
+			(node
+				(ref "D9")
+				(pin "2")
+				(pinfunction "A_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R14")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "24")
+			(name "Net-(D10-A)")
+			(class "Default")
+			(node
+				(ref "D10")
+				(pin "2")
+				(pinfunction "A_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R15")
+				(pin "2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "25")
 			(name "Net-(J1-Pin_1)")
 			(class "Alimentacion")
 			(node
@@ -3557,7 +4370,7 @@
 			)
 		)
 		(net
-			(code "24")
+			(code "26")
 			(name "Net-(J2-PadT)")
 			(class "Default")
 			(node
@@ -3572,7 +4385,7 @@
 			)
 		)
 		(net
-			(code "25")
+			(code "27")
 			(name "Net-(J3-PadT)")
 			(class "Default")
 			(node
@@ -3587,7 +4400,7 @@
 			)
 		)
 		(net
-			(code "29")
+			(code "31")
 			(name "unconnected-(J2-PadR)")
 			(class "Default")
 			(node
@@ -3597,7 +4410,7 @@
 			)
 		)
 		(net
-			(code "30")
+			(code "32")
 			(name "unconnected-(J3-PadR)")
 			(class "Default")
 			(node
@@ -3607,7 +4420,7 @@
 			)
 		)
 		(net
-			(code "31")
+			(code "33")
 			(name "unconnected-(U1-CLK{slash}IO6-Pad38)")
 			(class "Default")
 			(node
@@ -3618,7 +4431,7 @@
 			)
 		)
 		(net
-			(code "32")
+			(code "34")
 			(name "unconnected-(U1-CMD{slash}IO11-Pad18)")
 			(class "Default")
 			(node
@@ -3629,7 +4442,7 @@
 			)
 		)
 		(net
-			(code "33")
+			(code "35")
 			(name "unconnected-(U1-EN-Pad2)")
 			(class "Default")
 			(node
@@ -3640,7 +4453,7 @@
 			)
 		)
 		(net
-			(code "34")
+			(code "36")
 			(name "unconnected-(U1-IO0-Pad33)")
 			(class "Default")
 			(node
@@ -3651,7 +4464,7 @@
 			)
 		)
 		(net
-			(code "35")
+			(code "37")
 			(name "unconnected-(U1-IO2-Pad34)")
 			(class "Default")
 			(node
@@ -3662,7 +4475,7 @@
 			)
 		)
 		(net
-			(code "36")
+			(code "38")
 			(name "unconnected-(U1-IO5-Pad29)")
 			(class "Default")
 			(node
@@ -3673,7 +4486,7 @@
 			)
 		)
 		(net
-			(code "37")
+			(code "39")
 			(name "unconnected-(U1-IO12-Pad13)")
 			(class "Default")
 			(node
@@ -3684,7 +4497,7 @@
 			)
 		)
 		(net
-			(code "38")
+			(code "40")
 			(name "unconnected-(U1-IO13-Pad15)")
 			(class "Default")
 			(node
@@ -3695,7 +4508,7 @@
 			)
 		)
 		(net
-			(code "39")
+			(code "41")
 			(name "unconnected-(U1-IO14-Pad12)")
 			(class "Default")
 			(node
@@ -3706,7 +4519,7 @@
 			)
 		)
 		(net
-			(code "40")
+			(code "42")
 			(name "unconnected-(U1-IO15-Pad35)")
 			(class "Default")
 			(node
@@ -3717,7 +4530,7 @@
 			)
 		)
 		(net
-			(code "41")
+			(code "43")
 			(name "unconnected-(U1-IO16-Pad31)")
 			(class "Default")
 			(node
@@ -3728,7 +4541,7 @@
 			)
 		)
 		(net
-			(code "42")
+			(code "44")
 			(name "unconnected-(U1-IO17-Pad30)")
 			(class "Default")
 			(node
@@ -3739,7 +4552,7 @@
 			)
 		)
 		(net
-			(code "43")
+			(code "45")
 			(name "unconnected-(U1-RXD0{slash}IO3-Pad24)")
 			(class "Default")
 			(node
@@ -3750,7 +4563,7 @@
 			)
 		)
 		(net
-			(code "44")
+			(code "46")
 			(name "unconnected-(U1-SD0{slash}IO7-Pad37)")
 			(class "Default")
 			(node
@@ -3761,7 +4574,7 @@
 			)
 		)
 		(net
-			(code "45")
+			(code "47")
 			(name "unconnected-(U1-SD1{slash}IO8-Pad36)")
 			(class "Default")
 			(node
@@ -3772,7 +4585,7 @@
 			)
 		)
 		(net
-			(code "46")
+			(code "48")
 			(name "unconnected-(U1-SD2{slash}IO9-Pad16)")
 			(class "Default")
 			(node
@@ -3783,7 +4596,7 @@
 			)
 		)
 		(net
-			(code "47")
+			(code "49")
 			(name "unconnected-(U1-SD3{slash}IO10-Pad17)")
 			(class "Default")
 			(node
@@ -3794,7 +4607,7 @@
 			)
 		)
 		(net
-			(code "48")
+			(code "50")
 			(name "unconnected-(U1-TXD0{slash}IO1-Pad23)")
 			(class "Default")
 			(node

@@ -14,6 +14,6 @@ Total: **3 puentes, 3 alambres**.
 
 | Puente | Red | Alambres | Largo aprox. | Agujeros |
 |---|---|---|---|---|
-| JP1 | `CH2_ADC` | 1 | 17 mm | (43.6, 47.1) junto a D4.2<br>(60.9, 47.1) junto a R11.1 |
-| JP2 | `CH1_ADC` | 1 | 6 mm | (65.2, 38.6) junto a R11.2<br>(71.3, 38.6) junto a R11.2 |
-| JP3 | `V_ADC` | 1 | 24 mm | (78.6, 16.5) junto a J7.4<br>(81.8, 40.8) junto a U1.5 |
+| JP1 | `+5V` | 1 | 14 mm | (9.2, 59.4) junto a R3.1<br>(9.2, 73.2) junto a J1.2 |
+| JP2 | `CH2_ADC` | 1 | 4 mm | (55.7, 44.7) junto a R11.1<br>(60.0, 44.7) junto a R11.1 |
+| JP3 | `V_ADC` | 1 | 21 mm | (83.0, 18.8) junto a J7.4<br>(83.0, 39.6) junto a U1.5 |

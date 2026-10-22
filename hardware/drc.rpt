@@ -1,20 +1,28 @@
 ** Drc report for medidor-energia.kicad_pcb **
-** Created on 2026-10-21T20:37:30 **
+** Created on 2026-10-22T07:58:55 **
 ** Report includes: Errors, Warnings **
 
-** Found 3 DRC violations **
+** Found 5 DRC violations **
 [silk_overlap]: Silkscreen clearance
     Rule: board setup constraints silk; warning
-    @(98.2700 mm, 44.6700 mm): Segment of J7 on F.Silkscreen
-    @(103.5900 mm, 41.5400 mm): Segment of JP3 on F.Silkscreen
+    @(34.2000 mm, 84.4300 mm): Segment of JP1 on F.Silkscreen
+    @(34.2000 mm, 90.1300 mm): Reference field of JP1
 [silk_overlap]: Silkscreen clearance
     Rule: board setup constraints silk; warning
-    @(98.2700 mm, 47.3300 mm): Segment of J7 on F.Silkscreen
-    @(103.5900 mm, 41.5400 mm): Segment of JP3 on F.Silkscreen
+    @(26.1800 mm, 93.2600 mm): Segment of J1 on F.Silkscreen
+    @(34.2000 mm, 84.4300 mm): Segment of JP1 on F.Silkscreen
 [silk_overlap]: Silkscreen clearance
     Rule: board setup constraints silk; warning
-    @(103.5900 mm, 41.5400 mm): Segment of JP3 on F.Silkscreen
-    @(105.1700 mm, 52.4500 mm): Reference field of JP3
+    @(34.2000 mm, 84.4300 mm): Segment of JP1 on F.Silkscreen
+    @(34.1000 mm, 103.6600 mm): Segment of J1 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(108.0100 mm, 43.8400 mm): Segment of JP3 on F.Silkscreen
+    @(108.0100 mm, 53.0000 mm): Reference field of JP3
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; warning
+    @(34.2000 mm, 98.2300 mm): PTH pad 1 [+5V] of JP1
+    @(31.5000 mm, 101.0000 mm): Footprint J1
 
 ** Found 0 unconnected pads **
 

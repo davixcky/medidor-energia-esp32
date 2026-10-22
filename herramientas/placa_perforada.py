@@ -185,6 +185,27 @@ def definir():
     for pin_esp, pin_j6 in ((21, 3), (22, 4), (25, 5), (27, 6), (28, 7), (32, 8)):
         puente((46, 14 + pin_esp - 20), (54, 11 + pin_j6), "LCD")
 
+    # ---- puntos de prueba (lazo de alambre en un agujero de la red) y LED de alimentación
+    pista((18, 30), (21, 30))
+    pieza("TP1", "tp", {"1": (20, 30)}, "+5V")
+    pieza("TP2", "tp", {"1": (57, 18)}, "+3V3")
+    pista((12, 18), (13, 18))
+    pieza("TP3", "tp", {"1": (13, 18)}, "VBIAS")
+    pieza("TP4", "tp", {"1": (28, 16)}, "CH1_ADC")
+    pieza("TP5", "tp", {"1": (15, 22)}, "CH2_ADC")
+    pieza("TP6", "tp", {"1": (4, 6)}, "ZMPT_OUT")
+    pista((18, 6), (19, 6))
+    pieza("TP7", "tp", {"1": (19, 6)}, "V_ADC")
+    pieza("TP8", "tp", {"1": (30, 27)}, "GND")
+    pieza("TP9", "tp", {"1": (48, 29)}, "GND")
+    pieza("R14", "res_v", {"1": (21, 30), "2": (21, 28)}, "R14")
+    pista((21, 28), (26, 28))
+    pieza("D9", "led3", {"2": (26, 28), "1": (26, 27)}, "D9 +5V")      # cátodo sobre el bus de GND
+    pieza("R15", "res", {"1": (57, 24), "2": (53, 24)}, "R15")
+    pista((53, 24), (52, 24))
+    pieza("D10", "led3", {"2": (52, 24), "1": (51, 24)}, "D10 +3V3")
+    pista((51, 24), (48, 24))
+
     # ---- LED de estado (LED en el panel, cable a un espadín de 2 pines)
     puente((36, 22), (50, 22), "DIG")
     pieza("R11", "res", {"1": (50, 22), "2": (54, 22)}, "R11")
@@ -462,6 +483,13 @@ def dibujar_piezas(ax, X, Y):
                 ax.add_patch(Circle((x - 0.6, y), 0.5, fc="#bdc3c7", ec="#555", zorder=6))
                 ax.plot([x - 0.9, x - 0.3], [y, y], color="#555", lw=1, zorder=7)
             ax.text(min(xs) + 1.0, y1 + 0.9, texto, fontsize=7, weight="bold", zorder=6)
+        elif tipo == "tp":
+            ax.add_patch(Circle((cx, cy), 0.55, fc="none", ec="#b0b0b0", lw=2.2, zorder=6))
+            ax.text(cx + 0.7, cy + 0.7, texto, fontsize=6.2, weight="bold", zorder=6)
+        elif tipo == "led3":
+            ax.add_patch(Circle((cx, cy), 0.75, fc="#e74c3c" if "5V" in texto else "#2ecc71", ec="black",
+                                lw=0.8, alpha=0.9, zorder=5))
+            ax.text(cx + 0.9, cy, texto, va="center", fontsize=6.2, zorder=6)
         elif tipo in ("hembra4v", "macho2v", "macho8v"):
             y0, y1 = min(ys), max(ys)
             ax.add_patch(Rectangle((xs[0] - 0.5, y0 - 0.5), 1.0, (y1 - y0) + 1.0,
