@@ -31,6 +31,7 @@ def exportar():
 
     for o in piezas:
         if o.Name == "Placa_KiCad":
+            PLACA_MEDIO_Y = o.Traslado.y - 70   # mitad de la placa (90 mm) en coordenadas del gabinete
             antes = set(x.Name for x in doc.Objects)
             Import.insert(os.path.join(AQUI, o.ArchivoSTEP), doc.Name)
             for componente in doc.Objects:
@@ -54,6 +55,12 @@ def exportar():
                     color = (0.72, 0.65, 0.48)
                 elif "C_Disc" in etiqueta:
                     color = (0.65, 0.35, 0.15)
+                elif "TestPoint" in etiqueta:
+                    color = (0.80, 0.80, 0.82)   # lazo de alambre estañado
+                elif "LED_D3.0mm" in etiqueta:
+                    # D10 (+3,3 V, verde) está arriba a la derecha de la placa; D9 (+5 V, rojo), abajo.
+                    verde = forma.BoundBox.Center.y > PLACA_MEDIO_Y
+                    color = (0.15, 0.80, 0.25) if verde else (0.85, 0.12, 0.10)
                 agregar(componente.Name, forma, color, "interior")
             continue
         color = tuple(float(c) for c in o.ColorRGB.split(","))
