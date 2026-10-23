@@ -1,0 +1,80 @@
+[
+  {
+    "part": "cuerpo",
+    "seconds": 24794.748046875,
+    "grams": 273.6763916015625,
+    "warning": ""
+  },
+  {
+    "part": "cupon-ajuste",
+    "seconds": 2237.223876953125,
+    "grams": 21.505481719970703,
+    "warning": ""
+  },
+  {
+    "part": "cupon-encoder",
+    "seconds": 457.6602478027344,
+    "grams": 3.4182114601135254,
+    "warning": ""
+  },
+  {
+    "part": "cupon-usbc",
+    "seconds": 296.1714782714844,
+    "grams": 2.127793312072754,
+    "warning": ""
+  },
+  {
+    "part": "difusor-alimentacion",
+    "seconds": 269.5701599121094,
+    "grams": 0.4864068031311035,
+    "warning": ""
+  },
+  {
+    "part": "difusor-estado",
+    "seconds": 270.6976623535156,
+    "grams": 0.4864068031311035,
+    "warning": ""
+  },
+  {
+    "part": "difusor-neopixel",
+    "seconds": 499.283447265625,
+    "grams": 3.1319637298583984,
+    "warning": ""
+  },
+  {
+    "part": "guarda-120v",
+    "seconds": 1512.8603515625,
+    "grams": 15.65839672088623,
+    "warning": ""
+  },
+  {
+    "part": "panel",
+    "seconds": 753.9227905273438,
+    "grams": 6.284789562225342,
+    "warning": ""
+  },
+  {
+    "part": "porta-neopixel",
+    "seconds": 479.8589172363281,
+    "grams": 3.432080030441284,
+    "warning": ""
+  },
+  {
+    "part": "retenedor-lcd-d",
+    "seconds": 305.6079406738281,
+    "grams": 1.601664662361145,
+    "warning": ""
+  },
+  {
+    "part": "retenedor-lcd-i",
+    "seconds": 291.5680847167969,
+    "grams": 1.4340705871582031,
+    "warning": ""
+  },
+  {
+    "part": "tapa",
+    "seconds": 8530.3740234375,
+    "grams": 89.0280532836914,
+    "warning": ""
+  }
+]

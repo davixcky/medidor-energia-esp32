@@ -33,7 +33,7 @@ static Datos ejemplo() {
   d.alerta_min = 7;
   d.canal_tara = 0;
   d.ruido_tara = 0.06f;
-  d.version = "fw-v1.1.0";
+  d.version = "fw-v1.3.0";
   return d;
 }
 
@@ -82,5 +82,15 @@ int main(int argc, char** argv) {
     }
     printf("%-9s franjas %s  %s\n", e.nombre, igual ? "iguales" : "DISTINTAS", ruta);
   }
+  dibujar_ajustes(completo, 0, true, 200, false, 2000);
+  for(int y0=0;y0<ALTO;y0+=alto_franja) {
+    franja.origen(y0);dibujar_ajustes(franja,0,true,200,false,2000);
+    memcpy(compuesta+y0*ANCHO,franja.getBuffer(),sizeof(uint16_t)*ANCHO*alto_franja);
+  }
+  bool same=memcmp(compuesta,completo.getBuffer(),sizeof compuesta)==0;
+  fallos+=!same;
+  char config_path[256];snprintf(config_path,sizeof config_path,"%s/configuracion.ppm",dir);
+  if(!guardar(config_path,completo.getBuffer()))return 1;
+  printf("Configuracion: franjas %s\n",same ? "iguales" : "DISTINTAS");
   return fallos ? 1 : 0;
 }

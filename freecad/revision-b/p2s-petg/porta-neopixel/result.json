@@ -1,0 +1,47 @@
+{
+    "error_string": "Success.",
+    "export_time": 429,
+    "plate_index": 0,
+    "prepare_time": 4,
+    "return_code": 0,
+    "sliced_plates": [
+        {
+            "filament_change_times": 0,
+            "filaments": [
+                {
+                    "filament_id": "GFG99",
+                    "id": 1,
+                    "main_used_g": 3.432080030441284,
+                    "total_used_g": 3.432080030441284
+                }
+            ],
+            "generate_support_material_time": 1,
+            "id": 1,
+            "infill_time": 11,
+            "layer_filament_change": 0,
+            "main_predication": 459.8980407714844,
+            "make_perimeters_time": 7,
+            "obj_cached_cnt": 0,
+            "objects": [
+                {
+                    "bbox": {
+                        "depth": 14.0,
+                        "height": 3.5999999046325684,
+                        "width": 100.0,
+                        "x": 77.99999237060547,
+                        "y": 121.0,
+                        "z": 0.0
+                    },
+                    "id": 5,
+                    "name": "porta-neopixel.stl",
+                    "triangle_count": 564
+                }
+            ],
+            "sliced_time": 50,
+            "sliced_time_with_cache": 28,
+            "total_predication": 479.8589172363281,
+            "triangle_count": 564,
+            "warning_message": ""
+        }
+    ]
+}

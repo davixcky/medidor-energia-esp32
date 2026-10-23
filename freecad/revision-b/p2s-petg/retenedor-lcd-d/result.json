@@ -1,0 +1,47 @@
+{
+    "error_string": "Success.",
+    "export_time": 374,
+    "plate_index": 0,
+    "prepare_time": 2,
+    "return_code": 0,
+    "sliced_plates": [
+        {
+            "filament_change_times": 0,
+            "filaments": [
+                {
+                    "filament_id": "GFG99",
+                    "id": 1,
+                    "main_used_g": 1.601664662361145,
+                    "total_used_g": 1.601664662361145
+                }
+            ],
+            "generate_support_material_time": 1,
+            "id": 1,
+            "infill_time": 8,
+            "layer_filament_change": 0,
+            "main_predication": 285.6902770996094,
+            "make_perimeters_time": 7,
+            "obj_cached_cnt": 0,
+            "objects": [
+                {
+                    "bbox": {
+                        "depth": 47.0,
+                        "height": 3.9000000953674316,
+                        "width": 15.199997901916504,
+                        "x": 120.4000015258789,
+                        "y": 104.5,
+                        "z": 0.0
+                    },
+                    "id": 5,
+                    "name": "retenedor-lcd-d.stl",
+                    "triangle_count": 380
+                }
+            ],
+            "sliced_time": 116,
+            "sliced_time_with_cache": 96,
+            "total_predication": 305.6079406738281,
+            "triangle_count": 380,
+            "warning_message": ""
+        }
+    ]
+}

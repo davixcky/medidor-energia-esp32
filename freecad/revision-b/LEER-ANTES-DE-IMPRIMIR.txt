@@ -1,0 +1,106 @@
+MEDIDOR DE ENERGÍA — REVISIÓN B
+Gabinete PETG, Bambu Lab P2S, boquilla supuesta de 0,4 mm.
+Diseño para comprobar en banco: todavía no es un dispositivo validado físicamente.
+
+ACABADO Y ENSAMBLE
+Cuerpo grafito y tapa gris, esquinas R10; panel negro independiente.
+Tapa magnética: ocho imanes de neodimio Ø8 × 3 mm (cuatro pares).
+Imprimir primero el cupón: alojamientos 8,1 / 8,2 / 8,3 mm para elegir ajuste.
+Comprobar polaridad de cada pareja antes de pegar. No montar a presión en PETG.
+Guarda interna de 120 V con dos tornillos: permanece puesta al retirar la tapa.
+No usar los imanes para sujetar la guarda de red.
+Retenedores LCD con cuatro tuercas M3 y tornillos cuya punta no toque la pantalla.
+Comprobar longitud real de pulsadores con el espesor tapa+panel de 5,4 mm.
+No se ha confirmado la compra de los pulsadores ni del buzzer: medir antes de imprimir.
+
+NEOPIXELS
+Cuatro WS2812B RGB de 5 V, tira de 60 LED/m, ancho 10 mm; tramo nominal 66,7 mm.
+Difusor de PETG natural/translúcido; probar transmisión óptica antes de toda la tapa.
+Barra visible 80 × 6 mm, soporte desmontable con dos tornillos M3 para plástico.
+Pegar la tira en el portatiras con adhesivo apropiado; no cubrir los emisores.
+GPIO13 -> entrada 74AHCT125 -> 330 ohm -> DIN del primer pixel.
+No conectar DIN de una tira de 5 V directamente al ESP32.
+74AHCT125 DIP14: 14 a +5 V protegido, 7 a GND, 1 (/OE) a GND,
+2 (A) a GPIO13, 3 (Y) a resistencia de 330 ohm y luego DIN.
+Entradas no usadas 5/9/12 a GND, /OE 4/10/13 a +5 V; salidas 6/8/11 sin conectar.
+100 nF entre 14 y 7 junto al chip; 10 kohm entre GPIO13 y GND.
+680 uF / 10 V entre +5 V y GND junto a la tira; respetar polaridad.
+Alimentación desde TP1 (+5 V protegido) y TP9 (GND) de la placa.
+Confirmar 4,5–5,5 V en el 74AHCT125 con Wi-Fi y luces funcionando.
+Conector desmontable de tres contactos: +5 V / GND / DIN, rotulado en ambos lados.
+La placa principal aún no contiene este circuito: montar una placa auxiliar aislada,
+con fijación mecánica en baja tensión. Su soporte depende de la placa auxiliar elegida.
+Nunca conectar esta alimentación al compartimento de red.
+
+SONIDO
+Piezo PASIVO de 12 mm de diámetro × 7 mm de alto, compatible con excitación de 5 V.
+Asiento interior Ø12,6 mm; sujetar con adhesivo flexible en el lateral, no en el orificio.
+GPIO14 -> 1 kohm -> base de NPN; 10 kohm base-emisor.
+Emisor a GND; colector al negativo del piezo; positivo a +5 V protegido.
+Confirmar patillaje E/B/C del transistor comprado. No conectar el piezo al GPIO sin driver.
+Esta etapa es para piezo capacitivo; un zumbador electromagnético necesita otra protección.
+PWM 2400 Hz, canal LEDC 2 separado del canal 0 de la LCD.
+Pulsación: 30 ms. Alerta nueva: dos tonos de 80 ms separados por 80 ms.
+Mantener VISTA 2 s alterna silencio y guarda la preferencia; consola confirma el estado.
+Reconocer una alerta cancela los tonos restantes. El color sigue visible en silencio.
+Verde: envío reciente al servidor; ámbar: sin envío confirmado; rojo: alerta sin reconocer.
+Brillo limitado por valores RGB (máximo 32/255); no hay animación continua.
+
+POTENCIA Y PRUEBAS
+Presupuestar hasta 240 mA adicionales si los cuatro pixels llegaran a blanco máximo;
+el límite de firmware reduce consumo normal, pero no sustituye protección eléctrica.
+Medir caída de tensión, calentamiento, ruido ADC y reinicios con Wi-Fi antes de usar a 120 V.
+La simulación anterior no valida este circuito auxiliar ni el comportamiento térmico del PETG.
+Comenzar con alimentación USB aislada y sin red de 120 V conectada.
+Comprobar botón, mute persistente, alerta, reconocimiento y recuperación de red.
+Los STL están en orientación de impresión; verificar soportes y puentes en Bambu Studio.
+Imprimir cuerpo/tapa por separado. El perfil es Generic PETG; ajustar al filamento real.
+Los ficheros CAD y mallas se validan geométricamente, pero falta comprobar ajuste físico.
+
+REFERENCIAS
+https://learn.adafruit.com/adafruit-neopixel-uberguide/best-practices
+https://www.ti.com/product/SN74AHCT125
+
+ACTUALIZACIÓN USB-C Y LCD
+La abertura frontal ahora mide 18 × 10 mm, con esquinas R2, para dejar
+pasar la carcasa del cable. Centro provisional X125,20 / Z28,05 mm.
+El STEP existente representa DevKitC V4 con Micro-USB, NO una placa USB-C.
+El usuario confirmó que su ESP32 ya tiene USB-C: se conserva acceso directo.
+Falta confirmar modelo exacto, centro y distancia del conector a la pared.
+No se garantiza acoplamiento completo con una placa o cable aún no medidos.
+Imprimir cupon-usbc.stl (pared de 2,5 mm) y probar el cable real antes del cuerpo.
+Si se usa una extensión de panel USB-C, necesita su propio soporte y cable de datos;
+no equivale a cambiar solamente el agujero de la placa Micro-USB existente.
+LCD Waveshare 1,9 pulgadas: 170 × 320 nativo, 320 × 170 en horizontal.
+El render muestra la interfaz RGB565 real generada por firmware/test/pantallas.cpp.
+Las cifras de la pantalla son datos de prueba, no lecturas del dispositivo físico.
+https://files.waveshare.com/upload/7/7f/1.9inch_LCD_Module.pdf
+https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32/esp32-devkitc/user_guide.html
+
+La LCD sube 4,9 mm respecto de la primera revisión B; la tapa incluye un alojamiento
+inferior de 51,8 × 27,9 mm. Usar la tapa y retenedores del mismo paquete actualizado.
+La superficie activa queda a Z75,3 mm. Se verificó sin intersecciones con la tapa.
+Render reproducible: usar LCD_TEXTURE con la ruta absoluta a img/ui-lcd-resumen.png
+al ejecutar freecad/render_blender.py en Blender; MODEL_FILE, STEP_FILE,
+RENDER_TEMP y RENDER_OUT seleccionan esta revisión sin modificar la anterior.
+
+ENCODER DE CONFIGURACIÓN — FIRMWARE 1.3.0
+Encoder incremental con pulsador, montaje roscado M7 y eje de 6 mm.
+Modelo CAD de envolvente: cuerpo 12 × 12 × 12 mm; perilla comercial Ø20 × 12 mm.
+Centro (X164, Y26), agujero Ø7,2 mm. Confirmar rosca, largo útil y tuerca antes de imprimir.
+No equivale a un potenciómetro ni a un módulo de encoder alimentado a 5 V.
+A -> GPIO32 (U1 pin 7); B -> GPIO33 (U1 pin 8); común C -> GND.
+Pulsador: un contacto a GPIO16 (U1 pin 31), otro a GND.
+Pull-ups externos de 10 kohm a 3,3 V en A, B y pulsador; 10 nF a GND en A/B,
+100 nF en el pulsador junto al ESP32. El firmware habilita además INPUT_PULLUP.
+Usar conector polarizado y cable corto; no llevar señales por el compartimento de 120 V.
+GPIO16 requiere ESP32-WROOM sin PSRAM en ese pin. No es un pinout para ESP32-S3/WROVER.
+Las conexiones se toman de los pines libres del DevKit: la PCB principal no tiene
+conector dedicado para el encoder; el cableado auxiliar se documenta por separado.
+Por defecto cuatro flancos por paso. Si el encoder tiene dos flancos por paso,
+ajustar ENCODER_EDGES_PER_DETENT=2 en config.h. Invertir A/B invierte el sentido.
+Pulsar: abrir menú / editar / guardar. Girar: elegir / cambiar. Mantener 2 s: cancelar / salir.
+Ajustes: brillo LCD 32–255, sonido sí/no, umbral local 100–10000 W en pasos de 100 W.
+NVS se escribe solo al confirmar. Wi-Fi y calibración siguen configurados como antes.
+Una alerta sin reconocer cierra el menú; reconocerla con ACCIÓN. El muestreo continúa.
+Referencia dimensional: https://tech.alpsalpine.com/assets/catalog/product-catalog-ec-all.en.pdf

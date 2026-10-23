@@ -1,0 +1,47 @@
+{
+    "error_string": "Success.",
+    "export_time": 400,
+    "plate_index": 0,
+    "prepare_time": 7,
+    "return_code": 0,
+    "sliced_plates": [
+        {
+            "filament_change_times": 0,
+            "filaments": [
+                {
+                    "filament_id": "GFG99",
+                    "id": 1,
+                    "main_used_g": 15.65839672088623,
+                    "total_used_g": 15.65839672088623
+                }
+            ],
+            "generate_support_material_time": 1,
+            "id": 1,
+            "infill_time": 58,
+            "layer_filament_change": 0,
+            "main_predication": 1492.8807373046875,
+            "make_perimeters_time": 7,
+            "obj_cached_cnt": 0,
+            "objects": [
+                {
+                    "bbox": {
+                        "depth": 35.900001525878906,
+                        "height": 2.4000000953674316,
+                        "width": 194.1999969482422,
+                        "x": 30.899999618530273,
+                        "y": 110.05000305175781,
+                        "z": 0.0
+                    },
+                    "id": 5,
+                    "name": "guarda-120v.stl",
+                    "triangle_count": 608
+                }
+            ],
+            "sliced_time": 86,
+            "sliced_time_with_cache": 16,
+            "total_predication": 1512.8603515625,
+            "triangle_count": 608,
+            "warning_message": ""
+        }
+    ]
+}

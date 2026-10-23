@@ -5,6 +5,10 @@
 // Núcleo 0: red (Wi-Fi, NTP, POST de registros ADR-001 en lotes), pantalla LCD, pulsadores
 // y LED de estado.
 #include <Adafruit_ST7789.h>
+#include <Adafruit_NeoPixel.h>
+#include "feedback.h"
+#include "ajustes.h"
+#include <atomic>
 #include <Arduino.h>
 #include <HTTPClient.h>
 #include <Preferences.h>
@@ -21,7 +25,7 @@
 #include "secretos.h"
 
 #ifndef FW_VERSION
-#define FW_VERSION "fw-v1.1.0"
+#define FW_VERSION "fw-v1.3.0"
 #endif
 
 // ---------------------------------------------------------------- estado compartido
@@ -48,6 +52,9 @@ static float energia_hora_wh[24] = {};
 static int hora_actual = -1;
 static int dia_actual = -1;
 static uint32_t inicio_alerta = 0;
+static std::atomic<uint32_t> umbral_local{static_cast<uint32_t>(UMBRAL_ALERTA_W)};
+static int brillo_lcd = 200;
+static ajustes_ui::Menu menu;
 static bool alerta_activa = false, alerta_reconocida = false;
 static uint32_t ultimo_envio_ok = 0;
 static int rssi = 0;
@@ -266,7 +273,13 @@ static void actualizar_energia_y_alerta(const medicion::Resultado& r) {
     hora_actual = local.tm_hour;
     energia_hora_wh[hora_actual] += wh;
   }
-  if (r.p[0] > UMBRAL_ALERTA_W) {
+  const uint32_t threshold = umbral_local.load();
+  static uint32_t previous_threshold = threshold;
+  if (previous_threshold != threshold) {
+    inicio_alerta = 0; alerta_activa = false; alerta_reconocida = false;
+    previous_threshold = threshold;
+  }
+  if (r.p[0] > threshold) {
     if (inicio_alerta == 0) inicio_alerta = millis();
     if (!alerta_activa && millis() - inicio_alerta >= ALERTA_SOSTENIDA_S * 1000UL) {
       alerta_activa = true;
@@ -324,7 +337,7 @@ static void dibujar(const medicion::Resultado& r) {
   d.rssi = rssi;
   d.servidor_ok = millis() - ultimo_envio_ok < 15000;
   d.bufer = cantidad;
-  d.umbral_w = UMBRAL_ALERTA_W;
+  d.umbral_w = umbral_local.load();
   d.alerta_min = inicio_alerta ? (millis() - inicio_alerta) / 60000 : 0;
   d.canal_tara = canal_tara;
   d.ruido_tara = cal.ruido_i[canal_tara];
@@ -337,7 +350,7 @@ static void dibujar(const medicion::Resultado& r) {
   }
 }
 
-static void luz_fondo(bool encendida) { ledcWrite(0, encendida ? 200 : 0); }
+static void luz_fondo(bool encendida) { ledcWrite(0, encendida ? brillo_lcd : 0); }
 
 struct Boton {
   explicit Boton(int p) : pin(p) {}
@@ -364,23 +377,94 @@ static int leer(Boton& b) {
   return evento;
 }
 
+static Adafruit_NeoPixel pixels(4, PIN_NEOPIXEL, NEO_GRB + NEO_KHZ800);
+static feedback::Sound sound;
+static void feedback_tick() {
+  const uint32_t now = millis();
+  const bool alert = alerta_activa && !alerta_reconocida;
+  ledcWrite(2, sound.tick(now, alert) ? 128 : 0);
+  // Restrained fixed colors; only transmit when the state changes.
+  const bool online = ultimo_envio_ok != 0 && now - ultimo_envio_ok < 15000;
+  const uint32_t color = alert ? pixels.Color(32, 0, 0) :
+      online ? pixels.Color(0, 18, 10) : pixels.Color(24, 9, 0);
+  static uint32_t previous = 0xffffffff;
+  if (color != previous) { pixels.fill(color); pixels.show(); previous = color; }
+}
+
+static portMUX_TYPE enc_mux = portMUX_INITIALIZER_UNLOCKED;
+static volatile int enc_edges = 0;
+static volatile uint8_t enc_before = 0;
+static void IRAM_ATTR encoder_edge() {
+  const uint8_t now = (digitalRead(PIN_ENC_A) << 1) | digitalRead(PIN_ENC_B);
+  portENTER_CRITICAL_ISR(&enc_mux);
+  // A two-bit jump loses synchronization; don't turn an invalid edge into motion.
+  if ((enc_before ^ now) == 3) enc_edges = 0;
+  else enc_edges += ajustes_ui::transition(enc_before, now);
+  enc_before = now;
+  portEXIT_CRITICAL_ISR(&enc_mux);
+}
+static int encoder_turn() {
+  portENTER_CRITICAL(&enc_mux);
+  const int detents = enc_edges / ENCODER_EDGES_PER_DETENT;
+  enc_edges %= ENCODER_EDGES_PER_DETENT;
+  portEXIT_CRITICAL(&enc_mux);
+  return detents;
+}
+static void dibujar_ajustes() {
+  const auto& v = menu.editing ? menu.draft : menu.values;
+  for (int y = 0; y < interfaz::ALTO; y += ALTO_FRANJA) {
+    franja.origen(y);
+    interfaz::dibujar_ajustes(franja,menu.row,menu.editing,v.brightness,v.muted,v.threshold);
+    lcd.drawRGBBitmap(0,y,franja.getBuffer(),interfaz::ANCHO,ALTO_FRANJA);
+  }
+}
+
 static void tarea_interfaz(void*) {
   using namespace interfaz;
-  Boton sw1(PIN_SW1), sw2(PIN_SW2);
+  Boton sw1(PIN_SW1), sw2(PIN_SW2), encoder_button(PIN_ENC_SW);
   bool apagada = false;
   uint32_t ultimo_dibujo = 0;
   for (;;) {
     atender_consola();
     int e1 = leer(sw1), e2 = leer(sw2);
-    if (e1 || e2) {
+    int enc_press = leer(encoder_button), turn = encoder_turn();
+    if (e1 || e2 || enc_press || turn) {
       ultima_pulsacion = millis();
       if (apagada) {
         apagada = false;
         luz_fondo(true);
-        e1 = e2 = 0;
+        e1 = e2 = enc_press = turn = 0;
       }
     }
-    if (pantalla == ALERTA) {
+    const bool alert = alerta_activa && !alerta_reconocida;
+    if (alert) { menu.active = false; menu.editing = false; pantalla = ALERTA; }
+    if (!alert && pantalla != TARA) {
+      if (enc_press == 2) menu.cancel();
+      if (enc_press == 1) {
+        if (!menu.active) menu.values = {brillo_lcd, sound.muted, static_cast<int>(umbral_local.load())};
+        if (menu.press()) {
+          brillo_lcd = menu.values.brightness;
+          sound.muted = menu.values.muted; sound.stop();
+          umbral_local.store(menu.values.threshold);
+          prefs.putInt("brillo", brillo_lcd); prefs.putBool("silencio", sound.muted);
+          prefs.putUInt("umbral", menu.values.threshold);
+          luz_fondo(true);
+        }
+        sound.click(millis());
+      }
+      menu.turn(turn);
+    }
+    if (menu.active) e1 = e2 = 0;
+    if (enc_press || turn) ultimo_dibujo = millis() - 501;
+    if (e1 == 2) {
+      sound.toggle();
+      prefs.putBool("silencio", sound.muted);
+      Serial.printf("Sonido: %s\n", sound.muted ? "silenciado" : "activo");
+    } else if (e1 || e2) sound.click(millis());
+    feedback_tick();
+    if (menu.active) {
+      // Configuration consumes encoder input; measurement and network tasks continue.
+    } else if (pantalla == ALERTA) {
       if (e2 == 1) {
         alerta_reconocida = true;
         pantalla = RESUMEN;
@@ -389,7 +473,7 @@ static void tarea_interfaz(void*) {
       if (e1 == 1) pantalla = canal_tara == 0 ? CH1 : CH2;
       if (e2 == 2) {
         pedir_tara = true;
-        while (pedir_tara) vTaskDelay(pdMS_TO_TICKS(50));
+        while (pedir_tara) { feedback_tick(); vTaskDelay(pdMS_TO_TICKS(10)); }
         portENTER_CRITICAL(&mux);
         float ruido = cal.ruido_i[canal_tara];
         portEXIT_CRITICAL(&mux);
@@ -420,7 +504,7 @@ static void tarea_interfaz(void*) {
       portENTER_CRITICAL(&mux);
       r = ultimo;
       portEXIT_CRITICAL(&mux);
-      dibujar(r);
+      if (menu.active) dibujar_ajustes(); else dibujar(r);
     }
     vTaskDelay(pdMS_TO_TICKS(10));
   }
@@ -433,6 +517,11 @@ void setup() {
   pinMode(PIN_LED, OUTPUT);
   pinMode(PIN_SW1, INPUT);   // pull-up externo de 10 kΩ
   pinMode(PIN_SW2, INPUT);
+  pinMode(PIN_ENC_A, INPUT_PULLUP); pinMode(PIN_ENC_B, INPUT_PULLUP);
+  pinMode(PIN_ENC_SW, INPUT_PULLUP);
+  enc_before = (digitalRead(PIN_ENC_A) << 1) | digitalRead(PIN_ENC_B);
+  attachInterrupt(digitalPinToInterrupt(PIN_ENC_A), encoder_edge, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(PIN_ENC_B), encoder_edge, CHANGE);
 
   adc1_config_width(ADC_WIDTH_BIT_12);
   for (adc1_channel_t ch : {ADC_CH1, ADC_CH2, ADC_V}) adc1_config_channel_atten(ch, ADC_ATTEN_DB_12);
@@ -442,6 +531,15 @@ void setup() {
   cal.voltios_por_codigo = car.coeff_a / 65536.0f / 1000.0f;
   cal.tau_filtro_s = TAU_FILTRO_S;
   prefs.begin("medidor", false);
+  sound.muted = prefs.getBool("silencio", false);
+  brillo_lcd = ajustes_ui::clamp(prefs.getInt("brillo", 200), 32, 255);
+  umbral_local.store(ajustes_ui::clamp(prefs.getUInt("umbral", static_cast<uint32_t>(UMBRAL_ALERTA_W)), 100, 10000));
+  ledcSetup(2, 2400, 8); // independent timer from LCD channel 0
+  ledcAttachPin(PIN_BUZZER, 2);
+  ledcWrite(2, 0);
+  pixels.begin();
+  pixels.clear();
+  pixels.show();
   cal.ruido_i[0] = prefs.getFloat("ruido1", 0.0f);
   cal.ruido_i[1] = prefs.getFloat("ruido2", 0.0f);
   medir_retardo_multiplexado();

@@ -1,0 +1,42 @@
+{
+  "duration": 46,
+  "fps": 24,
+  "segments": [
+    {
+      "id": 1,
+      "start": 1.2,
+      "end": 5.744,
+      "text": "Este es el diseño actualizado del medidor de energía con ESP treinta y dos."
+    },
+    {
+      "id": 2,
+      "start": 6.744,
+      "end": 12.995,
+      "text": "La carcasa de PETG tiene bordes redondeados y una tapa magnética. La guarda interior permanece atornillada."
+    },
+    {
+      "id": 3,
+      "start": 13.995,
+      "end": 20.928,
+      "text": "La pantalla a color muestra mediciones y ajustes. El encoder configura brillo, sonido y alerta. Las cifras son de prueba."
+    },
+    {
+      "id": 4,
+      "start": 21.928,
+      "end": 29.949,
+      "text": "Cuatro NeoPixels indican conexión, desconexión y alerta. El zumbador confirma las pulsaciones; mantener Vista permite silenciarlo."
+    },
+    {
+      "id": 5,
+      "start": 30.949,
+      "end": 37.84,
+      "text": "La abertura frontal deja espacio para el cable USB tipo C. Su posición final debe comprobarse con la placa real."
+    },
+    {
+      "id": 6,
+      "start": 38.84,
+      "end": 43.427,
+      "text": "El siguiente paso es imprimir los cupones de ajuste y validar el montaje en banco."
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+    "error_string": "Success.",
+    "export_time": 381,
+    "plate_index": 0,
+    "prepare_time": 3,
+    "return_code": 0,
+    "sliced_plates": [
+        {
+            "filament_change_times": 0,
+            "filaments": [
+                {
+                    "filament_id": "GFG99",
+                    "id": 1,
+                    "main_used_g": 2.127793312072754,
+                    "total_used_g": 2.127793312072754
+                }
+            ],
+            "generate_support_material_time": 1,
+            "id": 1,
+            "infill_time": 8,
+            "layer_filament_change": 0,
+            "main_predication": 276.2835998535156,
+            "make_perimeters_time": 5,
+            "obj_cached_cnt": 0,
+            "objects": [
+                {
+                    "bbox": {
+                        "depth": 25.0,
+                        "height": 2.5,
+                        "width": 40.0,
+                        "x": 108.0,
+                        "y": 115.5,
+                        "z": 0.0
+                    },
+                    "id": 5,
+                    "name": "cupon-usbc.stl",
+                    "triangle_count": 384
+                }
+            ],
+            "sliced_time": 35,
+            "sliced_time_with_cache": 20,
+            "total_predication": 296.1714782714844,
+            "triangle_count": 384,
+            "warning_message": ""
+        }
+    ]
+}

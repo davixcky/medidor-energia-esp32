@@ -1,0 +1,30 @@
+make: Entering directory '/home/davixcky/dev/.personal/electronica/medidor-energia-esp32/firmware/test'
+g++ -std=c++17 -O2 -Wall -Wextra -o /tmp/medidor-prueba-ajustes prueba_ajustes.cpp
+/tmp/medidor-prueba-ajustes
+Encoder: direction, bounce, invalid edges; menu: cancel, save, limits passed
+g++ -std=c++17 -O2 -Wall -Wextra -o /tmp/medidor-prueba-feedback prueba_feedback.cpp
+/tmp/medidor-prueba-feedback
+Feedback: button, alert, acknowledge, mute and rollover passed
+g++ -std=c++17 -O2 -Wall -DARDUINO=100 -Iarduino -I"../.pio/libdeps/esp32dev/Adafruit GFX Library" -I../lib/interfaz -I../lib/medicion \
+    -o pantallas pantallas.cpp ../lib/interfaz/interfaz.cpp "../.pio/libdeps/esp32dev/Adafruit GFX Library/Adafruit_GFX.cpp"
+../.pio/libdeps/esp32dev/Adafruit GFX Library/Adafruit_GFX.cpp:60:9: warning: ‘pgm_read_pointer’ redefined
+   60 | #define pgm_read_pointer(addr) ((void *)pgm_read_dword(addr))
+      |         ^~~~~~~~~~~~~~~~
+In file included from ../.pio/libdeps/esp32dev/Adafruit GFX Library/Adafruit_GFX.h:5,
+                 from ../.pio/libdeps/esp32dev/Adafruit GFX Library/Adafruit_GFX.cpp:34:
+arduino/Arduino.h:14:9: note: this is the location of the previous definition
+   14 | #define pgm_read_pointer(a) (*(void* const*)(a))
+      |         ^~~~~~~~~~~~~~~~
+mkdir -p salida
+./pantallas salida
+resumen   franjas iguales  salida/resumen.ppm
+ch1       franjas iguales  salida/ch1.ppm
+ch2       franjas iguales  salida/ch2.ppm
+energia   franjas iguales  salida/energia.ppm
+alerta    franjas iguales  salida/alerta.ppm
+tara      franjas iguales  salida/tara.ppm
+arranque  franjas iguales  salida/arranque.ppm
+Configuracion: franjas iguales
+python3 componer_pantallas.py salida ../../img
+8 pantallas y ui-lcd-pantallas.png en ../../img
+make: Leaving directory '/home/davixcky/dev/.personal/electronica/medidor-energia-esp32/firmware/test'

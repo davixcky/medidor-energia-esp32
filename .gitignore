@@ -22,3 +22,20 @@ hardware/*.kicad_prl
 
 # Secretos del firmware
 firmware/include/secretos.h
+
+# Revisión B: sources and selected previews live in Git; large deliverables are release assets.
+freecad/revision-b/render/
+freecad/revision-b/*.step
+freecad/revision-b/*.zip
+freecad/revision-b/p2s-petg/*/*.gcode
+freecad/revision-b/p2s-petg/*/*.3mf
+freecad/revision-b/p2s-petg/*.gcode
+freecad/revision-b/p2s-petg/*.3mf
+freecad/revision-b/p2s-petg/*/slicer.log
+video/revision-b/*.blend
+video/revision-b/*.mp4
+video/revision-b/preview-*.png
+video/revision-b/final-*.png
+video/revision-b/contacto.png
+video/revision-b/audio/*.wav
+video/revision-b/*.zip

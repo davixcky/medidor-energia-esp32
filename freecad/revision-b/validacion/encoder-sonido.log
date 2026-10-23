@@ -1,0 +1,8 @@
+make: Entering directory '/home/davixcky/dev/.personal/electronica/medidor-energia-esp32/firmware/test'
+g++ -std=c++17 -O2 -Wall -Wextra -o /tmp/medidor-prueba-ajustes prueba_ajustes.cpp
+/tmp/medidor-prueba-ajustes
+Encoder: direction, bounce, invalid edges; menu: cancel, save, limits passed
+g++ -std=c++17 -O2 -Wall -Wextra -o /tmp/medidor-prueba-feedback prueba_feedback.cpp
+/tmp/medidor-prueba-feedback
+Feedback: button, alert, acknowledge, mute and rollover passed
+make: Leaving directory '/home/davixcky/dev/.personal/electronica/medidor-energia-esp32/firmware/test'

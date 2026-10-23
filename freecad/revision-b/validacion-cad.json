@@ -1,0 +1,122 @@
+[
+  {
+    "part": "Cuerpo",
+    "mm": [
+      200.0,
+      150.0,
+      72.0
+    ],
+    "volume_mm3": 262049.95963869544,
+    "valid": true,
+    "closed_mesh": true,
+    "solids": 1
+  },
+  {
+    "part": "Tapa",
+    "mm": [
+      200.0,
+      150.0,
+      12.600000000000016
+    ],
+    "volume_mm3": 130521.27162948993,
+    "valid": true,
+    "closed_mesh": true,
+    "solids": 1
+  },
+  {
+    "part": "Panel",
+    "mm": [
+      154.0,
+      51.0,
+      0.7999999999999972
+    ],
+    "volume_mm3": 5139.567444601911,
+    "valid": true,
+    "closed_mesh": true,
+    "solids": 1
+  },
+  {
+    "part": "Guarda_120V",
+    "mm": [
+      194.2,
+      35.89999999999999,
+      2.3999999999999986
+    ],
+    "volume_mm3": 16173.959789711946,
+    "valid": true,
+    "closed_mesh": true,
+    "solids": 1
+  },
+  {
+    "part": "Retenedor_LCD_I",
+    "mm": [
+      12.2,
+      47.0,
+      3.9000000000000057
+    ],
+    "volume_mm3": 1177.1831889245025,
+    "valid": true,
+    "closed_mesh": true,
+    "solids": 1
+  },
+  {
+    "part": "Retenedor_LCD_D",
+    "mm": [
+      15.200000000000003,
+      47.0,
+      3.9000000000000057
+    ],
+    "volume_mm3": 1337.1831889245034,
+    "valid": true,
+    "closed_mesh": true,
+    "solids": 1
+  },
+  {
+    "part": "Difusor_Estado",
+    "mm": [
+      8.0,
+      12.0,
+      6.599999999999994
+    ],
+    "volume_mm3": 380.45189438578853,
+    "valid": true,
+    "closed_mesh": true,
+    "solids": 1
+  },
+  {
+    "part": "Difusor_Alimentacion",
+    "mm": [
+      8.0,
+      12.0,
+      6.599999999999994
+    ],
+    "volume_mm3": 380.4518943857888,
+    "valid": true,
+    "closed_mesh": true,
+    "solids": 1
+  },
+  {
+    "part": "Difusor_NeoPixel",
+    "mm": [
+      84.0,
+      10.0,
+      5.799999999999997
+    ],
+    "volume_mm3": 2941.884944016721,
+    "valid": true,
+    "closed_mesh": true,
+    "solids": 1
+  },
+  {
+    "part": "Porta_NeoPixel",
+    "mm": [
+      100.0,
+      14.0,
+      3.6000000000000014
+    ],
+    "volume_mm3": 2790.5854853512974,
+    "valid": true,
+    "closed_mesh": true,
+    "solids": 1
+  }
+]

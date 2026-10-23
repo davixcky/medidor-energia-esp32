@@ -1,0 +1,47 @@
+{
+    "error_string": "Success.",
+    "export_time": 496,
+    "plate_index": 0,
+    "prepare_time": 3,
+    "return_code": 0,
+    "sliced_plates": [
+        {
+            "filament_change_times": 0,
+            "filaments": [
+                {
+                    "filament_id": "GFG99",
+                    "id": 1,
+                    "main_used_g": 3.1319637298583984,
+                    "total_used_g": 3.1319637298583984
+                }
+            ],
+            "generate_support_material_time": 1,
+            "id": 1,
+            "infill_time": 13,
+            "layer_filament_change": 0,
+            "main_predication": 479.3323974609375,
+            "make_perimeters_time": 2,
+            "obj_cached_cnt": 0,
+            "objects": [
+                {
+                    "bbox": {
+                        "depth": 10.0,
+                        "height": 5.800000190734863,
+                        "width": 84.0,
+                        "x": 85.99999237060547,
+                        "y": 123.00000762939453,
+                        "z": 0.0
+                    },
+                    "id": 5,
+                    "name": "difusor-neopixel.stl",
+                    "triangle_count": 380
+                }
+            ],
+            "sliced_time": 37,
+            "sliced_time_with_cache": 19,
+            "total_predication": 499.283447265625,
+            "triangle_count": 380,
+            "warning_message": ""
+        }
+    ]
+}

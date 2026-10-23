@@ -13,3 +13,13 @@ pantallas: pantallas.cpp ../lib/interfaz/interfaz.cpp ../lib/interfaz/interfaz.h
 	mkdir -p salida
 	./pantallas salida
 	python3 componer_pantallas.py salida ../../img
+
+.PHONY: feedback
+feedback: prueba_feedback.cpp ../lib/feedback/feedback.h
+	g++ -std=c++17 -O2 -Wall -Wextra -o /tmp/medidor-prueba-feedback prueba_feedback.cpp
+	/tmp/medidor-prueba-feedback
+
+.PHONY: ajustes
+ajustes: prueba_ajustes.cpp ../lib/ajustes/ajustes.h
+	g++ -std=c++17 -O2 -Wall -Wextra -o /tmp/medidor-prueba-ajustes prueba_ajustes.cpp
+	/tmp/medidor-prueba-ajustes

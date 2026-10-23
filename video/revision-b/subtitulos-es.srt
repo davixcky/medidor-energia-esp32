@@ -1,0 +1,45 @@
+1
+00:00:01,200 --> 00:00:05,740
+Este es el diseño actualizado del medidor de energía
+con ESP treinta y dos.
+
+2
+00:00:06,740 --> 00:00:12,290
+La carcasa de PETG tiene bordes redondeados y una
+tapa magnética. La guarda interior permanece
+
+3
+00:00:12,290 --> 00:00:12,990
+atornillada.
+
+4
+00:00:14,000 --> 00:00:19,710
+La pantalla a color muestra mediciones y ajustes. El
+encoder configura brillo, sonido y alerta. Las
+
+5
+00:00:19,710 --> 00:00:20,930
+cifras son de prueba.
+
+6
+00:00:21,930 --> 00:00:27,770
+Cuatro NeoPixels indican conexión, desconexión y
+alerta. El zumbador confirma las pulsaciones;
+
+7
+00:00:27,770 --> 00:00:29,950
+mantener Vista permite silenciarlo.
+
+8
+00:00:30,950 --> 00:00:37,160
+La abertura frontal deja espacio para el cable USB
+tipo C. Su posición final debe comprobarse con la
+
+9
+00:00:37,160 --> 00:00:37,840
+placa real.
+
+10
+00:00:38,840 --> 00:00:43,430
+El siguiente paso es imprimir los cupones de ajuste
+y validar el montaje en banco.

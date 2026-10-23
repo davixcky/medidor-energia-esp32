@@ -10,7 +10,7 @@ import os
 import sys
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
-TEMP = os.path.join(AQUI, ".render")
+TEMP = os.environ.get("RENDER_TEMP", os.path.join(AQUI, ".render"))
 
 
 def exportar():
@@ -19,9 +19,9 @@ def exportar():
     import Import
 
     os.makedirs(TEMP, exist_ok=True)
-    doc = App.openDocument(os.path.join(AQUI, "medidor.FCStd"))
+    doc = App.openDocument(os.environ.get("MODEL_FILE", os.path.join(AQUI, "medidor.FCStd")))
     piezas = [o for o in doc.Objects if hasattr(o, "ColorRGB")]
-    Import.export(piezas, os.path.join(AQUI, "medidor.step"))
+    Import.export(piezas, os.environ.get("STEP_FILE", os.path.join(AQUI, "medidor.step")))
     datos = []
 
     def agregar(nombre, forma, color, grupo, abierta=None):
@@ -85,6 +85,12 @@ def renderizar():
     escena = bpy.context.scene
     escena.render.engine = "CYCLES"
     escena.cycles.device = "CPU"
+    if os.environ.get("RENDER_GPU"):
+        prefs = bpy.context.preferences.addons['cycles'].preferences
+        prefs.compute_device_type = 'OPTIX'
+        prefs.get_devices()
+        for device in prefs.devices: device.use = device.type == 'OPTIX'
+        escena.cycles.device = 'GPU'
     escena.cycles.samples = 32
     escena.cycles.use_denoising = True
     escena.render.resolution_x = 2000
@@ -118,6 +124,23 @@ def renderizar():
         shader = material.node_tree.nodes.get("Principled BSDF")
         shader.inputs["Base Color"].default_value = (*dato["color"], 1)
         shader.inputs["Roughness"].default_value = 0.65
+        if dato["nombre"] == "LCD_pantalla" and os.environ.get("LCD_TEXTURE"):
+            # Map the firmware's landscape framebuffer to the physical active area.
+            coords = [v.co for v in malla.vertices]
+            xmin, xmax = min(v.x for v in coords), max(v.x for v in coords)
+            ymin, ymax = min(v.y for v in coords), max(v.y for v in coords)
+            uv = malla.uv_layers.new(name="LCD")
+            for poly in malla.polygons:
+                for li in poly.loop_indices:
+                    v = malla.vertices[malla.loops[li].vertex_index].co
+                    uv.data[li].uv = ((v.x-xmin)/(xmax-xmin), (v.y-ymin)/(ymax-ymin))
+            tex = material.node_tree.nodes.new("ShaderNodeTexImage")
+            tex.image = bpy.data.images.load(os.environ["LCD_TEXTURE"])
+            tex.interpolation = 'Closest'
+            material.node_tree.links.new(tex.outputs['Color'], shader.inputs['Base Color'])
+            material.node_tree.links.new(tex.outputs['Color'], shader.inputs['Emission Color'])
+            shader.inputs['Emission Strength'].default_value = 0.8
+            shader.inputs['Roughness'].default_value = 0.25
         objeto.data.materials.append(material)
         objetos[dato["nombre"]] = objeto
     for posicion, potencia, tam in (((-100, -150, 450), 180000, 350), ((350, 100, 350), 120000, 300)):
@@ -132,6 +155,10 @@ def renderizar():
     objeto = bpy.data.objects.new("Cámara", camara)
     escena.collection.objects.link(objeto)
     escena.camera = objeto
+    if os.environ.get("SAVE_SCENE"):
+        bpy.ops.file.pack_all()
+        bpy.ops.wm.save_as_mainfile(filepath=os.environ["SAVE_SCENE"])
+        return
     for vista, centro, direccion, escala in (
         ("cerrado", (100, 75, 35), (-0.75, -1, 0.95), 370),
         ("abierto", (220, 75, 20), (-0.25, -0.65, 1.5), 520),
@@ -150,7 +177,7 @@ def renderizar():
         objeto.location = objetivo + Vector(direccion).normalized() * 700
         objeto.rotation_euler = (objetivo - objeto.location).to_track_quat('-Z', 'Y').to_euler()
         camara.ortho_scale = escala
-        escena.render.filepath = os.path.join(AQUI, "..", "img", f"3d-medidor-{vista}.png")
+        escena.render.filepath = os.path.join(os.environ.get("RENDER_OUT", os.path.join(AQUI, "..", "img")), f"3d-medidor-{vista}.png")
         bpy.ops.render.render(write_still=True)
 
 

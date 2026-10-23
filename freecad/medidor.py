@@ -305,4 +305,5 @@ def construir():
     print("Medidor guardado. Placa de KiCad integrada:", integrada)
 
 
-construir()
+if __name__ == '__main__':
+    construir()

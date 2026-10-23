@@ -8,6 +8,22 @@ Sistemas Embebidos 1 · Ingeniería Electrónica · Universidad de la Costa (CUC
 
 ---
 
+## Revisión B — fabricación e interfaz local
+
+La revisión B incorpora gabinete PETG con tapa magnética, LCD Waveshare a color, cuatro
+NeoPixels, piezo y encoder para brillo, sonido y umbral de alerta. Las comprobaciones son de
+software y CAD; faltan montaje y validación eléctrica. La posición USB-C requiere medir la placa real.
+
+- [Descargas v1.3.0: video con voz y música, CAD y archivos P2S](https://github.com/davixcky/medidor-energia-esp32/releases/tag/v1.3.0).
+- [Ficha del dispositivo](freecad/revision-b/medidor-revB.pdf) y [guía de montaje](freecad/revision-b/LEER-ANTES-DE-IMPRIMIR.txt).
+- [Firmware y uso del encoder](firmware/README.md#configuración-con-encoder-v130).
+- [Fuentes del video](video/revision-b/LEEME.txt).
+
+Los STL y fuentes editables están en Git. El video, la escena Blender y los paquetes de
+fabricación se publican como archivos de la release; las cachés y fotogramas se regeneran.
+La PCB principal conserva su revisión anterior: encoder, NeoPixels y piezo requieren el
+cableado y circuito auxiliar indicados en la guía.
+
 ## Contenido
 
 1. [Introducción](#1-introducción)

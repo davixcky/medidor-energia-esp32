@@ -33,6 +33,7 @@ struct Datos {
 
 // Dibuja la pantalla completa. `g` puede ser la LCD, un lienzo completo o una franja.
 void dibujar(Adafruit_GFX& g, Pantalla p, const Datos& d);
+void dibujar_ajustes(Adafruit_GFX& g, int selected, bool editing, int brightness, bool muted, int threshold);
 
 // Lienzo de 16 bits que cubre solo las filas [y0, y0 + alto) de la pantalla. Dibujar la pantalla
 // por franjas y enviar cada una evita el parpadeo sin reservar los 109 kB de un lienzo completo.

@@ -1,0 +1,6 @@
+Origen,Destino,Nota
+Encoder A,GPIO32 / U1 pin 7,10k a 3V3 y 10nF a GND
+Encoder B,GPIO33 / U1 pin 8,10k a 3V3 y 10nF a GND
+Encoder C,GND,Comun de contactos
+Encoder SW1,GPIO16 / U1 pin 31,10k a 3V3 y 100nF a GND
+Encoder SW2,GND,Comun del pulsador

@@ -1,0 +1,19 @@
+Cantidad,Componente,Especificacion,Nota
+1,Encoder con pulsador,Incremental M7 eje 6mm,Confirmar flancos por paso y longitud roscada
+1,Perilla,Diametro20mm altura12mm eje6mm,Modelo CAD nominal
+8,Iman,Neodimio diametro8mm espesor3mm,Cuatro parejas y adhesivo
+4,NeoPixel,WS2812B RGB 5V,Tramo de tira60LED/m ancho10mm
+1,Adaptador de nivel,74AHCT125 DIP14,No sustituir por74HC125 sin verificar niveles
+1,Transistor,NPN 2N2222 o equivalente,Confirmar patillaje del fabricante
+1,Piezo pasivo,5V diametro12mm altura7mm,No zumbador electromagnetico sin proteccion adicional
+1,LED alimentacion,Ambar5mm,Serie1kohm
+2,Resistencia,1kohm,Base de NPN y LED de alimentacion
+5,Resistencia,10kohm,3 pullups encoder y 2 pulldowns auxiliares
+1,Resistencia,330ohm,Dato de NeoPixel
+2,Condensador,10nF,Filtro encoder A y B
+2,Condensador,100nF,Desacoplo74AHCT125 y pulsador encoder
+1,Condensador electrolitico,680uF10V,Junto a tira respetando polaridad
+4,Tuerca,M3,Retenedores de LCD
+4,Tornillo,M3 longitud por comprobar,Retenedores de LCD sin tocar vidrio
+4,Tornillo para plastico,M3 longitud por comprobar,2 guarda y 2 portatiras
+1,Placa auxiliar,Montaje aislado con fijacion,Drivers y desacoplo fuera de zona120V

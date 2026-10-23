@@ -1,0 +1,47 @@
+{
+    "error_string": "Success.",
+    "export_time": 517,
+    "plate_index": 0,
+    "prepare_time": 7732,
+    "return_code": 0,
+    "sliced_plates": [
+        {
+            "filament_change_times": 0,
+            "filaments": [
+                {
+                    "filament_id": "GFG99",
+                    "id": 1,
+                    "main_used_g": 89.0280532836914,
+                    "total_used_g": 89.0280532836914
+                }
+            ],
+            "generate_support_material_time": 18,
+            "id": 1,
+            "infill_time": 181,
+            "layer_filament_change": 0,
+            "main_predication": 8510.525390625,
+            "make_perimeters_time": 104,
+            "obj_cached_cnt": 0,
+            "objects": [
+                {
+                    "bbox": {
+                        "depth": 150.0,
+                        "height": 12.600000381469727,
+                        "width": 200.0,
+                        "x": 27.999998092651367,
+                        "y": 52.999996185302734,
+                        "z": 0.0
+                    },
+                    "id": 5,
+                    "name": "tapa.stl",
+                    "triangle_count": 6236
+                }
+            ],
+            "sliced_time": 589,
+            "sliced_time_with_cache": 156,
+            "total_predication": 8530.3740234375,
+            "triangle_count": 6236,
+            "warning_message": ""
+        }
+    ]
+}

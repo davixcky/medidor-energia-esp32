@@ -267,4 +267,23 @@ void Franja::fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color
     for (int16_t i = x; i < x1; ++i) buffer[i + j * WIDTH] = color;
 }
 
+void dibujar_ajustes(Adafruit_GFX& g, int selected, bool editing, int brightness_value, bool muted, int threshold_value) {
+  char brightness[32], sound_text[32], threshold[32];
+  snprintf(brightness,sizeof(brightness),"Brillo LCD     %d%%",brightness_value*100/255);
+  snprintf(sound_text,sizeof(sound_text),"Sonido         %s",muted ? "No" : "Si");
+  snprintf(threshold,sizeof(threshold),"Alerta local   %d W",threshold_value);
+  const char* rows[] = {brightness,sound_text,threshold,"Salir"};
+    g.fillScreen(0x1082); g.setFont(nullptr);
+    g.setTextSize(2); g.setTextColor(0xffff); g.setCursor(10, 8);
+    g.print("CONFIGURACION");
+    for (int row = 0; row < 4; ++row) {
+      if (row == selected) g.fillRect(5, 34 + row * 27, 310, 25, editing ? 0x0320 : 0x2945);
+      g.setCursor(10, 39 + row * 27); g.setTextColor(row == selected ? 0x7eaf : 0xffff);
+      g.print(rows[row]);
+    }
+    g.setTextSize(1); g.setTextColor(0xbdf7); g.setCursor(10, 151);
+    g.print(editing ? "Girar: cambiar  Pulsar: guardar" : "Girar: elegir   Pulsar: editar");
+    g.setCursor(10,161); g.print("Mantener 2 s: cancelar / salir");
+}
+
 }  // namespace interfaz

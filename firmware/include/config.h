@@ -9,6 +9,13 @@ constexpr adc1_channel_t ADC_CH2 = ADC1_CHANNEL_3;  // GPIO39, pinza CH2 (subcir
 constexpr adc1_channel_t ADC_V   = ADC1_CHANNEL_7;  // GPIO35, ZMPT101B
 
 // ---- Interfaz local
+constexpr int ENCODER_EDGES_PER_DETENT = 4; // elegir 2 si la ficha indica medio ciclo por paso
+static_assert(ENCODER_EDGES_PER_DETENT == 2 || ENCODER_EDGES_PER_DETENT == 4, "Encoder: 2 o 4 flancos por paso");
+constexpr int PIN_ENC_A = 32;
+constexpr int PIN_ENC_B = 33;
+constexpr int PIN_ENC_SW = 16; // ESP32-WROOM; no WROVER con PSRAM en GPIO16
+constexpr int PIN_NEOPIXEL = 13; // módulo auxiliar, vía 74AHCT125 a 5 V
+constexpr int PIN_BUZZER = 14;   // piezo pasivo vía transistor; PWM canal 2
 constexpr int PIN_LED = 25;
 constexpr int PIN_SW1 = 26;   // menú / canal (activo en bajo, pull-up externo de 10 kΩ)
 constexpr int PIN_SW2 = 27;   // confirmar / tara

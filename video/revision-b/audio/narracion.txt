@@ -1,0 +1,6 @@
+Este es el diseño actualizado del medidor de energía con ESP treinta y dos.
+La carcasa de PETG tiene bordes redondeados y una tapa magnética. La guarda interior permanece atornillada.
+La pantalla a color muestra mediciones y ajustes. El encoder configura brillo, sonido y alerta. Las cifras son de prueba.
+Cuatro NeoPixels indican conexión, desconexión y alerta. El zumbador confirma las pulsaciones; mantener Vista permite silenciarlo.
+La abertura frontal deja espacio para el cable USB tipo C. Su posición final debe comprobarse con la placa real.
+El siguiente paso es imprimir los cupones de ajuste y validar el montaje en banco.

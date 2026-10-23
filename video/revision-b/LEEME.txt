@@ -1,0 +1,44 @@
+MEDIDOR DE ENERGÍA — VIDEO REVISIÓN B
+46 segundos · 1920 × 1080 · 24 fps · H.264 + AAC estéreo.
+
+medidor-revB-audio.mp4: versión para presentar, con narración y gráficos.
+subtitulos-es.srt: subtítulos en español; también incluidos como pista opcional MP4.
+contacto.png: revisión de seis escenas, previa al render final.
+contacto-final.png: seis fotogramas extraídos del MP4 terminado.
+medidor-revB.blend: escena animada editable, texturas empaquetadas.
+
+CONTENIDO
+1. Vista del dispositivo.
+2. Apertura de tapa magnética; guarda interior permanece en posición.
+3. LCD Waveshare a color y menú de configuración del encoder.
+4. Estados ilustrativos de los NeoPixels y dos tonos de piezo sintetizados.
+5. Acceso USB-C; posición pendiente de comprobar con placa física.
+6. Cupones, montaje y validación en banco como siguiente paso.
+
+ORIGEN
+Geometría: freecad/revision-b/render/ensamble.json, exportada del ensamble FreeCAD.
+Pantalla: img/ui-lcd-resumen.png, generada por las pruebas de interfaz del firmware.
+Voz sintética local: Kokoro-82M, ef_dora, español, mediante kokoro-onnx.
+Guion: audio/narracion.txt. Tiempos medidos por segmento en tiempos.json.
+Música: progresión de acordes y melodía originales sintetizadas en audio/generar.py, sin grabación externa.
+Efectos: tonos sinusoidales y clics sintetizados en ese mismo script.
+Imágenes: render del CAD con Blender Cycles/OptiX; ninguna imagen generada por IA.
+Tipografía: DejaVu Sans. Gráficos ASS y subtítulos creados por graficos.py.
+
+REPRODUCCIÓN
+Abrir medidor-revB-audio.mp4 con VLC u otro reproductor H.264/AAC.
+No se necesita Internet para reproducirlo. Subtítulos opcionales desde el reproductor.
+
+REGENERACIÓN
+1. Generar base.blend con freecad/render_blender.py y SAVE_SCENE, LCD_TEXTURE.
+2. audio/generar.py genera voces, mezcla y tiempos (requiere Kokoro y sus pesos).
+3. blender -b base.blend --python animar.py crea la escena y vistas previas.
+4. python graficos.py genera rótulos y subtítulos.
+5. blender -b medidor-revB.blend --python renderizar.py genera frames/.
+6. python finalizar.py codifica y valida el MP4.
+Borrar frames/ antes de regenerar después de cambiar geometría, cámara o tiempos.
+
+LIMITACIONES
+Es una visualización de diseño. No demuestra fabricación, calibración ni pruebas físicas.
+La placa real usa USB-C, pero el STEP interno aún representa DevKitC Micro-USB.
+La abertura es provisional hasta medir el centro y la distancia del conector real.

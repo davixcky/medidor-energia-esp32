@@ -1,0 +1,9 @@
+*.pdf binary
+*.png binary
+*.stl binary
+*.step binary
+*.FCStd binary
+*.3mf binary
+*.pptx binary
+*.mp4 binary
+*.log -diff

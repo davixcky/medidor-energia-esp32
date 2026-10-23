@@ -1,0 +1,47 @@
+{
+    "error_string": "Success.",
+    "export_time": 599,
+    "plate_index": 0,
+    "prepare_time": 5,
+    "return_code": 0,
+    "sliced_plates": [
+        {
+            "filament_change_times": 0,
+            "filaments": [
+                {
+                    "filament_id": "GFG99",
+                    "id": 1,
+                    "main_used_g": 273.6763916015625,
+                    "total_used_g": 273.6763916015625
+                }
+            ],
+            "generate_support_material_time": 117,
+            "id": 1,
+            "infill_time": 222,
+            "layer_filament_change": 0,
+            "main_predication": 24774.76171875,
+            "make_perimeters_time": 302,
+            "obj_cached_cnt": 0,
+            "objects": [
+                {
+                    "bbox": {
+                        "depth": 150.0,
+                        "height": 72.0,
+                        "width": 200.0,
+                        "x": 28.0,
+                        "y": 53.0000114440918,
+                        "z": 0.0
+                    },
+                    "id": 5,
+                    "name": "cuerpo.stl",
+                    "triangle_count": 6196
+                }
+            ],
+            "sliced_time": 1191,
+            "sliced_time_with_cache": 494,
+            "total_predication": 24794.748046875,
+            "triangle_count": 6196,
+            "warning_message": ""
+        }
+    ]
+}

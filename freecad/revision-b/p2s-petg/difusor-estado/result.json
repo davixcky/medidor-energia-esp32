@@ -1,0 +1,47 @@
+{
+    "error_string": "Success.",
+    "export_time": 352,
+    "plate_index": 0,
+    "prepare_time": 4,
+    "return_code": 0,
+    "sliced_plates": [
+        {
+            "filament_change_times": 0,
+            "filaments": [
+                {
+                    "filament_id": "GFG99",
+                    "id": 1,
+                    "main_used_g": 0.4864068031311035,
+                    "total_used_g": 0.4864068031311035
+                }
+            ],
+            "generate_support_material_time": 1,
+            "id": 1,
+            "infill_time": 4,
+            "layer_filament_change": 0,
+            "main_predication": 250.81991577148438,
+            "make_perimeters_time": 5,
+            "obj_cached_cnt": 0,
+            "objects": [
+                {
+                    "bbox": {
+                        "depth": 12.0,
+                        "height": 6.599999904632568,
+                        "width": 8.0,
+                        "x": 124.0,
+                        "y": 122.0,
+                        "z": 0.0
+                    },
+                    "id": 5,
+                    "name": "difusor-estado.stl",
+                    "triangle_count": 548
+                }
+            ],
+            "sliced_time": 45,
+            "sliced_time_with_cache": 34,
+            "total_predication": 270.6976623535156,
+            "triangle_count": 548,
+            "warning_message": ""
+        }
+    ]
+}

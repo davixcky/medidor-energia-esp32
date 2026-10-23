@@ -1,0 +1,41 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+ScaledBorderAndShadow: yes
+WrapStyle: 2
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Title,DejaVu Sans,48,&H00F4F6F7,&H00FFFFFF,&H00121A20,&H00000000,-1,0,0,0,100,100,0,0,1,0,0,7,72,72,50,1
+Style: Detail,DejaVu Sans,27,&H00CBD1D5,&H00FFFFFF,&H00121A20,&H00000000,0,0,0,0,100,100,0,0,1,0,0,7,72,72,115,1
+Style: Foot,DejaVu Sans,21,&H00AAB6BF,&H00FFFFFF,&H00121A20,&H00000000,0,0,0,0,100,100,0,0,1,0,0,1,72,72,42,1
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 1,0:00:00.00,0:00:06.34,Title,,0,0,0,,{\fad(300,200)}MEDIDOR DE ENERGÍA
+Dialogue: 1,0:00:00.00,0:00:06.34,Detail,,0,0,0,,{\fad(350,200)}ESP32 · Revisión B · Diseño para fabricación
+Dialogue: 1,0:00:00.00,0:00:06.34,Detail,,0,0,0,,{\an9\pos(1848,60)\fs23\fad(300,200)}01 / 06
+Dialogue: 0,0:00:00.00,0:00:06.34,Detail,,0,0,0,,{\an7\pos(72,165)\p1\bord0\1c&H75B85C&\fad(300,200)}m 0 0 l 100 0 100 3 0 3{\p0}
+Dialogue: 1,0:00:06.34,0:00:13.60,Title,,0,0,0,,{\fad(300,200)}TAPA MAGNÉTICA
+Dialogue: 1,0:00:06.34,0:00:13.60,Detail,,0,0,0,,{\fad(350,200)}PETG · Esquinas R10 · Guarda interior atornillada
+Dialogue: 1,0:00:06.34,0:00:13.60,Detail,,0,0,0,,{\an9\pos(1848,60)\fs23\fad(300,200)}02 / 06
+Dialogue: 0,0:00:06.34,0:00:13.60,Detail,,0,0,0,,{\an7\pos(72,165)\p1\bord0\1c&H75B85C&\fad(300,200)}m 0 0 l 100 0 100 3 0 3{\p0}
+Dialogue: 1,0:00:13.60,0:00:21.53,Title,,0,0,0,,{\fad(300,200)}AJUSTES AL GIRAR
+Dialogue: 1,0:00:13.60,0:00:21.53,Detail,,0,0,0,,{\fad(350,200)}Encoder con pulsador · Brillo · Sonido · Alerta local
+Dialogue: 1,0:00:13.60,0:00:21.53,Detail,,0,0,0,,{\an9\pos(1848,60)\fs23\fad(300,200)}03 / 06
+Dialogue: 0,0:00:13.60,0:00:21.53,Detail,,0,0,0,,{\an7\pos(72,165)\p1\bord0\1c&H75B85C&\fad(300,200)}m 0 0 l 100 0 100 3 0 3{\p0}
+Dialogue: 1,0:00:21.53,0:00:30.55,Title,,0,0,0,,{\fad(300,200)}LUZ Y SONIDO
+Dialogue: 1,0:00:21.53,0:00:30.55,Detail,,0,0,0,,{\fad(350,200)}4 NeoPixels · Avisos breves · VISTA 2 s para silenciar
+Dialogue: 1,0:00:21.53,0:00:30.55,Detail,,0,0,0,,{\an9\pos(1848,60)\fs23\fad(300,200)}04 / 06
+Dialogue: 0,0:00:21.53,0:00:30.55,Detail,,0,0,0,,{\an7\pos(72,165)\p1\bord0\1c&H75B85C&\fad(300,200)}m 0 0 l 100 0 100 3 0 3{\p0}
+Dialogue: 1,0:00:30.55,0:00:38.44,Title,,0,0,0,,{\fad(300,200)}ACCESO USB-C
+Dialogue: 1,0:00:30.55,0:00:38.44,Detail,,0,0,0,,{\fad(350,200)}Abertura 18 × 10 mm · Posición por verificar con la placa real
+Dialogue: 1,0:00:30.55,0:00:38.44,Detail,,0,0,0,,{\an9\pos(1848,60)\fs23\fad(300,200)}05 / 06
+Dialogue: 0,0:00:30.55,0:00:38.44,Detail,,0,0,0,,{\an7\pos(72,165)\p1\bord0\1c&H75B85C&\fad(300,200)}m 0 0 l 100 0 100 3 0 3{\p0}
+Dialogue: 1,0:00:38.44,0:00:46.00,Title,,0,0,0,,{\fad(300,200)}SIGUIENTE PASO
+Dialogue: 1,0:00:38.44,0:00:46.00,Detail,,0,0,0,,{\fad(350,200)}Cupones de ajuste → montaje → pruebas en banco
+Dialogue: 1,0:00:38.44,0:00:46.00,Detail,,0,0,0,,{\an9\pos(1848,60)\fs23\fad(300,200)}06 / 06
+Dialogue: 0,0:00:38.44,0:00:46.00,Detail,,0,0,0,,{\an7\pos(72,165)\p1\bord0\1c&H75B85C&\fad(300,200)}m 0 0 l 100 0 100 3 0 3{\p0}
+Dialogue: 1,0:00:00.00,0:00:46.00,Foot,,0,0,0,,VISUALIZACIÓN CAD  /  Interfaz con datos de prueba
+Dialogue: 1,0:00:21.93,0:00:24.93,Detail,,0,0,0,,{\an3\pos(1848,1038)\fs25\1c&H75B85C&\fad(120,120)}● CONECTADO
+Dialogue: 1,0:00:24.93,0:00:26.93,Detail,,0,0,0,,{\an3\pos(1848,1038)\fs25\1c&H3DA3E8&\fad(120,120)}● SIN ENVÍO
+Dialogue: 1,0:00:26.93,0:00:30.43,Detail,,0,0,0,,{\an3\pos(1848,1038)\fs25\1c&H2E3AE0&\fad(120,120)}● ALERTA

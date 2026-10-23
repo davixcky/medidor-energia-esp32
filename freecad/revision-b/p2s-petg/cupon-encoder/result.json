@@ -1,0 +1,47 @@
+{
+    "error_string": "Success.",
+    "export_time": 362,
+    "plate_index": 0,
+    "prepare_time": 8,
+    "return_code": 0,
+    "sliced_plates": [
+        {
+            "filament_change_times": 0,
+            "filaments": [
+                {
+                    "filament_id": "GFG99",
+                    "id": 1,
+                    "main_used_g": 3.4182114601135254,
+                    "total_used_g": 3.4182114601135254
+                }
+            ],
+            "generate_support_material_time": 1,
+            "id": 1,
+            "infill_time": 10,
+            "layer_filament_change": 0,
+            "main_predication": 437.7681884765625,
+            "make_perimeters_time": 7,
+            "obj_cached_cnt": 0,
+            "objects": [
+                {
+                    "bbox": {
+                        "depth": 25.0,
+                        "height": 4.599999904632568,
+                        "width": 40.0,
+                        "x": 108.0,
+                        "y": 115.5,
+                        "z": 0.0
+                    },
+                    "id": 5,
+                    "name": "cupon-encoder.stl",
+                    "triangle_count": 360
+                }
+            ],
+            "sliced_time": 39,
+            "sliced_time_with_cache": 18,
+            "total_predication": 457.6602478027344,
+            "triangle_count": 360,
+            "warning_message": ""
+        }
+    ]
+}
