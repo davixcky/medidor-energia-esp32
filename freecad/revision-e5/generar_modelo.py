@@ -77,6 +77,19 @@ def conn(x,y,pins,vertical=False):
     return box(w,d,7,x,y,Z_BOARD+1.6)
 
 
+def esp32s_v11_usbc(doc,x,y,prefix="T4"):
+    """ESP32S/ESP-WROOM-32 USB-C, 38 pines; filas separadas 25,4 mm."""
+    z=Z_BOARD+1.6
+    add(doc,f"{prefix}_ESP32S_V1p1_PCB_58x28",box(28,58,1.6,x,y,z),"esp")
+    add(doc,f"{prefix}_ESP32S_Headers_38P",Part.makeCompound([
+        box(2.54,48.26,8.5,x+.03,y+4.87,z-5.0),
+        box(2.54,48.26,8.5,x+25.43,y+4.87,z-5.0)]),"chip")
+    add(doc,f"{prefix}_ESP32S_RF_Shield",box(18,25,3.2,x+5,y+29,z+1.6),"connector")
+    add(doc,f"{prefix}_ESP32S_USB_C",box(9,7.5,3.2,x+9.5,y-.8,z+1.6),"connector")
+    add(doc,f"{prefix}_ESP32S_EN_BOOT",Part.makeCompound([
+        box(4,3.5,2.2,x+3.5,y+5,z+1.6),box(4,3.5,2.2,x+20.5,y+5,z+1.6)]),"chip")
+
+
 def enclosure(doc):
     bottom=box(W,D,FLOOR)
     walls=[box(W,WALL,H-FLOOR,0,0,FLOOR),box(W,WALL,H-FLOOR,0,D-WALL,FLOOR),
@@ -119,7 +132,7 @@ def populate(doc):
             add(doc,"T3_ZMPT_LV",conn(x+8,y+d-9,3),"connector")
             add(doc,"T3_ADC_V",conn(x+w-16,y+d-9,3),"connector")
         elif ref=="T4":
-            add(doc,"T4_ESP32_38P",box(28,55,13,x+9,y+13,Z_BOARD+1.6),"esp")
+            esp32s_v11_usbc(doc,x+9,y+13)
             add(doc,"T4_LCD_Header",conn(x+50,y+12,8),"connector")
             add(doc,"T4_ADC_I",conn(x+w-12,y+8,4,True),"connector")
             add(doc,"T4_ADC_V",conn(x+w-12,y+34,3,True),"connector")

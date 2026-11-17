@@ -17,11 +17,14 @@
       "estado": "publicada",
       "fuente": "https://www.didacticaselectronicas.com/shop/category/prototipado-fabricacion-de-productos-placas-de-prototipo-perforadas-362"
     },
-    "ESP32-DevKit-38P": {
+    "ESP32S-V1.1-USB-C-38P": {
       "cantidad": 1,
-      "envolvente": [55.0, 28.0, 13.0],
-      "estado": "conservadora",
-      "por_medir": ["referencia finalmente comprada", "largo", "ancho", "altura total", "separacion entre hileras"]
+      "envolvente": [58.0, 28.0, 13.0],
+      "paso_pines": 2.54,
+      "separacion_centros_hileras": 25.4,
+      "estado": "publicada_equivalente_y_conservadora_en_altura",
+      "fuente": "https://www.gravityelectronic.com/shop/esp32s-esp-wroom-32-38-pin-cp2102-type-c-12920",
+      "por_medir": ["largo y ancho exactos de la unidad recibida", "altura total con headers"]
     },
     "TFT-ST7789-1.9-170x320": {
       "cantidad": 1,

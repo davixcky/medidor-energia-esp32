@@ -12,6 +12,10 @@ compartimento de red, detrás del tabique. La pantalla se reserva a
 
 `medidas-componentes.json` registra la fuente y la calidad de cada cota. Antes de
 imprimir definitivamente hay que medir las piezas marcadas `por_medir`, en
-especial el ESP32 definitivo, los dos EC11, la altura del ZMPT101B y el ancho
+especial el ESP32S V1.1 USB-C, los dos EC11, la altura del ZMPT101B y el ancho
 real de la cinta IP65. Esas cotas no están publicadas de forma suficiente para
 crear agujeros de ajuste exacto.
+
+El ESP32S se representa como placa de 58 × 28 mm, 19 pines por lado y 25,4 mm
+entre centros de hileras. Cabe en T4 sin aumentar el gabinete; antes de soldar
+los zócalos se deben confirmar esas tres cotas sobre la unidad recibida.
