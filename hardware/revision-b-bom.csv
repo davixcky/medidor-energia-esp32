@@ -3,7 +3,7 @@ Cantidad,Componente,Especificacion,Nota
 1,Perilla,Diametro20mm altura12mm eje6mm,Modelo CAD nominal
 8,Iman,Neodimio diametro8mm espesor3mm,Cuatro parejas y adhesivo
 4,NeoPixel,WS2812B RGB 5V,Tramo de tira60LED/m ancho10mm
-1,Adaptador de nivel,74AHCT125 DIP14,No sustituir por74HC125 sin verificar niveles
+1,Adaptador de nivel,74HCT245N DIP20,Reemplazo local documentado en perforadas-modulares; no usar 74HC245
 1,Transistor,NPN 2N2222 o equivalente,Confirmar patillaje del fabricante
 1,Piezo pasivo,5V diametro12mm altura7mm,No zumbador electromagnetico sin proteccion adicional
 1,LED alimentacion,Ambar5mm,Serie1kohm

@@ -1,0 +1,33 @@
+Cable,Desde,Pin,Señal,Hacia,Pin,Calibre/color recomendado,Nota
+C_PWR4,T1,1,+5V_PROT,T4,1,22 AWG rojo,Par dedicado en estrella
+C_PWR4,T1,2,GND,T4,2,22 AWG negro,Par dedicado en estrella
+C_PWR3,T1,1,+5V_PROT,T3,1,22 AWG rojo,Par dedicado en estrella
+C_PWR3,T1,2,GND,T3,2,22 AWG negro,Par dedicado en estrella
+C_PWR5,T1,1,+5V_PROT,T5,1,22 AWG rojo,Par dedicado en estrella
+C_PWR5,T1,2,GND,T5,2,22 AWG negro,Par dedicado en estrella
+C_ADC_I,T4,1,+3V3,T2,1,24 AWG rojo,Alimenta solamente el acondicionamiento
+C_ADC_I,T4,2,GND,T2,2,24 AWG negro,Retorno junto a señales
+C_ADC_I,T4,3,CH1_ADC,T2,3,24 AWG amarillo,Corto y lejos de buses digitales
+C_ADC_I,T4,4,CH2_ADC,T2,4,24 AWG azul,Corto y lejos de buses digitales
+C_ADC_V,T4,1,+3V3,T3,1,24 AWG rojo,Referencia de clamps
+C_ADC_V,T4,2,GND,T3,2,24 AWG negro,Retorno junto a señal
+C_ADC_V,T4,3,V_ADC,T3,3,24 AWG blanco,Corto y lejos de buses digitales
+C_UI_D,T4,1,GND,T5,1,24 AWG negro,Referencia de las señales
+C_UI_D,T4,2,LED_DATA GPIO13,T5,2,24 AWG verde,Hacia entrada HCT
+C_UI_D,T4,3,BUZZ GPIO14,T5,3,24 AWG naranja,Hacia resistencia de base
+C_UI_E,T4,1,+3V3,T5,1,24 AWG rojo,Encoder y pull-ups
+C_UI_E,T4,2,GND,T5,2,24 AWG negro,Común del encoder
+C_UI_E,T4,3,ENC_A GPIO32,T5,3,24 AWG amarillo,Filtrado en T5
+C_UI_E,T4,4,ENC_B GPIO33,T5,4,24 AWG azul,Filtrado en T5
+C_UI_E,T4,5,ENC_SW GPIO16,T5,5,24 AWG blanco,Filtrado en T5
+C_ZMPT,T3,1,+5V_PROT,U2 LV,1,22 AWG rojo,Solo lado de baja tensión
+C_ZMPT,T3,2,ZMPT_OUT,U2 LV,2,24 AWG amarillo,Confirmar orden impreso en módulo real
+C_ZMPT,T3,3,GND,U2 LV,3,22 AWG negro,No entra a compartimiento de red salvo al módulo
+C_LCD,T4,1,VCC,LCD,1,24 AWG rojo,Verificar pinout de la Waveshare real
+C_LCD,T4,2,GND,LCD,2,24 AWG negro,
+C_LCD,T4,3,DIN GPIO23,LCD,3,24 AWG verde,
+C_LCD,T4,4,CS GPIO22,LCD,4,24 AWG amarillo,
+C_LCD,T4,5,DC GPIO21,LCD,5,24 AWG azul,
+C_LCD,T4,6,BL GPIO19,LCD,6,24 AWG violeta,
+C_LCD,T4,7,CLK GPIO18,LCD,7,24 AWG naranja,
+C_LCD,T4,8,RST GPIO4,LCD,8,24 AWG blanco,

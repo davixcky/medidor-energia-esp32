@@ -24,6 +24,11 @@ fabricación se publican como archivos de la release; las cachés y fotogramas s
 La PCB principal conserva su revisión anterior: encoder, NeoPixels y piezo requieren el
 cableado y circuito auxiliar indicados en la guía.
 
+Para construcción manual modular, la fuente de verdad es
+[Medidor E.5 en cinco tarjetas perforadas](hardware/perforadas-modulares/README.md),
+con BOM completa, pinout de arneses, seguridad y orden de pruebas. La red de
+120 V permanece fuera de las tarjetas perforadas de baja tensión.
+
 ## Contenido
 
 1. [Introducción](#1-introducción)
@@ -110,9 +115,9 @@ usuario y con un error conocido?
 
 > **Alineación con el primer entregable.** El primer entregable definió un nodo ESP32 con tres pinzas y
 > un canal de tensión. Para el alcance de esta asignatura se implementan **dos canales de corriente**
-> (total y un subcircuito) y el tercero queda como reserva cableada en el conector J7, que expone las
-> entradas GPIO34, GPIO32 y GPIO33 del ADC1 (sección 7.3). El problema, la arquitectura y los criterios
-> de seguridad no cambian.
+> (total y un subcircuito). En la PCB anterior J7 exponía GPIO34, GPIO32 y GPIO33;
+> en la revisión B GPIO32/33 se asignaron al encoder y únicamente GPIO34 permanece
+> como reserva. El montaje modular E.5 usa un conector dedicado para el encoder.
 
 ## 4. Marco teórico
 
@@ -264,7 +269,7 @@ esquemático de la Ilustración 2.
 | 29 | D8 | LED verde de 5 mm con soporte de panel | 1 | Indicador de estado |
 | 30 | SW1, SW2 | Pulsador de panel de 12 mm, normalmente abierto | 2 | Interfaz de usuario |
 | 31 | — | Espadín hembra 1 × 19 | 2 | Zócalo del ESP32 |
-| 32 | J7 | Espadín hembra 1 × 4 | 1 | Reserva del ADC1 |
+| 32 | J7 | Espadín hembra 1 × 4 | 1 | Conector heredado: GPIO34 reserva; GPIO32/33 encoder en revisión B |
 | 33 | — | Espadín macho 1 × 2 | 3 | Cables del LED y los pulsadores |
 | 34 | — | Gabinete de 200 × 150 × 75 mm en ABS (impreso en FDM o caja comercial) con tabique de 3 mm | 1 | Estructura del sistema |
 | 35 | — | Prensaestopas PG7 | 1 | Entrada del cable de red con alivio de tracción |
@@ -315,7 +320,8 @@ Fuente: elaboración propia en KiCad 10.
 | 3 | GPIO36 (VP) | `CH1_ADC` | ADC1 canal 0: corriente CH1 | Solo entrada, ADC1 (funciona con Wi-Fi activo) |
 | 4 | GPIO39 (VN) | `CH2_ADC` | ADC1 canal 3: corriente CH2 | Solo entrada, ADC1 |
 | 6 | GPIO35 | `V_ADC` | ADC1 canal 7: tensión | Solo entrada, ADC1 |
-| 5, 7, 8 | GPIO34, 32, 33 | `RES_IO34/32/33` | Reserva (CH3 a CH5) en J7 | Tres entradas del ADC1 reservadas para ampliar los canales del nodo |
+| 5 | GPIO34 | `RES_IO34` | Reserva ADC1 | Única entrada analógica de reserva en revisión B |
+| 7, 8 | GPIO32, 33 | `ENC_A/ENC_B` | Encoder incremental | La revisión B ya no los deja disponibles para canales adicionales |
 | 9 | GPIO25 | `LED_EST` | LED de estado | Pin de ADC2 usado solo como salida digital |
 | 10, 11 | GPIO26, 27 | `SW1`, `SW2` | Pulsadores | Pines de ADC2 usados solo como entradas digitales |
 | 28 | GPIO18 | `LCD_CLK` | Reloj SPI de la LCD | SCK del bus VSPI |

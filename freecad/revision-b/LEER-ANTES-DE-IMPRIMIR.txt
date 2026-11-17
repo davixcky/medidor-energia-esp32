@@ -14,6 +14,10 @@ Comprobar longitud real de pulsadores con el espesor tapa+panel de 5,4 mm.
 No se ha confirmado la compra de los pulsadores ni del buzzer: medir antes de imprimir.
 
 NEOPIXELS
+NOTA E.5 MODULAR: para el montaje nuevo prevalece
+hardware/perforadas-modulares/README.md. Allí el 74AHCT125 se reemplaza por
+74HCT245N DIP20 disponible localmente; el circuito y pinout siguientes se
+conservan solo como referencia de la revisión B original.
 Cuatro WS2812B RGB de 5 V, tira de 60 LED/m, ancho 10 mm; tramo nominal 66,7 mm.
 Difusor de PETG natural/translúcido; probar transmisión óptica antes de toda la tapa.
 Barra visible 80 × 6 mm, soporte desmontable con dos tornillos M3 para plástico.

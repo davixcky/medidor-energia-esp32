@@ -14,7 +14,7 @@ static_assert(ENCODER_EDGES_PER_DETENT == 2 || ENCODER_EDGES_PER_DETENT == 4, "E
 constexpr int PIN_ENC_A = 32;
 constexpr int PIN_ENC_B = 33;
 constexpr int PIN_ENC_SW = 16; // ESP32-WROOM; no WROVER con PSRAM en GPIO16
-constexpr int PIN_NEOPIXEL = 13; // módulo auxiliar, vía 74AHCT125 a 5 V
+constexpr int PIN_NEOPIXEL = 13; // T5 modular: vía 74HCT245N a 5 V
 constexpr int PIN_BUZZER = 14;   // piezo pasivo vía transistor; PWM canal 2
 constexpr int PIN_LED = 25;
 constexpr int PIN_SW1 = 26;   // menú / canal (activo en bajo, pull-up externo de 10 kΩ)
