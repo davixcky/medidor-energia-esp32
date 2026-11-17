@@ -28,6 +28,8 @@ Para construcción manual modular, la fuente de verdad es
 [Medidor E.5 en cinco tarjetas perforadas](hardware/perforadas-modulares/README.md),
 con BOM completa, pinout de arneses, seguridad y orden de pruebas. La red de
 120 V permanece fuera de las tarjetas perforadas de baja tensión.
+[El modelo 3D E.5](freecad/revision-e5/medidor-E5-perforadas.FCStd) muestra las
+cinco tarjetas, la guarda de red y la barra de cuatro NeoPixels.
 
 ## Contenido
 

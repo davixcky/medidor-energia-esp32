@@ -64,6 +64,10 @@ hacerlos personas calificadas, con el equipo desconectado.
 - `SEGURIDAD-Y-PRUEBAS.md`: criterios de construcción y aceptación.
 - `PROMPT-CLAUDE-CARRITOS.md`: solicitud para preparar carritos en Colombia,
   sin efectuar compras.
+- `../../freecad/revision-e5/medidor-E5-perforadas.FCStd` y `.step`: gabinete
+  ampliado con T1–T5 en una sola capa, zona Z1 segregada y barra NeoPixel visible.
+- `../../freecad/revision-e5/medidor-E5-{cerrado,abierto,planta}.png`: vistas actualizadas
+  del montaje modular.
 
 ## Validación que sí aplica
 
