@@ -35,19 +35,19 @@ def renderizar(path):
     for pos,energy,size in (((-180,-250,380),1400,240),((420,80,300),1000,200)):
         ld=bpy.data.lights.new("Area","AREA"); ld.energy=energy; ld.size=size
         lo=bpy.data.objects.new("Area",ld); s.collection.objects.link(lo); lo.location=pos
-        lo.rotation_euler=(Vector((138,105,20))-lo.location).to_track_quat('-Z','Y').to_euler()
+        lo.rotation_euler=(Vector((170,120,20))-lo.location).to_track_quat('-Z','Y').to_euler()
     cd=bpy.data.cameras.new("Camera"); cd.type="ORTHO"; cam=bpy.data.objects.new("Camera",cd); s.collection.objects.link(cam); s.camera=cam
     def shot(name,target,direction,scale):
         target=Vector(target); cam.location=target+Vector(direction).normalized()*700
         cam.rotation_euler=(target-cam.location).to_track_quat('-Z','Y').to_euler(); cd.ortho_scale=scale
         s.render.filepath=str(HERE/name); bpy.ops.render.render(write_still=True)
     for n,o in objects.items(): o.location=(0,0,0); o.hide_render=False
-    shot("medidor-E5-cerrado.png",(138,105,30),(-.65,-.9,1),345)
+    shot("medidor-E5-cerrado.png",(170,120,32),(-.65,-.9,1),420)
     for n,o in objects.items():
-        o.location=(295,0,-64) if groups[n]=="lid" else ((0,230,-43) if groups[n]=="guard" else (0,0,0)); o.hide_render=False
-    shot("medidor-E5-abierto.png",(205,105,22),(-.5,-.9,1.2),480)
+        o.location=(365,0,-67) if groups[n]=="lid" else ((0,260,-46) if groups[n]=="guard" else (0,0,0)); o.hide_render=False
+    shot("medidor-E5-abierto.png",(265,120,22),(-.5,-.9,1.2),610)
     for n,o in objects.items(): o.location=(0,0,0); o.hide_render=groups[n] in ("lid","guard")
-    shot("medidor-E5-planta.png",(138,105,13),(0,-.05,1),300)
+    shot("medidor-E5-planta.png",(170,120,13),(0,-.05,1),380)
 
 
 if "--" in sys.argv: renderizar(sys.argv[-1])

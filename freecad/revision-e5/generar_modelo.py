@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Modelo E.5 del medidor: cinco perforadas y zona de red segregada."""
+"""Modelo E.5 basado en las envolventes de los artículos comprados."""
 from pathlib import Path
 import json
 import sys
@@ -11,16 +11,16 @@ import Part
 
 HERE = Path(__file__).resolve().parent
 STL = HERE / "stl"; STL.mkdir(parents=True, exist_ok=True)
-W, D, H, LID = 276.0, 210.0, 64.0, 3.0
+W, D, H, LID = 340.0, 240.0, 67.0, 3.0
 WALL, FLOOR, Z_BOARD = 2.5, 3.0, 9.0
-NETWORK_Y = 165.0
+NETWORK_Y = 185.0
 STRIP_W = 12.5
 BOARDS = {
-    "T1": (212.0, 8.0, 60.0, 50.0, "POTENCIA"),
-    "T2": (118.0, 8.0, 90.0, 70.0, "CORRIENTE + VBIAS"),
-    "T3": (8.0, 100.0, 70.0, 50.0, "TENSION MBT"),
-    "T4": (8.0, 8.0, 100.0, 80.0, "ESP32 + LCD"),
-    "T5": (90.0, 95.0, 80.0, 60.0, "INTERFAZ + ALERTAS"),
+    "T1": (242.0, 8.0, 90.0, 70.0, "POTENCIA"),
+    "T2": (140.0, 8.0, 90.0, 70.0, "CORRIENTE + VBIAS"),
+    "T3": (8.0, 100.0, 90.0, 70.0, "TENSION MBT"),
+    "T4": (8.0, 8.0, 120.0, 80.0, "ESP32 + LCD"),
+    "T5": (110.0, 100.0, 90.0, 70.0, "INTERFAZ + ALERTAS"),
 }
 COLORS = {
     "body": (.11,.14,.17), "lid": (.32,.35,.39), "guard": (.82,.12,.08),
@@ -84,10 +84,15 @@ def enclosure(doc):
     barrier=box(W-2*WALL,3,H-8,WALL,NETWORK_Y,FLOOR)
     add(doc,"Gabinete_E5",bottom.fuse(walls+[barrier]),"body","body")
     lid=box(W,D,LID,0,0,H)
-    lid=lid.cut(box(46,25,LID+2,22,42,H-1))
-    lid=lid.cut(box(70,6,LID+2,188,116,H-1))
-    for x in (98,128): lid=lid.cut(Part.makeCylinder(6.2,LID+2,v((x,52,H-1))))
-    lid=lid.cut(Part.makeCylinder(3.8,LID+2,v((158,52,H-1))))
+    lid=lid.cut(box(47,23,LID+2,24,44,H-1))
+    lid=lid.cut(box(70,6,LID+2,248,116,H-1))
+    for x in (110,140): lid=lid.cut(Part.makeCylinder(6.2,LID+2,v((x,52,H-1))))
+    for x in (170,200): lid=lid.cut(Part.makeCylinder(3.8,LID+2,v((x,52,H-1))))
+    # Rejilla acústica del piezo comprado, cuerpo circular de 44 x 14 mm.
+    for ix in range(-2,3):
+        for iy in range(-2,3):
+            if ix*ix+iy*iy <= 5:
+                lid=lid.cut(Part.makeCylinder(1.4,LID+2,v((225+ix*6,52+iy*6,H-1))))
     add(doc,"Tapa_E5",lid,"lid","lid")
     # Guarda independiente y desmontable de la zona de red.
     guard=box(W-10,D-NETWORK_Y-7,2,5,NETWORK_Y+4,42)
@@ -114,7 +119,7 @@ def populate(doc):
             add(doc,"T3_ZMPT_LV",conn(x+8,y+d-9,3),"connector")
             add(doc,"T3_ADC_V",conn(x+w-16,y+d-9,3),"connector")
         elif ref=="T4":
-            add(doc,"T4_ESP32",box(28,54,8,x+9,y+13,Z_BOARD+1.6),"esp")
+            add(doc,"T4_ESP32_38P",box(28,55,13,x+9,y+13,Z_BOARD+1.6),"esp")
             add(doc,"T4_LCD_Header",conn(x+50,y+12,8),"connector")
             add(doc,"T4_ADC_I",conn(x+w-12,y+8,4,True),"connector")
             add(doc,"T4_ADC_V",conn(x+w-12,y+34,3,True),"connector")
@@ -126,32 +131,32 @@ def populate(doc):
     add(doc,"Postes_M3",Part.makeCompound([Part.makeCylinder(3.2,Z_BOARD-FLOOR,v((x,y,FLOOR))) for x,y in mounting]),"support")
 
     # Arnés en estrella y señales con retorno, por corredores libres.
-    signal_paths=[[(108,44,16),(113,44,16),(113,58,16),(118,58,16)],
+    signal_paths=[[(128,44,16),(134,44,16),(134,58,16),(140,58,16)],
                   [(58,88,16),(58,94,16),(43,94,16),(43,100,16)],
-                  [(108,70,16),(180,86,16),(180,125,16),(170,125,16)],
-                  [(208,45,17),(210,45,17),(210,70,17),(70,92,17),(70,100,17)]]
+                  [(128,70,16),(205,92,16),(205,135,16),(200,135,16)],
+                  [(230,45,17),(236,45,17),(236,92,17),(70,92,17),(70,100,17)]]
     add(doc,"Arneses_Senal_E5",Part.makeCompound([tube(p,.75) for p in signal_paths]),"wire")
-    add(doc,"Bus_5V_GND_Estrella",tube([(242,58,18),(242,88,18),(175,88,18),(175,150,18)],1.2),"power")
+    add(doc,"Bus_5V_GND_Estrella",tube([(320,72,18),(320,92,18),(205,92,18),(205,165,18)],1.2),"power")
 
     # Barra real de 4 píxeles, claramente visible y con soporte adaptable 10-12,5 mm.
-    sx,sy,sz=188.0,116.0,38.0
+    sx,sy,sz=248.0,116.0,41.0
     add(doc,"Soporte_Barra_NeoPixel_13p2mm",box(71,STRIP_W+.7,2.2,sx-2,sy-.35,sz-1.5),"support")
     add(doc,"Barra_NeoPixel_WS2812B_4px",box(66.7,STRIP_W,1.2,sx,sy,sz),"strip")
     add(doc,"NeoPixels_4",Part.makeCompound([box(5,5,1.8,sx+6.3+i*16.67,sy+(STRIP_W-5)/2,sz+1.2) for i in range(4)]),"led")
 
     # Elementos de panel/tapa: LCD, encoder, botones y piezo.
-    add(doc,"LCD_1p9_ST7789",box(51.2,27.3,1.6,19.4,40.8,H-5),"screen","lid")
-    add(doc,"Encoder",Part.makeCylinder(6,13,v((158,52,H-10))),"connector","lid")
-    add(doc,"SW1_SW2",Part.makeCompound([Part.makeCylinder(6,12,v((x,52,H-10))) for x in (98,128)]),"connector","lid")
-    add(doc,"Piezo_pasivo",Part.makeCylinder(7,7,v((184,83,18))),"chip")
+    add(doc,"LCD_1p9_ST7789_51p2x27p3",box(51.2,27.3,3.0,21.9,41.8,H-5),"screen","lid")
+    add(doc,"Encoders_EC11",Part.makeCompound([Part.makeCylinder(6,13,v((x,52,H-10))) for x in (170,200)]),"connector","lid")
+    add(doc,"SW12BP_12mm",Part.makeCompound([Part.makeCylinder(6,12,v((x,52,H-10))) for x in (110,140)]),"connector","lid")
+    add(doc,"Piezo_pasivo_44x14",Part.makeCylinder(22,14,v((225,52,H-17))),"chip","lid")
 
     # Zona de red: ZMPT, fusible y bornera, siempre detrás del tabique.
-    add(doc,"ZMPT101B_Z1",box(49,19,15,110,178,FLOOR+4),"network","network")
-    add(doc,"Fusible_T500mA_Z1",box(30,10,10,45,181,FLOOR+4),"chip","network")
-    add(doc,"Bornera_LN_Z1",box(20,12,11,205,180,FLOOR+4),"connector","network")
+    add(doc,"ZMPT101B_Z1_51p7x21p6",box(51.7,21.6,17,142,200,FLOOR+4),"network","network")
+    add(doc,"Fusible_T500mA_Z1",box(30,10,10,52,203,FLOOR+4),"chip","network")
+    add(doc,"Bornera_LN_Z1",box(20,12,11,258,201,FLOOR+4),"connector","network")
     add(doc,"Cableado_Red_Z1",Part.makeCompound([
-        tube([(225,186,12),(180,186,12),(159,187,12)],1.2),
-        tube([(205,190,12),(85,190,12),(75,186,12),(45,186,12)],1.2)]),"power","network")
+        tube([(278,207,12),(220,207,12),(194,211,12)],1.2),
+        tube([(258,211,12),(95,211,12),(82,208,12),(52,208,12)],1.2)]),"power","network")
 
 
 def validate():
@@ -164,7 +169,8 @@ def validate():
     report={"revision":"E.5","enclosure_mm":[W,D,H+LID],"network_partition_y_mm":NETWORK_Y,
             "boards":{k:list(v[:4]) for k,v in BOARDS.items()},"neopixel_strip_mm":[66.7,STRIP_W],
             "neopixel_support_clearance_mm":13.2,"issues":issues,"valid":not issues,
-            "note":"Colocación por envolventes; confirmar medidas de componentes comprados antes de imprimir."}
+            "dimension_basis":"medidas-componentes.json",
+            "note":"Placas compradas completas; componentes por envolvente. Ver estados fuente/conservadora/por_medir."}
     (HERE/"validacion-3d.json").write_text(json.dumps(report,indent=2),encoding="utf-8")
     if issues: raise RuntimeError(issues)
 

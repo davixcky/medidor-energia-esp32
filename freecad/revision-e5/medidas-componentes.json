@@ -1,0 +1,65 @@
+{
+  "revision": "E.5-comprados-2026-11-17",
+  "unidades": "mm",
+  "regla": "Una cota 'publicada' viene de la tienda o fabricante; 'conservadora' reserva espacio hasta medir la pieza recibida.",
+  "componentes": {
+    "PCB-FV-7X9-HQ": {
+      "cantidad_en_modelo": 4,
+      "cantidad_comprada": 5,
+      "envolvente": [90.0, 70.0, 1.6],
+      "estado": "publicada",
+      "fuente": "https://www.didacticaselectronicas.com/shop/pcb-fv-7x9-hq-circuito-impreso-universal-7cm-x-9cm-fibra-de-vidrio-8397",
+      "detalle": "26x31 agujeros, paso 2.54, perforacion 1.0; queda una de repuesto"
+    },
+    "PCB-FV-8X12-HQ": {
+      "cantidad": 1,
+      "envolvente": [120.0, 80.0, 1.6],
+      "estado": "publicada",
+      "fuente": "https://www.didacticaselectronicas.com/shop/category/prototipado-fabricacion-de-productos-placas-de-prototipo-perforadas-362"
+    },
+    "ESP32-DevKit-38P": {
+      "cantidad": 1,
+      "envolvente": [55.0, 28.0, 13.0],
+      "estado": "conservadora",
+      "por_medir": ["referencia finalmente comprada", "largo", "ancho", "altura total", "separacion entre hileras"]
+    },
+    "TFT-ST7789-1.9-170x320": {
+      "cantidad": 1,
+      "envolvente": [51.2, 27.3, 3.0],
+      "estado": "publicada_fabricante_equivalente",
+      "por_medir": ["posicion exacta de agujeros y conector en la unidad CVR"]
+    },
+    "GEP0008-piezo-pasivo": {
+      "cantidad": 1,
+      "envolvente": {"diametro": 44.0, "altura": 14.0},
+      "estado": "publicada",
+      "fuente": "https://electronilab.co/tienda/zumbador-buzzer-pasivo-piezoelectrico-44x14-mm-alta-frecuencia-1-30v-dc/"
+    },
+    "ZMPT101B-SNC0015": {
+      "cantidad": 1,
+      "envolvente": [51.7, 21.6, 17.0],
+      "estado": "mixta",
+      "fuente": "https://electronilab.co/tienda/zmpt101b-sensor-transformador-de-voltaje-ac/",
+      "por_medir": ["altura total real"]
+    },
+    "SW12BP": {
+      "cantidad": 2,
+      "agujero_panel": 12.0,
+      "estado": "publicada_nominal",
+      "por_medir": ["largo posterior", "diametro de tuerca"]
+    },
+    "EC11-BOT0011": {
+      "cantidad": 2,
+      "envolvente_reservada": {"cuerpo_diametro": 12.0, "altura_panel": 13.0},
+      "estado": "conservadora",
+      "por_medir": ["diametro y largo del eje", "rosca", "cuerpo", "paso de terminales"]
+    },
+    "CINTALED-WS2812B-IP65": {
+      "cantidad": "1 tramo de 4 pixeles",
+      "envolvente": [66.7, 12.5, 2.5],
+      "estado": "conservadora",
+      "fuente": "https://www.didacticaselectronicas.com/shop/cintaled-ws2812b-cinta-led-rgb-ws2812b-5v-60-leds-ip65-1-metro-16610",
+      "por_medir": ["ancho exterior real con silicona", "espesor"]
+    }
+  }
+}

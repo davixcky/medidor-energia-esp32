@@ -67,7 +67,8 @@ hacerlos personas calificadas, con el equipo desconectado.
 - `../../freecad/revision-e5/medidor-E5-perforadas.FCStd` y `.step`: gabinete
   ampliado con T1–T5 en una sola capa, zona Z1 segregada y barra NeoPixel visible.
 - `../../freecad/revision-e5/medidor-E5-{cerrado,abierto,planta}.png`: vistas actualizadas
-  del montaje modular.
+- `../../freecad/revision-e5/medidas-componentes.json`: cotas de los artículos
+  comprados, su fuente y las dimensiones que todavía deben medirse con calibre.
 
 ## Validación que sí aplica
 

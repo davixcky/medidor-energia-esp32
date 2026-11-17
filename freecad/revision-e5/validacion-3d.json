@@ -1,20 +1,20 @@
 {
   "revision": "E.5",
   "enclosure_mm": [
-    276.0,
-    210.0,
-    67.0
+    340.0,
+    240.0,
+    70.0
   ],
-  "network_partition_y_mm": 165.0,
+  "network_partition_y_mm": 185.0,
   "boards": {
     "T1": [
-      212.0,
+      242.0,
       8.0,
-      60.0,
-      50.0
+      90.0,
+      70.0
     ],
     "T2": [
-      118.0,
+      140.0,
       8.0,
       90.0,
       70.0
@@ -22,20 +22,20 @@
     "T3": [
       8.0,
       100.0,
-      70.0,
-      50.0
+      90.0,
+      70.0
     ],
     "T4": [
       8.0,
       8.0,
-      100.0,
+      120.0,
       80.0
     ],
     "T5": [
+      110.0,
+      100.0,
       90.0,
-      95.0,
-      80.0,
-      60.0
+      70.0
     ]
   },
   "neopixel_strip_mm": [
@@ -45,5 +45,6 @@
   "neopixel_support_clearance_mm": 13.2,
   "issues": [],
   "valid": true,
-  "note": "Colocaci\u00f3n por envolventes; confirmar medidas de componentes comprados antes de imprimir."
+  "dimension_basis": "medidas-componentes.json",
+  "note": "Placas compradas completas; componentes por envolvente. Ver estados fuente/conservadora/por_medir."
 }
