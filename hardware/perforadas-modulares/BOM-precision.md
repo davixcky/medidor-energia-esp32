@@ -8,7 +8,7 @@ sensores, conectores, arneses, cableado, alimentación y montaje.
 
 | Grupo | Requisito |
 |---|---|
-| ESP32 | DevKitC V4 de 38 pines, ESP32-WROOM-32; no versión de 30 pines |
+| ESP32 | ESP32S V1.1 USB-C de 38 pines, ESP32-WROOM-32; verificar 25,4 mm entre hileras; no versión de 30 pines |
 | Corriente | 2 × SCT-013-000, 100 A : 50 mA, **sin** burden interno |
 | Tensión | 1 × ZMPT101B; su primario queda en la zona Z1 cerrada |
 | Burdens | 22 ohm y 47 ohm, película metálica, 1 %, soldadas en los jacks |

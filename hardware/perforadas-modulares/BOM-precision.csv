@@ -1,5 +1,5 @@
 Categoria,Referencia/uso,Descripcion/especificacion,Cantidad exacta,Cantidad a comprar,Precision/tolerancia,Observacion
-Modulo,U1,ESP32 DevKitC V4 38 pines ESP32-WROOM-32,1,1,—,No comprar versión de 30 pines
+Modulo,U1,ESP32S V1.1 USB-C 38 pines ESP32-WROOM-32,1,1,—,Verificar 25.4mm entre hileras; no comprar versión de 30 pines
 Sensor,CH1/CH2,SCT-013-000 100A:50mA sin burden interno,2,2,—,Confirmar sufijo 000
 Modulo,U2,ZMPT101B con LM358 y potenciómetro,1,1,—,Va en zona de red separada
 Pantalla,LCD,Waveshare 1.9in ST7789V2 170x320 SPI con cable,1,1,—,Confirmar conector de 8 vías

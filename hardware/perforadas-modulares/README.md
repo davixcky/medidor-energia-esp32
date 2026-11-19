@@ -1,19 +1,19 @@
-# Medidor E.5 en tarjetas perforadas modulares
+# Medidor E.6 en tarjetas perforadas compactas
 
-Esta es la fuente de verdad para montar la revisión B del medidor en tarjetas
+Esta es la fuente de verdad para montar el medidor en tarjetas
 perforadas pequeñas. Conserva el circuito analógico validado del esquemático
 `hardware/medidor-energia.kicad_sch`; solamente cambia su partición física y se
-incorpora la interfaz local de la revisión B.
+incorpora la interfaz local y el ESP32S V1.1 USB-C de 38 pines.
 
 ## Arquitectura: cinco tarjetas y una zona de red separada
 
 | Tarjeta | Tamaño orientativo | Contenido | Conectores principales |
 |---|---:|---|---|
-| T1 Alimentación | 60 x 50 mm | J1, F2, D1, C1, C2 y distribución en estrella de +5V/GND | entrada 5 V; salidas a T3, T4 y T5 |
-| T2 Corriente y VBIAS | 90 x 70 mm | R1-R6, C5-C8, D2-D5, entradas de las dos SCT | jacks CH1/CH2; bus ADC de 4 vías a T4 |
-| T3 Tensión MBT | 70 x 50 mm | J5, R7-R8, C9, D6-D7 y filtro `V_ADC` | alimentación desde T1; ZMPT MBT; bus ADC de 3 vías a T4 |
-| T4 Control | 100 x 80 mm | ESP32 en zócalos, LCD, pulsadores, LED de estado e indicadores | alimentación, ADC-I, ADC-V, LCD, panel y T5 |
-| T5 Interfaz/alertas | 80 x 60 mm | encoder, 74HCT245, cuatro WS2812B y driver del piezo | alimentación, señales desde T4, encoder, LEDs y piezo |
+| T1 Alimentación | 50 x 40 mm | J1, F2, D1, C1, C2 y distribución en estrella de +5V/GND | entrada 5 V; salidas a T3, T4 y T5 |
+| T2 Corriente y VBIAS | 70 x 55 mm | R1-R6, C5-C8, D2-D5, entradas de las dos SCT | jacks CH1/CH2; bus ADC de 4 vías a T4 |
+| T3 Tensión MBT | 55 x 45 mm | J5, R7-R8, C9, D6-D7 y filtro `V_ADC` | alimentación desde T1; ZMPT MBT; bus ADC de 3 vías a T4 |
+| T4 Control | 80 x 65 mm | ESP32S V1.1 USB-C en zócalos, LCD, pulsadores e indicadores | alimentación, ADC-I, ADC-V, LCD, panel y T5 |
+| T5 Interfaz/alertas | 65 x 50 mm | encoder, 74HCT245, cuatro WS2812B y driver del piezo | alimentación, señales desde T4, encoder, LEDs y piezo |
 | Z1 zona de red | no es perforada | J4, F1 y primario del ZMPT101B, dentro de guarda aislante | L/N de 120 V; cable MBT de 3 vías hacia T3 |
 
 No se monta red de 120 V en una tarjeta perforada. Z1 debe estar encerrada,
@@ -55,8 +55,12 @@ hacerlos personas calificadas, con el equipo desconectado.
 
 ## Archivos
 
+- `esquemas-tarjetas-compactas.pdf`: **esquema de construcción vigente**, cinco
+  páginas; una tarjeta por página.
+- `esquemas/`: PDFs individuales T1–T5, vistas PNG y
+  `netlist-por-tarjeta.json` con tamaños, pinouts y validación automática.
 - `esquema-modular-perforadas.pdf`: plano legible de las cinco tarjetas,
-  circuitos conservados, T5, arneses y secuencia de integración.
+  arneses y secuencia de integración; se conserva como vista general.
 - `BOM-precision.csv`: compra completa y cantidades recomendadas.
 - `BOM-precision.md`: resumen humano y criterios de sustitución.
 - `lista-por-tarjeta.csv`: ubicación de cada componente.
@@ -73,6 +77,9 @@ hacerlos personas calificadas, con el equipo desconectado.
 ## Validación que sí aplica
 
 La división no cambia los valores ni las redes del acondicionamiento analógico.
+El generador de los cinco esquemas comprueba que cada arnés tenga exactamente el
+mismo orden de pines en ambos extremos y que ninguna red de 120 V aparezca en
+una perforada.
 El generador de la perforada monolítica verificó 27/27 redes contra la netlist y
 `herramientas/simulacion.py` aprobó los márgenes de los tres ADC, las frecuencias
 de corte y el desfase. El caso de 4,75 V/500 mA no cumple; se exige adaptador
