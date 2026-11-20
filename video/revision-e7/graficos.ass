@@ -1,0 +1,20 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Title,DejaVu Sans,44,&H00FFFFFF,&H00FFFFFF,&H00101820,&H00000000,-1,0,0,0,100,100,0,0,1,1,0,7,72,72,42,1
+Style: Sub,DejaVu Sans,25,&H00BFD0DA,&H00FFFFFF,&H00101820,&H00000000,0,0,0,0,100,100,0,0,1,1,0,7,72,72,98,1
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:01.00,0:00:06.12,Title,,0,0,0,,MEDIDOR E.7
+Dialogue: 0,0:00:01.00,0:00:06.12,Sub,,0,0,0,,CINCO TARJETAS MODULARES
+Dialogue: 0,0:00:06.97,0:00:14.37,Title,,0,0,0,,INTERFAZ EMPOTRADA
+Dialogue: 0,0:00:06.97,0:00:14.37,Sub,,0,0,0,,LCD · ENCODER · PIEZO 44 mm · FCOB 12 V
+Dialogue: 0,0:00:15.22,0:00:21.11,Title,,0,0,0,,ESTADOS REALES
+Dialogue: 0,0:00:15.22,0:00:21.11,Sub,,0,0,0,,VERDE CONECTADO · ÁMBAR SIN RED · ROJO ALERTA
+Dialogue: 0,0:00:21.96,0:00:27.93,Title,,0,0,0,,INTERIOR ACCESIBLE
+Dialogue: 0,0:00:21.96,0:00:27.93,Sub,,0,0,0,,BORNERAS · JST · POTENCIÓMETROS · ESP32S USB-C
+Dialogue: 0,0:00:28.78,0:00:36.02,Title,,0,0,0,,RED SEGREGADA
+Dialogue: 0,0:00:28.78,0:00:36.02,Sub,,0,0,0,,GUARDA INDEPENDIENTE · VALIDACIÓN CON GABINETE CERRADO

@@ -1,0 +1,5 @@
+Este es el medidor de energía E siete, construido en cinco tarjetas perforadas modulares.
+La tapa integra pantalla, encoder, pulsadores, un piezo de cuarenta y cuatro milímetros y una barra F C O B de doce voltios.
+Verde indica conexión. Ámbar indica falta de red o servidor. Rojo indica una alerta sin reconocer.
+Al abrirlo se ven las borneras, conectores, potenciómetros y el ESP treinta y dos con USB tipo C.
+La zona de ciento veinte voltios queda detrás de una guarda independiente. La validación final se realiza con el gabinete cerrado.

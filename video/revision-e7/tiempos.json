@@ -1,0 +1,36 @@
+{
+  "duration": 38,
+  "fps": 24,
+  "segments": [
+    {
+      "id": 1,
+      "start": 1.0,
+      "end": 6.12,
+      "text": "Este es el medidor de energía E siete, construido en cinco tarjetas perforadas modulares."
+    },
+    {
+      "id": 2,
+      "start": 6.97,
+      "end": 14.373,
+      "text": "La tapa integra pantalla, encoder, pulsadores, un piezo de cuarenta y cuatro milímetros y una barra F C O B de doce voltios."
+    },
+    {
+      "id": 3,
+      "start": 15.223,
+      "end": 21.111,
+      "text": "Verde indica conexión. Ámbar indica falta de red o servidor. Rojo indica una alerta sin reconocer."
+    },
+    {
+      "id": 4,
+      "start": 21.961,
+      "end": 27.934,
+      "text": "Al abrirlo se ven las borneras, conectores, potenciómetros y el ESP treinta y dos con USB tipo C."
+    },
+    {
+      "id": 5,
+      "start": 28.784,
+      "end": 36.016,
+      "text": "La zona de ciento veinte voltios queda detrás de una guarda independiente. La validación final se realiza con el gabinete cerrado."
+    }
+  ]
+}
