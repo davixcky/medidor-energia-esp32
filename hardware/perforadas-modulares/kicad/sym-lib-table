@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "Medidor")(type "KiCad")(uri "${KIPRJMOD}/Medidor.kicad_sym")(options "")(descr "Símbolos propios del medidor"))
+)

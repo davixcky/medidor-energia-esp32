@@ -1,0 +1,50 @@
+{
+  "revision": "E.7",
+  "valid": true,
+  "checks": {
+    "kicad_erc": {
+      "T1": {
+        "ok": true,
+        "report": "kicad/medidor-t1-erc.rpt"
+      },
+      "T2": {
+        "ok": true,
+        "report": "kicad/medidor-t2-erc.rpt"
+      },
+      "T3": {
+        "ok": true,
+        "report": "kicad/medidor-t3-erc.rpt"
+      },
+      "T4": {
+        "ok": true,
+        "report": "kicad/medidor-t4-erc.rpt"
+      },
+      "T5": {
+        "ok": true,
+        "report": "kicad/medidor-t5-erc.rpt"
+      }
+    },
+    "contratos": {
+      "ok": true,
+      "revision": "E.7-WS2811-FCOB-12V"
+    },
+    "cad": {
+      "ok": true,
+      "issues": [],
+      "enclosure_mm": [
+        280.0,
+        180.0,
+        70.0
+      ]
+    },
+    "fcob_power_budget": {
+      "ok": true,
+      "max_output_w": 2.0,
+      "max_output_a_at_12v": 0.1667,
+      "estimated_input_a_at_5v_80pct": 0.5,
+      "required_boost": "12.0 V regulados, >=0.25 A continuos medidos",
+      "note": "Cálculo conservador; validar temperatura y tensión del MT3608 real."
+    }
+  },
+  "limits": "No valida soldadura manual, aislamiento de red ni módulo MT3608 real."
+}

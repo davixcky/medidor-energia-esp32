@@ -1,4 +1,4 @@
-# BOM de precisión — Medidor E.5 perforadas
+# BOM de precisión — Medidor E.7 perforadas
 
 La lista de compra fila por fila y las cantidades con repuesto están en
 [`BOM-precision.csv`](BOM-precision.csv). Contiene 62 líneas e incluye electrónica,
@@ -14,8 +14,9 @@ sensores, conectores, arneses, cableado, alimentación y montaje.
 | Burdens | 22 ohm y 47 ohm, película metálica, 1 %, soldadas en los jacks |
 | Filtros | resistencias 1 %; 47 nF, 27 nF y 10 nF de película/C0G, idealmente 5 % |
 | Level shifter | 74HCT245N DIP-20; HCT, no HC y no módulo I2C BSS138 |
-| Sonido | piezo pasivo de 5 V más NPN; no buzzer activo |
-| Alimentación | adaptador aislado regulado 5,1 V, 2 A mínimo; 3 A recomendado |
+| Sonido | piezo pasivo comprado GEP0008, 44 × 14 mm, más NPN; no buzzer activo |
+| Iluminación | BTF FCOB WS2811 12 V, 720 LED/m, 20 segmentos/m; usar 4 segmentos = 200 mm |
+| Alimentación | adaptador comprado 5 V/5 A y jack 5,5 × 2,5 mm; MT3608 ajustado a 12,0 V para la FCOB |
 
 ## Conectividad incluida
 
@@ -38,6 +39,9 @@ No sustituir valores críticos por el más cercano sin recalcular. En especial:
 - BAT85 no se reemplaza automáticamente por un diodo de silicio común.
 - 74HC245 no equivale al 74HCT245 para una entrada de 3,3 V alimentada a 5 V.
 - Un SCT-013 con salida de tensión o burden interno no equivale al SCT-013-000.
+- La FCOB de 12 V no puede conectarse al antiguo riel de 5 V ni reemplazarse en
+  el esquema por una WS2812B sin eliminar/recalcular el elevador.
+- 1N5819 y PTC de 1,1 A se retiraron de T1; usar 1N5822 de 3 A y PTC hold 2 A.
 
 Si una familia JST-XH completa no está disponible, puede elegirse otra familia
 polarizada, pero deben cambiarse ambos extremos y mantenerse un solo paso.

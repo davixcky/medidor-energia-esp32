@@ -4,7 +4,8 @@ C_PWR4,T1,2,GND,T4,2,22 AWG negro,Par dedicado en estrella
 C_PWR3,T1,1,+5V_PROT,T3,1,22 AWG rojo,Par dedicado en estrella
 C_PWR3,T1,2,GND,T3,2,22 AWG negro,Par dedicado en estrella
 C_PWR5,T1,1,+5V_PROT,T5,1,22 AWG rojo,Par dedicado en estrella
-C_PWR5,T1,2,GND,T5,2,22 AWG negro,Par dedicado en estrella
+C_PWR5,T1,2,+12V_LED,T5,2,22 AWG amarillo,Salida del MT3608 ajustada a 12.0V
+C_PWR5,T1,3,GND,T5,3,22 AWG negro,Retorno común dedicado
 C_ADC_I,T4,1,+3V3,T2,1,24 AWG rojo,Alimenta solamente el acondicionamiento
 C_ADC_I,T4,2,GND,T2,2,24 AWG negro,Retorno junto a señales
 C_ADC_I,T4,3,CH1_ADC,T2,3,24 AWG amarillo,Corto y lejos de buses digitales
@@ -31,3 +32,6 @@ C_LCD,T4,5,DC GPIO21,LCD,5,24 AWG azul,
 C_LCD,T4,6,BL GPIO19,LCD,6,24 AWG violeta,
 C_LCD,T4,7,CLK GPIO18,LCD,7,24 AWG naranja,
 C_LCD,T4,8,RST GPIO4,LCD,8,24 AWG blanco,
+C_PIX,T5,1,+12V_LED,FCOB,1,22 AWG amarillo,BTF FCOB WS2811 12V; no conectar a +5V
+C_PIX,T5,2,DIN_5V,FCOB,2,24 AWG verde,Salida B0 del 74HCT245 por R16
+C_PIX,T5,3,GND,FCOB,3,22 AWG negro,Verificar flecha de datos de la tira

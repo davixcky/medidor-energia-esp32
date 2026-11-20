@@ -1,0 +1,79 @@
+{
+  "revision": "E.7-componentes-reales-2026-11-20",
+  "unidades": "mm",
+  "regla": "Una cota 'publicada' viene de la tienda o fabricante; 'conservadora' reserva espacio hasta medir la pieza recibida.",
+  "componentes": {
+    "PCB-FV-7X9-HQ": {
+      "cantidad_en_modelo": 4,
+      "cantidad_comprada": 5,
+      "envolvente": [90.0, 70.0, 1.6],
+      "estado": "publicada",
+      "fuente": "https://www.didacticaselectronicas.com/shop/pcb-fv-7x9-hq-circuito-impreso-universal-7cm-x-9cm-fibra-de-vidrio-8397",
+      "detalle": "Stock 90x70; recortar para T1 50x40, T2 70x55, T3 55x45 y T5 65x50; paso 2.54, perforacion 1.0; queda una de repuesto"
+    },
+    "PCB-FV-8X12-HQ": {
+      "cantidad": 1,
+      "envolvente": [120.0, 80.0, 1.6],
+      "estado": "publicada",
+      "fuente": "https://www.didacticaselectronicas.com/shop/category/prototipado-fabricacion-de-productos-placas-de-prototipo-perforadas-362",
+      "detalle": "Stock 120x80; recortar T4 a 80x65 mm"
+    },
+    "ESP32S-V1.1-USB-C-38P": {
+      "cantidad": 1,
+      "envolvente": [58.0, 28.0, 13.0],
+      "paso_pines": 2.54,
+      "separacion_centros_hileras": 25.4,
+      "estado": "publicada_equivalente_y_conservadora_en_altura",
+      "fuente": "https://www.gravityelectronic.com/shop/esp32s-esp-wroom-32-38-pin-cp2102-type-c-12920",
+      "por_medir": ["largo y ancho exactos de la unidad recibida", "altura total con headers"]
+    },
+    "TFT-ST7789-1.9-170x320": {
+      "cantidad": 1,
+      "envolvente": [51.2, 27.3, 3.0],
+      "estado": "publicada_fabricante_equivalente",
+      "por_medir": ["posicion exacta de agujeros y conector en la unidad CVR"]
+    },
+    "GEP0008-piezo-pasivo": {
+      "cantidad": 1,
+      "envolvente": {"diametro": 44.0, "altura": 14.0},
+      "estado": "publicada",
+      "fuente": "https://electronilab.co/tienda/zumbador-buzzer-pasivo-piezoelectrico-44x14-mm-alta-frecuencia-1-30v-dc/"
+    },
+    "ZMPT101B-SNC0015": {
+      "cantidad": 1,
+      "envolvente": [51.7, 21.6, 17.0],
+      "estado": "mixta",
+      "fuente": "https://electronilab.co/tienda/zmpt101b-sensor-transformador-de-voltaje-ac/",
+      "por_medir": ["altura total real"]
+    },
+    "SW12BP": {
+      "cantidad": 2,
+      "agujero_panel": 12.0,
+      "estado": "publicada_nominal",
+      "por_medir": ["largo posterior", "diametro de tuerca"]
+    },
+    "EC11-BOT0011": {
+      "cantidad": 2,
+      "envolvente_reservada": {"cuerpo_diametro": 12.0, "altura_panel": 13.0},
+      "estado": "conservadora",
+      "por_medir": ["diametro y largo del eje", "rosca", "cuerpo", "paso de terminales"]
+    },
+    "BTF-FCOB-WS2811-12V-720L-IP30": {
+      "cantidad": "1 rollo; se usan 4 segmentos",
+      "envolvente_usada": [200.0, 12.0, 2.0],
+      "segmento_corte": 50.0,
+      "potencia_maxima_tramo_w": 2.0,
+      "estado": "publicada_fabricante",
+      "fuente_compra": "https://www.amazon.com/dp/B0BW5T6HW4",
+      "fuente_fabricante": "https://www.btf-lighting.com/en-intl/products/fcob-ws2811-rgb-addressable-led-strip-630-720leds",
+      "detalle": "Modelo FCOB-12V-720L-W-IP30-SPI; 720 LED/m, 20 IC/m, ancho 12 mm, max. 10 W/m"
+    },
+    "MT3608-MODULO-BOOST": {
+      "cantidad": 1,
+      "envolvente_reservada": [36.0, 17.0, 14.0],
+      "estado": "conservadora_por_confirmar_compra",
+      "ajuste": "12.0 V sin la tira conectada",
+      "por_medir": ["envolvente exacta y posicion del potenciometro del modulo recibido"]
+    }
+  }
+}

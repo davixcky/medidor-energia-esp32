@@ -1,4 +1,4 @@
-# Encargo para Claude: carritos del medidor E.5 modular
+# Encargo para Claude: carritos del medidor E.7 modular
 
 Trabaja sobre el proyecto `medidor-energia-esp32`. La lista de compra completa
 está en:
@@ -22,7 +22,7 @@ Instrucciones obligatorias:
 5. Prioriza resistencias de película metálica de 1 %. Los capacitores de 47 nF,
    27 nF y 10 nF deben ser película o C0G de 5 % cuando sea posible.
 6. Para el level shifter compra `74HCT245N` DIP-20 (HCT, no HC). El diseño ya
-   documenta su pinout. No comprar módulos I2C BSS138 para la línea WS2812.
+   documenta su pinout. No comprar módulos I2C BSS138 para la línea WS2811.
 7. Los piezos deben ser pasivos, no buzzers activos. Las pinzas deben decir
    `SCT-013-000 100A:50mA`, sin burden interno. El ESP32 debe ser DevKitC de 38
    pines. Confirma físicamente estas tres condiciones en cada publicación.
@@ -32,6 +32,9 @@ Instrucciones obligatorias:
    familia polarizada equivalente y reemplaza ambos lados; no mezcles pasos.
 10. Mantén separada la zona de 120 V. No propongas montar J4/F1/primario ZMPT en
     perforada de baja tensión.
+11. La barra ya disponible es BTF FCOB WS2811 de 12 V (ASIN B0BW5T6HW4). No
+    agregues otra tira. Sí agrega el nuevo MT3608, 1N5822 de 3 A, PTC hold 2 A y
+    los dos electrolíticos de 680 uF/16 V si todavía faltan.
 
 Entrega un reporte Markdown con:
 
@@ -42,5 +45,5 @@ Entrega un reporte Markdown con:
 - total por tienda y total general, sin envío;
 - confirmación textual: `NO SE REALIZÓ NINGUNA COMPRA`.
 
-Guarda el reporte como `carritos-medidor-E5-perforadas.md` y no cierres la tarea
+Guarda el reporte como `carritos-medidor-E7-perforadas.md` y no cierres la tarea
 hasta revisar la BOM completa, incluidos conectores y componentes auxiliares.

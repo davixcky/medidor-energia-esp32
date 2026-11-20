@@ -4,31 +4,31 @@ Sensor,CH1/CH2,SCT-013-000 100A:50mA sin burden interno,2,2,—,Confirmar sufijo
 Modulo,U2,ZMPT101B con LM358 y potenciómetro,1,1,—,Va en zona de red separada
 Pantalla,LCD,Waveshare 1.9in ST7789V2 170x320 SPI con cable,1,1,—,Confirmar conector de 8 vías
 Interfaz,ENC1,Encoder incremental EC11/M7 con pulsador eje 6mm,1,2,—,Uno de repuesto y perilla compatible
-Interfaz,PIX1-PIX4,WS2812B 5V en tramo de tira de 4 pixels,4,1 tramo,—,Preferible tira encapsulada o sobre PCB
+Interfaz,PIX1-PIX4,BTF FCOB WS2811 12V 720LED/m ancho 12mm ASIN B0BW5T6HW4,4 segmentos,200mm,—,Cortar solo cada 50mm; 20 segmentos/m; máximo 2W en el tramo usado
 Interfaz,U3,74HCT245N DIP-20,1,2,—,Reemplazo local del 74AHCT125; no 74HC245
 Interfaz,Q1,2N2222A o PN2222A THT,1,3,—,Confirmar patillaje del fabricante
-Interfaz,BZ1,Piezo pasivo 5V aprox 12mm,1,2,—,No buzzer activo
-Diodo,D1,1N5819 THT,1,3,—,Schottky de protección
+Interfaz,BZ1,Piezo pasivo GEP0008 1-30V cuerpo 44x14mm,1,2,—,Comprado; empotrado bajo rejilla; no buzzer activo
+Diodo,D1,1N5822 THT 3A DO-201AD,1,3,—,Schottky de protección; reemplaza 1N5819 por margen con fuente 5A
 Diodo,D2-D7,BAT85 DO-35,6,10,—,No sustituir sin revisar Vf/leakage
-Proteccion,F2,PTC MF-R110 hold 1.1A,1,2,—,
+Proteccion,F2,PTC radial hold 2.0A compatible 5V,1,2,—,Reemplaza MF-R110 1.1A
 Proteccion,F1,Fusible lento T500mA 250V 5x20mm,1,3,—,Más portafusible cerrado
 Resistencia,R1,22 ohm película metálica 1/4W,1,3,1%,Burden CH1 directamente en jack
 Resistencia,R2,47 ohm película metálica 1/4W,1,3,1%,Burden CH2 directamente en jack
 Resistencia,R5-R6,3.3kohm película metálica 1/4W,2,5,1%,
 Resistencia,R3,15kohm película metálica 1/4W,1,3,1%,
-Resistencia,R4/R12/R13/R17/R19-R22,10kohm película metálica 1/4W,8,12,1%,Incluye polarización botones encoder y pulldowns
+Resistencia,R4/R12/R13/R17/R19-R23,10kohm película metálica 1/4W,9,14,1%,Incluye polarización botones encoder y pulldowns del HCT
 Resistencia,R7,11kohm película metálica 1/4W,1,3,1%,No reemplazar por 10k
 Resistencia,R8,13kohm película metálica 1/4W,1,3,1%,No reemplazar por 12k
 Resistencia,R11/R16,330ohm película metálica 1/4W,2,5,1%,LED de estado y dato WS2812
-Resistencia,R14/R18/R23,1kohm película metálica 1/4W,3,5,1%,LED/transistor/LED auxiliar
+Resistencia,R14/R18,1kohm película metálica 1/4W,2,4,1%,LED/transistor
 Resistencia,R15,470ohm película metálica 1/4W,1,3,1%,
 Capacitor,C5-C6,47nF película o C0G THT,2,4,5%,Filtro de corriente
 Capacitor,C9,27nF película o C0G THT,1,3,5%,Filtro de tensión
 Capacitor,C12-C13,10nF película o C0G THT,2,4,5%,Encoder A/B
 Capacitor,C2/C8/C10/C11/C14/C15,100nF cerámico THT 50V,6,10,10%,Desacoplo y antirrebote
 Capacitor,C7,10uF electrolítico 16V o mayor,1,3,20%,VBIAS
-Capacitor,C1,470uF electrolítico 10V o mayor low-ESR,1,2,20%,Entrada de 5V
-Capacitor,C16,680uF electrolítico 10V o mayor low-ESR,1,2,20%,Junto a NeoPixels
+Capacitor,C1,470uF electrolítico comprado 35V,1,2,20%,Entrada de 5V; usar la unidad comprada
+Capacitor,C16/C17,680uF electrolítico 16V o mayor low-ESR,2,3,20%,Salida 12V del MT3608 y junto a la FCOB
 LED,D8,LED verde 5mm de panel,1,2,—,
 LED,D9/D10,LED rojo 3mm + LED verde 3mm,2,2,—,Uno de cada color
 LED,LED1,LED ámbar 5mm,1,2,—,Alimentación auxiliar
@@ -48,7 +48,7 @@ Conector,intertarjeta,JST-XH header vertical 5 vías,2,4,—,Encoder entre T4/T5
 Conector,intertarjeta,JST-XH carcasa 5 vías,2,4,—,Encoder entre T4/T5
 Conector,intertarjeta,Terminal crimp JST-XH hembra,42,60,—,Incluye repuesto; verificar compatibilidad real
 Conector,panel,Arneses polarizados 2 vías para SW1 SW2 D8 piezo,4,6,—,No incluidos en los 42 contactos
-Conector,panel,Arnés polarizado 3 vías para ZMPT MBT y tira LED,2,3,—,
+Conector,panel,Arnés polarizado 3 vías para ZMPT MBT y FCOB 12V,2,3,—,No invertir +12V DATA GND
 Conector,panel,Arnés polarizado 5 vías para encoder,1,2,—,
 Conector,LCD,Header/cable 1x8 paso 2.54mm,1,2,—,Confirmar con pantalla real
 Mecanico,T1-T5,Tarjeta perforada FR4 paso 2.54mm recortable,5,6,—,Tamaños según README
@@ -58,6 +58,7 @@ Mecanico,guarda,Portafusible cerrado 5x20 y prensaestopa PG7,1+1,1+2,—,Zona de
 Cable,baja tensión,Cable flexible 22AWG rojo/negro,2m por color,2m por color,—,Potencia y GND
 Cable,señales,Cable flexible 24AWG multicolor,6m,8m,—,Analógico/digital; trenzar con GND
 Cable,red,Cable 18AWG 300/600V fase/neutro/tierra,según gabinete,1m por color,—,Solo persona calificada y terminales aislados
-Alimentacion,externa,Adaptador aislado regulado 5.1V 2A mínimo,1,1,—,3A recomendado; 5.0-5.25V bajo carga
-Alimentacion,panel,Jack DC panel 5.5x2.1mm,1,2,—,Confirmar polaridad centro positivo
+Alimentacion,externa,Adaptador aislado ADAP-5V-5A 5V 5A plug 5.5x2.5mm,1,1,—,Comprado; centro positivo
+Alimentacion,U4,Modulo elevador MT3608 ajustable 5V a 12V minimo 0.25A salida,1,2,—,NUEVO requerido por la FCOB 12V; ajustar a 12.0V antes de conectarla
+Alimentacion,panel,Jack DC panel CON-156A 5.5x2.5mm,1,2,—,Comprado para coincidir con ADAP-5V-5A; centro positivo
 Instrumentacion,TP1-TP9,Lazos/pines de prueba THT,9,12,—,

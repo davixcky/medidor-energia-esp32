@@ -24,12 +24,14 @@ fabricación se publican como archivos de la release; las cachés y fotogramas s
 La PCB principal conserva su revisión anterior: encoder, NeoPixels y piezo requieren el
 cableado y circuito auxiliar indicados en la guía.
 
-Para construcción manual modular, la fuente de verdad es
-[Medidor E.5 en cinco tarjetas perforadas](hardware/perforadas-modulares/README.md),
-con BOM completa, pinout de arneses, seguridad y orden de pruebas. La red de
+Para la construcción manual vigente, la única fuente de verdad es
+[Medidor E.7 en cinco tarjetas perforadas](hardware/perforadas-modulares/README.md).
+Los archivos `kicad/medidor-t1.kicad_sch` … `medidor-t5.kicad_sch` son los
+esquemáticos editables; sus PDFs se generan directamente desde KiCad. La red de
 120 V permanece fuera de las tarjetas perforadas de baja tensión.
-[El modelo 3D E.5](freecad/revision-e5/medidor-E5-perforadas.FCStd) muestra las
-cinco tarjetas, la guarda de red y la barra de cuatro NeoPixels.
+[El modelo 3D E.7](freecad/revision-e7/medidor-E7-perforadas.FCStd) usa las
+medidas compradas, muestra conectores/borneras/controles y empotra el piezo de
+44 mm y la FCOB WS2811 de 12 V bajo difusor.
 
 ## Contenido
 

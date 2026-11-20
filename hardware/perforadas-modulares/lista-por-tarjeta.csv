@@ -1,8 +1,8 @@
 Tarjeta,Referencias,Descripción,Regla de montaje
-T1,"J1 F2 D1 C1 C2 TP1 TP8","Entrada y distribución protegida de 5 V","C1 cerca de la salida; C2 cerca del conector a T4; estrella real de GND"
+T1,"J1 F2 D1 C1 C2 U4 C17 TP1 TP8","Entrada protegida de 5 V elevador MT3608 a 12 V y distribución","C1 cerca de entrada; ajustar U4 a 12.0 V sin FCOB; estrella real de GND"
 T2,"R1 R2 R3 R4 R5 R6 C5 C6 C7 C8 D2 D3 D4 D5 TP3 TP4 TP5","Dos canales SCT y VBIAS","R1/R2 directamente en jacks; C5/C6 junto a salida; clamps cerca del conector a T4"
 T3,"J5 R7 R8 C9 D6 D7 TP6 TP7 TP9","Acondicionamiento de tensión de baja tensión","Nunca montar J4/F1 ni 120 V aquí"
-T4,"U1 J6 R11 R12 R13 R14 R15 C10 C11 D8 D9 D10 SW1 SW2 TP2 J_RES34","Control ESP32 LCD y panel","ESP32 en dos tiras hembra 1x19; GPIO34 es la única reserva ADC"
-T5,"U3 Q1 R16 R17 R18 R19 R20 R21 R22 R23 C12 C13 C14 C15 C16 ENC1 BZ1 LED1 PIX1-PIX4","Encoder level shifter NeoPixels y piezo","100 nF pegado a U3; 680 uF junto a los pixels; confirmar E/B/C de Q1"
+T4,"U1 R11 R12 R13 C10 C11 D8 SW1 SW2","Control ESP32 LCD y panel","ESP32 en dos tiras hembra 1x19; dejar libres antena y USB-C"
+T5,"U3 Q1 R16 R17 R18 R19 R20 R21 R22 R23 C12 C13 C14 C15 C16 ENC1 BZ1 C_PIX","Encoder level shifter FCOB y piezo","100 nF pegado a U3; 680 uF junto a C_PIX; confirmar E/B/C de Q1"
 Z1,"J4 F1 U2-primario","Zona de red de 120 V","Compartimiento cerrado; fusible en fase; no es tarjeta perforada de baja tensión"
-Panel,"J2 J3 D8 SW1 SW2 ENC1 BZ1 LED1 LCD PIX1-PIX4","Elementos mecánicos de panel","Usar arneses polarizados y alivio de tensión"
+Panel,"J2 J3 D8 SW1 SW2 ENC1 BZ1 LCD FCOB-200mm","Elementos mecánicos de panel","Piezo 44x14 empotrado; FCOB bajo difusor; usar arneses polarizados y alivio de tensión"

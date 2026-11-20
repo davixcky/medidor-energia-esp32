@@ -1,0 +1,50 @@
+{
+  "revision": "E.7",
+  "enclosure_mm": [
+    280.0,
+    180.0,
+    70.0
+  ],
+  "network_partition_y_mm": 132.0,
+  "boards": {
+    "T1": [
+      222.0,
+      8.0,
+      50.0,
+      40.0
+    ],
+    "T2": [
+      92.0,
+      8.0,
+      70.0,
+      55.0
+    ],
+    "T3": [
+      168.0,
+      70.0,
+      55.0,
+      45.0
+    ],
+    "T4": [
+      6.0,
+      8.0,
+      80.0,
+      65.0
+    ],
+    "T5": [
+      92.0,
+      70.0,
+      65.0,
+      50.0
+    ]
+  },
+  "fcob_strip_mm": [
+    200.0,
+    12.0
+  ],
+  "fcob_support_clearance_mm": 12.6,
+  "issues": [],
+  "valid": true,
+  "dimension_basis": "medidas-componentes.json",
+  "note": "Placas compradas recortadas a T1-T5; envolventes reales o conservadoras identificadas en medidas-componentes.json."
+}

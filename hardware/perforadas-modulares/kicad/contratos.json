@@ -1,0 +1,98 @@
+{
+  "valid": true,
+  "revision": "E.7-WS2811-FCOB-12V",
+  "pinouts": {
+    "C_PWR3": [
+      "+5V",
+      "GND"
+    ],
+    "C_PWR4": [
+      "+5V",
+      "GND"
+    ],
+    "C_PWR5": [
+      "+5V",
+      "+12V_LED",
+      "GND"
+    ],
+    "C_ADC_I": [
+      "+3V3",
+      "GND",
+      "CH1_ADC",
+      "CH2_ADC"
+    ],
+    "C_ADC_V": [
+      "+3V3",
+      "GND",
+      "V_ADC"
+    ],
+    "C_UI_D": [
+      "GND",
+      "LED_DATA",
+      "BUZZ"
+    ],
+    "C_UI_E": [
+      "+3V3",
+      "GND",
+      "ENC_A",
+      "ENC_B",
+      "ENC_SW"
+    ],
+    "C_PIX": [
+      "+12V_LED",
+      "DIN_5V",
+      "GND"
+    ],
+    "C_LCD": [
+      "+3V3",
+      "GND",
+      "LCD_DIN",
+      "LCD_CS",
+      "LCD_DC",
+      "LCD_BL",
+      "LCD_CLK",
+      "LCD_RST"
+    ]
+  },
+  "endpoints": {
+    "C_PWR3": [
+      "T1",
+      "T3"
+    ],
+    "C_PWR4": [
+      "T1",
+      "T4"
+    ],
+    "C_PWR5": [
+      "T1",
+      "T5"
+    ],
+    "C_ADC_I": [
+      "T2",
+      "T4"
+    ],
+    "C_ADC_V": [
+      "T3",
+      "T4"
+    ],
+    "C_UI_D": [
+      "T4",
+      "T5"
+    ],
+    "C_UI_E": [
+      "T4",
+      "T5"
+    ]
+  },
+  "strip": {
+    "asin": "B0BW5T6HW4",
+    "model": "FCOB-12V-720L-W-IP30-SPI",
+    "voltage_v": 12,
+    "width_mm": 12,
+    "cut_mm": 50,
+    "pixels_per_m": 20,
+    "used_pixels": 4,
+    "used_length_mm": 200,
+    "max_power_w": 2.0
+  }
+}
