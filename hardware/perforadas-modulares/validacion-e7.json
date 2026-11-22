@@ -1,5 +1,5 @@
 {
-  "revision": "E.7",
+  "revision": "E.9-TOUCH-12V-LM2596",
   "valid": true,
   "checks": {
     "kicad_erc": {
@@ -26,7 +26,12 @@
     },
     "contratos": {
       "ok": true,
-      "revision": "E.7-WS2811-FCOB-12V"
+      "revision": "E.9-TOUCH-12V-LM2596"
+    },
+    "schematic_topology": {
+      "ok": true,
+      "result": "E9_SCHEMATIC_TOPOLOGY_OK",
+      "error": ""
     },
     "cad": {
       "ok": true,
@@ -41,10 +46,9 @@
       "ok": true,
       "max_output_w": 2.0,
       "max_output_a_at_12v": 0.1667,
-      "estimated_input_a_at_5v_80pct": 0.5,
-      "required_boost": "12.0 V regulados, >=0.25 A continuos medidos",
-      "note": "Cálculo conservador; validar temperatura y tensión del MT3608 real."
+      "required_12v_branch": ">=0.25 A continuos medidos",
+      "note": "La FCOB usa +12V_PROT directo; el LM2596 genera solo +5V_PROT."
     }
   },
-  "limits": "No valida soldadura manual, aislamiento de red ni módulo MT3608 real."
+  "limits": "No valida soldadura manual, aislamiento de red, LM2596 real ni tolerancias de impresión."
 }

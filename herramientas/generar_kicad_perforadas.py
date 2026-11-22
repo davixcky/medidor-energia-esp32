@@ -62,6 +62,10 @@ def reset(card):
     g.PROYECTO = f"medidor-perforada-{card.lower()}"
     # No heredar las asignaciones por referencia del esquemático monolítico.
     g.HUELLAS = {}
+    # These sheets describe complete electrical assemblies, including R1/R2
+    # mounted directly on the panel jacks.  Keep them in exported netlists so
+    # connectivity checks cannot silently omit the two SCT burden resistors.
+    g.FUERA_DE_PLACA = {"U2", "J4", "F1"}
 
 
 def own_symbol(name, ref, value, pins, width=15.24, height=12.7, description=""):
@@ -145,12 +149,20 @@ def current_channel(s, n, y, burden):
     rb=s.colocar("Device:R",f"R{n}",f"{burden}Ω 1% burden",70.0,y,rot=90,huella=H_R)
     s.cable(j["1"],rb["1"]); s.cable(rb["2"],(88.0,rb["2"][1])); s.etiqueta("VBIAS",88.0,rb["2"][1])
     rs=s.colocar("Device:R",f"R{n+4}","3.3k 1%",115.0,j["1"][1],rot=90,huella=H_R)
-    s.cable(j["1"],rs["1"]); out=f"CH{n}_ADC"; s.cable(rs["2"],(140.0,rs["2"][1])); s.etiqueta(out,140.0,rs["2"][1])
+    # Branch R5/R6 from the SCT tip side of the burden.  Route above R1/R2 so
+    # the wire cannot pass through the burden symbol and accidentally join its
+    # VBIAS side when KiCad constructs the electrical graph.
+    lane_y = j["1"][1] - 10.16
+    s.cable(j["1"],(50.8,j["1"][1]),(50.8,lane_y),(rs["1"][0],lane_y),rs["1"])
+    out=f"CH{n}_ADC"; s.cable(rs["2"],(140.0,rs["2"][1])); s.etiqueta(out,140.0,rs["2"][1])
     c=s.colocar("Device:C",f"C{n+4}","47n 5%",155.0,y+8.0,huella=H_C)
     s.cable((140.0,rs["2"][1]),c["1"]); s.cable(c["2"],(155.0,y+16.0)); s.etiqueta("VBIAS",155.0,y+16.0)
     dl=s.colocar("Device:D_Schottky",f"D{2*n+1}","BAT85",185.0,y+10.0,rot=270,huella=H_D)
     dh=s.colocar("Device:D_Schottky",f"D{2*n}","BAT85",185.0,y-10.0,rot=270,huella=H_D)
-    s.cable((185.0,rs["2"][1]),dl["1"],dh["2"]); s.power("GND",185.0,dl["2"][1]); s.power("+3V3",185.0,dh["1"][1],180)
+    # The midpoint of each rail-clamp pair is the ADC node.  Starting this
+    # wire at R5/R6 is intentional: the previous generator began at x=185 mm,
+    # leaving the diode pair electrically floating despite looking nearby.
+    s.cable(rs["2"],(185.0,rs["2"][1]),dl["1"],dh["2"]); s.power("GND",185.0,dl["2"][1]); s.power("+3V3",185.0,dh["1"][1],180)
     s.cable(j["2"],(48.0,j["2"][1])); s.etiqueta("VBIAS",48.0,j["2"][1])
 
 
@@ -177,7 +189,9 @@ def t3():
         s.cable(q["1"],(q["1"][0],r7["2"][1]),(x,r7["2"][1]))
         s.cable(q["2"],(q["2"][0],q["2"][1]+2.54)); s.power("GND",q["2"][0],q["2"][1]+2.54)
     d6=s.colocar("Device:D_Schottky","D6","BAT85",200.0,60.0,rot=270,huella=H_D); d7=s.colocar("Device:D_Schottky","D7","BAT85",200.0,80.0,rot=270,huella=H_D)
-    s.cable((200.0,r7["2"][1]),d6["2"],d7["1"]); s.power("+3V3",200.0,d6["1"][1],180); s.power("GND",200.0,d7["2"][1])
+    # Join the D6/D7 midpoint to V_ADC.  As on T2, starting at x=200 mm left
+    # the clamp pair floating in the native KiCad netlist.
+    s.cable(r7["2"],(200.0,r7["2"][1]),d6["2"],d7["1"]); s.power("+3V3",200.0,d6["1"][1],180); s.power("GND",200.0,d7["2"][1])
     a=connector(s,"C_ADC_V",3,255.0,70.0,"+3V3 / GND / V_ADC"); label_connector(s,a,PINOUTS["C_ADC_V"],225.0,"izq")
     w=connector(s,"C_PWR3",2,255.0,120.0,"+5V / GND"); label_connector(s,w,PINOUTS["C_PWR3"],225.0,"izq")
     power_input(s,"+3V3",235.0,45.0); power_input(s,"GND",260.0,45.0)

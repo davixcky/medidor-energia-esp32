@@ -1214,28 +1214,40 @@
 		)
 	)
 	(junction
-		(at 129.54 69.85)
+		(at 104.14 69.85)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "47569f48-957e-5e53-8e3d-cf8236f74bc0")
 	)
 	(junction
-		(at 144.78 69.85)
+		(at 129.54 69.85)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "7664ce55-3ca2-5d61-bfb0-32aa7aa2ddcb")
 	)
 	(junction
-		(at 199.39 63.5)
+		(at 144.78 69.85)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "dbc6e152-7d7e-5112-b641-1e7356eb1771")
 	)
 	(junction
-		(at 199.39 69.85)
+		(at 170.18 69.85)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "713886e6-567d-5474-980c-0acbd9b209c5")
+	)
+	(junction
+		(at 199.39 63.5)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c7bb06b4-5412-5310-8047-1d02d4b4cbea")
+	)
+	(junction
+		(at 199.39 69.85)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "1e45a0c3-0925-519e-8ba8-e81733bbecb1")
 	)
 	(wire
 		(pts
@@ -1360,6 +1372,17 @@
 	)
 	(wire
 		(pts
+			(xy 104.14 69.85)
+			(xy 199.39 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c0a6d7e6-2fd9-56da-81bd-b30074088135")
+	)
+	(wire
+		(pts
 			(xy 199.39 69.85)
 			(xy 199.39 63.5)
 		)
@@ -1367,7 +1390,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "c0a6d7e6-2fd9-56da-81bd-b30074088135")
+		(uuid "dbb7e857-d598-5af0-aa80-70df309ccb22")
 	)
 	(wire
 		(pts
@@ -1378,7 +1401,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "dbb7e857-d598-5af0-aa80-70df309ccb22")
+		(uuid "fbb99db4-6ef2-5735-ae74-93ee159a5f95")
 	)
 	(wire
 		(pts
@@ -1389,7 +1412,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "fbb99db4-6ef2-5735-ae74-93ee159a5f95")
+		(uuid "12c4fd9b-1c38-52fe-b2d8-1b9d1c4c6130")
 	)
 	(wire
 		(pts
@@ -1400,7 +1423,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "12c4fd9b-1c38-52fe-b2d8-1b9d1c4c6130")
+		(uuid "8c540628-6590-5f21-b6db-dc8074043529")
 	)
 	(wire
 		(pts
@@ -1411,7 +1434,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "8c540628-6590-5f21-b6db-dc8074043529")
+		(uuid "a10b0c7d-4c18-5733-a1f2-d497e80983b3")
 	)
 	(wire
 		(pts
@@ -1422,7 +1445,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "a10b0c7d-4c18-5733-a1f2-d497e80983b3")
+		(uuid "27095c25-e816-50df-8917-481866697af1")
 	)
 	(wire
 		(pts
@@ -1433,7 +1456,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "27095c25-e816-50df-8917-481866697af1")
+		(uuid "5d39ed39-a83e-5bc1-ac4b-9809e04ebbc3")
 	)
 	(text "T3 · VOLTAGE CONDITIONING · ELV ONLY"
 		(exclude_from_sim no)

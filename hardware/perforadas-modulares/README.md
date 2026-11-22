@@ -107,6 +107,11 @@ The CAD electrical cross-check reports no layout errors. E.9 uses an isolated
 regulated 5 V. U4 must be adjusted and verified under a current-limited load
 before C_BUCK_OUT or any electronics are connected.
 
+`python3 herramientas/validar_esquematicos_e9.py` exports the native KiCad
+netlists and verifies the critical topology that passive-pin ERC cannot detect:
+the SCT tip side feeds R5/R6, both burden resistors return to VBIAS, and the
+midpoints of D2-D7 are joined to their corresponding ADC nodes.
+
 Las láminas dibujadas antiguas se retiraron para evitar dos fuentes de verdad.
 Para cablear siempre manda el `.kicad_sch` de `kicad/` y su PDF exportado.
 
