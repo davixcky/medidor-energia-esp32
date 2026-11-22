@@ -1,0 +1,227 @@
+{
+  "cama_mm": [
+    256.0,
+    256.0
+  ],
+  "archivos": {
+    "E9-pruebas-de-ajuste.3mf": {
+      "piezas": [
+        {
+          "nombre": "Prueba_cuerpo_alojamiento_iman",
+          "triangulos": 284,
+          "tamano_mm": [
+            16.0,
+            16.0,
+            10.0
+          ]
+        },
+        {
+          "nombre": "Prueba_cuerpo_cuna_LM2596",
+          "triangulos": 92,
+          "tamano_mm": [
+            55.0,
+            34.0,
+            7.2
+          ]
+        },
+        {
+          "nombre": "Prueba_cuerpo_pin_guarda_120V",
+          "triangulos": 508,
+          "tamano_mm": [
+            16.0,
+            15.0,
+            10.0
+          ]
+        },
+        {
+          "nombre": "Prueba_guarda_socket_ciego_120V",
+          "triangulos": 256,
+          "tamano_mm": [
+            16.0,
+            14.6,
+            9.0
+          ]
+        },
+        {
+          "nombre": "Prueba_pared_der_jack_DC",
+          "triangulos": 184,
+          "tamano_mm": [
+            2.5,
+            24.0,
+            24.0
+          ]
+        },
+        {
+          "nombre": "Prueba_pared_izq_jacks_SCT",
+          "triangulos": 356,
+          "tamano_mm": [
+            2.5,
+            44.0,
+            22.0
+          ]
+        },
+        {
+          "nombre": "Prueba_pared_trasera_PG7",
+          "triangulos": 184,
+          "tamano_mm": [
+            21.0,
+            2.5,
+            26.0
+          ]
+        },
+        {
+          "nombre": "Prueba_tapa_LED",
+          "triangulos": 436,
+          "tamano_mm": [
+            30.0,
+            30.0,
+            8.0
+          ]
+        },
+        {
+          "nombre": "Prueba_tapa_alojamiento_iman",
+          "triangulos": 260,
+          "tamano_mm": [
+            16.0,
+            16.0,
+            3.0
+          ]
+        },
+        {
+          "nombre": "Prueba_tapa_pantalla_T4S3",
+          "triangulos": 1744,
+          "tamano_mm": [
+            76.0,
+            60.0,
+            8.2
+          ]
+        }
+      ],
+      "ocupa_mm": [
+        223.0,
+        110.0,
+        26.0
+      ],
+      "cabe_en_cama": true,
+      "formato": "proyecto nativo; usa los ajustes abiertos en Bambu Studio"
+    },
+    "E9-piezas-pequenas.3mf": {
+      "piezas": [
+        {
+          "nombre": "Soporte_FCOB",
+          "triangulos": 388,
+          "tamano_mm": [
+            222.0,
+            23.0,
+            10.0
+          ]
+        },
+        {
+          "nombre": "Difusor_FCOB_hex",
+          "triangulos": 3772,
+          "tamano_mm": [
+            206.0,
+            20.4,
+            3.0
+          ]
+        },
+        {
+          "nombre": "Placa_trasera_desmontable_LCD",
+          "triangulos": 456,
+          "tamano_mm": [
+            64.0,
+            50.0,
+            4.0
+          ]
+        },
+        {
+          "nombre": "Aro_reten_piezo_bayoneta",
+          "triangulos": 900,
+          "tamano_mm": [
+            60.7,
+            57.3,
+            2.0
+          ]
+        }
+      ],
+      "ocupa_mm": [
+        222.0,
+        112.7,
+        10.0
+      ],
+      "cabe_en_cama": true,
+      "formato": "proyecto nativo; usa los ajustes abiertos en Bambu Studio"
+    },
+    "E9-guarda-120V.3mf": {
+      "piezas": [
+        {
+          "nombre": "Guarda_120V_E9",
+          "triangulos": 1268,
+          "tamano_mm": [
+            224.1,
+            224.1,
+            9.6
+          ]
+        }
+      ],
+      "ocupa_mm": [
+        224.1,
+        224.1,
+        9.6
+      ],
+      "cabe_en_cama": true,
+      "formato": "proyecto nativo; usa los ajustes abiertos en Bambu Studio"
+    },
+    "E9-gabinete.3mf": {
+      "piezas": [
+        {
+          "nombre": "Gabinete_E9_de_canto",
+          "triangulos": 4432,
+          "tamano_mm": [
+            245.4,
+            245.4,
+            180.0
+          ]
+        }
+      ],
+      "ocupa_mm": [
+        245.4,
+        245.4,
+        180.0
+      ],
+      "cabe_en_cama": true,
+      "formato": "proyecto nativo; usa los ajustes abiertos en Bambu Studio"
+    },
+    "E9-tapa.3mf": {
+      "piezas": [
+        {
+          "nombre": "Tapa_E9_de_canto",
+          "triangulos": 7508,
+          "tamano_mm": [
+            200.3,
+            200.3,
+            137.6
+          ]
+        }
+      ],
+      "ocupa_mm": [
+        200.3,
+        200.3,
+        137.6
+      ],
+      "cabe_en_cama": true,
+      "formato": "proyecto nativo; usa los ajustes abiertos en Bambu Studio"
+    },
+    "E9-completo-generado.3mf": {
+      "camas": [
+        "1 - FIT TESTS - PRINT FIRST",
+        "2 - Small parts",
+        "3 - 120 V guard",
+        "4 - Enclosure body - supports",
+        "5 - Lid - supports"
+      ],
+      "piezas": 17,
+      "formato": "multi-plate Bambu project with P2S profile; tree supports and 8 mm brim on edge-printed body/lid"
+    }
+  }
+}

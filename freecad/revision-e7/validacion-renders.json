@@ -1,0 +1,174 @@
+{
+  "revision": "E.9",
+  "valid": true,
+  "issues": [],
+  "files": [
+    {
+      "file": "medidor-E7-cerrado.png",
+      "expected_pixels": [
+        2100,
+        1350
+      ],
+      "pixels": [
+        2100,
+        1350
+      ],
+      "bytes": 2740082,
+      "grayscale_stddev": 21.47,
+      "sha256": "b89955f865e3ef1ce18aeac4d1393ef9f28b2b8b66453085b9a94fb9443441f5",
+      "fresh": true
+    },
+    {
+      "file": "medidor-E7-abierto.png",
+      "expected_pixels": [
+        2100,
+        1350
+      ],
+      "pixels": [
+        2100,
+        1350
+      ],
+      "bytes": 3306544,
+      "grayscale_stddev": 26.77,
+      "sha256": "c8c1b22f804c31cdb52c670782d605b4463364c4a19318dcc48121beda258ff1",
+      "fresh": true
+    },
+    {
+      "file": "medidor-E7-planta.png",
+      "expected_pixels": [
+        2100,
+        1350
+      ],
+      "pixels": [
+        2100,
+        1350
+      ],
+      "bytes": 3205493,
+      "grayscale_stddev": 36.3,
+      "sha256": "cc34c6bc55bde9406d4cc853f7f2ddb18e9409bee3f11fd2c910cd660bbdf8aa",
+      "fresh": true
+    },
+    {
+      "file": "medidor-E7-trasera.png",
+      "expected_pixels": [
+        2100,
+        1350
+      ],
+      "pixels": [
+        2100,
+        1350
+      ],
+      "bytes": 2742138,
+      "grayscale_stddev": 23.19,
+      "sha256": "20c515fff10c7b8406c79ced468f2ac8be7069746d07b8eab4cd3aef75648a92",
+      "fresh": true
+    },
+    {
+      "file": "medidor-E7-tapa-interior.png",
+      "expected_pixels": [
+        2100,
+        1350
+      ],
+      "pixels": [
+        2100,
+        1350
+      ],
+      "bytes": 2932224,
+      "grayscale_stddev": 23.46,
+      "sha256": "f56180ebff610ba68ccec0fe64c62fb3ea9f63b2d381bf6f99891c3dcaf2323c",
+      "fresh": true
+    },
+    {
+      "file": "medidor-E7-difusor.png",
+      "expected_pixels": [
+        2100,
+        1350
+      ],
+      "pixels": [
+        2100,
+        1350
+      ],
+      "bytes": 2914520,
+      "grayscale_stddev": 31.27,
+      "sha256": "4dfb2311a22230ef1292e0be4189511cad76f725e6637e64f5f9cefdaaa05428",
+      "fresh": true
+    },
+    {
+      "file": "medidor-E7-cierre-magnetico.png",
+      "expected_pixels": [
+        2100,
+        1350
+      ],
+      "pixels": [
+        2100,
+        1350
+      ],
+      "bytes": 2986265,
+      "grayscale_stddev": 27.37,
+      "sha256": "50c4067aa163721bc5b57b2dd5796dde982325aa1a7ee8bb4c0d934335562f45",
+      "fresh": true
+    },
+    {
+      "file": "medidor-E9-entradas-SCT.png",
+      "expected_pixels": [
+        2100,
+        1350
+      ],
+      "pixels": [
+        2100,
+        1350
+      ],
+      "bytes": 2586744,
+      "grayscale_stddev": 9.17,
+      "sha256": "4f8dea318f2d5fc0b48ae8b0928bad0c80a6050fc406f05c6be13e1ce0fcf45c",
+      "fresh": true
+    },
+    {
+      "file": "medidor-E9-alimentacion-12V.png",
+      "expected_pixels": [
+        2100,
+        1350
+      ],
+      "pixels": [
+        2100,
+        1350
+      ],
+      "bytes": 2563302,
+      "grayscale_stddev": 12.68,
+      "sha256": "b4d53406fc7a5eb0aaa93ebe750958c901a786a46ea0b4dd2fdd5b1fb54edbc3",
+      "fresh": true
+    },
+    {
+      "file": "medidor-E9-ruta-alimentacion-interior.png",
+      "expected_pixels": [
+        2100,
+        1350
+      ],
+      "pixels": [
+        2100,
+        1350
+      ],
+      "bytes": 3008604,
+      "grayscale_stddev": 27.59,
+      "sha256": "99eddff1c061e30d2400e7164cedd7c03f8f0b418e06e128c0ecc8d44969ea34",
+      "fresh": true
+    },
+    {
+      "file": "medidor-E8-pantalla-soporte-explotado.png",
+      "expected_pixels": [
+        1800,
+        1350
+      ],
+      "pixels": [
+        1800,
+        1350
+      ],
+      "bytes": 2241171,
+      "grayscale_stddev": 22.39,
+      "sha256": "c065be6064f568888204f168c440ea9f918ef541702ce8db6a1789dd6caa4e09",
+      "fresh": true
+    }
+  ],
+  "scope": "Integridad, resolución, contenido no vacío y vigencia de renders fijos.",
+  "does_not_prove": "Encaje físico, seguridad eléctrica, imprimibilidad ni fidelidad óptica."
+}

@@ -1,0 +1,11 @@
+Assembly,References,Description,Quantity,Purchase status,Mounting / verification
+T2,J2 J3,JST-XH 2-way vertical header,2,planned,Short harnesses to panel SCT jacks
+T2,R3,"15 kohm metal-film resistor, 1%, 0.25 W",1,planned,VBIAS upper divider
+T2,R4,"10 kohm metal-film resistor, 1%, 0.25 W",1,planned,VBIAS lower divider
+T2,R5 R6,"3.3 kohm metal-film resistor, 1%, 0.25 W",2,planned,ADC series filters
+T2,C5 C6,"47 nF film or C0G THT, 5%",2,planned,"Return to VBIAS, not GND"
+T2,C7,10 uF >=16 V electrolytic,1,planned,VBIAS reservoir
+T2,C8,100 nF 50 V ceramic THT,1,verified shared stock,VBIAS bypass
+T2,D2 D3 D4 D5,BAT85 Schottky DO-35,4,planned,ADC clamps
+T2,C_ADC_I,JST-XH 4-way vertical header,1,planned,+3V3 / GND / CH1_ADC / CH2_ADC
+T2,BOARD,"FR4 perfboard, 2.54 mm pitch, cut to 70 x 55 mm",1,planned,Keep SCT traces away from digital/power wiring

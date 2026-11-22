@@ -13,7 +13,7 @@
 			(at 0 27.94 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 			)
 		)
@@ -21,7 +21,7 @@
 			(at 0 -27.94 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 			)
 		)
@@ -29,7 +29,7 @@
 			(at 0 0 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
@@ -38,7 +38,7 @@
 			(at 0 0 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
@@ -47,7 +47,7 @@
 			(at 0 0 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
@@ -80,14 +80,14 @@
 				(name "3V3"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "1"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -98,14 +98,14 @@
 				(name "EN"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "2"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -116,14 +116,14 @@
 				(name "VP/IO36"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "3"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -134,14 +134,14 @@
 				(name "VN/IO39"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "4"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -152,14 +152,14 @@
 				(name "IO34"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "5"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -170,14 +170,14 @@
 				(name "IO35"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "6"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -188,14 +188,14 @@
 				(name "IO32"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "7"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -206,14 +206,14 @@
 				(name "IO33"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "8"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -224,14 +224,14 @@
 				(name "IO25"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "9"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -242,14 +242,14 @@
 				(name "IO26"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "10"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -260,14 +260,14 @@
 				(name "IO27"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "11"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -278,14 +278,14 @@
 				(name "IO14"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "12"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -296,14 +296,14 @@
 				(name "IO12"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "13"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -314,14 +314,14 @@
 				(name "GND"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "14"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -332,14 +332,14 @@
 				(name "IO13"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "15"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -350,14 +350,14 @@
 				(name "SD2/IO9"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "16"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -368,14 +368,14 @@
 				(name "SD3/IO10"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "17"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -386,14 +386,14 @@
 				(name "CMD/IO11"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "18"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -404,14 +404,14 @@
 				(name "5V"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "19"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -422,14 +422,14 @@
 				(name "GND"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "20"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -440,14 +440,14 @@
 				(name "IO23"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "21"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -458,14 +458,14 @@
 				(name "IO22"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "22"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -476,14 +476,14 @@
 				(name "TXD0/IO1"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "23"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -494,14 +494,14 @@
 				(name "RXD0/IO3"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "24"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -512,14 +512,14 @@
 				(name "IO21"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "25"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -530,14 +530,14 @@
 				(name "GND"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "26"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -548,14 +548,14 @@
 				(name "IO19"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "27"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -566,14 +566,14 @@
 				(name "IO18"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "28"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -584,14 +584,14 @@
 				(name "IO5"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "29"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -602,14 +602,14 @@
 				(name "IO17"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "30"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -620,14 +620,14 @@
 				(name "IO16"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "31"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -638,14 +638,14 @@
 				(name "IO4"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "32"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -656,14 +656,14 @@
 				(name "IO0"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "33"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -674,14 +674,14 @@
 				(name "IO2"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "34"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -692,14 +692,14 @@
 				(name "IO15"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "35"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -710,14 +710,14 @@
 				(name "SD1/IO8"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "36"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -728,14 +728,14 @@
 				(name "SD0/IO7"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "37"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -746,14 +746,14 @@
 				(name "CLK/IO6"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
 				(number "38"
 					(effects
 						(font
-							(size 1.27 1.27)
+							(size 1.5 1.5)
 						)
 					)
 				)
@@ -1180,6 +1180,144 @@
 					(effects
 						(font
 							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+	)
+	(symbol "LM2596_Module"
+		(pin_names
+			(offset 1.016)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 7.62 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+			)
+		)
+		(property "Value" "LM2596 adjusted to 5.0 V"
+			(at 0 -7.62 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Off-board LM2596 buck; adjust to 5.0 V before connecting any load"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "LM2596_Module_0_1"
+			(rectangle
+				(start -10.16 5.08)
+				(end 10.16 -5.08)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "LM2596_Module_1_1"
+			(pin power_in line
+				(at -10.16 2.54 0)
+				(length 5.08)
+				(name "VIN+"
+					(effects
+						(font
+							(size 1.5 1.5)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.5 1.5)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at -10.16 -2.54 0)
+				(length 5.08)
+				(name "VIN-"
+					(effects
+						(font
+							(size 1.5 1.5)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.5 1.5)
+						)
+					)
+				)
+			)
+			(pin power_out line
+				(at 10.16 2.54 180)
+				(length 5.08)
+				(name "VOUT+"
+					(effects
+						(font
+							(size 1.5 1.5)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.5 1.5)
+						)
+					)
+				)
+			)
+			(pin power_out line
+				(at 10.16 -2.54 180)
+				(length 5.08)
+				(name "VOUT-"
+					(effects
+						(font
+							(size 1.5 1.5)
+						)
+					)
+				)
+				(number "4"
+					(effects
+						(font
+							(size 1.5 1.5)
 						)
 					)
 				)

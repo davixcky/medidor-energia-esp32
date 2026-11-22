@@ -1,4 +1,5 @@
 /frames/
+/__pycache__/
 /*.blend1
 /preview-*.jpg
 

@@ -5,15 +5,15 @@
 	(uuid "c3099875-1622-5bf7-a02d-166f6fea464f")
 	(paper "A4")
 	(title_block
-		(title "Medidor de energía · T1")
-		(date "2026-11-20")
-		(rev "E.7")
+		(title "Energy meter · T1")
+		(date "2026-11-22")
+		(rev "E.9")
 		(company "")
-		(comment 1 "Tarjeta perforada modular")
-		(comment 2 "Tira BTF FCOB WS2811 12 V")
+		(comment 1 "Modular perfboard")
+		(comment 2 "Touch LilyGO · 12 V input · LM2596 to 5 V")
 	)
 	(lib_symbols
-		(symbol "Medidor:MT3608_Module"
+		(symbol "Medidor:LM2596_Module"
 			(pin_names
 				(offset 1.016)
 			)
@@ -24,15 +24,15 @@
 				(at 0 7.62 0)
 				(effects
 					(font
-						(size 1.27 1.27)
+						(size 1.5 1.5)
 					)
 				)
 			)
-			(property "Value" "MT3608 ajustado a 12,0 V"
+			(property "Value" "LM2596 adjusted to 5.0 V"
 				(at 0 -7.62 0)
 				(effects
 					(font
-						(size 1.27 1.27)
+						(size 1.5 1.5)
 					)
 				)
 			)
@@ -40,7 +40,7 @@
 				(at 0 0 0)
 				(effects
 					(font
-						(size 1.27 1.27)
+						(size 1.5 1.5)
 					)
 					(hide yes)
 				)
@@ -49,21 +49,21 @@
 				(at 0 0 0)
 				(effects
 					(font
-						(size 1.27 1.27)
+						(size 1.5 1.5)
 					)
 					(hide yes)
 				)
 			)
-			(property "Description" "Módulo elevador MT3608; ajustar a 12,0 V antes de conectar la tira"
+			(property "Description" "Off-board LM2596 buck; adjust to 5.0 V before connecting any load"
 				(at 0 0 0)
 				(effects
 					(font
-						(size 1.27 1.27)
+						(size 1.5 1.5)
 					)
 					(hide yes)
 				)
 			)
-			(symbol "MT3608_Module_0_1"
+			(symbol "LM2596_Module_0_1"
 				(rectangle
 					(start -10.16 5.08)
 					(end 10.16 -5.08)
@@ -76,21 +76,21 @@
 					)
 				)
 			)
-			(symbol "MT3608_Module_1_1"
+			(symbol "LM2596_Module_1_1"
 				(pin power_in line
 					(at -10.16 2.54 0)
 					(length 5.08)
 					(name "VIN+"
 						(effects
 							(font
-								(size 1.27 1.27)
+								(size 1.5 1.5)
 							)
 						)
 					)
 					(number "1"
 						(effects
 							(font
-								(size 1.27 1.27)
+								(size 1.5 1.5)
 							)
 						)
 					)
@@ -101,14 +101,14 @@
 					(name "VIN-"
 						(effects
 							(font
-								(size 1.27 1.27)
+								(size 1.5 1.5)
 							)
 						)
 					)
 					(number "2"
 						(effects
 							(font
-								(size 1.27 1.27)
+								(size 1.5 1.5)
 							)
 						)
 					)
@@ -119,14 +119,14 @@
 					(name "VOUT+"
 						(effects
 							(font
-								(size 1.27 1.27)
+								(size 1.5 1.5)
 							)
 						)
 					)
 					(number "3"
 						(effects
 							(font
-								(size 1.27 1.27)
+								(size 1.5 1.5)
 							)
 						)
 					)
@@ -137,14 +137,14 @@
 					(name "VOUT-"
 						(effects
 							(font
-								(size 1.27 1.27)
+								(size 1.5 1.5)
 							)
 						)
 					)
 					(number "4"
 						(effects
 							(font
-								(size 1.27 1.27)
+								(size 1.5 1.5)
 							)
 						)
 					)
@@ -1417,10 +1417,22 @@
 			(embedded_fonts no)
 		)
 	)
+	(junction
+		(at 124.46 53.34)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c03866d1-2539-5c19-8095-2e6a560da9dd")
+	)
+	(junction
+		(at 149.86 53.34)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "59d4b8b8-104b-5a4f-9f13-6aed2e340938")
+	)
 	(wire
 		(pts
-			(xy 33.02 50.8)
-			(xy 41.91 49.53)
+			(xy 35.56 54.61)
+			(xy 66.04 53.34)
 		)
 		(stroke
 			(width 0)
@@ -1430,8 +1442,8 @@
 	)
 	(wire
 		(pts
-			(xy 49.53 49.53)
-			(xy 57.15 49.53)
+			(xy 73.66 53.34)
+			(xy 101.6 53.34)
 		)
 		(stroke
 			(width 0)
@@ -1441,8 +1453,8 @@
 	)
 	(wire
 		(pts
-			(xy 64.77 49.53)
-			(xy 71.12 49.53)
+			(xy 109.22 53.34)
+			(xy 124.46 53.34)
 		)
 		(stroke
 			(width 0)
@@ -1452,8 +1464,8 @@
 	)
 	(wire
 		(pts
-			(xy 33.02 53.34)
-			(xy 35.56 53.34)
+			(xy 35.56 57.15)
+			(xy 44.45 57.15)
 		)
 		(stroke
 			(width 0)
@@ -1463,8 +1475,8 @@
 	)
 	(wire
 		(pts
-			(xy 35.56 53.34)
-			(xy 35.56 60.96)
+			(xy 44.45 57.15)
+			(xy 44.45 69.85)
 		)
 		(stroke
 			(width 0)
@@ -1474,8 +1486,8 @@
 	)
 	(wire
 		(pts
-			(xy 76.2 52.07)
-			(xy 76.2 49.53)
+			(xy 149.86 55.88)
+			(xy 149.86 53.34)
 		)
 		(stroke
 			(width 0)
@@ -1485,8 +1497,8 @@
 	)
 	(wire
 		(pts
-			(xy 88.9 52.07)
-			(xy 88.9 49.53)
+			(xy 124.46 53.34)
+			(xy 149.86 53.34)
 		)
 		(stroke
 			(width 0)
@@ -1496,8 +1508,8 @@
 	)
 	(wire
 		(pts
-			(xy 53.34 80.01)
-			(xy 48.26 80.01)
+			(xy 180.34 55.88)
+			(xy 180.34 53.34)
 		)
 		(stroke
 			(width 0)
@@ -1507,8 +1519,8 @@
 	)
 	(wire
 		(pts
-			(xy 53.34 85.09)
-			(xy 48.26 85.09)
+			(xy 124.46 53.34)
+			(xy 180.34 53.34)
 		)
 		(stroke
 			(width 0)
@@ -1518,8 +1530,8 @@
 	)
 	(wire
 		(pts
-			(xy 73.66 80.01)
-			(xy 78.74 80.01)
+			(xy 35.56 95.25)
+			(xy 52.07 95.25)
 		)
 		(stroke
 			(width 0)
@@ -1529,8 +1541,8 @@
 	)
 	(wire
 		(pts
-			(xy 73.66 85.09)
-			(xy 78.74 85.09)
+			(xy 35.56 97.79)
+			(xy 52.07 97.79)
 		)
 		(stroke
 			(width 0)
@@ -1540,8 +1552,8 @@
 	)
 	(wire
 		(pts
-			(xy 91.44 78.74)
-			(xy 91.44 76.2)
+			(xy 109.22 92.71)
+			(xy 90.17 92.71)
 		)
 		(stroke
 			(width 0)
@@ -1551,8 +1563,8 @@
 	)
 	(wire
 		(pts
-			(xy 111.76 109.22)
-			(xy 101.6 109.22)
+			(xy 109.22 97.79)
+			(xy 90.17 97.79)
 		)
 		(stroke
 			(width 0)
@@ -1562,8 +1574,8 @@
 	)
 	(wire
 		(pts
-			(xy 111.76 111.76)
-			(xy 101.6 111.76)
+			(xy 129.54 92.71)
+			(xy 149.86 92.71)
 		)
 		(stroke
 			(width 0)
@@ -1573,8 +1585,8 @@
 	)
 	(wire
 		(pts
-			(xy 111.76 127)
-			(xy 101.6 127)
+			(xy 129.54 97.79)
+			(xy 149.86 97.79)
 		)
 		(stroke
 			(width 0)
@@ -1584,8 +1596,8 @@
 	)
 	(wire
 		(pts
-			(xy 111.76 129.54)
-			(xy 101.6 129.54)
+			(xy 204.47 95.25)
+			(xy 185.42 95.25)
 		)
 		(stroke
 			(width 0)
@@ -1595,8 +1607,8 @@
 	)
 	(wire
 		(pts
-			(xy 111.76 144.78)
-			(xy 101.6 144.78)
+			(xy 204.47 97.79)
+			(xy 185.42 97.79)
 		)
 		(stroke
 			(width 0)
@@ -1606,8 +1618,8 @@
 	)
 	(wire
 		(pts
-			(xy 111.76 147.32)
-			(xy 101.6 147.32)
+			(xy 245.11 91.44)
+			(xy 245.11 86.36)
 		)
 		(stroke
 			(width 0)
@@ -1617,8 +1629,8 @@
 	)
 	(wire
 		(pts
-			(xy 111.76 149.86)
-			(xy 101.6 149.86)
+			(xy 224.79 124.46)
+			(xy 199.39 124.46)
 		)
 		(stroke
 			(width 0)
@@ -1626,7 +1638,73 @@
 		)
 		(uuid "0152a739-6c6e-543e-8d38-01c30ff75975")
 	)
-	(text "T1 · ALIMENTACIÓN 5 V + ELEVADOR 12 V LED"
+	(wire
+		(pts
+			(xy 224.79 127)
+			(xy 199.39 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "543f88c7-d60d-5e6b-a8f6-8b9f39e641bc")
+	)
+	(wire
+		(pts
+			(xy 224.79 149.86)
+			(xy 199.39 149.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0ba40a45-a16f-5937-8f5d-87b420e8374e")
+	)
+	(wire
+		(pts
+			(xy 224.79 152.4)
+			(xy 199.39 152.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5276f022-6345-5c0e-aefa-897d0e7df136")
+	)
+	(wire
+		(pts
+			(xy 144.78 172.72)
+			(xy 115.57 172.72)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b8a6268f-b2e5-5024-9096-c7e52f61b6e3")
+	)
+	(wire
+		(pts
+			(xy 144.78 175.26)
+			(xy 115.57 175.26)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8ac581e7-ece1-583f-a8bc-13d68c4d857e")
+	)
+	(wire
+		(pts
+			(xy 144.78 177.8)
+			(xy 115.57 177.8)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a059373e-8579-5c4c-98c9-0c6ad5b3e36f")
+	)
+	(text "T1 · 12 V INPUT + LM2596 BUCK + STAR DISTRIBUTION"
 		(exclude_from_sim no)
 		(at 20.32 25.4 0)
 		(effects
@@ -1638,7 +1716,7 @@
 		)
 		(uuid "cb9ac6df-4014-50eb-b64f-b1142d4dc3ad")
 	)
-	(text "Tarjeta perforada recortada: 50 × 40 mm · paso 2,54 mm"
+	(text "Perfboard cut size: 50 × 40 mm · 2.54 mm pitch"
 		(exclude_from_sim no)
 		(at 20.32 30.48 0)
 		(effects
@@ -1649,9 +1727,21 @@
 		)
 		(uuid "6fb794bd-843e-5e3b-8f6e-3854abac8b6e")
 	)
+	(text "Component values and purchasing status: bom-por-tarjeta/BOM-T1.csv"
+		(exclude_from_sim no)
+		(at 20.32 34.29 0)
+		(effects
+			(font
+				(size 1.15 1.15)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+		(uuid "9e26fffa-c78e-5872-8573-fdd2dcdb0779")
+	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x02")
-		(at 27.94 50.8 0)
+		(at 30.48 54.61 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -1660,38 +1750,38 @@
 		(dnp no)
 		(uuid "a6490a48-c4d0-5c4b-91e6-aef86c7dd86a")
 		(property "Reference" "J1"
-			(at 27.94 45.26 0)
+			(at 30.48 49.53 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(justify right)
 			)
 		)
-		(property "Value" "ENTRADA ADAP-5V-5A 5,5x2,5"
-			(at 30.94 52.8 0)
+		(property "Value" "12 V DC FROM CON-156A · CENTER POSITIVE"
+			(at 33.02 57.15 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(justify right)
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
-			(at 27.94 50.8 0)
+		(property "Footprint" "TerminalBlock_CUI:TerminalBlock_CUI_TB007-508-02_1x02_P5.08mm_Horizontal"
+			(at 30.48 54.61 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Datasheet" ""
-			(at 27.94 50.8 0)
+			(at 30.48 54.61 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
@@ -1713,7 +1803,7 @@
 	)
 	(symbol
 		(lib_id "Device:Polyfuse")
-		(at 45.72 49.53 90)
+		(at 69.85 53.34 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1721,37 +1811,38 @@
 		(dnp no)
 		(uuid "6f1eb276-bc5e-5581-803b-ee91fee1b0e0")
 		(property "Reference" "F2"
-			(at 48.72 47.53 90)
+			(at 72.39 52.07 90)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(justify left)
 			)
 		)
-		(property "Value" "PTC hold 2,0 A"
-			(at 48.72 51.53 90)
+		(property "Value" "PTC hold 2.0 A · rated >=16 V"
+			(at 72.39 55.88 90)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(justify left)
+				(hide yes)
 			)
 		)
 		(property "Footprint" "Fuse:Fuse_Littelfuse-LVR200"
-			(at 45.72 49.53 0)
+			(at 69.85 53.34 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Datasheet" ""
-			(at 45.72 49.53 0)
+			(at 69.85 53.34 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
@@ -1773,7 +1864,7 @@
 	)
 	(symbol
 		(lib_id "Device:D_Schottky")
-		(at 60.96 49.53 180)
+		(at 105.41 53.34 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1781,37 +1872,38 @@
 		(dnp no)
 		(uuid "4c0eda9d-f1dd-5196-bb05-383a58079d79")
 		(property "Reference" "D1"
-			(at 63.96 47.53 0)
+			(at 107.95 52.07 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(justify right)
 			)
 		)
 		(property "Value" "1N5822 3 A"
-			(at 63.96 51.53 0)
+			(at 107.95 55.88 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(justify right)
+				(hide yes)
 			)
 		)
 		(property "Footprint" "Diode_THT:D_DO-201AD_P15.24mm_Horizontal"
-			(at 60.96 49.53 0)
+			(at 105.41 53.34 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Datasheet" ""
-			(at 60.96 49.53 0)
+			(at 105.41 53.34 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
@@ -1831,11 +1923,11 @@
 			)
 		)
 	)
-	(label "+5V"
-		(at 71.12 49.53 0)
+	(label "+12V_PROT"
+		(at 124.46 53.34 0)
 		(effects
 			(font
-				(size 1.27 1.27)
+				(size 1.7 1.7)
 			)
 			(justify left bottom)
 		)
@@ -1843,7 +1935,7 @@
 	)
 	(symbol
 		(lib_id "power:PWR_FLAG")
-		(at 71.12 49.53 0)
+		(at 124.46 53.34 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
@@ -1851,36 +1943,37 @@
 		(dnp no)
 		(uuid "ffb5b0bd-c83c-530f-a121-e8857c03b35e")
 		(property "Reference" "#FLG01"
-			(at 71.12 49.53 0)
+			(at 124.46 53.34 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Value" "PWR_FLAG"
-			(at 71.12 45.03 0)
+			(at 124.46 49.53 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
+				(hide yes)
 			)
 		)
 		(property "Footprint" ""
-			(at 71.12 49.53 0)
+			(at 124.46 53.34 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Datasheet" ""
-			(at 71.12 49.53 0)
+			(at 124.46 53.34 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
@@ -1899,7 +1992,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 35.56 60.96 0)
+		(at 44.45 69.85 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
@@ -1907,36 +2000,36 @@
 		(dnp no)
 		(uuid "fa57cf53-f8e1-5e31-ac85-e2f04296a5ca")
 		(property "Reference" "#PWR001"
-			(at 35.56 60.96 0)
+			(at 44.45 69.85 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Value" "GND"
-			(at 35.56 64.36 0)
+			(at 44.45 73.66 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 			)
 		)
 		(property "Footprint" ""
-			(at 35.56 60.96 0)
+			(at 44.45 69.85 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Datasheet" ""
-			(at 35.56 60.96 0)
+			(at 44.45 69.85 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
@@ -1955,7 +2048,7 @@
 	)
 	(symbol
 		(lib_id "Device:C_Polarized")
-		(at 76.2 55.88 0)
+		(at 149.86 59.69 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1963,37 +2056,38 @@
 		(dnp no)
 		(uuid "036cc24a-7d18-58e8-9f66-689cbe9e60fd")
 		(property "Reference" "C1"
-			(at 79.2 53.88 0)
+			(at 152.4 58.42 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(justify left)
 			)
 		)
-		(property "Value" "470u 35V (comprado)"
-			(at 79.2 57.88 0)
+		(property "Value" "470u 35V"
+			(at 152.4 62.23 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(justify left)
+				(hide yes)
 			)
 		)
 		(property "Footprint" "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm"
-			(at 76.2 55.88 0)
+			(at 149.86 59.69 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Datasheet" ""
-			(at 76.2 55.88 0)
+			(at 149.86 59.69 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
@@ -2015,7 +2109,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 88.9 55.88 0)
+		(at 180.34 59.69 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2023,37 +2117,38 @@
 		(dnp no)
 		(uuid "c35a7e35-8bcb-56bd-87bf-4b7db4f134b9")
 		(property "Reference" "C2"
-			(at 91.9 53.88 0)
+			(at 182.88 58.42 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(justify left)
 			)
 		)
 		(property "Value" "100n"
-			(at 91.9 57.88 0)
+			(at 182.88 62.23 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(justify left)
+				(hide yes)
 			)
 		)
 		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
-			(at 88.9 55.88 0)
+			(at 180.34 59.69 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Datasheet" ""
-			(at 88.9 55.88 0)
+			(at 180.34 59.69 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
@@ -2073,19 +2168,9 @@
 			)
 		)
 	)
-	(label "+5V"
-		(at 76.2 49.53 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "fa08d8b1-f44c-5e8e-92b6-0af2842b2a3b")
-	)
 	(symbol
 		(lib_id "power:GND")
-		(at 76.2 59.69 0)
+		(at 149.86 63.5 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
@@ -2093,36 +2178,36 @@
 		(dnp no)
 		(uuid "587de245-998a-5a26-aace-11e4539a0f5c")
 		(property "Reference" "#PWR002"
-			(at 76.2 59.69 0)
+			(at 149.86 63.5 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Value" "GND"
-			(at 76.2 63.09 0)
+			(at 149.86 67.31 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 			)
 		)
 		(property "Footprint" ""
-			(at 76.2 59.69 0)
+			(at 149.86 63.5 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Datasheet" ""
-			(at 76.2 59.69 0)
+			(at 149.86 63.5 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
@@ -2139,19 +2224,9 @@
 			)
 		)
 	)
-	(label "+5V"
-		(at 88.9 49.53 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "fa8da0bb-881a-5157-bcd5-f5edffb1c13a")
-	)
 	(symbol
 		(lib_id "power:GND")
-		(at 88.9 59.69 0)
+		(at 180.34 63.5 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
@@ -2159,36 +2234,36 @@
 		(dnp no)
 		(uuid "488d339c-3e63-5723-8ea7-f5d6e044341a")
 		(property "Reference" "#PWR003"
-			(at 88.9 59.69 0)
+			(at 180.34 63.5 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Value" "GND"
-			(at 88.9 63.09 0)
+			(at 180.34 67.31 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 			)
 		)
 		(property "Footprint" ""
-			(at 88.9 59.69 0)
+			(at 180.34 63.5 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Datasheet" ""
-			(at 88.9 59.69 0)
+			(at 180.34 63.5 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
@@ -2206,46 +2281,48 @@
 		)
 	)
 	(symbol
-		(lib_id "Medidor:MT3608_Module")
-		(at 63.5 82.55 0)
+		(lib_id "Connector_Generic:Conn_01x02")
+		(at 30.48 95.25 0)
+		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "c7b559ee-5f96-5c76-b99f-ea04e0576ec2")
-		(property "Reference" "U4"
-			(at 66.5 80.55 0)
+		(property "Reference" "C_BUCK_IN"
+			(at 30.48 88.9 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
-		(property "Value" "MT3608 5→12 V"
-			(at 66.5 84.55 0)
+		(property "Value" "TO LM2596 IN: +12V_PROT / GND"
+			(at 33.02 96.52 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
-				(justify left)
+				(justify right)
+				(hide yes)
 			)
 		)
-		(property "Footprint" ""
-			(at 63.5 82.55 0)
+		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
+			(at 30.48 95.25 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Datasheet" ""
-			(at 63.5 82.55 0)
+			(at 30.48 95.25 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
@@ -2256,11 +2333,92 @@
 		(pin "2"
 			(uuid "f69771c9-264a-5e9a-9e36-715db4778882")
 		)
-		(pin "3"
+		(instances
+			(project "medidor-perforada-t1"
+				(path "/c3099875-1622-5bf7-a02d-166f6fea464f"
+					(reference "C_BUCK_IN")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "+12V_PROT"
+		(at 52.07 95.25 0)
+		(effects
+			(font
+				(size 1.7 1.7)
+			)
+			(justify left bottom)
+		)
+		(uuid "fa08d8b1-f44c-5e8e-92b6-0af2842b2a3b")
+	)
+	(label "GND"
+		(at 52.07 97.79 0)
+		(effects
+			(font
+				(size 1.7 1.7)
+			)
+			(justify left bottom)
+		)
+		(uuid "fa8da0bb-881a-5157-bcd5-f5edffb1c13a")
+	)
+	(symbol
+		(lib_id "Medidor:LM2596_Module")
+		(at 119.38 95.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "bcbc87d2-04fe-5f10-9e3d-bf426ffd3427")
+		(property "Reference" "U4"
+			(at 123.19 92.71 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "LM2596 OFF-BOARD 12→5 V"
+			(at 123.19 96.52 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 119.38 95.25 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 119.38 95.25 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
 			(uuid "133147f0-8e6d-52d0-844e-80360dcae20b")
 		)
-		(pin "4"
+		(pin "2"
 			(uuid "ef565f77-5260-5d9c-9a8a-995a318fbbce")
+		)
+		(pin "3"
+			(uuid "73083686-4498-5a19-ac0d-b8e0ed0b021a")
+		)
+		(pin "4"
+			(uuid "0e776d1d-25b5-51dc-ad02-76772cf40fda")
 		)
 		(instances
 			(project "medidor-perforada-t1"
@@ -2271,11 +2429,11 @@
 			)
 		)
 	)
-	(label "+5V"
-		(at 48.26 80.01 180)
+	(label "+12V_PROT"
+		(at 90.17 92.71 180)
 		(effects
 			(font
-				(size 1.27 1.27)
+				(size 1.7 1.7)
 			)
 			(justify right bottom)
 		)
@@ -2283,50 +2441,50 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 48.26 85.09 270)
+		(at 90.17 97.79 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "bcbc87d2-04fe-5f10-9e3d-bf426ffd3427")
+		(uuid "82808b85-3b14-545b-966f-0f17601a62cb")
 		(property "Reference" "#PWR004"
-			(at 48.26 85.09 0)
+			(at 90.17 97.79 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Value" "GND"
-			(at 43.06 85.09 0)
+			(at 85.09 97.79 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 			)
 		)
 		(property "Footprint" ""
-			(at 48.26 85.09 0)
+			(at 90.17 97.79 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Datasheet" ""
-			(at 48.26 85.09 0)
+			(at 90.17 97.79 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(pin "1"
-			(uuid "73083686-4498-5a19-ac0d-b8e0ed0b021a")
+			(uuid "6686b0c2-a12b-5826-8a82-eebd98ace098")
 		)
 		(instances
 			(project "medidor-perforada-t1"
@@ -2337,11 +2495,11 @@
 			)
 		)
 	)
-	(label "+12V_LED"
-		(at 78.74 80.01 0)
+	(label "+5V_PROT"
+		(at 149.86 92.71 0)
 		(effects
 			(font
-				(size 1.27 1.27)
+				(size 1.7 1.7)
 			)
 			(justify left bottom)
 		)
@@ -2349,50 +2507,50 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 78.74 85.09 90)
+		(at 149.86 97.79 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "82808b85-3b14-545b-966f-0f17601a62cb")
+		(uuid "59d7b399-eada-5154-9db4-ddd66e0f2abe")
 		(property "Reference" "#PWR005"
-			(at 78.74 85.09 0)
+			(at 149.86 97.79 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Value" "GND"
-			(at 83.94 85.09 0)
+			(at 154.94 97.79 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 			)
 		)
 		(property "Footprint" ""
-			(at 78.74 85.09 0)
+			(at 149.86 97.79 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Datasheet" ""
-			(at 78.74 85.09 0)
+			(at 149.86 97.79 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(pin "1"
-			(uuid "0e776d1d-25b5-51dc-ad02-76772cf40fda")
+			(uuid "f68f1cd1-e74f-57eb-a99f-e5800d593c69")
 		)
 		(instances
 			(project "medidor-perforada-t1"
@@ -2404,55 +2562,137 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:C_Polarized")
-		(at 91.44 82.55 0)
+		(lib_id "Connector_Generic:Conn_01x02")
+		(at 209.55 95.25 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "59d7b399-eada-5154-9db4-ddd66e0f2abe")
-		(property "Reference" "C17"
-			(at 94.44 80.55 0)
+		(uuid "6e7ff85f-e295-52fd-92ab-df4bbec0c55c")
+		(property "Reference" "C_BUCK_OUT"
+			(at 209.55 88.9 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(justify left)
 			)
 		)
-		(property "Value" "680u 16V"
-			(at 94.44 84.55 0)
+		(property "Value" "FROM LM2596 OUT: +5V_PROT / GND"
+			(at 213.36 96.52 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(justify left)
+				(hide yes)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm"
-			(at 91.44 82.55 0)
+		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
+			(at 209.55 95.25 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Datasheet" ""
-			(at 91.44 82.55 0)
+			(at 209.55 95.25 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(pin "1"
-			(uuid "6686b0c2-a12b-5826-8a82-eebd98ace098")
+			(uuid "dfd33727-bf6a-5987-8b1b-43e86ddc093f")
 		)
 		(pin "2"
-			(uuid "f68f1cd1-e74f-57eb-a99f-e5800d593c69")
+			(uuid "bd0fc387-b008-5905-aace-04c4eebda53b")
+		)
+		(instances
+			(project "medidor-perforada-t1"
+				(path "/c3099875-1622-5bf7-a02d-166f6fea464f"
+					(reference "C_BUCK_OUT")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "+5V_PROT"
+		(at 185.42 95.25 180)
+		(effects
+			(font
+				(size 1.7 1.7)
+			)
+			(justify right bottom)
+		)
+		(uuid "17dad608-1ca4-5291-93e7-52200232a7fc")
+	)
+	(label "GND"
+		(at 185.42 97.79 180)
+		(effects
+			(font
+				(size 1.7 1.7)
+			)
+			(justify right bottom)
+		)
+		(uuid "b4d4b581-6f68-522d-8a05-76dae74dca94")
+	)
+	(symbol
+		(lib_id "Device:C_Polarized")
+		(at 245.11 95.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "24b8f405-4cdd-5646-a5cc-a2cf3adc8979")
+		(property "Reference" "C17"
+			(at 247.65 92.71 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "680u 16V"
+			(at 247.65 96.52 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm"
+			(at 245.11 95.25 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 245.11 95.25 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "559eb897-c2cb-5b1a-b75e-310b220015e6")
+		)
+		(pin "2"
+			(uuid "8259a6a7-75f2-58d2-82b4-d94b7f109a2d")
 		)
 		(instances
 			(project "medidor-perforada-t1"
@@ -2463,62 +2703,62 @@
 			)
 		)
 	)
-	(label "+12V_LED"
-		(at 91.44 76.2 0)
+	(label "+5V_PROT"
+		(at 245.11 86.36 0)
 		(effects
 			(font
-				(size 1.27 1.27)
+				(size 1.7 1.7)
 			)
 			(justify left bottom)
 		)
-		(uuid "17dad608-1ca4-5291-93e7-52200232a7fc")
+		(uuid "372edb76-4ebe-5cee-ae4c-d25eb76f2303")
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 91.44 86.36 0)
+		(at 245.11 99.06 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "6e7ff85f-e295-52fd-92ab-df4bbec0c55c")
+		(uuid "af39049c-2cbc-5ec3-a02b-6a778cb346c6")
 		(property "Reference" "#PWR006"
-			(at 91.44 86.36 0)
+			(at 245.11 99.06 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Value" "GND"
-			(at 91.44 89.76 0)
+			(at 245.11 102.87 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 			)
 		)
 		(property "Footprint" ""
-			(at 91.44 86.36 0)
+			(at 245.11 99.06 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Datasheet" ""
-			(at 91.44 86.36 0)
+			(at 245.11 99.06 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(pin "1"
-			(uuid "dfd33727-bf6a-5987-8b1b-43e86ddc093f")
+			(uuid "1a26020c-49fe-5a72-988a-e7c72860119f")
 		)
 		(instances
 			(project "medidor-perforada-t1"
@@ -2531,208 +2771,46 @@
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x02")
-		(at 116.84 109.22 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "24b8f405-4cdd-5646-a5cc-a2cf3adc8979")
-		(property "Reference" "C_PWR3"
-			(at 116.84 103.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "+5V / GND"
-			(at 119.84 111.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
-			(at 116.84 109.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 116.84 109.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "bd0fc387-b008-5905-aace-04c4eebda53b")
-		)
-		(pin "2"
-			(uuid "559eb897-c2cb-5b1a-b75e-310b220015e6")
-		)
-		(instances
-			(project "medidor-perforada-t1"
-				(path "/c3099875-1622-5bf7-a02d-166f6fea464f"
-					(reference "C_PWR3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(label "+5V"
-		(at 101.6 109.22 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "b4d4b581-6f68-522d-8a05-76dae74dca94")
-	)
-	(label "GND"
-		(at 101.6 111.76 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "372edb76-4ebe-5cee-ae4c-d25eb76f2303")
-	)
-	(symbol
-		(lib_id "Connector_Generic:Conn_01x02")
-		(at 116.84 127 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "af39049c-2cbc-5ec3-a02b-6a778cb346c6")
-		(property "Reference" "C_PWR4"
-			(at 116.84 121.46 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "+5V / GND"
-			(at 119.84 129 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
-			(at 116.84 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 116.84 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "8259a6a7-75f2-58d2-82b4-d94b7f109a2d")
-		)
-		(pin "2"
-			(uuid "1a26020c-49fe-5a72-988a-e7c72860119f")
-		)
-		(instances
-			(project "medidor-perforada-t1"
-				(path "/c3099875-1622-5bf7-a02d-166f6fea464f"
-					(reference "C_PWR4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(label "+5V"
-		(at 101.6 127 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "eb0ecbf4-5219-59f7-bdad-e0f495f0e674")
-	)
-	(label "GND"
-		(at 101.6 129.54 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "629d610e-87c2-54af-82d9-15027501686c")
-	)
-	(symbol
-		(lib_id "Connector_Generic:Conn_01x03")
-		(at 116.84 147.32 0)
+		(at 229.87 124.46 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "afbc7ebc-5a62-5296-b825-c1ebcefb4f11")
-		(property "Reference" "C_PWR5"
-			(at 116.84 140.51 0)
+		(property "Reference" "C_PWR3"
+			(at 229.87 119.38 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(justify left)
 			)
 		)
-		(property "Value" "+5V / +12V_LED / GND"
-			(at 119.84 149.32 0)
+		(property "Value" "+5V_PROT / GND"
+			(at 232.41 127 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(justify left)
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
-			(at 116.84 147.32 0)
+		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
+			(at 229.87 124.46 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
 		)
 		(property "Datasheet" ""
-			(at 116.84 147.32 0)
+			(at 229.87 124.46 0)
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1.5 1.5)
 				)
 				(hide yes)
 			)
@@ -2743,8 +2821,170 @@
 		(pin "2"
 			(uuid "acf305e7-7729-51a0-8778-994c90b09fb2")
 		)
-		(pin "3"
+		(instances
+			(project "medidor-perforada-t1"
+				(path "/c3099875-1622-5bf7-a02d-166f6fea464f"
+					(reference "C_PWR3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "+5V_PROT"
+		(at 199.39 124.46 180)
+		(effects
+			(font
+				(size 1.7 1.7)
+			)
+			(justify right bottom)
+		)
+		(uuid "eb0ecbf4-5219-59f7-bdad-e0f495f0e674")
+	)
+	(label "GND"
+		(at 199.39 127 180)
+		(effects
+			(font
+				(size 1.7 1.7)
+			)
+			(justify right bottom)
+		)
+		(uuid "629d610e-87c2-54af-82d9-15027501686c")
+	)
+	(symbol
+		(lib_id "Connector_Generic:Conn_01x02")
+		(at 229.87 149.86 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "05f50c40-018e-58cc-9583-6d1f0b777fa3")
+		(property "Reference" "C_PWR4"
+			(at 229.87 144.78 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "+5V_PROT / GND"
+			(at 232.41 152.4 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
+			(at 229.87 149.86 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 229.87 149.86 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
 			(uuid "dceea1db-9b02-5bf2-8b37-63283e99ebfc")
+		)
+		(pin "2"
+			(uuid "81c98674-bb10-53e0-86af-13ed13339f68")
+		)
+		(instances
+			(project "medidor-perforada-t1"
+				(path "/c3099875-1622-5bf7-a02d-166f6fea464f"
+					(reference "C_PWR4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "+5V_PROT"
+		(at 199.39 149.86 180)
+		(effects
+			(font
+				(size 1.7 1.7)
+			)
+			(justify right bottom)
+		)
+		(uuid "5964fb39-a20a-578c-a0ba-a00e2a290349")
+	)
+	(label "GND"
+		(at 199.39 152.4 180)
+		(effects
+			(font
+				(size 1.7 1.7)
+			)
+			(justify right bottom)
+		)
+		(uuid "bb330070-a1e4-5495-a922-012df79e9892")
+	)
+	(symbol
+		(lib_id "Connector_Generic:Conn_01x03")
+		(at 149.86 175.26 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "0f22edaf-a9d3-54d5-be5c-ab8ea9569995")
+		(property "Reference" "C_PWR5"
+			(at 149.86 167.64 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "+5V_PROT / +12V_PROT / GND"
+			(at 152.4 176.53 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
+			(at 149.86 175.26 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 149.86 175.26 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f66c2c15-e461-5078-9154-49eb9b33bc02")
+		)
+		(pin "2"
+			(uuid "1ca1c9d6-51ea-5772-b2a0-4c510bfc6297")
+		)
+		(pin "3"
+			(uuid "29f32bd8-8753-532f-939e-1a9e104e9288")
 		)
 		(instances
 			(project "medidor-perforada-t1"
@@ -2755,46 +2995,46 @@
 			)
 		)
 	)
-	(label "+5V"
-		(at 101.6 144.78 180)
+	(label "+5V_PROT"
+		(at 115.57 172.72 180)
 		(effects
 			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "5964fb39-a20a-578c-a0ba-a00e2a290349")
-	)
-	(label "+12V_LED"
-		(at 101.6 147.32 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "bb330070-a1e4-5495-a922-012df79e9892")
-	)
-	(label "GND"
-		(at 101.6 149.86 180)
-		(effects
-			(font
-				(size 1.27 1.27)
+				(size 1.7 1.7)
 			)
 			(justify right bottom)
 		)
 		(uuid "9eee1ac4-061f-5b7c-ac58-28945bf0e928")
 	)
-	(text "AJUSTE OBLIGATORIO: sin la tira conectada, regular U4 hasta 12,0 V.\nLa tira FCOB de 200 mm consume hasta 2 W; diseñar U4 para ≥0,25 A a 12 V.\nD1 y F2 cambian respecto al diseño anterior: 1N5819/1,1 A quedan con poco margen."
+	(label "+12V_PROT"
+		(at 115.57 175.26 180)
+		(effects
+			(font
+				(size 1.7 1.7)
+			)
+			(justify right bottom)
+		)
+		(uuid "4d538d13-94b4-54db-957a-0661028751d9")
+	)
+	(label "GND"
+		(at 115.57 177.8 180)
+		(effects
+			(font
+				(size 1.7 1.7)
+			)
+			(justify right bottom)
+		)
+		(uuid "f7b9aa05-fdf9-5ae9-a70d-b298fac88f8f")
+	)
+	(text "MANDATORY: disconnect all loads and adjust U4 to 5.0 V before plugging C_BUCK_OUT.\nThe FCOB branch uses +12V_PROT directly; logic and analog boards use +5V_PROT.\nC_BUCK_IN and C_BUCK_OUT are separate keyed 2-way harnesses; never interchange them."
 		(exclude_from_sim no)
-		(at 20.32 167.64 0)
+		(at 20.32 180.34 0)
 		(effects
 			(font
 				(size 1.15 1.15)
 			)
 			(justify left bottom)
 		)
-		(uuid "9e26fffa-c78e-5872-8573-fdd2dcdb0779")
+		(uuid "32cbc300-eb5d-5b1f-a431-b799e4ab0be6")
 	)
 	(sheet_instances
 		(path "/"

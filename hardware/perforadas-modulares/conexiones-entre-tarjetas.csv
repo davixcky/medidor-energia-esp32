@@ -1,37 +1,36 @@
-Cable,Desde,Pin,Señal,Hacia,Pin,Calibre/color recomendado,Nota
-C_PWR4,T1,1,+5V_PROT,T4,1,22 AWG rojo,Par dedicado en estrella
-C_PWR4,T1,2,GND,T4,2,22 AWG negro,Par dedicado en estrella
-C_PWR3,T1,1,+5V_PROT,T3,1,22 AWG rojo,Par dedicado en estrella
-C_PWR3,T1,2,GND,T3,2,22 AWG negro,Par dedicado en estrella
-C_PWR5,T1,1,+5V_PROT,T5,1,22 AWG rojo,Par dedicado en estrella
-C_PWR5,T1,2,+12V_LED,T5,2,22 AWG amarillo,Salida del MT3608 ajustada a 12.0V
-C_PWR5,T1,3,GND,T5,3,22 AWG negro,Retorno común dedicado
-C_ADC_I,T4,1,+3V3,T2,1,24 AWG rojo,Alimenta solamente el acondicionamiento
-C_ADC_I,T4,2,GND,T2,2,24 AWG negro,Retorno junto a señales
-C_ADC_I,T4,3,CH1_ADC,T2,3,24 AWG amarillo,Corto y lejos de buses digitales
-C_ADC_I,T4,4,CH2_ADC,T2,4,24 AWG azul,Corto y lejos de buses digitales
-C_ADC_V,T4,1,+3V3,T3,1,24 AWG rojo,Referencia de clamps
-C_ADC_V,T4,2,GND,T3,2,24 AWG negro,Retorno junto a señal
-C_ADC_V,T4,3,V_ADC,T3,3,24 AWG blanco,Corto y lejos de buses digitales
-C_UI_D,T4,1,GND,T5,1,24 AWG negro,Referencia de las señales
-C_UI_D,T4,2,LED_DATA GPIO13,T5,2,24 AWG verde,Hacia entrada HCT
-C_UI_D,T4,3,BUZZ GPIO14,T5,3,24 AWG naranja,Hacia resistencia de base
-C_UI_E,T4,1,+3V3,T5,1,24 AWG rojo,Encoder y pull-ups
-C_UI_E,T4,2,GND,T5,2,24 AWG negro,Común del encoder
-C_UI_E,T4,3,ENC_A GPIO32,T5,3,24 AWG amarillo,Filtrado en T5
-C_UI_E,T4,4,ENC_B GPIO33,T5,4,24 AWG azul,Filtrado en T5
-C_UI_E,T4,5,ENC_SW GPIO16,T5,5,24 AWG blanco,Filtrado en T5
-C_ZMPT,T3,1,+5V_PROT,U2 LV,1,22 AWG rojo,Solo lado de baja tensión
-C_ZMPT,T3,2,ZMPT_OUT,U2 LV,2,24 AWG amarillo,Confirmar orden impreso en módulo real
-C_ZMPT,T3,3,GND,U2 LV,3,22 AWG negro,No entra a compartimiento de red salvo al módulo
-C_LCD,T4,1,VCC,LCD,1,24 AWG rojo,Verificar pinout de la Waveshare real
-C_LCD,T4,2,GND,LCD,2,24 AWG negro,
-C_LCD,T4,3,DIN GPIO23,LCD,3,24 AWG verde,
-C_LCD,T4,4,CS GPIO22,LCD,4,24 AWG amarillo,
-C_LCD,T4,5,DC GPIO21,LCD,5,24 AWG azul,
-C_LCD,T4,6,BL GPIO19,LCD,6,24 AWG violeta,
-C_LCD,T4,7,CLK GPIO18,LCD,7,24 AWG naranja,
-C_LCD,T4,8,RST GPIO4,LCD,8,24 AWG blanco,
-C_PIX,T5,1,+12V_LED,FCOB,1,22 AWG amarillo,BTF FCOB WS2811 12V; no conectar a +5V
-C_PIX,T5,2,DIN_5V,FCOB,2,24 AWG verde,Salida B0 del 74HCT245 por R16
-C_PIX,T5,3,GND,FCOB,3,22 AWG negro,Verificar flecha de datos de la tira
+Cable,Desde,Pin,Señal,Hacia,Pin destino,Calibre/color recomendado,Nota
+C_DC_IN,Panel JDC,1,+12V_IN,T1 J1,1,22 AWG red,Center positive
+C_DC_IN,Panel JDC,2,GND,T1 J1,2,22 AWG black,Return
+C_BUCK_IN,T1,1,+12V_PROT,U4 LM2596 IN,1,22 AWG red,Key separately from BUCK_OUT
+C_BUCK_IN,T1,2,GND,U4 LM2596 IN,2,22 AWG black,
+C_BUCK_OUT,U4 LM2596 OUT,1,+5V_PROT,T1,1,22 AWG red,Adjust to 5.0 V before connecting
+C_BUCK_OUT,U4 LM2596 OUT,2,GND,T1,2,22 AWG black,
+C_PWR3,T1,1,+5V_PROT,T3,1,22 AWG red,Dedicated star pair
+C_PWR3,T1,2,GND,T3,2,22 AWG black,
+C_PWR4,T1,1,+5V_PROT,T4,1,22 AWG red,Dedicated star pair
+C_PWR4,T1,2,GND,T4,2,22 AWG black,
+C_PWR5,T1,1,+5V_PROT,T5,1,22 AWG red,Dedicated harness
+C_PWR5,T1,2,+12V_PROT,T5,2,22 AWG yellow,FCOB branch
+C_PWR5,T1,3,GND,T5,3,22 AWG black,
+C_ADC_I,T4,1,+3V3,T2,1,24 AWG red,Short; away from digital wiring
+C_ADC_I,T4,2,GND,T2,2,24 AWG black,Twist/route with signals
+C_ADC_I,T4,3,CH1_ADC,T2,3,24 AWG yellow,GPIO36 / ADC1
+C_ADC_I,T4,4,CH2_ADC,T2,4,24 AWG blue,GPIO39 / ADC1
+C_ADC_V,T4,1,+3V3,T3,1,24 AWG red,Clamp reference
+C_ADC_V,T4,2,GND,T3,2,24 AWG black,
+C_ADC_V,T4,3,V_ADC,T3,3,24 AWG white,GPIO35 / ADC1
+C_UI_D,T4,1,GND,T5,1,24 AWG black,Digital reference
+C_UI_D,T4,2,LED_DATA GPIO13,T5,2,24 AWG green,To HCT input
+C_UI_D,T4,3,BUZZ GPIO14,T5,3,24 AWG orange,To R18
+C_LILY,T4,1,+5V_PROT,Panel LCD1,1,22 AWG red,VBUS; disconnect before USB-C
+C_LILY,T4,2,GND,Panel LCD1,2,22 AWG black,No UART/SPI/I2C
+C_LED,T4,1,LED_A,Panel D8,1,24 AWG green,R11 remains on T4
+C_LED,T4,2,GND,Panel D8,2,24 AWG black,
+C_BZ,T5,1,+5V_PROT,Panel BZ1,1,24 AWG red,Passive piezo
+C_BZ,T5,2,BZ_SW,Panel BZ1,2,24 AWG black,Switched by Q1
+C_PIX,T5,1,+12V_PROT,Panel FCOB,1,22 AWG yellow,Never connect to +5 V
+C_PIX,T5,2,DIN_5V,Panel FCOB,2,24 AWG green,Follow data arrow
+C_PIX,T5,3,GND,Panel FCOB,3,22 AWG black,
+C_ZMPT,T3,1,+5V_PROT,Z1 U2 LV,1,22 AWG red,Low-voltage side only
+C_ZMPT,T3,2,ZMPT_OUT,Z1 U2 LV,2,24 AWG yellow,Verify module pin order
+C_ZMPT,T3,3,GND,Z1 U2 LV,3,22 AWG black,

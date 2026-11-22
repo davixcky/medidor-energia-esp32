@@ -1,19 +1,31 @@
 1
-00:00:01,000 --> 00:00:06,120
-Este es el medidor de energía E siete, construido en cinco tarjetas perforadas modulares.
+00:00:00,800 --> 00:00:05,178
+Medidor de energía E siete: cinco tarjetas perforadas y la red separada.
 
 2
-00:00:06,970 --> 00:00:14,373
-La tapa integra pantalla, encoder, pulsadores, un piezo de cuarenta y cuatro milímetros y una barra F C O B de doce voltios.
+00:00:05,988 --> 00:00:10,195
+En la tapa: pantalla, pulsadores, encoder, piezo empotrado y barra de luz.
 
 3
-00:00:15,223 --> 00:00:21,111
-Verde indica conexión. Ámbar indica falta de red o servidor. Rojo indica una alerta sin reconocer.
+00:00:11,006 --> 00:00:12,410
+Verde fijo: conectado.
 
 4
-00:00:21,961 --> 00:00:27,934
-Al abrirlo se ven las borneras, conectores, potenciómetros y el ESP treinta y dos con USB tipo C.
+00:00:13,220 --> 00:00:16,723
+Ámbar, sin conexión: el LED parpadea una vez por segundo.
 
 5
-00:00:28,784 --> 00:00:36,016
-La zona de ciento veinte voltios queda detrás de una guarda independiente. La validación final se realiza con el gabinete cerrado.
+00:00:17,534 --> 00:00:19,842
+Rojo, alerta: cinco veces por segundo.
+
+6
+00:00:20,653 --> 00:00:24,220
+La tapa cierra con imanes y se levanta sin tensar los arneses.
+
+7
+00:00:25,031 --> 00:00:30,507
+Adentro, cinco tarjetas con borneras, conectores y el ESP treinta y dos con USB tipo C.
+
+8
+00:00:31,318 --> 00:00:34,600
+La red de ciento veinte voltios queda bajo su propia guarda.

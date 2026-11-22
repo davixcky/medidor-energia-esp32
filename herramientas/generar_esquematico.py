@@ -78,7 +78,7 @@ def pines_de(simbolo):
     return pines
 
 
-def efectos(tam=1.27, oculto=False, just=None):
+def efectos(tam=1.50, oculto=False, just=None):
     e = [S("effects"), [S("font"), [S("size"), tam, tam]]]
     if just:
         e.append([S("justify")] + [S(j) for j in just.split()])
@@ -92,8 +92,8 @@ def pin_def(tipo, x, y, ang, nombre, numero, largo=5.08):
             [S("name"), nombre, efectos()], [S("number"), numero, efectos()]]
 
 
-def prop(nombre, valor, x, y, ang=0, oculto=False, just=None):
-    return [S("property"), nombre, valor, [S("at"), r(x), r(y), ang], efectos(oculto=oculto, just=just)]
+def prop(nombre, valor, x, y, ang=0, oculto=False, just=None, tam=1.50):
+    return [S("property"), nombre, valor, [S("at"), r(x), r(y), ang], efectos(tam, oculto=oculto, just=just)]
 
 
 def simbolo_propio(nombre, ref, valor, graficos, pines, y_ref, y_val, desc=""):
@@ -182,7 +182,7 @@ class Esquematico:
         return self.pines_lib[lib_id]
 
     def colocar(self, lib_id, ref, valor, x, y, rot=0, espejo=False, huella="",
-                ref_at=None, val_at=None, ocultar_valor=False, nc=()):
+                ref_at=None, val_at=None, ocultar_valor=True, nc=()):
         pines = self.usar(lib_id)
         huella = HUELLAS.get(ref, huella)
         pos = {}
@@ -227,12 +227,12 @@ class Esquematico:
             dy, dx = -dy * 1, -dx
         ta = (x + dx * 5.2, y + dy * 3.4)
         return self.colocar(f"power:{nombre}", f"#PWR{self.pwr_n:03d}", nombre, x, y, rot,
-                            ref_at=(x, y), val_at=ta)
+                            ref_at=(x, y), val_at=ta, ocultar_valor=False)
 
     def bandera(self, x, y, rot=0):
         self.flg_n += 1
         return self.colocar("power:PWR_FLAG", f"#FLG{self.flg_n:02d}", "PWR_FLAG", x, y, rot,
-                            ref_at=(x, y), val_at=(x, y - 4.5 if rot == 0 else y + 4.5))
+                            ref_at=(x, y), val_at=(x, y - 4.5 if rot == 0 else y + 4.5), ocultar_valor=True)
 
     def cable(self, *puntos):
         for a, b in zip(puntos, puntos[1:]):
@@ -244,7 +244,7 @@ class Esquematico:
     def etiqueta(self, nombre, x, y, lado="der"):
         ang, just = (0, "left bottom") if lado == "der" else (180, "right bottom")
         self.items.append([S("label"), nombre, [S("at"), r(x), r(y), ang],
-                           efectos(just=just), [S("uuid"), uid("lbl")]])
+                           efectos(1.70, just=just), [S("uuid"), uid("lbl")]])
 
     def no_conectar(self, p):
         self.items.append([S("no_connect"), [S("at"), p[0], p[1]], [S("uuid"), uid("nc")]])

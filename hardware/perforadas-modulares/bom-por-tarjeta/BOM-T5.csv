@@ -1,0 +1,12 @@
+Assembly,References,Description,Quantity,Purchase status,Mounting / verification
+T5,U3,74HCT245N DIP-20,1,verified shared purchase,HCT required; do not use 74HC245
+T5,U3 socket,"DIP-20 socket, 7.62 mm",1,verified shared purchase,Install before U3
+T5,Q1,2N2222A or PN2222A THT,1,planned,Verify E/B/C for the exact manufacturer
+T5,R16,"330 ohm metal-film resistor, 1%, 0.25 W",1,planned,Series resistor on FCOB data
+T5,R17 R23,"10 kohm metal-film resistor, 1%, 0.25 W",2,planned,Input and unused-channel pulldowns
+T5,R18,"1 kohm metal-film resistor, 1%, 0.25 W",1,planned,Piezo transistor base
+T5,C14,100 nF 50 V ceramic THT,1,verified shared stock,Directly beside U3 pins 20/10
+T5,C16,680 uF 16 V electrolytic,1,verified purchase,Beside C_PIX; low-ESR not verified
+T5,C_PWR5 C_UI_D C_PIX,JST-XH 3-way vertical header,3,planned,"Power, control and FCOB"
+T5,C_BZ,JST-XH 2-way vertical header,1,planned,Panel passive piezo
+T5,BOARD,"FR4 perfboard, 2.54 mm pitch, cut to 65 x 50 mm",1,planned,Encoder and its RC network are absent in E.9

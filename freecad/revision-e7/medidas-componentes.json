@@ -1,7 +1,7 @@
 {
-  "revision": "E.7-componentes-reales-2026-11-20",
+  "revision": "E.9-touch-12V-sin-tornillos-2026-11-21",
   "unidades": "mm",
-  "regla": "Una cota 'publicada' viene de la tienda o fabricante; 'conservadora' reserva espacio hasta medir la pieza recibida.",
+  "regla": "'estado' describe la cota: publicada (tienda o fabricante), nominal (norma o serie del componente), conservadora (espacio reservado) o mixta. 'compra' describe la evidencia: verificada (hardware/COMPONENTES-COMPRADOS-VERIFICADOS.md) o planificada. Ninguna cota ha sido medida con calibre sobre la pieza recibida.",
   "componentes": {
     "PCB-FV-7X9-HQ": {
       "cantidad_en_modelo": 4,
@@ -9,14 +9,24 @@
       "envolvente": [90.0, 70.0, 1.6],
       "estado": "publicada",
       "fuente": "https://www.didacticaselectronicas.com/shop/pcb-fv-7x9-hq-circuito-impreso-universal-7cm-x-9cm-fibra-de-vidrio-8397",
-      "detalle": "Stock 90x70; recortar para T1 50x40, T2 70x55, T3 55x45 y T5 65x50; paso 2.54, perforacion 1.0; queda una de repuesto"
+      "detalle": "Stock 90x70; recortar para T2 70x55, T3 55x45 y T5 65x50; paso 2.54, perforacion 1.0; T1 usa la placa 60x40 declarada por el usuario recortada a 50x40",
+      "compra": "planificada"
+    },
+    "T1-PERFBOARD-60X40": {
+      "cantidad": 1,
+      "envolvente": [60.0, 40.0, 1.6],
+      "estado": "declarada_por_usuario_pendiente_de_medicion",
+      "fuente": "declaracion del usuario 2026-11-22",
+      "detalle": "Recortar a 50x40 para conservar los soportes del gabinete ya impreso; probar en seco, marcar y desbarbar los cantos de cobre",
+      "compra": "declarada_en_mano"
     },
     "PCB-FV-8X12-HQ": {
       "cantidad": 1,
       "envolvente": [120.0, 80.0, 1.6],
       "estado": "publicada",
       "fuente": "https://www.didacticaselectronicas.com/shop/category/prototipado-fabricacion-de-productos-placas-de-prototipo-perforadas-362",
-      "detalle": "Stock 120x80; recortar T4 a 80x65 mm"
+      "detalle": "Stock 120x80; recortar T4 a 80x65 mm",
+      "compra": "planificada"
     },
     "ESP32S-V1.1-USB-C-38P": {
       "cantidad": 1,
@@ -25,38 +35,90 @@
       "separacion_centros_hileras": 25.4,
       "estado": "publicada_equivalente_y_conservadora_en_altura",
       "fuente": "https://www.gravityelectronic.com/shop/esp32s-esp-wroom-32-38-pin-cp2102-type-c-12920",
-      "por_medir": ["largo y ancho exactos de la unidad recibida", "altura total con headers"]
+      "por_medir": [
+        "largo y ancho exactos de la unidad recibida",
+        "altura total con headers",
+        "sobremoldeo del cable USB-C que se usará",
+        "altura del conector USB-C sobre el PCB"
+      ],
+      "compra": "planificada",
+      "abertura_usb_c_gabinete": [13.5, 8.0]
     },
-    "TFT-ST7789-1.9-170x320": {
+    "LilyGO-T4-S3-AMOLED-2.41": {
       "cantidad": 1,
-      "envolvente": [51.2, 27.3, 3.0],
-      "estado": "publicada_fabricante_equivalente",
-      "por_medir": ["posicion exacta de agujeros y conector en la unidad CVR"]
+      "envolvente": [56.0, 44.0, 13.0],
+      "pcb": [51.56, 38.72, 1.6],
+      "vidrio": [56.0, 44.0, 2.0],
+      "estado": "mixta",
+      "por_medir": [
+        "espesor real del vidrio y del conjunto",
+        "posición del área activa respecto al vidrio",
+        "posición de la cabecera de alimentación VBUS/GND"
+      ],
+      "compra": "planificada",
+      "area_activa": [48.96, 36.72],
+      "resolucion": [450, 600],
+      "enlace_datos": "ESP-NOW; sin bus cableado",
+      "fuente": "https://github.com/Xinyuan-LilyGO/LilyGo-AMOLED-Series"
     },
     "GEP0008-piezo-pasivo": {
       "cantidad": 1,
-      "envolvente": {"diametro": 44.0, "altura": 14.0},
+      "envolvente": {
+        "diametro": 44.0,
+        "altura": 14.0
+      },
       "estado": "publicada",
-      "fuente": "https://electronilab.co/tienda/zumbador-buzzer-pasivo-piezoelectrico-44x14-mm-alta-frecuencia-1-30v-dc/"
+      "fuente": "https://electronilab.co/tienda/zumbador-buzzer-pasivo-piezoelectrico-44x14-mm-alta-frecuencia-1-30v-dc/",
+      "compra": "planificada"
     },
     "ZMPT101B-SNC0015": {
       "cantidad": 1,
       "envolvente": [51.7, 21.6, 17.0],
       "estado": "mixta",
       "fuente": "https://electronilab.co/tienda/zmpt101b-sensor-transformador-de-voltaje-ac/",
-      "por_medir": ["altura total real"]
+      "por_medir": [
+        "altura total real"
+      ],
+      "compra": "planificada"
     },
     "SW12BP": {
       "cantidad": 2,
       "agujero_panel": 12.0,
-      "estado": "publicada_nominal",
-      "por_medir": ["largo posterior", "diametro de tuerca"]
+      "estado": "mixta",
+      "por_medir": [
+        "largo posterior",
+        "diametro de tuerca"
+      ],
+      "compra": "verificada",
+      "envolvente_reservada": {
+        "cuerpo_diametro": 12.0,
+        "largo_posterior": 18.0,
+        "brida_diametro": 14.4,
+        "tuerca_entre_caras": 14.0
+      },
+      "detalle": "Metálico, momentáneo, sin iluminación. Agujero de 12 mm publicado; largo posterior y tuerca reservados."
     },
     "EC11-BOT0011": {
-      "cantidad": 2,
-      "envolvente_reservada": {"cuerpo_diametro": 12.0, "altura_panel": 13.0},
+      "cantidad": 0,
+      "envolvente_reservada": {
+        "cuerpo": [12.0, 12.0, 6.5],
+        "casquillo_diametro": 7.0,
+        "eje_diametro": 6.0,
+        "eje_largo_sobre_cuerpo": 15.0,
+        "perilla": {
+          "diametro": 18.0,
+          "altura": 12.0
+        }
+      },
       "estado": "conservadora",
-      "por_medir": ["diametro y largo del eje", "rosca", "cuerpo", "paso de terminales"]
+      "por_medir": [
+        "diametro y largo del eje",
+        "rosca",
+        "cuerpo",
+        "paso de terminales"
+      ],
+      "compra": "planificada",
+      "detalle": "DNP en E.9: la interfaz de usuario se realiza completamente en la pantalla tactil LilyGO."
     },
     "BTF-FCOB-WS2811-12V-720L-IP30": {
       "cantidad": "1 rollo; se usan 4 segmentos",
@@ -66,14 +128,221 @@
       "estado": "publicada_fabricante",
       "fuente_compra": "https://www.amazon.com/dp/B0BW5T6HW4",
       "fuente_fabricante": "https://www.btf-lighting.com/en-intl/products/fcob-ws2811-rgb-addressable-led-strip-630-720leds",
-      "detalle": "Modelo FCOB-12V-720L-W-IP30-SPI; 720 LED/m, 20 IC/m, ancho 12 mm, max. 10 W/m"
+      "detalle": "Modelo FCOB-12V-720L-W-IP30-SPI; 720 LED/m, 20 IC/m, ancho 12 mm, max. 10 W/m",
+      "compra": "planificada"
     },
     "MT3608-MODULO-BOOST": {
-      "cantidad": 1,
+      "cantidad": 0,
       "envolvente_reservada": [36.0, 17.0, 14.0],
       "estado": "conservadora_por_confirmar_compra",
       "ajuste": "12.0 V sin la tira conectada",
-      "por_medir": ["envolvente exacta y posicion del potenciometro del modulo recibido"]
+      "por_medir": [
+        "envolvente exacta y posicion del potenciometro del modulo recibido"
+      ],
+      "compra": "reemplazado",
+      "detalle": "No se monta en E.9: la entrada ahora es 12 V y la rama logica usa un buck LM2596."
+    },
+    "LM2596-MODULO-BUCK": {
+      "cantidad": 1,
+      "envolvente_reservada": [43.0, 21.0, 14.0],
+      "estado": "conservadora_por_confirmar_modelo",
+      "entrada": "12 V nominal desde CON-156A",
+      "ajuste": "5.0 V sin conectar ESP32 ni LilyGO; verificar polaridad y voltaje antes de conectar cargas",
+      "por_medir": [
+        "largo, ancho y altura del modulo real",
+        "posicion del potenciometro y borneras",
+        "corriente y temperatura con ESP32, LilyGO, analogica y LED activos"
+      ],
+      "compra": "declarada_sin_modelo_exacto",
+      "detalle": "La cuna y su probeta usan una envolvente conservadora; no declarar encaje perfecto hasta medir el modulo recibido."
+    },
+    "1N5819-DO41": {
+      "cantidad": 1,
+      "envolvente": {
+        "cuerpo_diametro": 2.7,
+        "cuerpo_largo": 5.2,
+        "paso": 10.16
+      },
+      "estado": "nominal",
+      "compra": "verificada",
+      "detalle": "D1 comprado. El esquemático y el BOM piden 1N5822 DO-201AD de 3 A: discrepancia eléctrica abierta."
+    },
+    "74HCT245N-con-zocalo-DIP20": {
+      "cantidad": 1,
+      "envolvente": [25.8, 10.1, 8.1],
+      "estado": "conservadora",
+      "compra": "verificada",
+      "por_medir": [
+        "ancho entre hileras 7,62 mm del zócalo",
+        "altura del conjunto"
+      ]
+    },
+    "REGLETA-HEMBRA-1x40-2.54": {
+      "cantidad": "2 x 1x19 (ESP32S) + 1x8 (LCD)",
+      "envolvente": {
+        "paso": 2.54,
+        "altura": 8.5
+      },
+      "estado": "nominal",
+      "compra": "verificada",
+      "por_medir": [
+        "altura real del aislante"
+      ]
+    },
+    "LED-5-VE-D": {
+      "cantidad": 1,
+      "envolvente": {
+        "diametro": 5.0,
+        "altura": 8.6,
+        "agujero_panel": 5.1
+      },
+      "estado": "nominal",
+      "compra": "verificada",
+      "detalle": "D8. El archivo de compras llama indicador de panel al LED verde de 3 mm; el BOM y el esquemático dicen 5 mm. Sin resolver."
+    },
+    "CON-156A-jack-DC-5.5x2.5": {
+      "cantidad": 1,
+      "envolvente_reservada": {
+        "agujero_panel": 8.2,
+        "cuerpo_diametro": 10.0,
+        "largo_interior": 12.5
+      },
+      "estado": "conservadora",
+      "compra": "verificada",
+      "por_medir": [
+        "diámetro de rosca",
+        "largo interior",
+        "posición de terminales"
+      ]
+    },
+    "CE470UF35V": {
+      "cantidad": 1,
+      "envolvente_reservada": {
+        "diametro": 10.0,
+        "altura": 17.0
+      },
+      "estado": "conservadora",
+      "compra": "verificada",
+      "por_medir": [
+        "diámetro, altura y paso de la unidad recibida"
+      ]
+    },
+    "CE680UF16V": {
+      "cantidad": 2,
+      "envolvente_reservada": {
+        "diametro": 10.0,
+        "altura": 17.0
+      },
+      "estado": "conservadora",
+      "compra": "verificada",
+      "detalle": "C16 y C17 usan las dos unidades compradas; no queda repuesto. Low-ESR no verificado.",
+      "por_medir": [
+        "diámetro, altura y paso"
+      ]
+    },
+    "CC0.1UF50V": {
+      "cantidad": 6,
+      "envolvente_reservada": [6.0, 2.6, 6.0],
+      "estado": "conservadora",
+      "compra": "verificada"
+    },
+    "JST-XH-2.5": {
+      "cantidad": "22 cabeceras verticales",
+      "envolvente": {
+        "paso": 2.5,
+        "ancho": "2,5 x (vías - 1) + 4,9",
+        "fondo": 5.75,
+        "altura": 7.0
+      },
+      "estado": "nominal",
+      "compra": "planificada",
+      "detalle": "Cotas de la serie XH tomadas de memoria de la hoja del fabricante; verificar con la pieza."
+    },
+    "BORNERA-5.08": {
+      "cantidad": "J1 2 polos, J5 3 polos",
+      "envolvente_reservada": {
+        "ancho": "5,08 x polos + 0,6",
+        "fondo": 8.0,
+        "altura": 10.0
+      },
+      "estado": "conservadora",
+      "compra": "planificada",
+      "detalle": "El esquemático asigna huella JST-XH a J1 y J5; el BOM pide bornera. Unificar antes de soldar."
+    },
+    "PTC-2A": {
+      "cantidad": 1,
+      "envolvente_reservada": [12.5, 3.5, 15.0],
+      "estado": "conservadora",
+      "compra": "planificada"
+    },
+    "JACK-3.5-PANEL": {
+      "cantidad": 2,
+      "envolvente_reservada": {
+        "agujero_panel": 6.2,
+        "cuerpo_diametro": 8.0,
+        "largo_interior": 13.5
+      },
+      "estado": "conservadora",
+      "compra": "planificada",
+      "por_medir": [
+        "rosca",
+        "largo",
+        "terminales"
+      ]
+    },
+    "PRENSAESTOPA-PG7": {
+      "cantidad": 1,
+      "envolvente": {
+        "agujero_panel": 12.5
+      },
+      "estado": "nominal",
+      "compra": "planificada",
+      "por_medir": [
+        "largo de rosca y tuerca"
+      ]
+    },
+    "PORTAFUSIBLE-5x20-CERRADO": {
+      "cantidad": 1,
+      "envolvente_reservada": {
+        "diametro": 12.5,
+        "largo": 42.0
+      },
+      "estado": "conservadora",
+      "compra": "planificada",
+      "detalle": "F1 es T500 mA lento. El CON-183AC y los FC-3A rápidos comprados no se asignan al medidor."
+    },
+    "J4-BORNERA-PROTEGIDA-2P": {
+      "cantidad": 1,
+      "envolvente_reservada": [22.0, 16.0, 14.0],
+      "estado": "conservadora",
+      "compra": "planificada"
+    },
+    "SEPARADOR-M3-NYLON": {
+      "cantidad": 20,
+      "envolvente": {
+        "altura": 6.0,
+        "entre_caras": 5.5,
+        "cabeza_tornillo": 5.5
+      },
+      "estado": "nominal",
+      "compra": "planificada"
+    },
+    "IMAN-NEODIMIO-6x2": {
+      "cantidad": 8,
+      "envolvente": {
+        "diametro": 6.0,
+        "altura": 2.0
+      },
+      "estado": "nominal",
+      "compra": "planificada",
+      "detalle": "Disco de neodimio 6 x 2 mm, imantado axialmente; cuatro en el gabinete y cuatro en la tapa. No figura en COMPONENTES-COMPRADOS-VERIFICADOS.md. Fuerza de retención y polaridad sin comprobar."
+    },
+    "GABINETE-E7-IMPRESO": {
+      "cantidad": 1,
+      "envolvente": [280.0, 180.0, 70.0],
+      "estado": "diseño",
+      "compra": "no aplica",
+      "detalle": "Pared 2,5; piso 3; tapa y guarda 3. Pide una cama de impresión de 280 mm o partir la pieza."
     }
   }
 }

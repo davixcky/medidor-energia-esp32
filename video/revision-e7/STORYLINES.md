@@ -1,24 +1,13 @@
-# Storylines — video E.7
+# Storyline — video E.7
 
-## Recomendada: el estado se vuelve visible
+El medidor aparece cerrado y funcionando, con la guarda de red a la vista. La
+cámara recorre la fila de controles y se detiene en la barra de luz y el LED:
+verde fijo, ámbar con el LED a 1 Hz, rojo con el LED a 5 Hz. Reconocida la
+alerta, la tapa se suelta de sus imanes, bascula y queda de pie; los arneses la acompañan.
+Dentro se nombran las cinco tarjetas, se muestran sus conexiones y el ESP32S,
+y por último la zona de red bajo su guarda. La tapa cierra y queda en verde.
 
-El medidor aparece cerrado y funcionando; la cámara sigue la barra de luz desde
-verde a ámbar y rojo antes de abrir el producto y revelar las cinco tarjetas.
-La luz conduce el recorrido desde la interfaz hasta la separación segura de red.
+`producto en verde → controles → verde / ámbar 1 Hz / rojo 5 Hz → apertura → T1–T5 → conexiones → zona de red → cierre en verde`
 
-Primeros dos segundos: producto completo, LCD encendida y FCOB verde.
-
-`producto funcionando → interfaz empotrada → tres estados LED → apertura → cinco tarjetas → guarda de red → cierre`
-
-Look: estudio gris grafito, producto real E.7, luz cálida y contraluz frío.
-Sonido: narración española, cama tonal tenue y dos pulsos cortos del piezo.
-
-## Alternativa: una señal recorre el equipo
-
-Una línea de energía entra por la bornera, atraviesa T1–T5 y termina en la
-pantalla. Forma de vuelo continuo por el interior.
-
-## Alternativa: montaje por capas
-
-Gabinete, tarjetas, conectores, tapa y controles se ensamblan uno por uno.
-Forma de despiece sobre fondo claro con cortes al ritmo.
+Sonido: narración en español, cama tonal tenue y los dos pitidos de 80 ms del
+piezo al entrar en alerta, como en `feedback::Sound`.

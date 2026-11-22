@@ -2,9 +2,8 @@
 //
 // Núcleo 1: tarea de adquisición. Muestrea V, I1 e I2 a 8 kS/s por canal y calcula una
 // ventana de 60 ciclos (≈ 1 s). Solo entrega resultados por cola: nunca toca la red.
-// Núcleo 0: red (Wi-Fi, NTP, POST de registros ADR-001 en lotes), pantalla LCD, pulsadores
-// y LED de estado.
-#include <Adafruit_ST7789.h>
+// Núcleo 0: red (Wi-Fi, NTP, POST de registros ADR-001 en lotes), terminal LilyGO por ESP-NOW,
+// pulsadores y LED de estado. La LilyGO solo presenta; nunca adquiere ni calcula energía.
 #include <Adafruit_NeoPixel.h>
 #include "feedback.h"
 #include "ajustes.h"
@@ -13,16 +12,16 @@
 #include <HTTPClient.h>
 #include <Preferences.h>
 #include <WiFi.h>
-#include <SPI.h>
 #include <esp_adc_cal.h>
+#include <esp_now.h>
 #include <esp_timer.h>
 #include <time.h>
 
 #include "adr001.h"
 #include "config.h"
-#include "interfaz.h"
 #include "medicion.h"
 #include "secretos.h"
+#include <telemetry_packet.h>
 
 #ifndef FW_VERSION
 #define FW_VERSION "fw-v1.3.0"
@@ -58,14 +57,14 @@ static ajustes_ui::Menu menu;
 static bool alerta_activa = false, alerta_reconocida = false;
 static uint32_t ultimo_envio_ok = 0;
 static int rssi = 0;
+static std::atomic<bool> display_espnow_ready{false};
+static constexpr uint8_t LILYGO_MAC[6] = {0xF0, 0xF5, 0xBD, 0x43, 0x1A, 0x9C};
+static constexpr char DISPLAY_LINK_AP[] = "Medidor-Energy-Link";
 
 // Búfer circular de registros codificados, para no perder datos sin red.
 static uint8_t bufer[BUFER_REGISTROS][adr001::TAMANO];
 static size_t cabeza = 0, cantidad = 0;
 
-Adafruit_ST7789 lcd(PIN_LCD_CS, PIN_LCD_DC, PIN_LCD_RST);
-constexpr int16_t ALTO_FRANJA = 34;   // 5 franjas de 34 filas = 170 filas; 21,8 kB de RAM
-static interfaz::Franja franja(ALTO_FRANJA);
 Preferences prefs;
 
 // ---------------------------------------------------------------- adquisición (núcleo 1)
@@ -292,7 +291,7 @@ static void actualizar_energia_y_alerta(const medicion::Resultado& r) {
 }
 
 static void tarea_red(void*) {
-  WiFi.mode(WIFI_STA);
+  WiFi.mode(WIFI_AP_STA);
   WiFi.begin(WIFI_SSID, WIFI_CLAVE);
   configTzTime("COT5", "pool.ntp.org", "time.google.com");   // Colombia, UTC−5
   uint32_t ultimo_lote = 0;
@@ -314,6 +313,17 @@ static void tarea_red(void*) {
       }
     } else {
       rssi = WiFi.RSSI();
+      if (!display_espnow_ready.load()) {
+        WiFi.softAP(DISPLAY_LINK_AP, "display-only", WiFi.channel(), true, 1);
+        esp_now_peer_info_t peer{};
+        memcpy(peer.peer_addr, LILYGO_MAC, sizeof(LILYGO_MAC));
+        peer.channel = 0;
+        peer.encrypt = false;
+        if (esp_now_init() == ESP_OK && esp_now_add_peer(&peer) == ESP_OK) {
+          display_espnow_ready.store(true);
+          Serial.printf("Display ESP-NOW listo, canal %d\n", WiFi.channel());
+        }
+      }
     }
     if (millis() - ultimo_lote >= ENVIO_CADA_MS) {
       ultimo_lote = millis();
@@ -323,34 +333,40 @@ static void tarea_red(void*) {
 }
 
 // ---------------------------------------------------------------- interfaz local (núcleo 0)
-using interfaz::Pantalla;
-static Pantalla pantalla = interfaz::RESUMEN;
+enum Pantalla { RESUMEN, CH1, CH2, ENERGIA, N_CICLO, ALERTA, TARA, ARRANQUE };
+static Pantalla pantalla = RESUMEN;
 static uint32_t ultima_pulsacion = 0;
 
-static void dibujar(const medicion::Resultado& r) {
-  interfaz::Datos d{};
-  d.r = r;
-  d.energia_hoy_kwh = energia_hoy_wh / 1000.0;
-  for (int h = 0; h < 24; ++h) d.energia_hora_kwh[h] = energia_hora_wh[h] / 1000.0f;
-  d.hora = hora_actual;
-  d.wifi = WiFi.status() == WL_CONNECTED;
-  d.rssi = rssi;
-  d.servidor_ok = millis() - ultimo_envio_ok < 15000;
-  d.bufer = cantidad;
-  d.umbral_w = umbral_local.load();
-  d.alerta_min = inicio_alerta ? (millis() - inicio_alerta) / 60000 : 0;
-  d.canal_tara = canal_tara;
-  d.ruido_tara = cal.ruido_i[canal_tara];
-  d.version = FW_VERSION;
-  // Se dibuja la pantalla completa en cada franja y se envía solo la parte que le toca.
-  for (int16_t y0 = 0; y0 < interfaz::ALTO; y0 += ALTO_FRANJA) {
-    franja.origen(y0);
-    interfaz::dibujar(franja, pantalla, d);
-    lcd.drawRGBBitmap(0, y0, franja.getBuffer(), interfaz::ANCHO, ALTO_FRANJA);
-  }
+static const char* nombre_pantalla(Pantalla p) {
+  static const char* const nombres[] = {"summary", "channel1", "channel2", "energy"};
+  if (p >= RESUMEN && p < N_CICLO) return nombres[static_cast<int>(p)];
+  if (p == ALERTA) return "alert";
+  if (p == TARA) return "tare";
+  return "startup";
 }
 
-static void luz_fondo(bool encendida) { ledcWrite(0, encendida ? brillo_lcd : 0); }
+static void enviar_display(const medicion::Resultado& r, const char* screen) {
+  static uint32_t seq = 0;
+  (void)screen;
+  if (!display_espnow_ready.load()) return;
+  TelemetryPacket packet;
+  packet.seq = ++seq;
+  packet.vrms = r.v_rms;
+  packet.i1 = r.i_rms[0];
+  packet.i2 = r.i_rms[1];
+  packet.p1 = r.p[0];
+  packet.p2 = r.p[1];
+  packet.today_wh = static_cast<float>(energia_hoy_wh);
+  packet.alert = alerta_activa && !alerta_reconocida;
+  packet.internet = WiFi.status() == WL_CONNECTED;
+  strlcpy(packet.city, "Medidor", sizeof(packet.city));
+  esp_now_send(LILYGO_MAC, reinterpret_cast<const uint8_t*>(&packet), sizeof(packet));
+}
+
+static void luz_fondo(bool encendida) {
+  // La T4-S3 gestiona su AMOLED; no hay línea física de luz de fondo.
+  (void)encendida;
+}
 
 struct Boton {
   explicit Boton(int p) : pin(p) {}
@@ -410,24 +426,17 @@ static int encoder_turn() {
   portEXIT_CRITICAL(&enc_mux);
   return detents;
 }
-static void dibujar_ajustes() {
-  const auto& v = menu.editing ? menu.draft : menu.values;
-  for (int y = 0; y < interfaz::ALTO; y += ALTO_FRANJA) {
-    franja.origen(y);
-    interfaz::dibujar_ajustes(franja,menu.row,menu.editing,v.brightness,v.muted,v.threshold);
-    lcd.drawRGBBitmap(0,y,franja.getBuffer(),interfaz::ANCHO,ALTO_FRANJA);
-  }
-}
-
 static void tarea_interfaz(void*) {
-  using namespace interfaz;
   Boton sw1(PIN_SW1), sw2(PIN_SW2), encoder_button(PIN_ENC_SW);
   bool apagada = false;
   uint32_t ultimo_dibujo = 0;
   for (;;) {
     atender_consola();
-    int e1 = leer(sw1), e2 = leer(sw2);
-    int enc_press = leer(encoder_button), turn = encoder_turn();
+    int e1 = 0, e2 = 0, enc_press = 0, turn = 0;
+    if constexpr (PHYSICAL_PANEL_CONTROLS) {
+      e1 = leer(sw1); e2 = leer(sw2);
+      enc_press = leer(encoder_button); turn = encoder_turn();
+    }
     if (e1 || e2 || enc_press || turn) {
       ultima_pulsacion = millis();
       if (apagada) {
@@ -504,7 +513,7 @@ static void tarea_interfaz(void*) {
       portENTER_CRITICAL(&mux);
       r = ultimo;
       portEXIT_CRITICAL(&mux);
-      if (menu.active) dibujar_ajustes(); else dibujar(r);
+      enviar_display(r, apagada ? "off" : (menu.active ? "settings" : nombre_pantalla(pantalla)));
     }
     vTaskDelay(pdMS_TO_TICKS(10));
   }
@@ -515,13 +524,15 @@ void setup() {
   Serial.begin(115200);
   Serial.printf("\nMedidor de energía %s\n", FW_VERSION);
   pinMode(PIN_LED, OUTPUT);
-  pinMode(PIN_SW1, INPUT);   // pull-up externo de 10 kΩ
-  pinMode(PIN_SW2, INPUT);
-  pinMode(PIN_ENC_A, INPUT_PULLUP); pinMode(PIN_ENC_B, INPUT_PULLUP);
-  pinMode(PIN_ENC_SW, INPUT_PULLUP);
-  enc_before = (digitalRead(PIN_ENC_A) << 1) | digitalRead(PIN_ENC_B);
-  attachInterrupt(digitalPinToInterrupt(PIN_ENC_A), encoder_edge, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(PIN_ENC_B), encoder_edge, CHANGE);
+  if constexpr (PHYSICAL_PANEL_CONTROLS) {
+    pinMode(PIN_SW1, INPUT);
+    pinMode(PIN_SW2, INPUT);
+    pinMode(PIN_ENC_A, INPUT_PULLUP); pinMode(PIN_ENC_B, INPUT_PULLUP);
+    pinMode(PIN_ENC_SW, INPUT_PULLUP);
+    enc_before = (digitalRead(PIN_ENC_A) << 1) | digitalRead(PIN_ENC_B);
+    attachInterrupt(digitalPinToInterrupt(PIN_ENC_A), encoder_edge, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(PIN_ENC_B), encoder_edge, CHANGE);
+  }
 
   adc1_config_width(ADC_WIDTH_BIT_12);
   for (adc1_channel_t ch : {ADC_CH1, ADC_CH2, ADC_V}) adc1_config_channel_atten(ch, ADC_ATTEN_DB_12);
@@ -547,22 +558,8 @@ void setup() {
   aplicar_ajustes();
   mostrar_ajustes();
 
-  ledcSetup(0, 5000, 8);   // luz de fondo de la LCD
-  ledcAttachPin(PIN_LCD_BL, 0);
-  luz_fondo(true);
-  SPI.begin(PIN_LCD_CLK, -1, PIN_LCD_DIN, PIN_LCD_CS);
-  lcd.init(170, 320);
-  lcd.setSPISpeed(LCD_SPI_HZ);
-  lcd.setRotation(1);      // horizontal, 320 × 170, con el conector a la izquierda
-  {
-    interfaz::Datos d{};
-    d.version = FW_VERSION;
-    for (int16_t y0 = 0; y0 < interfaz::ALTO; y0 += ALTO_FRANJA) {
-      franja.origen(y0);
-      interfaz::dibujar(franja, interfaz::ARRANQUE, d);
-      lcd.drawRGBBitmap(0, y0, franja.getBuffer(), interfaz::ANCHO, ALTO_FRANJA);
-    }
-  }
+  medicion::Resultado inicial{};
+  enviar_display(inicial, "startup");
 
   cola_resultados = xQueueCreate(8, sizeof(medicion::Resultado));
   xTaskCreatePinnedToCore(tarea_red, "red", 8192, nullptr, 5, nullptr, 0);

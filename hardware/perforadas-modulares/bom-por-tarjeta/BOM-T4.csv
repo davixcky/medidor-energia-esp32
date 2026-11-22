@@ -1,0 +1,8 @@
+Assembly,References,Description,Quantity,Purchase status,Mounting / verification
+T4,U1,"ESP32S V1.1 USB-C, 38 pins, ESP32-WROOM-32",1,planned,ADC1 pins only; keep antenna and USB-C clear
+T4,U1 sockets,"Female header strip 1x19, 2.54 mm",2,verified shared stock,Cut from verified 1x40 strips; confirm 25.4 mm row spacing
+T4,R11,"330 ohm metal-film resistor, 1%, 0.25 W",1,planned,Panel status LED series resistor
+T4,C_PWR4 C_LILY C_LED,JST-XH 2-way vertical header,3,planned,LilyGO connector carries power only
+T4,C_ADC_V C_UI_D,JST-XH 3-way vertical header,2,planned,Voltage ADC and digital-output harnesses
+T4,C_ADC_I,JST-XH 4-way vertical header,1,planned,Two current ADC channels
+T4,BOARD,"FR4 perfboard, 2.54 mm pitch, cut to 80 x 65 mm",1,planned,"No SW1, SW2, ENC1 or wired LCD bus in E.9"

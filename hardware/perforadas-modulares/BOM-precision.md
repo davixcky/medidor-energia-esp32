@@ -1,47 +1,93 @@
-# BOM de precisión — Medidor E.7 perforadas
+# E.9 BOM by board
 
-La lista de compra fila por fila y las cantidades con repuesto están en
-[`BOM-precision.csv`](BOM-precision.csv). Contiene 62 líneas e incluye electrónica,
-sensores, conectores, arneses, cableado, alimentación y montaje.
+Generated from `herramientas/generar_kicad_perforadas.py`.
+Quantities are mounted quantities, not spare-purchase quantities. `verified` refers only to documented purchase evidence.
 
-## Componentes críticos
+## T1
 
-| Grupo | Requisito |
-|---|---|
-| ESP32 | ESP32S V1.1 USB-C de 38 pines, ESP32-WROOM-32; verificar 25,4 mm entre hileras; no versión de 30 pines |
-| Corriente | 2 × SCT-013-000, 100 A : 50 mA, **sin** burden interno |
-| Tensión | 1 × ZMPT101B; su primario queda en la zona Z1 cerrada |
-| Burdens | 22 ohm y 47 ohm, película metálica, 1 %, soldadas en los jacks |
-| Filtros | resistencias 1 %; 47 nF, 27 nF y 10 nF de película/C0G, idealmente 5 % |
-| Level shifter | 74HCT245N DIP-20; HCT, no HC y no módulo I2C BSS138 |
-| Sonido | piezo pasivo comprado GEP0008, 44 × 14 mm, más NPN; no buzzer activo |
-| Iluminación | BTF FCOB WS2811 12 V, 720 LED/m, 20 segmentos/m; usar 4 segmentos = 200 mm |
-| Alimentación | adaptador comprado 5 V/5 A y jack 5,5 × 2,5 mm; MT3608 ajustado a 12,0 V para la FCOB |
+| References | Qty | Description | Purchase status | Mounting / verification |
+|---|---:|---|---|---|
+| J1 | 1 | 2-way 5.08 mm terminal block | planned | 12 V input from panel CON-156A |
+| F2 | 1 | Resettable PTC, 2.0 A hold, rated >=16 V | planned | Series input protection |
+| D1 | 1 | 1N5822 Schottky, 3 A, DO-201AD | planned | Do not substitute the purchased 1N5819 without current/thermal review |
+| C1 | 1 | 470 uF 35 V electrolytic | verified purchase | At protected 12 V input; measure body before final placement |
+| C2 | 1 | 100 nF 50 V ceramic THT | verified shared stock | At protected 12 V input |
+| C17 | 1 | 680 uF 16 V electrolytic | verified purchase | At returned 5 V rail; low-ESR not verified |
+| C_BUCK_IN C_BUCK_OUT C_PWR3 C_PWR4 | 4 | JST-XH 2-way vertical header | planned | Key every harness; BUCK IN and OUT must not be interchangeable |
+| C_PWR5 | 1 | JST-XH 3-way vertical header | planned | +5V_PROT / +12V_PROT / GND |
+| BOARD | 1 | FR4 perfboard, 2.54 mm pitch, cut to 50 x 40 mm from user's 60 x 40 mm board | declared on hand; dimensions unverified | Test against the printed supports, mark, then remove 10 mm from the long side and deburr all copper edges |
 
-## Conectividad incluida
+## T2
 
-Los siete arneses entre tarjetas requieren en total:
+| References | Qty | Description | Purchase status | Mounting / verification |
+|---|---:|---|---|---|
+| J2 J3 | 2 | JST-XH 2-way vertical header | planned | Short harnesses to panel SCT jacks |
+| R3 | 1 | 15 kohm metal-film resistor, 1%, 0.25 W | planned | VBIAS upper divider |
+| R4 | 1 | 10 kohm metal-film resistor, 1%, 0.25 W | planned | VBIAS lower divider |
+| R5 R6 | 2 | 3.3 kohm metal-film resistor, 1%, 0.25 W | planned | ADC series filters |
+| C5 C6 | 2 | 47 nF film or C0G THT, 5% | planned | Return to VBIAS, not GND |
+| C7 | 1 | 10 uF >=16 V electrolytic | planned | VBIAS reservoir |
+| C8 | 1 | 100 nF 50 V ceramic THT | verified shared stock | VBIAS bypass |
+| D2 D3 D4 D5 | 4 | BAT85 Schottky DO-35 | planned | ADC clamps |
+| C_ADC_I | 1 | JST-XH 4-way vertical header | planned | +3V3 / GND / CH1_ADC / CH2_ADC |
+| BOARD | 1 | FR4 perfboard, 2.54 mm pitch, cut to 70 x 55 mm | planned | Keep SCT traces away from digital/power wiring |
 
-- 6 headers y 6 carcasas de 2 vías.
-- 4 headers y 4 carcasas de 3 vías.
-- 2 headers y 2 carcasas de 4 vías.
-- 2 headers y 2 carcasas de 5 vías.
-- 42 contactos crimp; comprar 60 por pérdidas y repuestos.
+## T3
 
-Estos conteos no incluyen LCD, ZMPT, encoder, piezo, LEDs ni pulsadores de panel;
-sus arneses aparecen como líneas independientes en el CSV.
+| References | Qty | Description | Purchase status | Mounting / verification |
+|---|---:|---|---|---|
+| J5 | 1 | 3-way 5.08 mm terminal block | planned | Only ZMPT low-voltage side enters this board |
+| R7 | 1 | 11 kohm metal-film resistor, 1%, 0.25 W | planned | Voltage-channel divider/filter |
+| R8 | 1 | 13 kohm metal-film resistor, 1%, 0.25 W | planned | Do not replace with 12 kohm |
+| C9 | 1 | 27 nF film or C0G THT, 5% | planned | Voltage-channel filter |
+| D6 D7 | 2 | BAT85 Schottky DO-35 | planned | ADC clamps |
+| C_PWR3 | 1 | JST-XH 2-way vertical header | planned | +5V_PROT / GND |
+| C_ADC_V | 1 | JST-XH 3-way vertical header | planned | +3V3 / GND / V_ADC |
+| BOARD | 1 | FR4 perfboard, 2.54 mm pitch, cut to 55 x 45 mm | planned | No mains-voltage component is allowed on T3 |
 
-## Sustituciones
+## T4
 
-No sustituir valores críticos por el más cercano sin recalcular. En especial:
+| References | Qty | Description | Purchase status | Mounting / verification |
+|---|---:|---|---|---|
+| U1 | 1 | ESP32S V1.1 USB-C, 38 pins, ESP32-WROOM-32 | planned | ADC1 pins only; keep antenna and USB-C clear |
+| U1 sockets | 2 | Female header strip 1x19, 2.54 mm | verified shared stock | Cut from verified 1x40 strips; confirm 25.4 mm row spacing |
+| R11 | 1 | 330 ohm metal-film resistor, 1%, 0.25 W | planned | Panel status LED series resistor |
+| C_PWR4 C_LILY C_LED | 3 | JST-XH 2-way vertical header | planned | LilyGO connector carries power only |
+| C_ADC_V C_UI_D | 2 | JST-XH 3-way vertical header | planned | Voltage ADC and digital-output harnesses |
+| C_ADC_I | 1 | JST-XH 4-way vertical header | planned | Two current ADC channels |
+| BOARD | 1 | FR4 perfboard, 2.54 mm pitch, cut to 80 x 65 mm | planned | No SW1, SW2, ENC1 or wired LCD bus in E.9 |
 
-- 11 kOhm no se reemplaza por 10 kOhm y 13 kOhm no se reemplaza por 12 kOhm.
-- BAT85 no se reemplaza automáticamente por un diodo de silicio común.
-- 74HC245 no equivale al 74HCT245 para una entrada de 3,3 V alimentada a 5 V.
-- Un SCT-013 con salida de tensión o burden interno no equivale al SCT-013-000.
-- La FCOB de 12 V no puede conectarse al antiguo riel de 5 V ni reemplazarse en
-  el esquema por una WS2812B sin eliminar/recalcular el elevador.
-- 1N5819 y PTC de 1,1 A se retiraron de T1; usar 1N5822 de 3 A y PTC hold 2 A.
+## T5
 
-Si una familia JST-XH completa no está disponible, puede elegirse otra familia
-polarizada, pero deben cambiarse ambos extremos y mantenerse un solo paso.
+| References | Qty | Description | Purchase status | Mounting / verification |
+|---|---:|---|---|---|
+| U3 | 1 | 74HCT245N DIP-20 | verified shared purchase | HCT required; do not use 74HC245 |
+| U3 socket | 1 | DIP-20 socket, 7.62 mm | verified shared purchase | Install before U3 |
+| Q1 | 1 | 2N2222A or PN2222A THT | planned | Verify E/B/C for the exact manufacturer |
+| R16 | 1 | 330 ohm metal-film resistor, 1%, 0.25 W | planned | Series resistor on FCOB data |
+| R17 R23 | 2 | 10 kohm metal-film resistor, 1%, 0.25 W | planned | Input and unused-channel pulldowns |
+| R18 | 1 | 1 kohm metal-film resistor, 1%, 0.25 W | planned | Piezo transistor base |
+| C14 | 1 | 100 nF 50 V ceramic THT | verified shared stock | Directly beside U3 pins 20/10 |
+| C16 | 1 | 680 uF 16 V electrolytic | verified purchase | Beside C_PIX; low-ESR not verified |
+| C_PWR5 C_UI_D C_PIX | 3 | JST-XH 3-way vertical header | planned | Power, control and FCOB |
+| C_BZ | 1 | JST-XH 2-way vertical header | planned | Panel passive piezo |
+| BOARD | 1 | FR4 perfboard, 2.54 mm pitch, cut to 65 x 50 mm | planned | Encoder and its RC network are absent in E.9 |
+
+## Off-board, panel and guarded Z1
+
+| References | Qty | Description | Purchase status | Mounting / verification |
+|---|---:|---|---|---|
+| U4 | 1 | LM2596 adjustable buck module, reserved 43 x 21 x 14 mm | planned / exact model unverified | Adjust to 5.0 V unloaded, then verify under current-limited load |
+| LCD1 | 1 | LilyGO T4-S3 AMOLED 2.41 in, 450 x 600 | planned | ESP-NOW terminal; VBUS/GND only; disconnect harness before USB |
+| JDC | 1 | CON-156A panel jack, 5.5 x 2.5 mm, center positive | verified purchase | 12 V input |
+| J2P J3P | 2 | 3.5 mm female panel jack | planned | For SCT-013-000 plugs |
+| R1 | 1 | 22 ohm metal-film resistor, 1%, 0.25 W | planned | Solder directly across CH1 panel jack |
+| R2 | 1 | 47 ohm metal-film resistor, 1%, 0.25 W | planned | Solder directly across CH2 panel jack |
+| D8 | 1 | Green diffused panel LED, 5 mm | verified purchase | Connected through C_LED; R11 is on T4 |
+| BZ1 | 1 | GEP0008 passive piezo, 44 x 14 mm | declared purchased; document pending | Not an active buzzer |
+| FCOB | 1 | BTF FCOB WS2811, 12 V, 12 mm, 200 mm used | planned | Four 50 mm addressable pixels; <=2 W design load |
+| SCT1 SCT2 | 2 | SCT-013-000, 100 A : 50 mA, no internal burden | planned | Never leave secondary open while clamped around energized conductor |
+| Z1-U2 | 1 | ZMPT101B module | planned | Primary remains inside guarded Z1 compartment |
+| Z1-F1 | 1 | T500 mA 250 V slow-blow fuse + enclosed holder | planned | Phase conductor only; qualified mains work |
+| Z1-J4 | 1 | Guarded 2-way mains terminal + PG7 gland | planned | Inside opaque segregated guard |
+| SUPPLY | 1 | Isolated regulated 12 V DC adapter, center-positive | planned | Final current rating after measured load test; 2 A provisional minimum |

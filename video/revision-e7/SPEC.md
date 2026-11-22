@@ -1,9 +1,8 @@
-GOAL: Mostrar que E.7 es un producto modular verificable y que sus luces comunican estados concretos.
-OUTPUT: Blender/FFmpeg, 1920 x 1080, 24 fps, H.264 + AAC.
-TIME: 30–40 s; una acción visual nueva cada 3–6 s.
-LOOK: fondo #111820; gabinete grafito; FCOB verde/ámbar/rojo como único acento variable; tipografía sans 42/28 px; estudio 3D con contacto y sin partículas.
-OBJECTS: gabinete E.7, LCD, encoder, dos pulsadores, LED de panel, piezo 44 mm empotrado, FCOB 200 mm, T1–T5, borneras, JST, potenciómetros, ESP32S USB-C y guarda Z1.
-MOTION: cámara cubic-bezier suave; apertura de tapa en 36 frames; estados LED por corte; títulos inmóviles mientras se leen.
-SHOTS: hero cerrado; detalle de tapa; estados LED; apertura; planta con tarjetas; guarda de red; hero final.
-BANNED: LED tipo ecualizador; cuatro colores distintos en la FCOB; partículas; HUD decorativo; piezas flotando sin soporte; afirmar que el render es prueba física.
-QA: primer frame con producto; estado verde/ámbar/rojo legible; piezo bajo rejilla; cinco tarjetas visibles; zona de red separada; último frame cerrado.
+GOAL: Mostrar que E.7 es un producto modular montable y que sus luces comunican los tres estados del firmware.
+OUTPUT: Blender/FFmpeg, 1920 x 1080, 24 fps, 38 s (912 fotogramas), H.264 + AAC + subtítulos en español.
+LOOK: fondo #111820; gabinete grafito; guarda de red naranja translúcida; FCOB verde/ámbar/rojo como único acento variable; tipografía sans 44/25 px.
+OBJECTS: gabinete E.7 con tapa suelta de cierre magnético, difusor hexagonal de la FCOB, LCD, encoder, dos pulsadores, LED D8 verde, piezo 44 mm empotrado, FCOB 200 mm, T1–T5, borneras, JST-XH, potenciómetros, ESP32S V1.1 USB-C, arneses y zona de red con guarda.
+MOTION: planos unidos por corte; cámara con movimiento lento dentro de cada plano; tapa en 48 fotogramas; estados LED por corte.
+SHOTS: hero cerrado verde; fila de controles; verde fijo; ámbar a 1 Hz; rojo a 5 Hz; apertura; planta con rótulos T1–T5; conexiones y ESP32S; zona de red; cierre y verde.
+BANNED: LED tipo ecualizador; colores distintos entre segmentos FCOB; LED D8 en otro color; piezas flotando; arneses desconectados; afirmar que el render es prueba física.
+QA: `verificar.py` sin fallos; hoja de contacto revisada; cinco tarjetas visibles; estado final verde y cerrado.

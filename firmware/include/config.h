@@ -8,26 +8,21 @@ constexpr adc1_channel_t ADC_CH1 = ADC1_CHANNEL_0;  // GPIO36, pinza CH1 (total)
 constexpr adc1_channel_t ADC_CH2 = ADC1_CHANNEL_3;  // GPIO39, pinza CH2 (subcircuito)
 constexpr adc1_channel_t ADC_V   = ADC1_CHANNEL_7;  // GPIO35, ZMPT101B
 
-// ---- Interfaz local
+// ---- Interfaz local E.9: touch-only on the separate LilyGO terminal.
+constexpr bool PHYSICAL_PANEL_CONTROLS = false;
+// Legacy pin assignments remain only so the historical schematic can compile during migration.
 constexpr int ENCODER_EDGES_PER_DETENT = 4; // elegir 2 si la ficha indica medio ciclo por paso
 static_assert(ENCODER_EDGES_PER_DETENT == 2 || ENCODER_EDGES_PER_DETENT == 4, "Encoder: 2 o 4 flancos por paso");
 constexpr int PIN_ENC_A = 32;
 constexpr int PIN_ENC_B = 33;
 constexpr int PIN_ENC_SW = 16; // ESP32-WROOM; no WROVER con PSRAM en GPIO16
-constexpr int PIN_NEOPIXEL = 13; // T5 modular: vía 74HCT245N a 5 V
+constexpr int PIN_NEOPIXEL = 13; // T1 potencia/salidas: vía 74HCT245N a 5 V
 constexpr int PIN_BUZZER = 14;   // piezo pasivo vía transistor; PWM canal 2
 constexpr int PIN_LED = 25;
 constexpr int PIN_SW1 = 26;   // menú / canal (activo en bajo, pull-up externo de 10 kΩ)
 constexpr int PIN_SW2 = 27;   // confirmar / tara
-// LCD Waveshare de 1,9" (ST7789V2, 170 × 320) por SPI. Todos los pines están en el mismo lado
-// de la tarjeta (J3 del DevKitC); se evitan GPIO5 y GPIO15, que son pines de arranque.
-constexpr int PIN_LCD_CLK = 18;   // SCK del VSPI
-constexpr int PIN_LCD_DIN = 23;   // MOSI del VSPI
-constexpr int PIN_LCD_CS = 22;
-constexpr int PIN_LCD_DC = 21;
-constexpr int PIN_LCD_RST = 4;
-constexpr int PIN_LCD_BL = 19;    // luz de fondo, con PWM
-constexpr uint32_t LCD_SPI_HZ = 40000000;
+// La LilyGO T4-S3 es un terminal independiente enlazado solo por ESP-NOW.
+// No se reservan GPIO ni un bus cableado para el display.
 
 // ---- Muestreo
 constexpr uint32_t FS_HZ = 8000;        // muestras por segundo y por canal

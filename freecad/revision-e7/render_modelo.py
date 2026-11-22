@@ -1,57 +1,106 @@
 #!/usr/bin/env python3
-"""Exporta el FCStd E.7 a JSON y crea vistas de producto con Blender."""
+"""Exporta el FCStd E.7 a JSON (con FreeCAD) y crea las vistas de revisión (con Blender).
+
+    freecadcmd  -> escribe .render/ensamble.json
+    blender -b --python render_modelo.py -- vistas
+"""
 from pathlib import Path
-import json,sys
-HERE=Path(__file__).resolve().parent; TEMP=HERE/".render"
+import json
+import sys
+
+HERE = Path(__file__).resolve().parent
+TEMP = HERE / ".render"
 
 
 def exportar():
     import FreeCAD as App
-    TEMP.mkdir(exist_ok=True); doc=App.openDocument(str(HERE/"medidor-E7-perforadas.FCStd")); data=[]
+    TEMP.mkdir(exist_ok=True)
+    doc = App.openDocument(str(HERE / "medidor-E7-perforadas.FCStd"))
+    data = []
     for o in doc.Objects:
-        if not hasattr(o,"Shape") or o.Shape.isNull(): continue
-        vertices,faces=o.Shape.tessellate(.18)
-        data.append({"name":o.Name,"vertices":[tuple(v) for v in vertices],"faces":faces,
-                     "color":[float(v) for v in o.ColorRGB.split(",")],"group":o.AssemblyGroup})
-    path=TEMP/"ensamble.json"; path.write_text(json.dumps(data),encoding="utf-8"); print(path)
+        if not hasattr(o, "Shape") or o.Shape.isNull():
+            continue
+        vertices, faces = o.Shape.tessellate(.12)
+        data.append({"name": o.Name, "vertices": [tuple(round(c, 4) for c in v) for v in vertices], "faces": faces,
+                     "color": [float(v) for v in o.ColorRGB.split(",")], "material": o.Material, "group": o.AssemblyGroup})
+    path = TEMP / "ensamble.json"
+    path.write_text(json.dumps(data), encoding="utf-8")
+    print(path, len(data), "objetos")
 
 
-def renderizar(path):
+def renderizar():
+    sys.path.insert(0, str(HERE))
     import bpy
-    from mathutils import Vector
-    data=json.loads(Path(path).read_text()); bpy.ops.wm.read_factory_settings(use_empty=True); s=bpy.context.scene
-    s.render.engine="BLENDER_EEVEE"; s.render.resolution_x,s.render.resolution_y=2100,1350
-    s.render.resolution_percentage=100; s.render.image_settings.file_format="PNG"
-    s.world=bpy.data.worlds.new("World"); s.world.use_nodes=True
-    bg=s.world.node_tree.nodes.get("Background"); bg.inputs["Color"].default_value=(.72,.74,.78,1); bg.inputs["Strength"].default_value=.75
-    s.view_settings.look="AgX - Medium High Contrast"; objects={}; groups={}
-    for d in data:
-        me=bpy.data.meshes.new(d["name"]); me.from_pydata(d["vertices"],[],d["faces"]); me.update()
-        o=bpy.data.objects.new(d["name"],me); s.collection.objects.link(o)
-        m=bpy.data.materials.new(d["name"]); m.diffuse_color=(*d["color"],1); m.use_nodes=True
-        sh=m.node_tree.nodes.get("Principled BSDF"); sh.inputs["Base Color"].default_value=(*d["color"],1); sh.inputs["Roughness"].default_value=.62
-        if "Segmentos_WS2811" in d["name"] or "LED_estado" in d["name"]: sh.inputs["Emission Color"].default_value=(*d["color"],1); sh.inputs["Emission Strength"].default_value=2
-        o.data.materials.append(m); objects[d["name"]]=o; groups[d["name"]]=d["group"]
-    for pos,energy,size in (((-180,-250,380),1400,240),((420,80,300),1000,200)):
-        ld=bpy.data.lights.new("Area","AREA"); ld.energy=energy; ld.size=size
-        lo=bpy.data.objects.new("Area",ld); s.collection.objects.link(lo); lo.location=pos
-        lo.rotation_euler=(Vector((140,90,20))-lo.location).to_track_quat('-Z','Y').to_euler()
-    cd=bpy.data.cameras.new("Camera"); cd.type="ORTHO"; cam=bpy.data.objects.new("Camera",cd); s.collection.objects.link(cam); s.camera=cam
-    def shot(name,target,direction,scale):
-        target=Vector(target); cam.location=target+Vector(direction).normalized()*700
-        cam.rotation_euler=(target-cam.location).to_track_quat('-Z','Y').to_euler(); cd.ortho_scale=scale
-        s.render.filepath=str(HERE/name); bpy.ops.render.render(write_still=True)
-    for n,o in objects.items(): o.location=(0,0,0); o.hide_render=False
-    shot("medidor-E7-cerrado.png",(140,90,32),(-.65,-.9,1),350)
-    for n,o in objects.items():
-        o.location=(300,0,-67) if groups[n]=="lid" else ((0,195,-46) if groups[n]=="guard" else (0,0,0)); o.hide_render=False
-    shot("medidor-E7-abierto.png",(220,90,22),(-.5,-.9,1.2),510)
-    for n,o in objects.items(): o.location=(0,0,0); o.hide_render=groups[n] in ("lid","guard")
-    shot("medidor-E7-planta.png",(140,90,13),(0,-.05,1),315)
-    # Cara interior de la tapa: confirma que piezo, LCD, controles y FCOB quedan empotrados.
-    for n,o in objects.items(): o.location=(0,0,0); o.hide_render=groups[n] != "lid"
-    shot("medidor-E7-tapa-interior.png",(140,90,58),(0,.05,-1),315)
+    from escena_blender import Escena
+
+    e = Escena()
+    s = e.s
+    s.render.resolution_x, s.render.resolution_y, s.render.resolution_percentage = 2100, 1350, 100
+    e.suelo((.045, .055, .07), .55)
+    # Dark visible background, with a separate neutral environment fill so the dark enclosure
+    # retains the same readable product contrast as the equalizer renders.
+    e.fondo_camara((.035, .045, .06), (.55, .57, .60), .9)
+    e.luz("Principal", (-160, -260, 420), 52000, 260)
+    e.luz("Relleno", (480, 60, 330), 32000, 240)
+    e.luz("Trasera", (140, 480, 300), 28000, 240)
+    cam = e.camara(50)
+    e.luces_fcob(fuerza=.9)
+    e.color_fcob((0, 1.0, 10 / 18))      # estado normal del firmware: verde (0,18,10) en los cuatro segmentos
+
+    def toma(nombre, f, pos, hacia, lente=50, orto=None):
+        e.abrir(f)
+        cam.data.type = "ORTHO" if orto else "PERSP"
+        if orto:
+            cam.data.ortho_scale = orto
+        cam.data.lens = lente
+        e.apuntar(cam, pos, hacia)
+        s.render.filepath = str(HERE / nombre)
+        bpy.ops.render.render(write_still=True)
+
+    abierta = 1.0      # tapa de pie en los bolsillos de estacionamiento
+    toma("medidor-E7-cerrado.png", 0, (-150, -400, 330), (140, 84, 28))
+    toma("medidor-E7-abierto.png", abierta, (470, 330, 420), (140, 70, 45))
+    toma("medidor-E7-planta.png", abierta, (140, 89, 700), (140, 90, 0), orto=330)
+    toma("medidor-E7-trasera.png", 0, (-190, 500, 300), (140, 96, 28))
+    toma("medidor-E7-tapa-interior.png", abierta, (150, 330, 250), (140, 5, 130), lente=42)
+    toma("medidor-E7-difusor.png", 0, (118, 30, 215), (128, 100, 68), lente=70)
+    toma("medidor-E7-cierre-magnetico.png", .45, (430, -250, 250), (140, 70, 70), lente=50)
+    toma("medidor-E9-entradas-SCT.png", 0, (-145, 76, 105), (0, 106, 38), lente=72)
+    toma("medidor-E9-alimentacion-12V.png", 0, (425, -55, 115), (280, 36, 40), lente=72)
+    toma("medidor-E9-ruta-alimentacion-interior.png", abierta, (88, 112, 185), (226, 29, 27), lente=50)
+
+    # Vista didáctica del soporte de pantalla. La tapa, la pantalla y la placa trasera de
+    # deslizamiento se separan solo para mostrar el orden de montaje sin tornillos.
+    e.abrir(0)
+    bpy.ops.wm.stl_import(filepath=str(HERE / "pruebas-de-ajuste/tapa_pantalla_T4S3.stl"))
+    front = bpy.context.object
+    front.name = "Frente_prueba_pantalla_T4S3"
+    front.data.materials.append(e.material("frente_pantalla", "lid", (.68, .70, .73)))
+    keep = {front.name, "LilyGO_T4S3_PCB_51p56x38p72", "LilyGO_T4S3_AMOLED_vidrio_56x44",
+            "LilyGO_VBUS_GND_2vias", "Placa_trasera_desmontable_LCD"}
+    for obj in s.objects:
+        if obj.type in {"MESH", "CURVE"}:
+            obj.hide_render = obj.name not in keep
+    for name in ("LilyGO_T4S3_PCB_51p56x38p72", "LilyGO_T4S3_AMOLED_vidrio_56x44", "LilyGO_VBUS_GND_2vias"):
+        e.objetos[name].location.z -= 8
+    pcb = e.objetos["LilyGO_T4S3_PCB_51p56x38p72"]
+    pcb.data.materials.clear()
+    pcb.data.materials.append(e.material("pcb_pantalla_acento", "pcb_dark", (.035, .24, .13)))
+    back = e.objetos["Placa_trasera_desmontable_LCD"]
+    back.location.z -= 18
+    # Color propio para distinguir la pieza impresa desmontable de la tapa fija.
+    accent = e.material("placa_trasera_acento", "nylon", (.20, .48, .78))
+    back.data.materials.clear()
+    back.data.materials.append(accent)
+    s.render.resolution_x, s.render.resolution_y = 1800, 1350
+    cam.data.type = "PERSP"
+    cam.data.lens = 62
+    e.apuntar(cam, (190, -170, -50), (56, 52, 48))
+    s.render.filepath = str(HERE / "medidor-E8-pantalla-soporte-explotado.png")
+    bpy.ops.render.render(write_still=True)
 
 
-if "--" in sys.argv: renderizar(sys.argv[-1])
-else: exportar()
+if "--" in sys.argv:
+    renderizar()
+else:
+    exportar()

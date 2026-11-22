@@ -1,18 +1,26 @@
 {
   "valid": true,
-  "revision": "E.7-WS2811-FCOB-12V",
+  "revision": "E.9-TOUCH-12V-LM2596",
   "pinouts": {
+    "C_BUCK_IN": [
+      "+12V_PROT",
+      "GND"
+    ],
+    "C_BUCK_OUT": [
+      "+5V_PROT",
+      "GND"
+    ],
     "C_PWR3": [
-      "+5V",
+      "+5V_PROT",
       "GND"
     ],
     "C_PWR4": [
-      "+5V",
+      "+5V_PROT",
       "GND"
     ],
     "C_PWR5": [
-      "+5V",
-      "+12V_LED",
+      "+5V_PROT",
+      "+12V_PROT",
       "GND"
     ],
     "C_ADC_I": [
@@ -31,27 +39,22 @@
       "LED_DATA",
       "BUZZ"
     ],
-    "C_UI_E": [
-      "+3V3",
-      "GND",
-      "ENC_A",
-      "ENC_B",
-      "ENC_SW"
-    ],
     "C_PIX": [
-      "+12V_LED",
+      "+12V_PROT",
       "DIN_5V",
       "GND"
     ],
-    "C_LCD": [
-      "+3V3",
-      "GND",
-      "LCD_DIN",
-      "LCD_CS",
-      "LCD_DC",
-      "LCD_BL",
-      "LCD_CLK",
-      "LCD_RST"
+    "C_LILY": [
+      "+5V_PROT",
+      "GND"
+    ],
+    "C_LED": [
+      "LED_A",
+      "GND"
+    ],
+    "C_BZ": [
+      "+5V_PROT",
+      "BZ_SW"
     ]
   },
   "endpoints": {
@@ -79,9 +82,29 @@
       "T4",
       "T5"
     ],
-    "C_UI_E": [
+    "C_BUCK_IN": [
+      "T1",
+      "U4"
+    ],
+    "C_BUCK_OUT": [
+      "U4",
+      "T1"
+    ],
+    "C_LILY": [
       "T4",
-      "T5"
+      "Panel"
+    ],
+    "C_LED": [
+      "T4",
+      "Panel"
+    ],
+    "C_BZ": [
+      "T5",
+      "Panel"
+    ],
+    "C_PIX": [
+      "T5",
+      "Panel"
     ]
   },
   "strip": {

@@ -24,14 +24,21 @@ fabricación se publican como archivos de la release; las cachés y fotogramas s
 La PCB principal conserva su revisión anterior: encoder, NeoPixels y piezo requieren el
 cableado y circuito auxiliar indicados en la guía.
 
-Para la construcción manual vigente, la única fuente de verdad es
-[Medidor E.7 en cinco tarjetas perforadas](hardware/perforadas-modulares/README.md).
-Los archivos `kicad/medidor-t1.kicad_sch` … `medidor-t5.kicad_sch` son los
-esquemáticos editables; sus PDFs se generan directamente desde KiCad. La red de
-120 V permanece fuera de las tarjetas perforadas de baja tensión.
-[El modelo 3D E.7](freecad/revision-e7/medidor-E7-perforadas.FCStd) usa las
-medidas compradas, muestra conectores/borneras/controles y empotra el piezo de
-44 mm y la FCOB WS2811 de 12 V bajo difusor.
+La revisión en curso [E.8](hardware/perforadas-modulares/ARQUITECTURA-E8.md)
+reduce el medidor a tres tarjetas de baja tensión: potencia/salidas, medición
+analógica y control. La red de 120 V permanece en Z1, fuera de las perforadas.
+El ESP32-WROOM principal sigue siendo dueño de la adquisición, energía, Wi-Fi y
+alarmas. Una LilyGO T4-S3 AMOLED en la tapa funciona únicamente como terminal
+gráfico por ESP-NOW; no sustituye al controlador del medidor. La lista de
+construcción E.8 está en
+[`lista-por-tarjeta-e8.csv`](hardware/perforadas-modulares/lista-por-tarjeta-e8.csv).
+El [modelo mecánico E.8](freecad/revision-e7/README.md) incluye ahora probetas de ajuste,
+placa trasera desmontable para la LilyGO, imanes a presión y proyectos reproducibles para Bambu Studio.
+Las referencias visuales actuales son la [vista cerrada](freecad/revision-e7/medidor-E7-cerrado.png),
+la [vista abierta](freecad/revision-e7/medidor-E7-abierto.png), la
+[planta](freecad/revision-e7/medidor-E7-planta.png) y el
+[soporte de pantalla explotado](freecad/revision-e7/medidor-E8-pantalla-soporte-explotado.png).
+Las [prácticas mecánicas E.8](freecad/revision-e7/BEST-PRACTICES.md) se mantienen separadas de otros proyectos.
 
 ## Contenido
 

@@ -1,183 +1,81 @@
 {
-  "streams": [
-    {
-      "index": 0,
-      "codec_name": "h264",
-      "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
-      "profile": "High",
-      "codec_type": "video",
-      "codec_tag_string": "avc1",
-      "codec_tag": "0x31637661",
-      "mime_codec_string": "avc1.640028",
-      "width": 1920,
-      "height": 1080,
-      "coded_width": 1920,
-      "coded_height": 1080,
-      "has_b_frames": 2,
-      "sample_aspect_ratio": "1:1",
-      "display_aspect_ratio": "16:9",
-      "pix_fmt": "yuvj420p",
-      "level": 40,
-      "color_range": "pc",
-      "color_space": "bt470bg",
-      "chroma_location": "left",
-      "field_order": "progressive",
-      "is_avc": "true",
-      "nal_length_size": "4",
-      "id": "0x1",
-      "r_frame_rate": "24/1",
-      "avg_frame_rate": "24/1",
-      "time_base": "1/12288",
-      "start_pts": 0,
-      "start_time": "0.000000",
-      "duration_ts": 466944,
-      "duration": "38.000000",
-      "bit_rate": "2041691",
-      "bits_per_raw_sample": "8",
-      "nb_frames": "912",
-      "extradata_size": 51,
-      "disposition": {
-        "default": 1,
-        "dub": 0,
-        "original": 0,
-        "comment": 0,
-        "lyrics": 0,
-        "karaoke": 0,
-        "forced": 0,
-        "hearing_impaired": 0,
-        "visual_impaired": 0,
-        "clean_effects": 0,
-        "attached_pic": 0,
-        "timed_thumbnails": 0,
-        "non_diegetic": 0,
-        "captions": 0,
-        "descriptions": 0,
-        "metadata": 0,
-        "dependent": 0,
-        "still_image": 0,
-        "multilayer": 0
-      },
-      "tags": {
-        "language": "und",
-        "handler_name": "VideoHandler",
-        "encoder": "Lavc62.28.100 libx264"
-      }
+  "contenedor": {
+    "video": "h264 High 1920x1080 24/1 fps yuv420p",
+    "fotogramas_decodificados": 912,
+    "audio": "aac LC 48000 Hz 2 canales",
+    "subtitulos": [
+      "mov_text (spa)"
+    ],
+    "duracion_s": 38.0,
+    "tamano_bytes": 15736938
+  },
+  "decodificacion_completa": {
+    "errores": [],
+    "ok": true
+  },
+  "audio_medido": {
+    "lufs_integrado": -16.2,
+    "lra_lu": 2.9,
+    "pico_real_dbtp": -1.4,
+    "escucha_humana": false
+  },
+  "fcob_cuatro_segmentos": {
+    "fotogramas": 369,
+    "max_dif_tono": 1.8,
+    "max_dif_rgb": 7.2,
+    "errores": []
+  },
+  "estado_final": {
+    "fotograma": 887,
+    "t_s": 36.92,
+    "tonos_fcob": [
+      160,
+      160,
+      160,
+      160
+    ],
+    "apertura_tapa": 0.0
+  },
+  "led_panel": {
+    "ambar": {
+      "fotogramas": 104,
+      "flancos_de_subida": 4,
+      "frecuencia_medida_hz": 1.0,
+      "frecuencia_firmware_hz": 1.0,
+      "coincidencia_con_firmware": 1.0,
+      "contraste_verde_8bit": [
+        51,
+        250
+      ]
     },
-    {
-      "index": 1,
-      "codec_name": "aac",
-      "codec_long_name": "AAC (Advanced Audio Coding)",
-      "profile": "LC",
-      "codec_type": "audio",
-      "codec_tag_string": "mp4a",
-      "codec_tag": "0x6134706d",
-      "mime_codec_string": "mp4a.40.2",
-      "sample_fmt": "fltp",
-      "sample_rate": "48000",
-      "channels": 2,
-      "channel_layout": "stereo",
-      "bits_per_sample": 0,
-      "initial_padding": 0,
-      "id": "0x2",
-      "r_frame_rate": "0/0",
-      "avg_frame_rate": "0/0",
-      "time_base": "1/48000",
-      "start_pts": 0,
-      "start_time": "0.000000",
-      "duration_ts": 1824000,
-      "duration": "38.000000",
-      "bit_rate": "192259",
-      "nb_frames": "1783",
-      "extradata_size": 5,
-      "disposition": {
-        "default": 1,
-        "dub": 0,
-        "original": 0,
-        "comment": 0,
-        "lyrics": 0,
-        "karaoke": 0,
-        "forced": 0,
-        "hearing_impaired": 0,
-        "visual_impaired": 0,
-        "clean_effects": 0,
-        "attached_pic": 0,
-        "timed_thumbnails": 0,
-        "non_diegetic": 0,
-        "captions": 0,
-        "descriptions": 0,
-        "metadata": 0,
-        "dependent": 0,
-        "still_image": 0,
-        "multilayer": 0
-      },
-      "tags": {
-        "language": "spa",
-        "handler_name": "SoundHandler"
-      }
+    "rojo": {
+      "fotogramas": 75,
+      "flancos_de_subida": 15,
+      "frecuencia_medida_hz": 5.01,
+      "frecuencia_firmware_hz": 5.0,
+      "coincidencia_con_firmware": 1.0,
+      "contraste_verde_8bit": [
+        50,
+        249
+      ]
     },
-    {
-      "index": 2,
-      "codec_name": "mov_text",
-      "codec_long_name": "MOV text",
-      "codec_type": "subtitle",
-      "codec_tag_string": "tx3g",
-      "codec_tag": "0x67337874",
-      "id": "0x3",
-      "r_frame_rate": "0/0",
-      "avg_frame_rate": "0/0",
-      "time_base": "1/1000000",
-      "start_pts": 0,
-      "start_time": "0.000000",
-      "duration_ts": 36016000,
-      "duration": "36.016000",
-      "bit_rate": "125",
-      "nb_frames": "11",
-      "extradata_size": 68,
-      "disposition": {
-        "default": 1,
-        "dub": 0,
-        "original": 0,
-        "comment": 0,
-        "lyrics": 0,
-        "karaoke": 0,
-        "forced": 0,
-        "hearing_impaired": 0,
-        "visual_impaired": 0,
-        "clean_effects": 0,
-        "attached_pic": 0,
-        "timed_thumbnails": 0,
-        "non_diegetic": 0,
-        "captions": 0,
-        "descriptions": 0,
-        "metadata": 0,
-        "dependent": 0,
-        "still_image": 0,
-        "multilayer": 0
-      },
-      "tags": {
-        "language": "spa",
-        "handler_name": "SubtitleHandler"
-      }
+    "verde": {
+      "fotogramas": 48,
+      "verde_min_8bit": 248,
+      "fijo": true
     }
-  ],
-  "format": {
-    "filename": "/home/davixcky/dev/.personal/electronica/medidor-energia-esp32/video/revision-e7/medidor-E7-producto.mp4",
-    "nb_streams": 3,
-    "nb_programs": 0,
-    "nb_stream_groups": 0,
-    "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
-    "format_long_name": "QuickTime / MOV",
-    "start_time": "0.000000",
-    "duration": "38.000000",
-    "size": "10640867",
-    "bit_rate": "2240182",
-    "probe_score": 100,
-    "tags": {
-      "major_brand": "isom",
-      "minor_version": "512",
-      "compatible_brands": "isomiso2avc1mp41",
-      "title": "Medidor de energ\u00eda ESP32 \u2014 E.7",
-      "encoder": "Lavf62.12.100"
+  },
+  "cinco_tarjetas_visibles": {
+    "fotograma": 638,
+    "tarjetas": {
+      "T1": true,
+      "T2": true,
+      "T3": true,
+      "T4": true,
+      "T5": true
     }
-  }
+  },
+  "valido": true,
+  "fallos": [],
+  "limites": "Mediciones sobre el MP4. No hubo escucha humana del audio. El render no valida aislamiento, calibración ni seguridad del prototipo."
 }

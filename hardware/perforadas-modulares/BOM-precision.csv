@@ -1,64 +1,60 @@
-Categoria,Referencia/uso,Descripcion/especificacion,Cantidad exacta,Cantidad a comprar,Precision/tolerancia,Observacion
-Modulo,U1,ESP32S V1.1 USB-C 38 pines ESP32-WROOM-32,1,1,—,Verificar 25.4mm entre hileras; no comprar versión de 30 pines
-Sensor,CH1/CH2,SCT-013-000 100A:50mA sin burden interno,2,2,—,Confirmar sufijo 000
-Modulo,U2,ZMPT101B con LM358 y potenciómetro,1,1,—,Va en zona de red separada
-Pantalla,LCD,Waveshare 1.9in ST7789V2 170x320 SPI con cable,1,1,—,Confirmar conector de 8 vías
-Interfaz,ENC1,Encoder incremental EC11/M7 con pulsador eje 6mm,1,2,—,Uno de repuesto y perilla compatible
-Interfaz,PIX1-PIX4,BTF FCOB WS2811 12V 720LED/m ancho 12mm ASIN B0BW5T6HW4,4 segmentos,200mm,—,Cortar solo cada 50mm; 20 segmentos/m; máximo 2W en el tramo usado
-Interfaz,U3,74HCT245N DIP-20,1,2,—,Reemplazo local del 74AHCT125; no 74HC245
-Interfaz,Q1,2N2222A o PN2222A THT,1,3,—,Confirmar patillaje del fabricante
-Interfaz,BZ1,Piezo pasivo GEP0008 1-30V cuerpo 44x14mm,1,2,—,Comprado; empotrado bajo rejilla; no buzzer activo
-Diodo,D1,1N5822 THT 3A DO-201AD,1,3,—,Schottky de protección; reemplaza 1N5819 por margen con fuente 5A
-Diodo,D2-D7,BAT85 DO-35,6,10,—,No sustituir sin revisar Vf/leakage
-Proteccion,F2,PTC radial hold 2.0A compatible 5V,1,2,—,Reemplaza MF-R110 1.1A
-Proteccion,F1,Fusible lento T500mA 250V 5x20mm,1,3,—,Más portafusible cerrado
-Resistencia,R1,22 ohm película metálica 1/4W,1,3,1%,Burden CH1 directamente en jack
-Resistencia,R2,47 ohm película metálica 1/4W,1,3,1%,Burden CH2 directamente en jack
-Resistencia,R5-R6,3.3kohm película metálica 1/4W,2,5,1%,
-Resistencia,R3,15kohm película metálica 1/4W,1,3,1%,
-Resistencia,R4/R12/R13/R17/R19-R23,10kohm película metálica 1/4W,9,14,1%,Incluye polarización botones encoder y pulldowns del HCT
-Resistencia,R7,11kohm película metálica 1/4W,1,3,1%,No reemplazar por 10k
-Resistencia,R8,13kohm película metálica 1/4W,1,3,1%,No reemplazar por 12k
-Resistencia,R11/R16,330ohm película metálica 1/4W,2,5,1%,LED de estado y dato WS2812
-Resistencia,R14/R18,1kohm película metálica 1/4W,2,4,1%,LED/transistor
-Resistencia,R15,470ohm película metálica 1/4W,1,3,1%,
-Capacitor,C5-C6,47nF película o C0G THT,2,4,5%,Filtro de corriente
-Capacitor,C9,27nF película o C0G THT,1,3,5%,Filtro de tensión
-Capacitor,C12-C13,10nF película o C0G THT,2,4,5%,Encoder A/B
-Capacitor,C2/C8/C10/C11/C14/C15,100nF cerámico THT 50V,6,10,10%,Desacoplo y antirrebote
-Capacitor,C7,10uF electrolítico 16V o mayor,1,3,20%,VBIAS
-Capacitor,C1,470uF electrolítico comprado 35V,1,2,20%,Entrada de 5V; usar la unidad comprada
-Capacitor,C16/C17,680uF electrolítico 16V o mayor low-ESR,2,3,20%,Salida 12V del MT3608 y junto a la FCOB
-LED,D8,LED verde 5mm de panel,1,2,—,
-LED,D9/D10,LED rojo 3mm + LED verde 3mm,2,2,—,Uno de cada color
-LED,LED1,LED ámbar 5mm,1,2,—,Alimentación auxiliar
-Pulsador,SW1/SW2,Pulsador NA de panel 12mm,2,3,—,
-Conector,J1,Bornera 2 polos paso 5.08mm,1,2,—,Entrada 5V
-Conector,J4,Bornera protegida 2 polos para red + guarda,1,1,—,Solo zona Z1
-Conector,J5,Bornera 3 polos paso 5.08mm,1,2,—,Salida MBT del ZMPT
-Conector,J2/J3,Jack 3.5mm hembra de panel estéreo,2,3,—,Burden soldado directamente
-Conector,ESP32,Zócalo hembra 1x19 paso 2.54mm,2,4,—,Comprar tiras cortables si no hay 1x19
-Conector,intertarjeta,JST-XH header vertical 2 vías,6,8,—,Tres arneses de potencia
-Conector,intertarjeta,JST-XH carcasa 2 vías,6,8,—,Tres arneses de potencia
-Conector,intertarjeta,JST-XH header vertical 3 vías,4,6,—,ADC-V y UI digital
-Conector,intertarjeta,JST-XH carcasa 3 vías,4,6,—,ADC-V y UI digital
-Conector,intertarjeta,JST-XH header vertical 4 vías,2,4,—,ADC-I
-Conector,intertarjeta,JST-XH carcasa 4 vías,2,4,—,ADC-I
-Conector,intertarjeta,JST-XH header vertical 5 vías,2,4,—,Encoder entre T4/T5
-Conector,intertarjeta,JST-XH carcasa 5 vías,2,4,—,Encoder entre T4/T5
-Conector,intertarjeta,Terminal crimp JST-XH hembra,42,60,—,Incluye repuesto; verificar compatibilidad real
-Conector,panel,Arneses polarizados 2 vías para SW1 SW2 D8 piezo,4,6,—,No incluidos en los 42 contactos
-Conector,panel,Arnés polarizado 3 vías para ZMPT MBT y FCOB 12V,2,3,—,No invertir +12V DATA GND
-Conector,panel,Arnés polarizado 5 vías para encoder,1,2,—,
-Conector,LCD,Header/cable 1x8 paso 2.54mm,1,2,—,Confirmar con pantalla real
-Mecanico,T1-T5,Tarjeta perforada FR4 paso 2.54mm recortable,5,6,—,Tamaños según README
-Mecanico,varios,Separadores nylon M3 + tornillos + tuercas,20,24,—,Cuatro por tarjeta
-Mecanico,encoder,Perilla para eje 6mm,1,1,—,
-Mecanico,guarda,Portafusible cerrado 5x20 y prensaestopa PG7,1+1,1+2,—,Zona de red
-Cable,baja tensión,Cable flexible 22AWG rojo/negro,2m por color,2m por color,—,Potencia y GND
-Cable,señales,Cable flexible 24AWG multicolor,6m,8m,—,Analógico/digital; trenzar con GND
-Cable,red,Cable 18AWG 300/600V fase/neutro/tierra,según gabinete,1m por color,—,Solo persona calificada y terminales aislados
-Alimentacion,externa,Adaptador aislado ADAP-5V-5A 5V 5A plug 5.5x2.5mm,1,1,—,Comprado; centro positivo
-Alimentacion,U4,Modulo elevador MT3608 ajustable 5V a 12V minimo 0.25A salida,1,2,—,NUEVO requerido por la FCOB 12V; ajustar a 12.0V antes de conectarla
-Alimentacion,panel,Jack DC panel CON-156A 5.5x2.5mm,1,2,—,Comprado para coincidir con ADAP-5V-5A; centro positivo
-Instrumentacion,TP1-TP9,Lazos/pines de prueba THT,9,12,—,
+Assembly,References,Description,Quantity,Purchase status,Mounting / verification
+T1,J1,2-way 5.08 mm terminal block,1,planned,12 V input from panel CON-156A
+T1,F2,"Resettable PTC, 2.0 A hold, rated >=16 V",1,planned,Series input protection
+T1,D1,"1N5822 Schottky, 3 A, DO-201AD",1,planned,Do not substitute the purchased 1N5819 without current/thermal review
+T1,C1,470 uF 35 V electrolytic,1,verified purchase,At protected 12 V input; measure body before final placement
+T1,C2,100 nF 50 V ceramic THT,1,verified shared stock,At protected 12 V input
+T1,C17,680 uF 16 V electrolytic,1,verified purchase,At returned 5 V rail; low-ESR not verified
+T1,C_BUCK_IN C_BUCK_OUT C_PWR3 C_PWR4,JST-XH 2-way vertical header,4,planned,Key every harness; BUCK IN and OUT must not be interchangeable
+T1,C_PWR5,JST-XH 3-way vertical header,1,planned,+5V_PROT / +12V_PROT / GND
+T1,BOARD,"FR4 perfboard, 2.54 mm pitch, cut to 50 x 40 mm from user's 60 x 40 mm board",1,declared on hand; dimensions unverified,"Test against the printed supports, mark, then remove 10 mm from the long side and deburr all copper edges"
+T2,J2 J3,JST-XH 2-way vertical header,2,planned,Short harnesses to panel SCT jacks
+T2,R3,"15 kohm metal-film resistor, 1%, 0.25 W",1,planned,VBIAS upper divider
+T2,R4,"10 kohm metal-film resistor, 1%, 0.25 W",1,planned,VBIAS lower divider
+T2,R5 R6,"3.3 kohm metal-film resistor, 1%, 0.25 W",2,planned,ADC series filters
+T2,C5 C6,"47 nF film or C0G THT, 5%",2,planned,"Return to VBIAS, not GND"
+T2,C7,10 uF >=16 V electrolytic,1,planned,VBIAS reservoir
+T2,C8,100 nF 50 V ceramic THT,1,verified shared stock,VBIAS bypass
+T2,D2 D3 D4 D5,BAT85 Schottky DO-35,4,planned,ADC clamps
+T2,C_ADC_I,JST-XH 4-way vertical header,1,planned,+3V3 / GND / CH1_ADC / CH2_ADC
+T2,BOARD,"FR4 perfboard, 2.54 mm pitch, cut to 70 x 55 mm",1,planned,Keep SCT traces away from digital/power wiring
+T3,J5,3-way 5.08 mm terminal block,1,planned,Only ZMPT low-voltage side enters this board
+T3,R7,"11 kohm metal-film resistor, 1%, 0.25 W",1,planned,Voltage-channel divider/filter
+T3,R8,"13 kohm metal-film resistor, 1%, 0.25 W",1,planned,Do not replace with 12 kohm
+T3,C9,"27 nF film or C0G THT, 5%",1,planned,Voltage-channel filter
+T3,D6 D7,BAT85 Schottky DO-35,2,planned,ADC clamps
+T3,C_PWR3,JST-XH 2-way vertical header,1,planned,+5V_PROT / GND
+T3,C_ADC_V,JST-XH 3-way vertical header,1,planned,+3V3 / GND / V_ADC
+T3,BOARD,"FR4 perfboard, 2.54 mm pitch, cut to 55 x 45 mm",1,planned,No mains-voltage component is allowed on T3
+T4,U1,"ESP32S V1.1 USB-C, 38 pins, ESP32-WROOM-32",1,planned,ADC1 pins only; keep antenna and USB-C clear
+T4,U1 sockets,"Female header strip 1x19, 2.54 mm",2,verified shared stock,Cut from verified 1x40 strips; confirm 25.4 mm row spacing
+T4,R11,"330 ohm metal-film resistor, 1%, 0.25 W",1,planned,Panel status LED series resistor
+T4,C_PWR4 C_LILY C_LED,JST-XH 2-way vertical header,3,planned,LilyGO connector carries power only
+T4,C_ADC_V C_UI_D,JST-XH 3-way vertical header,2,planned,Voltage ADC and digital-output harnesses
+T4,C_ADC_I,JST-XH 4-way vertical header,1,planned,Two current ADC channels
+T4,BOARD,"FR4 perfboard, 2.54 mm pitch, cut to 80 x 65 mm",1,planned,"No SW1, SW2, ENC1 or wired LCD bus in E.9"
+T5,U3,74HCT245N DIP-20,1,verified shared purchase,HCT required; do not use 74HC245
+T5,U3 socket,"DIP-20 socket, 7.62 mm",1,verified shared purchase,Install before U3
+T5,Q1,2N2222A or PN2222A THT,1,planned,Verify E/B/C for the exact manufacturer
+T5,R16,"330 ohm metal-film resistor, 1%, 0.25 W",1,planned,Series resistor on FCOB data
+T5,R17 R23,"10 kohm metal-film resistor, 1%, 0.25 W",2,planned,Input and unused-channel pulldowns
+T5,R18,"1 kohm metal-film resistor, 1%, 0.25 W",1,planned,Piezo transistor base
+T5,C14,100 nF 50 V ceramic THT,1,verified shared stock,Directly beside U3 pins 20/10
+T5,C16,680 uF 16 V electrolytic,1,verified purchase,Beside C_PIX; low-ESR not verified
+T5,C_PWR5 C_UI_D C_PIX,JST-XH 3-way vertical header,3,planned,"Power, control and FCOB"
+T5,C_BZ,JST-XH 2-way vertical header,1,planned,Panel passive piezo
+T5,BOARD,"FR4 perfboard, 2.54 mm pitch, cut to 65 x 50 mm",1,planned,Encoder and its RC network are absent in E.9
+OFFBOARD,U4,"LM2596 adjustable buck module, reserved 43 x 21 x 14 mm",1,planned / exact model unverified,"Adjust to 5.0 V unloaded, then verify under current-limited load"
+OFFBOARD,LCD1,"LilyGO T4-S3 AMOLED 2.41 in, 450 x 600",1,planned,ESP-NOW terminal; VBUS/GND only; disconnect harness before USB
+OFFBOARD,JDC,"CON-156A panel jack, 5.5 x 2.5 mm, center positive",1,verified purchase,12 V input
+OFFBOARD,J2P J3P,3.5 mm female panel jack,2,planned,For SCT-013-000 plugs
+OFFBOARD,R1,"22 ohm metal-film resistor, 1%, 0.25 W",1,planned,Solder directly across CH1 panel jack
+OFFBOARD,R2,"47 ohm metal-film resistor, 1%, 0.25 W",1,planned,Solder directly across CH2 panel jack
+OFFBOARD,D8,"Green diffused panel LED, 5 mm",1,verified purchase,Connected through C_LED; R11 is on T4
+OFFBOARD,BZ1,"GEP0008 passive piezo, 44 x 14 mm",1,declared purchased; document pending,Not an active buzzer
+OFFBOARD,FCOB,"BTF FCOB WS2811, 12 V, 12 mm, 200 mm used",1,planned,Four 50 mm addressable pixels; <=2 W design load
+OFFBOARD,SCT1 SCT2,"SCT-013-000, 100 A : 50 mA, no internal burden",2,planned,Never leave secondary open while clamped around energized conductor
+OFFBOARD,Z1-U2,ZMPT101B module,1,planned,Primary remains inside guarded Z1 compartment
+OFFBOARD,Z1-F1,T500 mA 250 V slow-blow fuse + enclosed holder,1,planned,Phase conductor only; qualified mains work
+OFFBOARD,Z1-J4,Guarded 2-way mains terminal + PG7 gland,1,planned,Inside opaque segregated guard
+OFFBOARD,SUPPLY,"Isolated regulated 12 V DC adapter, center-positive",1,planned,Final current rating after measured load test; 2 A provisional minimum

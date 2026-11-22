@@ -1,27 +1,29 @@
 {
-  "revision": "E.7",
+  "revision": "E.9",
+  "valid": true,
+  "issues": [],
   "enclosure_mm": [
     280.0,
     180.0,
     70.0
   ],
-  "network_partition_y_mm": 132.0,
+  "network_partition_y_mm": 136.0,
   "boards": {
     "T1": [
-      222.0,
+      214.0,
       8.0,
       50.0,
       40.0
     ],
     "T2": [
-      92.0,
-      8.0,
+      6.0,
+      77.0,
       70.0,
       55.0
     ],
     "T3": [
-      168.0,
-      70.0,
+      94.0,
+      62.0,
       55.0,
       45.0
     ],
@@ -32,8 +34,8 @@
       65.0
     ],
     "T5": [
-      92.0,
-      70.0,
+      94.0,
+      8.0,
       65.0,
       50.0
     ]
@@ -42,9 +44,695 @@
     200.0,
     12.0
   ],
-  "fcob_support_clearance_mm": 12.6,
-  "issues": [],
-  "valid": true,
+  "fcob_ventana_mm": [
+    200.0,
+    14.43
+  ],
+  "difusor_hex": {
+    "espesores_mm": [
+      0.3,
+      0.5,
+      1.1
+    ],
+    "repeticion_mm": 12.5,
+    "celdas": 83,
+    "distancia_fcob_a_piel_mm": 7.9
+  },
+  "objetos": 255,
+  "piezas_sin_apoyo": [],
+  "interferencias_al_abrir": [],
+  "tapa": {
+    "cierre": "imanes",
+    "trayectoria_servicio": [
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.62,
+        90.0,
+        0.0,
+        9.0
+      ],
+      [
+        0.8,
+        90.0,
+        6.3,
+        9.0
+      ],
+      [
+        1.0,
+        90.0,
+        6.3,
+        0.0
+      ]
+    ],
+    "imanes": [
+      {
+        "xy": [
+          10.0,
+          7.0
+        ],
+        "distancia_a_transformador_ZMPT_mm": 172.6
+      },
+      {
+        "xy": [
+          270.0,
+          7.0
+        ],
+        "distancia_a_transformador_ZMPT_mm": 206.9
+      },
+      {
+        "xy": [
+          12.0,
+          131.5
+        ],
+        "distancia_a_transformador_ZMPT_mm": 98.5
+      },
+      {
+        "xy": [
+          268.0,
+          131.5
+        ],
+        "distancia_a_transformador_ZMPT_mm": 149.6
+      }
+    ],
+    "unero_frontal_mm": {
+      "centro_x": 140.0,
+      "radio": 10.0,
+      "profundidad_vertical": 7.0
+    },
+    "separacion_minima_exigida_mm": 60.0
+  },
+  "puentes_de_arnes": [
+    {
+      "nombre": "LCD",
+      "tapa": [
+        58.0,
+        24.0,
+        62.0
+      ],
+      "base": [
+        58.0,
+        24.0,
+        46.0
+      ],
+      "sentido": 1,
+      "radio": 1.1,
+      "vias": 2,
+      "longitud_mm": 91.59,
+      "radio_coca_cerrada_mm": 8.0,
+      "saliente_coca_cerrada_mm": 41.2,
+      "cuerda_cerrada_mm": 16.0,
+      "cuerda_estacionada_mm": 46.76,
+      "cuerda_maxima_mm": 57.25,
+      "holgura_minima_mm": 34.35,
+      "separacion_pared_frontal_mm": 13.01
+    },
+    {
+      "nombre": "panel_T4",
+      "tapa": [
+        44.0,
+        17.5,
+        62.0
+      ],
+      "base": [
+        44.0,
+        17.5,
+        46.0
+      ],
+      "sentido": -1,
+      "radio": 1.1,
+      "vias": 2,
+      "longitud_mm": 78.59,
+      "radio_coca_cerrada_mm": 8.0,
+      "saliente_coca_cerrada_mm": 34.7,
+      "cuerda_cerrada_mm": 16.0,
+      "cuerda_estacionada_mm": 39.0,
+      "cuerda_maxima_mm": 49.12,
+      "holgura_minima_mm": 29.47,
+      "separacion_pared_frontal_mm": 8.37
+    },
+    {
+      "nombre": "panel_T5",
+      "tapa": [
+        96.0,
+        12.0,
+        62.0
+      ],
+      "base": [
+        96.0,
+        12.0,
+        40.0
+      ],
+      "sentido": -1,
+      "radio": 1.5,
+      "vias": 5,
+      "longitud_mm": 77.61,
+      "radio_coca_cerrada_mm": 11.0,
+      "saliente_coca_cerrada_mm": 32.5,
+      "cuerda_cerrada_mm": 22.0,
+      "cuerda_estacionada_mm": 39.01,
+      "cuerda_maxima_mm": 48.51,
+      "holgura_minima_mm": 29.1,
+      "separacion_pared_frontal_mm": 4.06
+    }
+  ],
+  "arneses": [
+    {
+      "nombre": "C_UI_D_T4_T5",
+      "tipo": "digital",
+      "diametro_mm": 2.6,
+      "radio_minimo_mm": 6.7,
+      "longitud_mm": 44.2,
+      "relacion_radio_diametro": 2.58
+    },
+    {
+      "nombre": "C_ADC_I_T4_T2",
+      "tipo": "analógico",
+      "diametro_mm": 3.0,
+      "radio_minimo_mm": 7.7,
+      "longitud_mm": 41.8,
+      "relacion_radio_diametro": 2.57
+    },
+    {
+      "nombre": "C_ADC_V_T4_T3",
+      "tipo": "analógico",
+      "diametro_mm": 2.6,
+      "radio_minimo_mm": 6.7,
+      "longitud_mm": 47.0,
+      "relacion_radio_diametro": 2.58
+    },
+    {
+      "nombre": "C_PWR5_T1_T5",
+      "tipo": "potencia MBT",
+      "diametro_mm": 3.0,
+      "radio_minimo_mm": 8.3,
+      "longitud_mm": 91.6,
+      "relacion_radio_diametro": 2.77
+    },
+    {
+      "nombre": "C_PWR3_T1_T3",
+      "tipo": "potencia MBT",
+      "diametro_mm": 2.6,
+      "radio_minimo_mm": 7.8,
+      "longitud_mm": 207.8,
+      "relacion_radio_diametro": 3.0
+    },
+    {
+      "nombre": "C_PWR4_T1_T4",
+      "tipo": "potencia MBT",
+      "diametro_mm": 2.6,
+      "radio_minimo_mm": 7.8,
+      "longitud_mm": 275.0,
+      "relacion_radio_diametro": 3.0
+    },
+    {
+      "nombre": "Entrada_12V_pos",
+      "tipo": "potencia MBT",
+      "diametro_mm": 1.8,
+      "radio_minimo_mm": 4.8,
+      "longitud_mm": 76.2,
+      "relacion_radio_diametro": 2.67
+    },
+    {
+      "nombre": "Entrada_12V_gnd",
+      "tipo": "potencia MBT",
+      "diametro_mm": 1.8,
+      "radio_minimo_mm": 4.8,
+      "longitud_mm": 75.0,
+      "relacion_radio_diametro": 2.67
+    },
+    {
+      "nombre": "Buck_12V_IN_pos",
+      "tipo": "potencia MBT",
+      "diametro_mm": 1.8,
+      "radio_minimo_mm": 5.4,
+      "longitud_mm": 98.3,
+      "relacion_radio_diametro": 3.0
+    },
+    {
+      "nombre": "Buck_12V_IN_gnd",
+      "tipo": "potencia MBT",
+      "diametro_mm": 1.8,
+      "radio_minimo_mm": 5.4,
+      "longitud_mm": 98.3,
+      "relacion_radio_diametro": 3.0
+    },
+    {
+      "nombre": "Buck_5V_OUT_pos",
+      "tipo": "potencia MBT",
+      "diametro_mm": 1.8,
+      "radio_minimo_mm": 5.4,
+      "longitud_mm": 74.0,
+      "relacion_radio_diametro": 3.0
+    },
+    {
+      "nombre": "Buck_5V_OUT_gnd",
+      "tipo": "potencia MBT",
+      "diametro_mm": 1.8,
+      "radio_minimo_mm": 5.4,
+      "longitud_mm": 74.0,
+      "relacion_radio_diametro": 3.0
+    },
+    {
+      "nombre": "Par_SCT_J2",
+      "tipo": "analógico",
+      "diametro_mm": 2.4,
+      "radio_minimo_mm": 6.9,
+      "longitud_mm": 18.7,
+      "relacion_radio_diametro": 2.88
+    },
+    {
+      "nombre": "Par_SCT_J3",
+      "tipo": "analógico",
+      "diametro_mm": 2.4,
+      "radio_minimo_mm": 6.9,
+      "longitud_mm": 18.7,
+      "relacion_radio_diametro": 2.88
+    },
+    {
+      "nombre": "Arnes_tapa_LCD",
+      "tipo": "lógico tapa",
+      "diametro_mm": 2.2,
+      "radio_minimo_mm": 6.6,
+      "longitud_mm": 51.8,
+      "relacion_radio_diametro": 3.0
+    },
+    {
+      "nombre": "Arnes_tapa_LED",
+      "tipo": "lógico tapa",
+      "diametro_mm": 2.2,
+      "radio_minimo_mm": 6.6,
+      "longitud_mm": 176.5,
+      "relacion_radio_diametro": 3.0
+    },
+    {
+      "nombre": "Arnes_tapa_T5_tronco",
+      "tipo": "lógico tapa",
+      "diametro_mm": 3.0,
+      "radio_minimo_mm": Infinity,
+      "longitud_mm": 54.0,
+      "relacion_radio_diametro": Infinity
+    },
+    {
+      "nombre": "Arnes_tapa_FCOB",
+      "tipo": "lógico tapa",
+      "diametro_mm": 2.6,
+      "radio_minimo_mm": 7.8,
+      "longitud_mm": 224.1,
+      "relacion_radio_diametro": 3.0
+    },
+    {
+      "nombre": "Arnes_tapa_piezo",
+      "tipo": "lógico tapa",
+      "diametro_mm": 2.2,
+      "radio_minimo_mm": 6.6,
+      "longitud_mm": 103.8,
+      "relacion_radio_diametro": 3.0
+    },
+    {
+      "nombre": "Puente_arnes_LCD",
+      "tipo": "puente tapa",
+      "diametro_mm": 2.2,
+      "radio_minimo_mm": 8.0,
+      "longitud_mm": 91.6,
+      "relacion_radio_diametro": 3.64
+    },
+    {
+      "nombre": "Puente_arnes_panel_T4",
+      "tipo": "puente tapa",
+      "diametro_mm": 2.2,
+      "radio_minimo_mm": 8.0,
+      "longitud_mm": 78.6,
+      "relacion_radio_diametro": 3.64
+    },
+    {
+      "nombre": "Puente_arnes_panel_T5",
+      "tipo": "puente tapa",
+      "diametro_mm": 3.0,
+      "radio_minimo_mm": 11.0,
+      "longitud_mm": 77.6,
+      "relacion_radio_diametro": 3.67
+    },
+    {
+      "nombre": "Arnes_base_LCD",
+      "tipo": "lógico tapa",
+      "diametro_mm": 2.2,
+      "radio_minimo_mm": 6.6,
+      "longitud_mm": 49.3,
+      "relacion_radio_diametro": 3.0
+    },
+    {
+      "nombre": "Arnes_base_panel_T4",
+      "tipo": "lógico tapa",
+      "diametro_mm": 2.2,
+      "radio_minimo_mm": 6.6,
+      "longitud_mm": 21.9,
+      "relacion_radio_diametro": 3.0
+    },
+    {
+      "nombre": "Arnes_base_C_LED",
+      "tipo": "lógico tapa",
+      "diametro_mm": 2.2,
+      "radio_minimo_mm": Infinity,
+      "longitud_mm": 16.3,
+      "relacion_radio_diametro": Infinity
+    },
+    {
+      "nombre": "Arnes_base_panel_T5",
+      "tipo": "lógico tapa",
+      "diametro_mm": 3.0,
+      "radio_minimo_mm": 9.0,
+      "longitud_mm": 29.1,
+      "relacion_radio_diametro": 3.0
+    },
+    {
+      "nombre": "Arnes_base_C_BZ",
+      "tipo": "lógico tapa",
+      "diametro_mm": 2.2,
+      "radio_minimo_mm": Infinity,
+      "longitud_mm": 16.3,
+      "relacion_radio_diametro": Infinity
+    },
+    {
+      "nombre": "Arnes_base_C_PIX",
+      "tipo": "lógico tapa",
+      "diametro_mm": 2.2,
+      "radio_minimo_mm": 6.6,
+      "longitud_mm": 23.1,
+      "relacion_radio_diametro": 3.0
+    },
+    {
+      "nombre": "Red_L_entrada_J4",
+      "tipo": "red 120 V",
+      "diametro_mm": 2.2,
+      "radio_minimo_mm": 6.5,
+      "longitud_mm": 45.9,
+      "relacion_radio_diametro": 2.95
+    },
+    {
+      "nombre": "Red_N_entrada_J4",
+      "tipo": "red 120 V",
+      "diametro_mm": 2.2,
+      "radio_minimo_mm": 6.5,
+      "longitud_mm": 40.2,
+      "relacion_radio_diametro": 2.95
+    },
+    {
+      "nombre": "Red_L_J4_F1",
+      "tipo": "red 120 V",
+      "diametro_mm": 2.2,
+      "radio_minimo_mm": 6.6,
+      "longitud_mm": 32.6,
+      "relacion_radio_diametro": 3.0
+    },
+    {
+      "nombre": "Red_L_F1_ZMPT",
+      "tipo": "red 120 V",
+      "diametro_mm": 2.2,
+      "radio_minimo_mm": 6.6,
+      "longitud_mm": 19.4,
+      "relacion_radio_diametro": 3.0
+    },
+    {
+      "nombre": "Red_N_J4_ZMPT",
+      "tipo": "red 120 V",
+      "diametro_mm": 2.2,
+      "radio_minimo_mm": 6.6,
+      "longitud_mm": 102.9,
+      "relacion_radio_diametro": 3.0
+    },
+    {
+      "nombre": "C_ZMPT_MBT_a_T3_J5",
+      "tipo": "MBT desde Z1",
+      "diametro_mm": 3.0,
+      "radio_minimo_mm": 7.6,
+      "longitud_mm": 136.2,
+      "relacion_radio_diametro": 2.53
+    }
+  ],
+  "esquematicos": {
+    "tarjetas": {
+      "T1": {
+        "esquematico": [
+          "C1",
+          "C17",
+          "C2",
+          "C_BUCK_IN",
+          "C_BUCK_OUT",
+          "C_PWR3",
+          "C_PWR4",
+          "C_PWR5",
+          "D1",
+          "F2",
+          "J1",
+          "U4"
+        ],
+        "sobre_tarjeta": [
+          "C1",
+          "C17",
+          "C2",
+          "C_BUCK_IN",
+          "C_BUCK_OUT",
+          "C_PWR3",
+          "C_PWR4",
+          "C_PWR5",
+          "D1",
+          "F2",
+          "J1"
+        ],
+        "fuera_de_tarjeta": {
+          "U4": "LM2596 en cuna impresa integrada al cuerpo; sustituye al MT3608 histórico"
+        },
+        "extras_planificados": {},
+        "coincide": true
+      },
+      "T2": {
+        "esquematico": [
+          "C5",
+          "C6",
+          "C7",
+          "C8",
+          "C_ADC_I",
+          "D2",
+          "D3",
+          "D4",
+          "D5",
+          "J2",
+          "J3",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "sobre_tarjeta": [
+          "C5",
+          "C6",
+          "C7",
+          "C8",
+          "C_ADC_I",
+          "D2",
+          "D3",
+          "D4",
+          "D5",
+          "J2",
+          "J3",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "fuera_de_tarjeta": {
+          "R1": "soldada en el jack de panel J2",
+          "R2": "soldada en el jack de panel J3"
+        },
+        "extras_planificados": {},
+        "coincide": true
+      },
+      "T3": {
+        "esquematico": [
+          "C9",
+          "C_ADC_V",
+          "C_PWR3",
+          "D6",
+          "D7",
+          "J5",
+          "R7",
+          "R8"
+        ],
+        "sobre_tarjeta": [
+          "C9",
+          "C_ADC_V",
+          "C_PWR3",
+          "D6",
+          "D7",
+          "J5",
+          "R7",
+          "R8"
+        ],
+        "fuera_de_tarjeta": {},
+        "extras_planificados": {},
+        "coincide": true
+      },
+      "T4": {
+        "esquematico": [
+          "C_ADC_I",
+          "C_ADC_V",
+          "C_LED",
+          "C_LILY",
+          "C_PWR4",
+          "C_UI_D",
+          "R11",
+          "U1"
+        ],
+        "sobre_tarjeta": [
+          "C_ADC_I",
+          "C_ADC_V",
+          "C_LED",
+          "C_LILY",
+          "C_PWR4",
+          "C_UI_D",
+          "R11",
+          "U1"
+        ],
+        "fuera_de_tarjeta": {},
+        "extras_planificados": {},
+        "coincide": true
+      },
+      "T5": {
+        "esquematico": [
+          "C14",
+          "C16",
+          "C_BZ",
+          "C_PIX",
+          "C_PWR5",
+          "C_UI_D",
+          "Q1",
+          "R16",
+          "R17",
+          "R18",
+          "R23",
+          "U3"
+        ],
+        "sobre_tarjeta": [
+          "C14",
+          "C16",
+          "C_BZ",
+          "C_PIX",
+          "C_PWR5",
+          "C_UI_D",
+          "Q1",
+          "R16",
+          "R17",
+          "R18",
+          "R23",
+          "U3"
+        ],
+        "fuera_de_tarjeta": {},
+        "extras_planificados": {},
+        "coincide": true
+      }
+    },
+    "arneses": {
+      "C_DC_IN": {
+        "desde": "Panel JDC",
+        "hacia": "T1 J1",
+        "vias": 2
+      },
+      "C_BUCK_IN": {
+        "desde": "T1",
+        "hacia": "U4 LM2596 IN",
+        "vias": 2
+      },
+      "C_BUCK_OUT": {
+        "desde": "U4 LM2596 OUT",
+        "hacia": "T1",
+        "vias": 2
+      },
+      "C_PWR3": {
+        "desde": "T1",
+        "hacia": "T3",
+        "vias": 2
+      },
+      "C_PWR4": {
+        "desde": "T1",
+        "hacia": "T4",
+        "vias": 2
+      },
+      "C_PWR5": {
+        "desde": "T1",
+        "hacia": "T5",
+        "vias": 3
+      },
+      "C_ADC_I": {
+        "desde": "T4",
+        "hacia": "T2",
+        "vias": 4
+      },
+      "C_ADC_V": {
+        "desde": "T4",
+        "hacia": "T3",
+        "vias": 3
+      },
+      "C_UI_D": {
+        "desde": "T4",
+        "hacia": "T5",
+        "vias": 3
+      },
+      "C_LILY": {
+        "desde": "T4",
+        "hacia": "Panel LCD1",
+        "vias": 2
+      },
+      "C_LED": {
+        "desde": "T4",
+        "hacia": "Panel D8",
+        "vias": 2
+      },
+      "C_BZ": {
+        "desde": "T5",
+        "hacia": "Panel BZ1",
+        "vias": 2
+      },
+      "C_PIX": {
+        "desde": "T5",
+        "hacia": "Panel FCOB",
+        "vias": 3
+      },
+      "C_ZMPT": {
+        "desde": "T3",
+        "hacia": "Z1 U2 LV",
+        "vias": 3
+      }
+    },
+    "notas": []
+  },
+  "piezas_impresas": [
+    "stl/gabinete_e7.stl",
+    "stl/tapa_e7.stl",
+    "stl/guarda_120v_e7.stl",
+    "stl/soporte_fcob.stl",
+    "stl/difusor_fcob_hex.stl",
+    "stl/placa_trasera_desmontable_lcd.stl",
+    "stl/aro_reten_piezo_bayoneta.stl"
+  ],
+  "probetas_ajuste": [
+    "pruebas-de-ajuste/cuerpo_alojamiento_iman.stl",
+    "pruebas-de-ajuste/cuerpo_cuna_LM2596.stl",
+    "pruebas-de-ajuste/cuerpo_pin_guarda_120V.stl",
+    "pruebas-de-ajuste/guarda_socket_ciego_120V.stl",
+    "pruebas-de-ajuste/pared_der_jack_DC.stl",
+    "pruebas-de-ajuste/pared_izq_jacks_SCT.stl",
+    "pruebas-de-ajuste/pared_trasera_PG7.stl",
+    "pruebas-de-ajuste/tapa_LED.stl",
+    "pruebas-de-ajuste/tapa_alojamiento_iman.stl",
+    "pruebas-de-ajuste/tapa_pantalla_T4S3.stl"
+  ],
   "dimension_basis": "medidas-componentes.json",
-  "note": "Placas compradas recortadas a T1-T5; envolventes reales o conservadoras identificadas en medidas-componentes.json."
+  "limits": "Comprobación geométrica del CAD. No valida aislamiento, distancias normativas, soldadura ni el prototipo físico."
 }

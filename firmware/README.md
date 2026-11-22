@@ -6,7 +6,7 @@ PlatformIO con el *framework* Arduino para ESP32 (núcleo 2.0.17, ESP-IDF 4.4).
 |---|---|---|
 | 1 | `adquisicion` | Muestrea V (GPIO35), CH1 (GPIO36) y CH2 (GPIO39) a 8.000 muestras/s por canal y cierra una ventana cada 60 ciclos de red (≈ 1 s). Solo entrega resultados por cola. |
 | 0 | `red` | Wi-Fi, hora por NTP (UTC−5), registro ADR-001 de 40 B por ventana, búfer de 1.200 registros (20 min sin red) y envío en lotes cada 5 s a `POST /api/ingesta`. |
-| 0 | `interfaz` | LCD Waveshare de 1,9" por SPI (resumen, CH1, CH2, energía hoy, alerta, tara), pulsadores SW1/SW2 y LED de estado. |
+| 0 | `interfaz` | Estado enviado a una LilyGO T4-S3 por ESP-NOW, feedback y LED de estado; controles físicos DNP. |
 
 El cálculo (`lib/medicion/`) no depende de Arduino:
 
@@ -33,9 +33,9 @@ La prueba en el PC genera señales con la misma cadena del *hardware* (pinza, re
 VBIAS, ADC de 12 bits con ruido y retardo de multiplexado) y compara V, I, P, frecuencia y THD con los
 valores exactos.
 
-## Configuración con encoder (v1.3.0)
+## Legacy encoder configuration (disabled in E.9)
 
-Pulsar el encoder abre el menú. Girar selecciona una fila; pulsar permite editar y vuelve a
+`PHYSICAL_PANEL_CONTROLS` is `false`. The following behavior is retained only for historical builds: pressing the encoder opens the menu, turning selects a row, and pressing edits or returns.
 confirmar. Mantenerlo dos segundos cancela la edición o sale. El menú guarda brillo de LCD,
 sonido y umbral local de alerta en NVS. Una alerta pendiente tiene prioridad sobre el menú.
 Wi-Fi y calibración conservan sus mecanismos existentes; no se editan con el encoder.
@@ -47,14 +47,14 @@ La placa debe ser ESP32-WROOM; GPIO16 no está disponible para esto en algunos m
 `ENCODER_EDGES_PER_DETENT` admite 2 o 4 según la ficha del encoder; por defecto 4.
 
 ```bash
-make -C test ajustes feedback pantallas
+make -C test ajustes feedback
 ```
 
 ![Menú de configuración](../img/ui-lcd-configuracion.png)
 
 ## Pantalla
 
-Las pantallas están en `lib/interfaz/` y solo dibujan sobre un `Adafruit_GFX`. En el ESP32 se dibujan
+Las pantallas heredadas están en `lib/interfaz/` y sirven para documentación y pruebas visuales. En E.8 el ESP32 principal no dibuja píxeles: envía valores y estado por ESP-NOW; `../firmware-lilygo/` dibuja la interfaz AMOLED. Antes se dibujaban
 en cinco franjas de 320 × 34 píxeles (21,8 kB) que se envían una tras otra por SPI a 40 MHz, sin
 parpadeo y sin reservar los 109 kB de un lienzo completo. En el PC, `test/pantallas.cpp` compila el
 mismo código con un sustituto mínimo de Arduino (`test/arduino/`), comprueba que el dibujo por franjas

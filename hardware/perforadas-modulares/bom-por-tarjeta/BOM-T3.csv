@@ -1,0 +1,9 @@
+Assembly,References,Description,Quantity,Purchase status,Mounting / verification
+T3,J5,3-way 5.08 mm terminal block,1,planned,Only ZMPT low-voltage side enters this board
+T3,R7,"11 kohm metal-film resistor, 1%, 0.25 W",1,planned,Voltage-channel divider/filter
+T3,R8,"13 kohm metal-film resistor, 1%, 0.25 W",1,planned,Do not replace with 12 kohm
+T3,C9,"27 nF film or C0G THT, 5%",1,planned,Voltage-channel filter
+T3,D6 D7,BAT85 Schottky DO-35,2,planned,ADC clamps
+T3,C_PWR3,JST-XH 2-way vertical header,1,planned,+5V_PROT / GND
+T3,C_ADC_V,JST-XH 3-way vertical header,1,planned,+3V3 / GND / V_ADC
+T3,BOARD,"FR4 perfboard, 2.54 mm pitch, cut to 55 x 45 mm",1,planned,No mains-voltage component is allowed on T3

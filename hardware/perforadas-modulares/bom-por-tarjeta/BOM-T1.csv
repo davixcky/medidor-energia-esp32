@@ -1,0 +1,10 @@
+Assembly,References,Description,Quantity,Purchase status,Mounting / verification
+T1,J1,2-way 5.08 mm terminal block,1,planned,12 V input from panel CON-156A
+T1,F2,"Resettable PTC, 2.0 A hold, rated >=16 V",1,planned,Series input protection
+T1,D1,"1N5822 Schottky, 3 A, DO-201AD",1,planned,Do not substitute the purchased 1N5819 without current/thermal review
+T1,C1,470 uF 35 V electrolytic,1,verified purchase,At protected 12 V input; measure body before final placement
+T1,C2,100 nF 50 V ceramic THT,1,verified shared stock,At protected 12 V input
+T1,C17,680 uF 16 V electrolytic,1,verified purchase,At returned 5 V rail; low-ESR not verified
+T1,C_BUCK_IN C_BUCK_OUT C_PWR3 C_PWR4,JST-XH 2-way vertical header,4,planned,Key every harness; BUCK IN and OUT must not be interchangeable
+T1,C_PWR5,JST-XH 3-way vertical header,1,planned,+5V_PROT / +12V_PROT / GND
+T1,BOARD,"FR4 perfboard, 2.54 mm pitch, cut to 50 x 40 mm from user's 60 x 40 mm board",1,declared on hand; dimensions unverified,"Test against the printed supports, mark, then remove 10 mm from the long side and deburr all copper edges"

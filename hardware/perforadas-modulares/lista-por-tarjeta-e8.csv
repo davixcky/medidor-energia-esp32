@@ -1,0 +1,50 @@
+Tarjeta,Referencia,Valor/descripcion,Cantidad,Montaje
+T1,J1,Bornera 2P 5.08 mm,1,Entrada 12 V protegida
+T1,F2,PTC hold 2 A,1,En serie con entrada
+T1,D1,1N5822 3 A,1,No usar el 1N5819 comprado
+T1,C1,470 uF 35 V,1,Cerca de J1
+T1,C2 C14,100 nF ceramico,2,C2 entrada; C14 junto a U3
+Fuera-T1,U4,LM2596 12 a 5 V,1,Cuna impresa; ajustar a 5.0 V sin cargas
+T1,C16 C17,680 uF 16 V low-ESR,2,Salida boost y FCOB
+T1,U3,74HCT245N DIP-20 + zocalo,1,HCT obligatorio
+T1,R16,330 ohm 1 %,1,Serie de datos FCOB
+T1,R17 R23,10 kohm 1 %,2,Pulldown de datos y entradas libres
+T1,Q1,2N2222/PN2222,1,Confirmar E-B-C
+T1,R18,1 kohm 1 %,1,Base del transistor
+T1,C_CTRL,Header JST-XH 4P,1,Hacia T3
+T1,C_PWR_M,Header JST-XH 2P,1,Hacia T2
+T1,C_PIX,Header JST-XH 3P,1,Hacia FCOB
+T2,J2 J3,Jack 3.5 mm panel,2,Burdens soldados directamente
+T2,R1,22 ohm 1 %,1,Burden CH1
+T2,R2,47 ohm 1 %,1,Burden CH2
+T2,R3,15 kohm 1 %,1,VBIAS
+T2,R4,10 kohm 1 %,1,VBIAS
+T2,R5 R6,3.3 kohm 1 %,2,Filtros SCT
+T2,R7,11 kohm 1 %,1,Filtro tension
+T2,R8,13 kohm 1 %,1,Filtro tension
+T2,C5 C6,47 nF 5 %,2,Filtros SCT
+T2,C7,10 uF 16 V,1,VBIAS
+T2,C8,100 nF,1,VBIAS
+T2,C9,27 nF 5 %,1,Filtro tension
+T2,D2-D7,BAT85,6,Clamps ADC
+T2,J5,Bornera 3P 5.08 mm,1,Lado MBT del ZMPT
+T2,C_ADC,Header JST-XH 5P,1,Hacia T3
+T2,C_PWR_M,Header JST-XH 2P,1,5 V desde T1
+T3,U1,ESP32S V1.1 USB-C 38P + 2 zocalos 1x19,1,Control y medicion
+T3,R11,330 ohm 1 %,1,LED de estado
+T3,R12 R13 R19 R20 R21,10 kohm 1 %,5,Pullups de botones y encoder
+T3,C10 C11 C15,100 nF,3,Antirrebote
+T3,C12 C13,10 nF,2,Encoder A/B
+T3,C_CTRL,Header JST-XH 4P,1,Potencia/datos con T1
+T3,C_ADC,Header JST-XH 5P,1,ADC y 3V3 con T2
+T3,C_PANEL,Header JST-XH 8P,1,Encoder botones y LED
+T3,C_LILY,Header JST-XH 4P,1,5V GND TX RX
+Panel,LCD1,LilyGO T4-S3 AMOLED 2.41 pulgadas,1,Solo terminal grafico
+Panel,ENC1,DNP - reemplazado por la LilyGO tactil,0,Retirar del esquematico en la proxima revision electrica
+Panel,SW1 SW2,DNP - reemplazados por la LilyGO tactil,0,Retirar del esquematico en la proxima revision electrica
+Panel,D8,LED verde 5 mm,1,Arnes a T3
+Panel,BZ1,Piezo pasivo 44x14 mm,1,Arnes a T1
+Panel,FCOB,BTF FCOB WS2811 12 V 200 mm,1,4 segmentos
+Z1,J4,Bornera protegida 2P,1,Red 120 V
+Z1,F1,Fusible lento T500 mA + portafusible cerrado,1,Solo fase
+Z1,U2,ZMPT101B,1,Primario dentro de guarda
