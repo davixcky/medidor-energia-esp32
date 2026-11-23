@@ -7,22 +7,24 @@
 <meta name="description" content="Medidor de energía eléctrica no invasivo de dos canales con ESP32. Proyecto de Sistemas Embebidos 1, Universidad de la Costa.">
 <meta property="og:title" content="Medidor de energía no invasivo con ESP32">
 <meta property="og:description" content="Mide el consumo de tu tablero y tu aire acondicionado segundo a segundo. Proyecto CUC 2026-2.">
-<meta property="og:image" content="img/cerrado.jpg">
+<meta property="og:image" content="https://davixcky.github.io/medidor-energia-esp32/img/cerrado.jpg">
+<meta property="og:url" content="https://davixcky.github.io/medidor-energia-esp32/">
+<link rel="canonical" href="https://davixcky.github.io/medidor-energia-esp32/">
 <link rel="icon" href="img/icono.png">
 <title>Medidor de energía ESP32 · CUC</title>
 <style>
-:root{--bg:#12161b;--bg2:#1a2027;--panel:#202832;--line:#2e3946;--tx:#eef2f6;--tx2:#a8b4c2;--tx3:#6f7d8d;
+:root{--bg:#12161b;--bg2:#1a2027;--panel:#202832;--line:#2e3946;--tx:#eef2f6;--tx2:#a8b4c2;--tx3:#8291a2;
   --verde:#3ddc97;--azul:#5aa9ff;--naranja:#f5a35c;--violeta:#b08cff}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:64px}
 body{background:var(--bg);color:var(--tx);font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
 a{color:var(--verde)}
-img{max-width:100%;display:block}
+img{max-width:100%;height:auto;display:block}
 .envoltura{max-width:880px;margin:0 auto;padding:0 16px}
 nav{position:sticky;top:0;z-index:5;background:rgba(18,22,27,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 nav .envoltura{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-top:10px;padding-bottom:10px}
 nav .envoltura::-webkit-scrollbar{display:none}
-nav a{flex:none;color:var(--tx2);text-decoration:none;font-size:14px;font-weight:600;padding:6px 12px;border-radius:999px;background:var(--panel)}
+nav a{flex:none;display:inline-flex;align-items:center;min-height:44px;color:var(--tx2);text-decoration:none;font-size:14px;font-weight:600;padding:8px 12px;border-radius:999px;background:var(--panel)}
 header{padding:40px 0 8px}
 .kicker{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--verde);font-weight:700}
 h1{font-size:clamp(32px,8vw,52px);line-height:1.05;letter-spacing:-.02em;margin:10px 0 14px}
@@ -85,7 +87,7 @@ footer{padding:36px 0 60px;color:var(--tx3);font-size:14px;border-top:1px solid 
   <div class="kicker">Sistemas Embebidos 1 · Universidad de la Costa</div>
   <h1>Medidor de energía no invasivo con ESP32</h1>
   <p>Un medidor monofásico de 120 V / 60 Hz con <b>dos canales de corriente</b> y <b>un canal de tensión aislado</b>. Mide el tablero completo y un subcircuito, como el del aire acondicionado, y publica los datos por Wi-Fi cada segundo.</p>
-  <div class="render"><img src="img/cerrado.jpg" alt="Render del medidor cerrado con pantalla táctil y barra de luz verde"></div>
+  <div class="render"><img src="img/cerrado.jpg" width="1600" height="1029" fetchpriority="high" alt="Render del medidor cerrado con pantalla táctil y barra de luz verde"></div>
   <div class="grid">
     <div class="dato"><small>Muestreo</small><strong>8.000/s</strong>por canal</div>
     <div class="dato"><small>Canales</small><strong>2 + V</strong>CH1 60 A · CH2 30 A</div>
@@ -118,7 +120,7 @@ footer{padding:36px 0 60px;color:var(--tx3);font-size:14px;border-top:1px solid 
     <li><b>Wi-Fi.</b> Envía un registro por ventana en lotes cada 5 s; si se cae la red guarda hasta 1.200 registros (20 min).</li>
     <li><b>Plataforma web.</b> Guarda la serie, la muestra en un tablero y la usa para pronosticar el consumo.</li>
   </ol>
-  <figure><img class="claro" src="img/bloques.jpg" alt="Diagrama de bloques del medidor"><figcaption>Diagrama de bloques. Las flechas punteadas indican acople magnético: las pinzas no tocan la red.</figcaption></figure>
+  <figure><img class="claro" src="img/bloques.jpg" width="1600" height="867" alt="Diagrama de bloques del medidor"><figcaption>Diagrama de bloques. Las flechas punteadas indican acople magnético: las pinzas no tocan la red.</figcaption></figure>
 </section>
 
 <section id="matematica">
@@ -148,10 +150,10 @@ footer{padding:36px 0 60px;color:var(--tx3);font-size:14px;border-top:1px solid 
     <tr><td>T5 Interfaz</td><td>Barra de luz, piezo y adaptador de nivel</td></tr>
     <tr><td>Z1 Red</td><td>Fusible y primario del ZMPT101B, con guarda opaca</td></tr>
   </table></div>
-  <div class="render"><img src="img/abierto.jpg" alt="Render del medidor abierto mostrando las tarjetas internas"></div>
+  <div class="render"><img src="img/abierto.jpg" width="1600" height="1029" alt="Render del medidor abierto mostrando las tarjetas internas"></div>
   <p>En la tapa, una <b>LilyGO T4-S3 AMOLED</b> táctil recibe por ESP-NOW los valores ya calculados. Solo es la pantalla: el ESP32 principal sigue a cargo de la medición.</p>
   <div class="render"><video src="img/producto.mp4" poster="img/producto-poster.jpg" controls muted playsinline preload="none"></video></div>
-  <figure><img class="claro" src="img/esquematico.jpg" alt="Esquemático del medidor en KiCad"><figcaption>Esquemático en KiCad. La verificación eléctrica (ERC) termina sin errores.</figcaption></figure>
+  <figure><img class="claro" src="img/esquematico.jpg" width="1600" height="1131" alt="Esquemático del medidor en KiCad"><figcaption>Esquemático en KiCad. La verificación eléctrica (ERC) termina sin errores.</figcaption></figure>
   <div class="aviso">Trabajar con 120 V es peligroso. Este es un proyecto académico; el gabinete no tiene certificación eléctrica.</div>
 </section>
 
@@ -166,15 +168,15 @@ footer{padding:36px 0 60px;color:var(--tx3);font-size:14px;border-top:1px solid 
     <tr><td>0</td><td>Interfaz</td><td>Pantalla, luz de estado y alertas</td></tr>
   </table></div>
   <p>Las constantes de calibración se guardan en memoria no volátil desde la consola serie, sin recompilar.</p>
-  <figure><img src="img/tft.png" alt="Pantalla del medidor mostrando consumo actual" style="border-radius:14px;max-width:420px"><figcaption>Pantalla local: consumo total, tensión y corriente por canal.</figcaption></figure>
+  <figure><img src="img/tft.png" width="600" height="450" alt="Pantalla del medidor mostrando consumo actual" style="border-radius:14px;width:min(420px,100%)"><figcaption>Pantalla local: consumo total, tensión y corriente por canal.</figcaption></figure>
 </section>
 
 <section id="plataforma">
   <div class="kicker">Plataforma web</div>
   <h2>Tu consumo, en el celular</h2>
   <p>El tablero muestra la potencia por canal, la energía acumulada y el pronóstico. Hasta tener registros propios funciona con un simulador.</p>
-  <figure><img src="img/tablero-movil.jpg" alt="Tablero de la plataforma en un celular" style="border-radius:14px"><figcaption>Tablero en el celular.</figcaption></figure>
-  <figure><img src="img/tablero.jpg" alt="Tablero de la plataforma en escritorio" style="border-radius:14px"></figure>
+  <figure><img src="img/tablero-movil.jpg" width="1600" height="1097" alt="Tablero de la plataforma en un celular" style="border-radius:14px"><figcaption>Tablero en el celular.</figcaption></figure>
+  <figure><img src="img/tablero.jpg" width="1440" height="900" alt="Tablero de la plataforma en escritorio" style="border-radius:14px"></figure>
 </section>
 
 <section id="lstm">
@@ -222,7 +224,7 @@ footer{padding:36px 0 60px;color:var(--tx3);font-size:14px;border-top:1px solid 
     <tr><td>Repetir la semana pasada</td><td>0,59</td><td>0,58</td><td>0,58</td></tr>
   </table></div>
   <p>La LSTM le gana a los tres trucos en todos los plazos: se equivoca entre <b>15 % y 17 % menos</b> que el mejor de ellos.</p>
-  <figure><img class="claro" src="img/lstm-dia.jpg" alt="Pronóstico de la LSTM sobre un día real"><figcaption>La red trabajando sobre un día real: arriba lo que lee, en medio sus puertas, abajo su libreta (las 32 unidades de memoria).</figcaption></figure>
+  <figure><img class="claro" src="img/lstm-dia.jpg" width="1600" height="1155" alt="Pronóstico de la LSTM sobre un día real"><figcaption>La red trabajando sobre un día real: arriba lo que lee, en medio sus puertas, abajo su libreta (las 32 unidades de memoria).</figcaption></figure>
 
   <h3>6. Lo que todavía no sabe</h3>
   <ul class="limites">
