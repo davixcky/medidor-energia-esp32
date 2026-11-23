@@ -18,6 +18,7 @@ from fontTools.ttLib import TTFont
 from PIL import Image, ImageDraw
 from shapely import affinity
 from shapely.geometry import Point, Polygon, box
+from shapely.geometry.polygon import orient
 from shapely.ops import unary_union
 
 AQUI = Path(__file__).resolve().parent
@@ -36,7 +37,18 @@ CHISTES = {
     "fase": (["SOLO ABRAZO", "LA FASE"], "fase + neutro = 0,0 A"),
     "hardexplosion": (["HARDEXPLOSION:", "PENDIENTE"], "prueba de resistencia · CUC"),
     "revision": (["REVISIÓN E.9", "ESTA SÍ ES"], "la final (dijimos igual en la E.5)"),
+    "factura": (["MI FACTURA:", "30 DÍAS"], "yo: cada segundo"),
+    "ads1015": (["3.300 < 24.000", "ADIÓS ADS1015"], "muestras por segundo: no alcanzaba"),
+    "puentes": (["10 PUENTES", "CERO VÍAS"], "PCB de una cara, hecha con tóner"),
+    "arranque": (["MI FIRMWARE", "NO ARRANCABA"], "esperaba en el núcleo equivocado"),
+    "francia": (["MI IA APRENDIÓ", "EN FRANCIA"], "una casa en Sceaux, datos de la UCI"),
+    "muestras": (["8.000 MUESTRAS", "POR SEGUNDO"], "y aún no sé cuánto gasta la nevera"),
+    "mcp6004": (["¿MCP6004?", "NO HAY AQUÍ"], "en Barranquilla no se consigue"),
+    "equipo": (["DAVID, JOSE", "Y LEO"], "Sistemas Embebidos 1 · CUC 2026-2"),
 }
+
+# Llavero QR para regalar en el stand: abre la página del proyecto.
+URL_QR = "https://davixcky.github.io/medidor-energia-esp32/"
 
 
 # ---------- texto a polígonos ----------
@@ -137,10 +149,21 @@ def color(lineas, pie):
 
 
 def extruir(geom, z0, z1):
-    geoms = [geom] if geom.geom_type == "Polygon" else list(geom.geoms)
-    mallas = [trimesh.creation.extrude_polygon(g, z1 - z0) for g in geoms if g.area > 1e-3]
-    m = trimesh.util.concatenate(mallas)
-    m.apply_translation((0, 0, z0))
+    """Extruye con manifold3d (robusto ante letras con huecos que tocan el borde)."""
+    import manifold3d as mf
+    import numpy as np
+    geoms = [geom] if geom.geom_type == "Polygon" else [g for g in geom.geoms if g.geom_type == "Polygon"]
+    anillos = []
+    for g in geoms:
+        if g.area < 1e-3:
+            continue
+        g = orient(g)
+        anillos.append(np.array(g.exterior.coords[:-1]))
+        anillos += [np.array(i.coords[:-1]) for i in g.interiors]
+    sec = mf.CrossSection(anillos, mf.FillRule.EvenOdd)
+    malla = sec.extrude(z1 - z0).translate((0, 0, z0)).to_mesh()
+    m = trimesh.Trimesh(vertices=malla.vert_properties[:, :3], faces=malla.tri_verts, process=True)
+    assert m.is_volume, geom.bounds
     return m
 
 
@@ -181,7 +204,7 @@ def escribir_3mf(ruta, nombre, base, capa):
 
 
 # ---------- vista previa ----------
-def vista(ruta, forma, verde, escala=14):
+def vista(ruta, forma, verde, escala=14, claro=False):
     minx, miny, maxx, maxy = forma.bounds
     W, H = int((maxx - minx + 8) * escala), int((maxy - miny + 8) * escala)
     img = Image.new("RGB", (W, H), "#e9edf1")
@@ -189,15 +212,58 @@ def vista(ruta, forma, verde, escala=14):
     a = lambda x, y: ((x - minx + 4) * escala, (maxy - y + 4) * escala)
 
     def pinta(g, col, dx=0, dy=0):
+        # cada polígono en su propia máscara, para que sus huecos no borren otras piezas
         for p in ([g] if g.geom_type == "Polygon" else g.geoms):
-            d.polygon([a(x + dx, y + dy) for x, y in p.exterior.coords], fill=col)
+            capa = Image.new("L", img.size, 0)
+            dc = ImageDraw.Draw(capa)
+            dc.polygon([a(x + dx, y + dy) for x, y in p.exterior.coords], fill=255)
             for i in p.interiors:
-                d.polygon([a(x + dx, y + dy) for x, y in i.coords], fill="#e9edf1" if col != "#3ddc97" else "#2f3740")
+                dc.polygon([a(x + dx, y + dy) for x, y in i.coords], fill=0)
+            img.paste(col, mask=capa)
 
     pinta(forma, "#c5ccd3", .5, -.6)   # sombra
-    pinta(forma, "#2f3740")
-    pinta(verde, "#3ddc97")
+    pinta(forma, "#f4f6f8" if claro else "#2f3740")
+    pinta(verde, "#1b2128" if claro else "#3ddc97")
     img.save(ruta)
+
+
+# ---------- llavero QR ----------
+def llavero_qr():
+    import qrcode
+    q = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_L, border=0)
+    q.add_data(URL_QR)
+    q.make(fit=True)
+    mat = q.get_matrix()
+    n = len(mat)
+    lado_qr = 32.0
+    m = lado_qr / n                       # tamaño de módulo
+    W, H, r = 42.0, 56.0, 4.0             # placa clara; el QR arriba, texto abajo
+    placa = box(-W / 2 + r, -H / 2 + r, W / 2 - r, H / 2 - r).buffer(r, 32)
+    oreja = Point(0, H / 2 + 1.5).buffer(6.0, 64)
+    forma = unary_union([placa, oreja]).buffer(-1.5, 32).buffer(1.5, 32).difference(Point(0, H / 2 + 2.0).buffer(3.0, 64))
+    x0, y0 = -lado_qr / 2, H / 2 - 4.0    # esquina superior izquierda del QR (zona de silencio = borde claro)
+    filas = []
+    for i, fila in enumerate(mat):
+        j = 0
+        while j < n:
+            if fila[j]:
+                k = j
+                while k < n and fila[k]:
+                    k += 1
+                filas.append(box(x0 + j * m, y0 - (i + 1) * m, x0 + k * m, y0 - i * m))
+                j = k
+            else:
+                j += 1
+    # una dilatación mínima une los módulos que solo se tocan en una esquina
+    oscuro = unary_union(filas).buffer(0.01, join_style=2)
+    t1 = linea("ESCANÉAME", FUENTE, 4.4, 34.0, -17.0, -H / 2 + 8.4)
+    t2 = linea("medidor de energía · CUC", FUENTE_PEQ, 2.9, 34.0, -17.0, -H / 2 + 3.4)
+    centro = lambda g: affinity.translate(g, -(g.bounds[0] + g.bounds[2]) / 2, 0)
+    oscuro = unary_union([oscuro, centro(t1), centro(t2)]).intersection(forma.buffer(-MARGEN))
+    base = trimesh.boolean.union([extruir(forma, 0, ALTO - INCRUSTE),
+                                  extruir(forma.difference(oscuro), ALTO - INCRUSTE - 0.01, ALTO)], engine="manifold")
+    capa = trimesh.boolean.union([extruir(oscuro, ALTO - INCRUSTE, ALTO)], engine="manifold")
+    return forma, oscuro, base, capa, n, m
 
 
 def main():
@@ -212,6 +278,14 @@ def main():
         vista(AQUI / f"vista-{clave}.png", forma, verde)
         x0, y0, x1, y1 = forma.bounds
         print(f"{clave}: {x1 - x0:.1f} × {y1 - y0:.1f} × {ALTO} mm · base {base.volume / 1000:.2f} cm³ · color {capa.volume / 1000:.2f} cm³")
+    forma, oscuro, base, capa, n, m = llavero_qr()
+    assert base.is_watertight and capa.is_watertight, "qr"
+    base.export(AQUI / "stl" / "llavero-qr-claro.stl")
+    capa.export(AQUI / "stl" / "llavero-qr-oscuro.stl")
+    escribir_3mf(AQUI / "3mf" / "llavero-qr.3mf", "Llavero QR", base, capa)
+    vista(AQUI / "vista-qr.png", forma, oscuro, claro=True)
+    x0, y0, x1, y1 = forma.bounds
+    print(f"qr: {x1 - x0:.1f} × {y1 - y0:.1f} × {ALTO} mm · {n}×{n} módulos de {m:.2f} mm")
 
 
 if __name__ == "__main__":

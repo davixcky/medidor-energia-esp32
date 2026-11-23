@@ -1,13 +1,31 @@
 # Llavero de la pinza
 
-Llavero de dos colores con forma de pinza **SCT-013**: la argolla pasa por el hueco de la pinza,
-como el conductor de fase. Tres chistes del proyecto, misma forma:
+Llaveros de dos colores. Once chistes del proyecto con forma de pinza **SCT-013** (la argolla pasa por
+el hueco de la pinza, como el conductor de fase) y un llavero QR para regalar en el stand.
 
 | Archivo | Chiste |
 |---|---|
 | `llavero-fase` | **SOLO ABRAZO LA FASE** · fase + neutro = 0,0 A *(si la pinza abraza el cable completo de un equipo, fase y neutro se cancelan y mide cero)* |
 | `llavero-hardexplosion` | **HARDEXPLOSION: PENDIENTE** *(la tabla de la prueba de resistencia, toda en "Pendiente")* |
 | `llavero-revision` | **REVISIÓN E.9 · ESTA SÍ ES** la final (dijimos igual en la E.5) |
+| `llavero-factura` | **MI FACTURA: 30 DÍAS** · yo: cada segundo |
+| `llavero-ads1015` | **3.300 < 24.000 · ADIÓS ADS1015** *(el ADC externo que no alcanzaba)* |
+| `llavero-puentes` | **10 PUENTES · CERO VÍAS** · PCB de una cara, hecha con tóner |
+| `llavero-arranque` | **MI FIRMWARE NO ARRANCABA** · esperaba en el núcleo equivocado |
+| `llavero-francia` | **MI IA APRENDIÓ EN FRANCIA** · una casa en Sceaux, datos de la UCI |
+| `llavero-muestras` | **8.000 MUESTRAS POR SEGUNDO** · y aún no sé cuánto gasta la nevera |
+| `llavero-mcp6004` | **¿MCP6004? NO HAY AQUÍ** · en Barranquilla no se consigue |
+| `llavero-equipo` | **DAVID, JOSE Y LEO** · Sistemas Embebidos 1 · CUC 2026-2 |
+
+## Llavero QR (`llavero-qr`)
+
+42 × 63,5 × 3,6 mm. Abre `https://davixcky.github.io/medidor-energia-esp32/` (la misma página del
+stand). Aquí los colores van al revés: la parte `base` (`llavero-qr-claro.stl`) debe ser **blanca o
+clara** y `color` (`llavero-qr-oscuro.stl`) **negra**, porque los lectores de QR necesitan módulos
+oscuros sobre fondo claro. Cada módulo mide 1,1 mm. La vista previa se probó con un lector de QR;
+probar la primera pieza impresa con el celular antes de imprimir varias.
+
+![Llavero QR](vista-qr.png)
 
 ![Vistas](vista-fase.png)
 
