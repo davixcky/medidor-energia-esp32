@@ -1,0 +1,10 @@
+{
+  "name": "Medidor de energía ESP32 · Stand CUC",
+  "short_name": "Medidor CUC",
+  "start_url": "kiosko.html",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#12161b",
+  "theme_color": "#12161b",
+  "icons": [{ "src": "img/icono.png", "sizes": "512x512", "type": "image/png" }]
+}

@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#12161b">
+<meta name="description" content="Medidor de energía eléctrica no invasivo de dos canales con ESP32. Proyecto de Sistemas Embebidos 1, Universidad de la Costa.">
+<meta property="og:title" content="Medidor de energía no invasivo con ESP32">
+<meta property="og:description" content="Mide el consumo de tu tablero y tu aire acondicionado segundo a segundo. Proyecto CUC 2026-2.">
+<meta property="og:image" content="img/cerrado.jpg">
+<link rel="icon" href="img/icono.png">
+<title>Medidor de energía ESP32 · CUC</title>
+<style>
+:root{--bg:#12161b;--bg2:#1a2027;--panel:#202832;--line:#2e3946;--tx:#eef2f6;--tx2:#a8b4c2;--tx3:#6f7d8d;
+  --verde:#3ddc97;--azul:#5aa9ff;--naranja:#f5a35c;--violeta:#b08cff}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{background:var(--bg);color:var(--tx);font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+a{color:var(--verde)}
+img{max-width:100%;display:block}
+.envoltura{max-width:880px;margin:0 auto;padding:0 16px}
+nav{position:sticky;top:0;z-index:5;background:rgba(18,22,27,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .envoltura{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-top:10px;padding-bottom:10px}
+nav .envoltura::-webkit-scrollbar{display:none}
+nav a{flex:none;color:var(--tx2);text-decoration:none;font-size:14px;font-weight:600;padding:6px 12px;border-radius:999px;background:var(--panel)}
+header{padding:40px 0 8px}
+.kicker{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--verde);font-weight:700}
+h1{font-size:clamp(32px,8vw,52px);line-height:1.05;letter-spacing:-.02em;margin:10px 0 14px}
+h2{font-size:clamp(26px,6vw,36px);line-height:1.15;letter-spacing:-.01em;margin:6px 0 12px}
+h3{font-size:19px;margin:22px 0 6px}
+p{color:var(--tx2);margin:10px 0}
+p b,li b{color:var(--tx)}
+section{padding:44px 0;border-top:1px solid var(--line)}
+.render{border-radius:18px;overflow:hidden;margin:20px 0;background:#2a3037}
+.render video{width:100%;display:block}
+figure{margin:20px 0}
+figcaption{font-size:14px;color:var(--tx3);margin-top:8px}
+.claro{background:#fff;border-radius:14px;padding:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:18px 0}
+.dato{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.dato small{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3);font-weight:600}
+.dato strong{display:block;font-size:26px;line-height:1.2;margin-top:2px}
+ol.pasos{list-style:none;counter-reset:p;margin:18px 0;display:grid;gap:12px}
+ol.pasos li{counter-increment:p;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px 14px 60px;position:relative;color:var(--tx2)}
+ol.pasos li::before{content:counter(p);position:absolute;left:16px;top:14px;width:30px;height:30px;border-radius:9px;background:#183027;color:var(--verde);font-weight:800;display:flex;align-items:center;justify-content:center}
+.formula{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 18px;font-size:19px;margin:14px 0;overflow-x:auto;white-space:nowrap}
+table{width:100%;border-collapse:collapse;font-size:15px;margin:16px 0}
+.tabla{overflow-x:auto}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--tx3);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+tr.nuestro td{color:var(--verde);font-weight:700}
+.aviso{border-left:4px solid var(--naranja);background:#2a2119;border-radius:0 12px 12px 0;padding:12px 16px;color:#f1d3b8;margin:18px 0;font-size:15px}
+.boton{display:inline-flex;align-items:center;gap:8px;background:var(--verde);color:#08130e;text-decoration:none;font-weight:800;padding:14px 22px;border-radius:999px;margin:8px 8px 0 0}
+.boton.sec{background:var(--panel);color:var(--tx);border:1px solid var(--line)}
+.equipo{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
+.equipo span{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-weight:600}
+footer{padding:36px 0 60px;color:var(--tx3);font-size:14px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+<nav><div class="envoltura">
+  <a href="#problema">Problema</a><a href="#funciona">Cómo funciona</a><a href="#matematica">Cálculo</a>
+  <a href="#hardware">Hardware</a><a href="#firmware">Firmware</a><a href="#plataforma">Plataforma</a>
+  <a href="#lstm">Pronóstico</a><a href="#equipo">Equipo</a>
+</div></nav>
+
+<main class="envoltura">
+<header>
+  <div class="kicker">Sistemas Embebidos 1 · Universidad de la Costa</div>
+  <h1>Medidor de energía no invasivo con ESP32</h1>
+  <p>Un medidor monofásico de 120 V / 60 Hz con <b>dos canales de corriente</b> y <b>un canal de tensión aislado</b>. Mide el tablero completo y un subcircuito, como el del aire acondicionado, y publica los datos por Wi-Fi cada segundo.</p>
+  <div class="render"><img src="img/cerrado.jpg" alt="Render del medidor cerrado con pantalla táctil y barra de luz verde"></div>
+  <div class="grid">
+    <div class="dato"><small>Muestreo</small><strong>8.000/s</strong>por canal</div>
+    <div class="dato"><small>Canales</small><strong>2 + V</strong>CH1 60 A · CH2 30 A</div>
+    <div class="dato"><small>Meta de error</small><strong>±3 %</strong>potencia activa</div>
+    <div class="dato"><small>Pronóstico</small><strong>LSTM</strong>5.281 parámetros</div>
+  </div>
+</header>
+
+<section id="problema">
+  <div class="kicker">El problema</div>
+  <h2>La factura llega tarde y no dice qué equipo gastó</h2>
+  <p>La factura muestra un solo número al mes. Tiene tres limitaciones:</p>
+  <ol class="pasos">
+    <li><b>Resolución de un mes.</b> No muestra los ciclos diario y semanal, que son los que dominan en un clima sin estaciones.</li>
+    <li><b>Un solo total.</b> No distingue qué circuito o equipo produjo el consumo.</li>
+    <li><b>Hasta 30 días de retraso.</b> Una medida de ahorro no se puede comprobar hasta el siguiente ciclo de facturación.</li>
+  </ol>
+  <p>En la región Caribe la demanda sigue creciendo y, en los edificios comerciales, el aire acondicionado representa en promedio cerca de la mitad del consumo.</p>
+  <p><b>Pregunta del proyecto:</b> ¿cómo medir, con un microcontrolador de bajo costo y sin intervenir la instalación, el consumo por circuito y casi en tiempo real, de forma segura y con un error conocido?</p>
+</section>
+
+<section id="funciona">
+  <div class="kicker">Cómo funciona</div>
+  <h2>Del cable a tu celular</h2>
+  <ol class="pasos">
+    <li><b>Pinzas SCT-013-000.</b> Abrazan el conductor de fase sin abrirlo. La corriente crea un campo magnético que la pinza convierte en una corriente pequeña.</li>
+    <li><b>ZMPT101B.</b> Un transformador aislado reduce los 120 V a una señal segura. La red queda en un compartimento separado.</li>
+    <li><b>Acondicionamiento.</b> Resistencia de carga, polarización a media escala, filtro antialias y protección llevan cada señal al rango del ADC.</li>
+    <li><b>ESP32.</b> El ADC1 toma 8.000 muestras por segundo de cada señal y calcula sobre ventanas de 60 ciclos de red (≈ 1 s).</li>
+    <li><b>Wi-Fi.</b> Envía un registro por ventana en lotes cada 5 s; si se cae la red guarda hasta 1.200 registros (20 min).</li>
+    <li><b>Plataforma web.</b> Guarda la serie, la muestra en un tablero y la usa para pronosticar el consumo.</li>
+  </ol>
+  <figure><img class="claro" src="img/bloques.jpg" alt="Diagrama de bloques del medidor"><figcaption>Diagrama de bloques. Las flechas punteadas indican acople magnético: las pinzas no tocan la red.</figcaption></figure>
+</section>
+
+<section id="matematica">
+  <div class="kicker">El cálculo</div>
+  <h2>Multiplicar, sumar, promediar</h2>
+  <p>Con muestras tomadas sobre un número entero de ciclos, los valores eficaces y la potencia activa son sumas:</p>
+  <div class="formula">V<sub>rms</sub> ≈ √( (1/N) Σ v<sub>n</sub>² ) &nbsp;&nbsp; P ≈ (1/N) Σ v<sub>n</sub>·i<sub>n</sub></div>
+  <div class="formula">S = V<sub>rms</sub>·I<sub>rms</sub> &nbsp;&nbsp; FP = P / S &nbsp;&nbsp; Q = √(S² − P²)</div>
+  <ul style="margin:14px 0 0 20px;color:var(--tx2);display:grid;gap:8px">
+    <li>La ventana empieza y termina en cruces por cero de la tensión, así siempre contiene ciclos completos.</li>
+    <li>Se resta la media de la propia ventana, por eso no hace falta conocer con exactitud la polarización.</li>
+    <li>Como el ADC convierte V, I1 e I2 en secuencia, la tensión se interpola al instante de cada corriente (corrección de −8° a +11°).</li>
+    <li>La distorsión armónica (THD) de CH1 se calcula con el algoritmo de Goertzel hasta el armónico 40.</li>
+  </ul>
+</section>
+
+<section id="hardware">
+  <div class="kicker">Hardware</div>
+  <h2>Tarjetas modulares y red aislada</h2>
+  <p>El gabinete de 280 × 180 × 70 mm se imprime en 3D. La tapa cierra con imanes; no lleva tornillos de ensamble ni pegante. Dentro hay cinco tarjetas perforadas de baja tensión:</p>
+  <div class="tabla"><table>
+    <tr><th>Tarjeta</th><th>Función</th></tr>
+    <tr><td>T1 Potencia</td><td>Protección de entrada y 12 V / 5 V (LM2596)</td></tr>
+    <tr><td>T2 Corriente</td><td>Dos canales SCT, resistencias de carga y polarización</td></tr>
+    <tr><td>T3 Tensión</td><td>Acondicionamiento del ZMPT101B</td></tr>
+    <tr><td>T4 Control</td><td>ESP32 principal: adquisición, Wi-Fi y ESP-NOW</td></tr>
+    <tr><td>T5 Interfaz</td><td>Barra de luz, piezo y adaptador de nivel</td></tr>
+    <tr><td>Z1 Red</td><td>Fusible y primario del ZMPT101B, con guarda opaca</td></tr>
+  </table></div>
+  <div class="render"><img src="img/abierto.jpg" alt="Render del medidor abierto mostrando las tarjetas internas"></div>
+  <p>En la tapa, una <b>LilyGO T4-S3 AMOLED</b> táctil recibe por ESP-NOW los valores ya calculados. Solo es la pantalla: el ESP32 principal sigue a cargo de la medición.</p>
+  <div class="render"><video src="img/producto.mp4" poster="img/producto-poster.jpg" controls muted playsinline preload="none"></video></div>
+  <figure><img class="claro" src="img/esquematico.jpg" alt="Esquemático del medidor en KiCad"><figcaption>Esquemático en KiCad. La verificación eléctrica (ERC) termina sin errores.</figcaption></figure>
+  <div class="aviso">Trabajar con 120 V es peligroso. Este es un proyecto académico; el gabinete no tiene certificación eléctrica.</div>
+</section>
+
+<section id="firmware">
+  <div class="kicker">Firmware</div>
+  <h2>Tres tareas en dos núcleos</h2>
+  <p>Escrito en C++ con PlatformIO sobre FreeRTOS.</p>
+  <div class="tabla"><table>
+    <tr><th>Núcleo</th><th>Tarea</th><th>Función</th></tr>
+    <tr><td>1</td><td>Adquisición</td><td>Temporizador cada 125 µs, ventana de 60 ciclos</td></tr>
+    <tr><td>0</td><td>Red</td><td>Wi-Fi, hora NTP, búfer y envío en lotes</td></tr>
+    <tr><td>0</td><td>Interfaz</td><td>Pantalla, luz de estado y alertas</td></tr>
+  </table></div>
+  <p>Las constantes de calibración se guardan en memoria no volátil desde la consola serie, sin recompilar.</p>
+  <figure><img src="img/tft.png" alt="Pantalla del medidor mostrando consumo actual" style="border-radius:14px;max-width:420px"><figcaption>Pantalla local: consumo total, tensión y corriente por canal.</figcaption></figure>
+</section>
+
+<section id="plataforma">
+  <div class="kicker">Plataforma web</div>
+  <h2>Tu consumo, en el celular</h2>
+  <p>El tablero muestra la potencia por canal, la energía acumulada y el pronóstico. Hasta tener registros propios funciona con un simulador.</p>
+  <figure><img src="img/tablero-movil.jpg" alt="Tablero de la plataforma en un celular" style="border-radius:14px"><figcaption>Tablero en el celular.</figcaption></figure>
+  <figure><img src="img/tablero.jpg" alt="Tablero de la plataforma en escritorio" style="border-radius:14px"></figure>
+</section>
+
+<section id="lstm">
+  <div class="kicker" style="color:var(--violeta)">Pronóstico</div>
+  <h2>Una red LSTM predice las próximas horas</h2>
+  <p>Mientras no hay registros propios, la red se entrenó con la serie pública <i>Individual Household Electric Power Consumption</i> de la UCI (una vivienda medida cada minuto entre 2006 y 2010) y la temperatura de Open-Meteo.</p>
+  <p>Entrada de 24 h × 4 variables (consumo, hora, día de la semana, temperatura) → LSTM de 32 unidades → densa de 16 → salida. <b>5.281 parámetros.</b></p>
+  <div class="tabla"><table>
+    <tr><th>Error medio (kWh)</th><th>1 h</th><th>24 h</th><th>48 h</th></tr>
+    <tr class="nuestro"><td>LSTM</td><td>0,35</td><td>0,46</td><td>0,48</td></tr>
+    <tr><td>Repetir última hora</td><td>0,41</td><td>0,71</td><td>0,72</td></tr>
+    <tr><td>Repetir ayer</td><td>0,56</td><td>0,56</td><td>0,57</td></tr>
+    <tr><td>Repetir semana pasada</td><td>0,59</td><td>0,58</td><td>0,58</td></tr>
+  </table></div>
+  <p>A 24 h la LSTM reduce el error un <b>34 %</b> frente a repetir la última hora.</p>
+  <figure><img class="claro" src="img/lstm-dia.jpg" alt="Pronóstico de la LSTM sobre un día real"><figcaption>Pronóstico sobre un día del conjunto de prueba.</figcaption></figure>
+</section>
+
+<section id="comparacion">
+  <div class="kicker">Estado del arte</div>
+  <h2>¿Por qué no comprar uno?</h2>
+  <div class="tabla"><table>
+    <tr><th>Solución</th><th>Canales</th><th>Forma de onda</th></tr>
+    <tr><td>Shelly EM</td><td>2</td><td>No</td></tr>
+    <tr><td>Emporia Vue</td><td>hasta 18</td><td>No</td></tr>
+    <tr><td>Sense</td><td>2</td><td>No para el usuario</td></tr>
+    <tr><td>IoTaWatt</td><td>14</td><td>Parcial</td></tr>
+    <tr><td>PZEM-004T</td><td>1</td><td>No</td></tr>
+    <tr class="nuestro"><td>Este proyecto</td><td>2 + V</td><td>Sí, 8.000/s</td></tr>
+  </table></div>
+  <p>Los equipos comerciales no dan acceso a las muestras ni al método de cálculo. Aquí cada paso, del sensor a la nube, es abierto y se puede estudiar.</p>
+</section>
+
+<section id="equipo">
+  <div class="kicker">Equipo</div>
+  <h2>Quiénes lo hicimos</h2>
+  <div class="equipo"><span>David Orozco</span><span>Jose Torres</span><span>Leo Rojas</span></div>
+  <p>Ingeniería Electrónica · Universidad de la Costa (CUC) · Periodo 2026-2.</p>
+  <div class="aviso">Estado actual: diseño eléctrico y mecánico, firmware y plataforma probados con señales simuladas. El montaje y la validación con carga real están en curso.</div>
+  <a class="boton" href="https://github.com/davixcky/medidor-energia-esp32">Ver el código en GitHub</a>
+  <a class="boton sec" href="https://github.com/davixcky/medidor-energia-esp32#contenido">Documento técnico completo</a>
+</section>
+</main>
+
+<footer><div class="envoltura">Medidor de energía no invasivo de dos canales con ESP32 · Sistemas Embebidos 1 · CUC 2026-2</div></footer>
+</body>
+</html>
