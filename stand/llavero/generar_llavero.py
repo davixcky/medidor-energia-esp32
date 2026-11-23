@@ -35,18 +35,18 @@ ALTO, INCRUSTE = 3.6, 0.6           # espesor total y profundidad del segundo co
 MARGEN = 1.6                        # borde de la base alrededor del color
 TEXTO_X = (19.0, CUERPO[2] - 3.2)   # zona útil para texto
 
-CHISTES = {
-    "fase": (["SOLO ABRAZO", "LA FASE"], "fase + neutro = 0,0 A"),
-    "hardexplosion": (["HARDEXPLOSION:", "PENDIENTE"], "prueba de resistencia · CUC"),
-    "revision": (["REVISIÓN E.9", "ESTA SÍ ES"], "la final (dijimos igual en la E.5)"),
-    "factura": (["MI FACTURA:", "30 DÍAS"], "yo: cada segundo"),
-    "ads1015": (["3.300 < 24.000", "ADIÓS ADS1015"], "muestras por segundo: no alcanzaba"),
-    "puentes": (["10 PUENTES", "CERO VÍAS"], "PCB de una cara, hecha con tóner"),
-    "arranque": (["MI FIRMWARE", "NO ARRANCABA"], "esperaba en el núcleo equivocado"),
-    "francia": (["MI IA APRENDIÓ", "EN FRANCIA"], "una casa en Sceaux, datos de la UCI"),
-    "muestras": (["8.000 MUESTRAS", "POR SEGUNDO"], "y aún no sé cuánto gasta la nevera"),
-    "mcp6004": (["¿MCP6004?", "NO HAY AQUÍ"], "en Barranquilla no se consigue"),
-    "equipo": (["DAVID, JOSE", "Y LEO"], "Sistemas Embebidos 1 · CUC 2026-2"),
+TEXTOS = {
+    "proyecto": (["MEDIDOR DE", "ENERGÍA ESP32"], "no invasivo · 2 canales · Wi-Fi"),
+    "sct013": (["PINZA SCT-013", "SIN ABRIR CIRCUITO"], "corriente no invasiva · 2 canales"),
+    "tiempo-real": (["CONSUMO EN", "TIEMPO REAL"], "potencia · energía · costo"),
+    "muestreo": (["8.000 MUESTRAS", "POR SEGUNDO"], "por canal · ADC1 del ESP32"),
+    "canales": (["DOS CANALES", "CH1 + CH2"], "tablero total + subcircuito"),
+    "variables": (["V · I · P · Q · S", "Y FACTOR P."], "medición eléctrica completa"),
+    "wifi": (["ESP32 + Wi-Fi", "DATOS CADA 1 s"], "tablero web en tiempo real"),
+    "lstm": (["PRONÓSTICO LSTM", "PRÓXIMAS 48 h"], "energía con inteligencia artificial"),
+    "alertas": (["ALERTAS DE", "CONSUMO ALTO"], "umbral P95 · detección 5 min"),
+    "seguridad": (["120 V AISLADOS", "BAJA TENSIÓN"], "ZMPT101B + barrera física"),
+    "equipo": (["CUC 2026-2", "SIST. EMBEBIDOS"], "David · Jose · Leo"),
 }
 
 # Llavero QR para regalar en el stand: abre la página del proyecto.
@@ -56,9 +56,9 @@ URL_QR = "https://davixcky.github.io/medidor-energia-esp32/"
 # porque necesita base clara + detalle oscuro. La placa QR lleva seis copias:
 # es la pieza pensada para regalar en el stand.
 PLACAS = (
-    ("placa-01-medicion", ("fase", "ads1015", "muestras", "mcp6004"), 1),
-    ("placa-02-proyecto", ("hardexplosion", "revision", "puentes", "arranque"), 1),
-    ("placa-03-equipo", ("factura", "francia", "equipo"), 1),
+    ("placa-01-medidor", ("proyecto", "sct013", "tiempo-real", "muestreo"), 1),
+    ("placa-02-funciones", ("canales", "variables", "wifi", "lstm"), 1),
+    ("placa-03-identidad", ("alertas", "seguridad", "equipo"), 1),
     ("placa-04-qr-x6", ("qr",), 6),
 )
 
@@ -333,7 +333,7 @@ def main():
     (AQUI / "3mf").mkdir(exist_ok=True)
     (AQUI / "placas").mkdir(exist_ok=True)
     mallas_por_clave = {}
-    for clave, (lineas, pie) in CHISTES.items():
+    for clave, (lineas, pie) in TEXTOS.items():
         forma, verde, base, capa = mallas(lineas, pie)
         assert base.is_watertight and capa.is_watertight, clave
         base.export(AQUI / "stl" / f"llavero-{clave}-base.stl")

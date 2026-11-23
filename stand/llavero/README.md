@@ -1,21 +1,22 @@
 # Llavero de la pinza
 
-Llaveros de dos colores. Once chistes del proyecto con forma de pinza **SCT-013** (la argolla pasa por
-el hueco de la pinza, como el conductor de fase) y un llavero QR para regalar en el stand.
+Llaveros de dos colores. Once mensajes que explican el medidor con forma de pinza **SCT-013** (la
+argolla pasa por el hueco de la pinza, como el conductor de fase) y un llavero QR para regalar en el
+stand.
 
-| Archivo | Chiste |
+| Archivo | Mensaje del proyecto |
 |---|---|
-| `llavero-fase` | **SOLO ABRAZO LA FASE** · fase + neutro = 0,0 A *(si la pinza abraza el cable completo de un equipo, fase y neutro se cancelan y mide cero)* |
-| `llavero-hardexplosion` | **HARDEXPLOSION: PENDIENTE** *(la tabla de la prueba de resistencia, toda en "Pendiente")* |
-| `llavero-revision` | **REVISIÓN E.9 · ESTA SÍ ES** la final (dijimos igual en la E.5) |
-| `llavero-factura` | **MI FACTURA: 30 DÍAS** · yo: cada segundo |
-| `llavero-ads1015` | **3.300 < 24.000 · ADIÓS ADS1015** *(el ADC externo que no alcanzaba)* |
-| `llavero-puentes` | **10 PUENTES · CERO VÍAS** · PCB de una cara, hecha con tóner |
-| `llavero-arranque` | **MI FIRMWARE NO ARRANCABA** · esperaba en el núcleo equivocado |
-| `llavero-francia` | **MI IA APRENDIÓ EN FRANCIA** · una casa en Sceaux, datos de la UCI |
-| `llavero-muestras` | **8.000 MUESTRAS POR SEGUNDO** · y aún no sé cuánto gasta la nevera |
-| `llavero-mcp6004` | **¿MCP6004? NO HAY AQUÍ** · en Barranquilla no se consigue |
-| `llavero-equipo` | **DAVID, JOSE Y LEO** · Sistemas Embebidos 1 · CUC 2026-2 |
+| `llavero-proyecto` | **MEDIDOR DE ENERGÍA ESP32** · no invasivo · 2 canales · Wi-Fi |
+| `llavero-sct013` | **PINZA SCT-013 · SIN ABRIR CIRCUITO** · corriente no invasiva |
+| `llavero-tiempo-real` | **CONSUMO EN TIEMPO REAL** · potencia · energía · costo |
+| `llavero-muestreo` | **8.000 MUESTRAS POR SEGUNDO** · por canal · ADC1 del ESP32 |
+| `llavero-canales` | **DOS CANALES · CH1 + CH2** · tablero total + subcircuito |
+| `llavero-variables` | **V · I · P · Q · S Y FACTOR P.** · medición eléctrica completa |
+| `llavero-wifi` | **ESP32 + Wi-Fi · DATOS CADA 1 s** · tablero web en tiempo real |
+| `llavero-lstm` | **PRONÓSTICO LSTM · PRÓXIMAS 48 h** · energía con inteligencia artificial |
+| `llavero-alertas` | **ALERTAS DE CONSUMO ALTO** · umbral P95 · detección 5 min |
+| `llavero-seguridad` | **120 V AISLADOS · BAJA TENSIÓN** · ZMPT101B + barrera física |
+| `llavero-equipo` | **CUC 2026-2 · SIST. EMBEBIDOS** · David · Jose · Leo |
 
 ## Llavero QR (`llavero-qr`)
 
@@ -39,9 +40,9 @@ colores.
 
 | Placa | Contenido | Filamento 1 | Filamento 2 |
 |---|---|---|---|
-| `placa-01-medicion.3mf` | fase, ADS1015, muestras, MCP6004 | oscuro | verde |
-| `placa-02-proyecto.3mf` | Hardexplosion, revisión, puentes, arranque | oscuro | verde |
-| `placa-03-equipo.3mf` | factura, Francia, equipo | oscuro | verde |
+| `placa-01-medidor.3mf` | proyecto, SCT-013, tiempo real, muestreo | oscuro | verde |
+| `placa-02-funciones.3mf` | canales, variables, Wi-Fi, LSTM | oscuro | verde |
+| `placa-03-identidad.3mf` | alertas, seguridad, equipo | oscuro | verde |
 | `placa-04-qr-x6.3mf` | 6 llaveros QR | blanco o claro | negro |
 
 Abrir una placa en Bambu Studio u OrcaSlicer, confirmar los dos filamentos y laminar con capa de
@@ -66,9 +67,9 @@ lanzar `placa-04-qr-x6.3mf`.
 - Sin AMS: pausar en la capa de 3,0 mm, cambiar a verde y continuar. Así todo lo que está a esa
   altura sale verde, que es justo el dibujo.
 
-## Cambiar el chiste
+## Cambiar el mensaje
 
-Editar `CHISTES` en `generar_llavero.py` y ejecutar:
+Editar `TEXTOS` en `generar_llavero.py` y ejecutar:
 
 ```sh
 pip install trimesh shapely mapbox_earcut manifold3d fonttools pillow qrcode
