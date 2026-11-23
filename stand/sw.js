@@ -1,5 +1,5 @@
 // Guarda la presentación en el iPad para que funcione sin Wi-Fi en el stand.
-const CACHE = 'stand-v1';
+const CACHE = 'stand-v2';
 const ARCHIVOS = [
   './', 'index.html', 'kiosko.html', 'manifest.webmanifest',
   'img/qr.svg', 'img/icono.png', 'img/cerrado.jpg', 'img/abierto.jpg',

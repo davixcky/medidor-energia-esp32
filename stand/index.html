@@ -54,6 +54,21 @@ tr.nuestro td{color:var(--verde);font-weight:700}
 .boton.sec{background:var(--panel);color:var(--tx);border:1px solid var(--line)}
 .equipo{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
 .equipo span{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-weight:600}
+.puertas{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0}
+.puerta{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.puerta span{font-size:28px;display:block}
+.puerta b{display:block;margin:4px 0 2px;color:var(--violeta)}
+.puerta p{margin:0;font-size:15px}
+.limites{margin:10px 0 0 20px;color:var(--tx2);display:grid;gap:8px}
+.curiosos{margin-top:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.curiosos summary{cursor:pointer;font-weight:700}
+.faq{display:grid;gap:10px;margin-top:16px}
+.faq details{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:0 16px}
+.faq summary{cursor:pointer;list-style:none;font-weight:700;padding:16px 28px 16px 0;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:0;top:12px;font-size:24px;color:var(--verde)}
+.faq details[open] summary::after{content:"−"}
+.faq details p{margin:0 0 14px}
 footer{padding:36px 0 60px;color:var(--tx3);font-size:14px;border-top:1px solid var(--line)}
 </style>
 </head>
@@ -62,7 +77,7 @@ footer{padding:36px 0 60px;color:var(--tx3);font-size:14px;border-top:1px solid 
 <nav><div class="envoltura">
   <a href="#problema">Problema</a><a href="#funciona">Cómo funciona</a><a href="#matematica">Cálculo</a>
   <a href="#hardware">Hardware</a><a href="#firmware">Firmware</a><a href="#plataforma">Plataforma</a>
-  <a href="#lstm">Pronóstico</a><a href="#equipo">Equipo</a>
+  <a href="#lstm">Pronóstico IA</a><a href="#preguntas">Preguntas</a><a href="#equipo">Equipo</a>
 </div></nav>
 
 <main class="envoltura">
@@ -163,19 +178,88 @@ footer{padding:36px 0 60px;color:var(--tx3);font-size:14px;border-top:1px solid 
 </section>
 
 <section id="lstm">
-  <div class="kicker" style="color:var(--violeta)">Pronóstico</div>
-  <h2>Una red LSTM predice las próximas horas</h2>
-  <p>Mientras no hay registros propios, la red se entrenó con la serie pública <i>Individual Household Electric Power Consumption</i> de la UCI (una vivienda medida cada minuto entre 2006 y 2010) y la temperatura de Open-Meteo.</p>
-  <p>Entrada de 24 h × 4 variables (consumo, hora, día de la semana, temperatura) → LSTM de 32 unidades → densa de 16 → salida. <b>5.281 parámetros.</b></p>
+  <div class="kicker" style="color:var(--violeta)">Pronóstico con inteligencia artificial</div>
+  <h2>¿Cómo adivina el consumo de mañana?</h2>
+  <p>Usamos una red neuronal llamada <b>LSTM</b> (<i>Long Short-Term Memory</i>, “memoria de corto y largo plazo”). Es un programa que aprende patrones mirando el pasado, igual que tú sabes que a las 7 de la noche, cuando todos llegan a casa, se prende todo.</p>
+
+  <h3>1. Lee las últimas 24 horas, como un diario</h3>
+  <p>La red recorre el día anterior <b>hora por hora</b>, en orden. En cada hora recibe cuatro datos:</p>
+  <div class="grid">
+    <div class="dato"><small>⚡ Consumo</small>kWh de esa hora</div>
+    <div class="dato"><small>🕖 Hora</small>madrugada, mediodía, noche…</div>
+    <div class="dato"><small>📅 Día</small>lunes no es igual a domingo</div>
+    <div class="dato"><small>🌡️ Temperatura</small>más calor, más aire</div>
+  </div>
+
+  <h3>2. Lleva una libreta de apuntes</h3>
+  <p>Lo especial de la LSTM es que tiene <b>memoria</b>: una libreta donde va anotando lo importante mientras lee. Tres “puertas” deciden qué pasa con esa libreta en cada hora:</p>
+  <div class="puertas">
+    <div class="puerta"><span>🧽</span><b>Puerta de olvido</b><p>¿Qué borro? “Lo de la madrugada ya no importa para la noche.”</p></div>
+    <div class="puerta"><span>✏️</span><b>Puerta de entrada</b><p>¿Qué anoto? “Empezó el pico de la tarde y hace calor.”</p></div>
+    <div class="puerta"><span>📣</span><b>Puerta de salida</b><p>¿Qué uso ahora? Lo que sirve para decir cuánto se gastará.</p></div>
+  </div>
+  <p>Una red común se “olvida” de lo que vio al principio del día. Con la libreta y las puertas, la LSTM recuerda lo que pasó hace 20 horas si le sirve.</p>
+
+  <h3>3. ¿Cómo aprendió?</h3>
+  <ol class="pasos">
+    <li><b>Le mostramos ejemplos.</b> Casi 22.000 ventanas de 24 horas, cada una con la respuesta correcta: lo que se consumió en la hora siguiente.</li>
+    <li><b>Adivina y compara.</b> Al principio adivina mal. Se mide qué tan lejos quedó.</li>
+    <li><b>Ajusta sus perillas.</b> La red tiene <b>5.281 perillas</b> (parámetros). Cada error mueve un poquito cada perilla para equivocarse menos la próxima vez.</li>
+    <li><b>Repite.</b> Le dimos hasta 20 vueltas a todos los ejemplos; en un computador normal tarda unos 6 segundos.</li>
+    <li><b>Examen final.</b> Se probó con un año que nunca vio (2010), para saber si aprendió o solo memorizó.</li>
+  </ol>
+
+  <h3>4. ¿Cómo predice todo un día?</h3>
+  <p>Como fichas de dominó: predice la hora siguiente, toma esa predicción como si fuera real y predice la siguiente, y así 24 o 48 veces.</p>
+
+  <h3>5. ¿Qué tan bien le fue?</h3>
+  <p>Para saber si una IA sirve hay que compararla con trucos simples. Si no les gana, no vale la pena.</p>
   <div class="tabla"><table>
-    <tr><th>Error medio (kWh)</th><th>1 h</th><th>24 h</th><th>48 h</th></tr>
+    <tr><th>Error medio (kWh por hora)</th><th>1 h</th><th>24 h</th><th>48 h</th></tr>
     <tr class="nuestro"><td>LSTM</td><td>0,35</td><td>0,46</td><td>0,48</td></tr>
-    <tr><td>Repetir última hora</td><td>0,41</td><td>0,71</td><td>0,72</td></tr>
-    <tr><td>Repetir ayer</td><td>0,56</td><td>0,56</td><td>0,57</td></tr>
-    <tr><td>Repetir semana pasada</td><td>0,59</td><td>0,58</td><td>0,58</td></tr>
+    <tr><td>Repetir la última hora</td><td>0,41</td><td>0,71</td><td>0,72</td></tr>
+    <tr><td>Repetir lo de ayer</td><td>0,56</td><td>0,56</td><td>0,57</td></tr>
+    <tr><td>Repetir la semana pasada</td><td>0,59</td><td>0,58</td><td>0,58</td></tr>
   </table></div>
-  <p>A 24 h la LSTM reduce el error un <b>34 %</b> frente a repetir la última hora.</p>
-  <figure><img class="claro" src="img/lstm-dia.jpg" alt="Pronóstico de la LSTM sobre un día real"><figcaption>Pronóstico sobre un día del conjunto de prueba.</figcaption></figure>
+  <p>La LSTM le gana a los tres trucos en todos los plazos: se equivoca entre <b>15 % y 17 % menos</b> que el mejor de ellos.</p>
+  <figure><img class="claro" src="img/lstm-dia.jpg" alt="Pronóstico de la LSTM sobre un día real"><figcaption>La red trabajando sobre un día real: arriba lo que lee, en medio sus puertas, abajo su libreta (las 32 unidades de memoria).</figcaption></figure>
+
+  <h3>6. Lo que todavía no sabe</h3>
+  <ul class="limites">
+    <li>Aprendió con datos públicos de <b>una casa en Francia</b> (UCI, 2006–2010), porque aún no tenemos meses de mediciones propias. El siguiente paso es reentrenarla con datos del Caribe.</li>
+    <li>Para 24 y 48 h se le dio la temperatura real que hizo; en la vida real dependería del pronóstico del clima.</li>
+    <li>Una casa sola es difícil de predecir: si alguien prende la plancha a una hora rara, ningún modelo lo sabe.</li>
+  </ul>
+
+  <details class="curiosos"><summary>Para los curiosos: la arquitectura</summary>
+    <p>Entrada 24 × 4 → LSTM de 32 unidades → <i>dropout</i> 0,2 → densa de 16 (ReLU) → salida de 1. Parámetros: 4.736 en la LSTM + 528 en la densa + 17 en la salida = 5.281. Entrenada con Adam y parada temprana en PyTorch. Las compuertas usan sigmoide (valores entre 0 y 1): 0 es “cerrada”, 1 es “abierta”.</p>
+  </details>
+</section>
+
+<section id="preguntas">
+  <div class="kicker">Preguntas frecuentes</div>
+  <h2>Lo que más nos preguntan</h2>
+  <div class="faq">
+    <details><summary>¿Lo puedo poner en el tablero y ver todos mis equipos?</summary>
+      <p>Se instala en el tablero, pero mide <b>dos circuitos</b>: una pinza en la acometida (el consumo total de la casa, hasta 60 A) y otra en el circuito que elijas, por ejemplo el del aire acondicionado (hasta 30 A). Todo lo demás aparece como “resto”.</p>
+      <p>Todavía <b>no reconoce cada aparato</b> por separado. Pero el medidor ya guarda la forma de onda completa (8.000 muestras por segundo) y sus armónicos, y cada equipo tiene una “huella” eléctrica distinta. Reconocer equipos por esa huella se llama <b>desagregación de cargas (NILM)</b> y es el siguiente paso natural.</p></details>
+    <details><summary>¿Hay que cortar cables? ¿Es peligroso?</summary>
+      <p>No se corta nada: las pinzas se abren y abrazan el cable. Aun así, para ponerlas hay que abrir el tablero, y eso lo debe hacer un <b>electricista</b>. La parte de 120 V del medidor va en un compartimento separado con guarda. Es un prototipo académico, sin certificación eléctrica.</p></details>
+    <details><summary>¿Puedo medir más circuitos?</summary>
+      <p>Sí, con una pinza más por circuito. El ESP32 tiene pocas entradas analógicas libres, así que para muchos circuitos se agregaría un convertidor externo, como hacen medidores abiertos de 14 canales.</p></details>
+    <details><summary>¿Qué tan preciso es?</summary>
+      <p>La meta es un error de <b>±3 % o menos</b> en potencia activa frente a una carga de potencia conocida entre 1 A y 30 A. El cálculo ya se probó con señales simuladas; la validación con el equipo armado está en curso, así que todavía no tenemos la cifra medida.</p></details>
+    <details><summary>¿Sirve para 220 V o trifásico?</summary>
+      <p>Está diseñado para <b>monofásico de 120 V / 60 Hz</b>, lo común en viviendas y locales pequeños en Colombia. Otras tensiones requieren recalcular el acondicionamiento.</p></details>
+    <details><summary>¿Qué pasa si se cae el Wi-Fi?</summary>
+      <p>Sigue midiendo y mostrando los datos en su pantalla. Guarda hasta <b>1.200 registros (unos 20 minutos)</b> y los envía cuando vuelve la conexión.</p></details>
+    <details><summary>¿Por qué no comprar uno ya hecho?</summary>
+      <p>Los medidores comerciales entregan solo el resultado final y no muestran la forma de onda ni cómo calculan. Este proyecto es de una materia de sistemas embebidos: queríamos construir y entender toda la cadena, del sensor a la nube, y dejarla abierta para que otros la estudien.</p></details>
+    <details><summary>¿Para qué me sirve saber el consumo segundo a segundo?</summary>
+      <p>Para ver cuánto gasta de verdad el aire acondicionado, descubrir consumos “fantasma” en la noche y comprobar <b>el mismo día</b> si un cambio (subir un grado el aire, cambiar un equipo) ahorra energía, sin esperar la factura.</p></details>
+    <details><summary>¿Qué es lo que predice la IA y para qué?</summary>
+      <p>Predice cuántos kWh se consumirán en las próximas horas. Sirve para anticipar picos y estimar la factura antes de que llegue. Arriba explicamos <a href="#lstm">cómo funciona</a>.</p></details>
+  </div>
 </section>
 
 <section id="comparacion">

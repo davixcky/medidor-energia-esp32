@@ -145,6 +145,31 @@ canvas{display:block;width:100%;height:100%}
 .leyenda{position:absolute;top:16px;left:22px;display:flex;gap:18px;font-size:15px;font-weight:600}
 .leyenda i{display:inline-block;width:14px;height:4px;border-radius:2px;margin-right:6px;vertical-align:middle}
 
+/* escena piensa */
+.piensa{display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:10px;padding:22px 26px;aspect-ratio:auto}
+.p-tit{font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);font-weight:700}
+.horas{display:grid;grid-template-columns:repeat(24,1fr);gap:3px;align-items:end;height:90px}
+.horas i{display:block;border-radius:3px 3px 0 0;background:#3a4452;transition:background .2s}
+.horas i.leida{background:#6b5a99}.horas i.ahora{background:var(--violeta);box-shadow:0 0 12px var(--violeta)}
+.p-flecha{text-align:center;color:var(--tx3);font-size:14px}
+.libreta{background:#1d1830;border:1px solid #3b3160;border-radius:16px;padding:14px 16px}
+.puertas{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pu{text-align:center;border-radius:10px;padding:8px 4px;font-weight:700;font-size:15px;background:#262037;color:var(--tx3);transition:all .25s}
+.pu.on{background:var(--violeta);color:#160f29;transform:scale(1.05)}
+.memoria{display:grid;grid-template-columns:repeat(16,1fr);gap:4px;margin-top:12px;height:46px;align-items:center}
+.memoria i{display:block;height:100%;border-radius:4px;background:var(--violeta);transition:opacity .35s}
+.prediccion{text-align:center;font-size:20px;color:var(--tx2);background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;transition:all .4s}
+.prediccion b{color:var(--tx)}
+.prediccion.lista{border-color:var(--violeta);color:var(--tx)}
+.prediccion.lista b{color:var(--violeta);font-size:26px}
+/* escena faq */
+.faqs{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.faq{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px 22px}
+.faq b{display:block;font-size:clamp(19px,1.8vw,24px);margin-bottom:8px}
+.faq p{color:var(--tx2);font-size:clamp(16px,1.5vw,19px);line-height:1.4}
+.escena.activa .faqs .faq:nth-child(1){animation-delay:.4s}.escena.activa .faqs .faq:nth-child(2){animation-delay:1.2s}
+.escena.activa .faqs .faq:nth-child(3){animation-delay:2s}.escena.activa .faqs .faq:nth-child(4){animation-delay:2.8s}
+
 /* escena video */
 .video{width:100%;border-radius:24px;overflow:hidden;background:#000;aspect-ratio:16/9;max-height:100%}
 .video video{width:100%;height:100%;object-fit:cover;display:block}
@@ -322,13 +347,39 @@ canvas{display:block;width:100%;height:100%}
     </div>
   </section>
 
+  <!-- 8a. LSTM, explicación amigable -->
+  <section class="escena" id="s-piensa" data-dur="18">
+    <div>
+      <div class="kicker ent" style="color:var(--violeta)">¿Cómo piensa la IA?</div>
+      <h2 class="ent">Lee el día de ayer y lleva una libreta.</h2>
+      <p class="lead ent">La red <b style="color:var(--tx)">LSTM</b> recorre las últimas 24 horas, una por una: consumo, hora, día y temperatura. Mientras lee, tres puertas deciden qué guardar en su memoria.</p>
+      <ul class="lista">
+        <li class="ent"><span class="chip" style="background:#2b2140">🧽</span><span><b>Olvido:</b> borra lo que ya no sirve.</span></li>
+        <li class="ent"><span class="chip" style="background:#2b2140">✏️</span><span><b>Entrada:</b> anota lo nuevo e importante.</span></li>
+        <li class="ent"><span class="chip" style="background:#2b2140">📣</span><span><b>Salida:</b> usa lo anotado para predecir.</span></li>
+      </ul>
+    </div>
+    <div class="lienzo piensa">
+      <div class="p-tit">Las últimas 24 horas</div>
+      <div class="horas" id="horas"></div>
+      <div class="p-flecha">▼</div>
+      <div class="libreta">
+        <div class="p-tit" style="margin:0 0 10px">Libreta de memoria</div>
+        <div class="puertas"><div class="pu" id="pu0">🧽 Olvido</div><div class="pu" id="pu1">✏️ Entrada</div><div class="pu" id="pu2">📣 Salida</div></div>
+        <div class="memoria" id="memoria"></div>
+      </div>
+      <div class="p-flecha">▼</div>
+      <div class="prediccion" id="prediccion">Hora siguiente: <b class="num">…</b></div>
+    </div>
+  </section>
+
   <!-- 8. LSTM -->
   <section class="escena" id="s-lstm" data-dur="16">
     <div>
       <div class="kicker ent" style="color:var(--violeta)">Inteligencia artificial</div>
       <h2 class="ent">Predice el consumo de las próximas horas.</h2>
       <p class="lead ent">Una red neuronal <b style="color:var(--tx)">LSTM</b> de 5.281 parámetros aprende el ciclo diario y la temperatura. Entrenada con datos públicos de una vivienda (UCI) mientras reunimos registros propios.</p>
-      <div class="ent" style="margin-top:24px;display:flex;align-items:baseline;gap:16px"><span class="grande num" id="mejora">−34 %</span><span style="color:var(--tx2);font-size:18px;max-width:20ch">de error frente a repetir la última hora, a 24 h</span></div>
+      <div class="ent" style="margin-top:24px;display:flex;align-items:baseline;gap:16px"><span class="grande num" id="mejora">−17 %</span><span style="color:var(--tx2);font-size:18px;max-width:22ch">de error frente al mejor método simple, a 24 h</span></div>
       <div class="barras ent">
         <div class="fila lstm"><span>LSTM</span><div class="pista"><div class="rel" data-v="0.464"></div></div><span class="num">0,46</span></div>
         <div class="fila"><span>Repetir ayer</span><div class="pista"><div class="rel" data-v="0.558"></div></div><span class="num">0,56</span></div>
@@ -355,6 +406,20 @@ canvas{display:block;width:100%;height:100%}
       <tr class="fil"><td>PZEM-004T</td><td>1</td><td class="no">No</td><td>Valores ya calculados</td></tr>
       <tr class="fil nuestro"><td>Este proyecto</td><td>2 + tensión</td><td class="si">Sí · 8.000 muestras/s</td><td class="si">Abierto, hecho por el grupo</td></tr>
     </table>
+  </section>
+
+  <!-- 9a. PREGUNTAS FRECUENTES -->
+  <section class="escena una" id="s-faq" data-dur="22">
+    <div>
+      <div class="kicker ent">Preguntas frecuentes</div>
+      <h2 class="ent">Lo que más nos preguntan.</h2>
+    </div>
+    <div class="faqs">
+      <div class="faq ent"><b>¿Lo pongo en el tablero y veo todos mis equipos?</b><p>Mide <span class="acento">2 circuitos</span>: el total de la casa y uno que elijas, como el aire. Reconocer cada aparato por su “huella” eléctrica es el siguiente paso: el medidor ya guarda la forma de onda que se necesita.</p></div>
+      <div class="faq ent"><b>¿Hay que cortar cables?</b><p>No. Las pinzas abrazan el cable. Pero abrir el tablero es trabajo de un <span class="na">electricista</span>.</p></div>
+      <div class="faq ent"><b>¿Y si se cae el Wi-Fi?</b><p>Sigue midiendo, lo muestra en su pantalla y guarda <span class="acento">20 minutos</span> de registros para enviarlos después.</p></div>
+      <div class="faq ent"><b>¿Qué tan preciso es?</b><p>La meta es <span class="acento">±3 %</span> en potencia. Probado con señales simuladas; la prueba con carga real está en curso.</p></div>
+    </div>
   </section>
 
   <!-- 10. CIERRE -->
@@ -516,6 +581,20 @@ function lstm(now){if(activa('s-lstm')){const[x,w,h]=lienzo($('#c-lstm'));x.clea
   if(t>14)tl=now;}
   requestAnimationFrame(lstm)}
 requestAnimationFrame(lstm);
+
+/* ---------- 8a. cómo piensa la LSTM ---------- */
+const perfil=[.5,.42,.38,.36,.36,.4,.6,.9,.8,.6,.55,.6,.7,.62,.58,.6,.7,.95,1.3,1.6,1.5,1.2,.9,.65];
+const horas=$('#horas');perfil.forEach(v=>{const i=document.createElement('i');i.style.height=(v/1.6*100)+'%';horas.appendChild(i)});
+const mem=$('#memoria');for(let k=0;k<16;k++)mem.appendChild(document.createElement('i'));
+let tp=null;
+alEntrar['s-piensa']=()=>{clearInterval(tp);let h=-8;const hs=[...horas.children];hs.forEach(e=>e.className='');
+  [...mem.children].forEach(e=>e.style.opacity=.15);$('#prediccion').className='prediccion';$('#prediccion b').textContent='…';
+  tp=setInterval(()=>{if(!activa('s-piensa')){clearInterval(tp);return}h++;if(h<0)return;
+    if(h<24){hs.forEach((e,k)=>e.className=k<h?'leida':k===h?'ahora':'');
+      const pu=h%3;[0,1,2].forEach(k=>$('#pu'+k).classList.toggle('on',k===pu));
+      [...mem.children].forEach((e,k)=>e.style.opacity=(.2+.8*Math.abs(Math.sin(h*.45+k*.9)*perfil[h]/1.6)).toFixed(2))}
+    else if(h===24){hs.forEach(e=>e.className='leida');[0,1,2].forEach(k=>$('#pu'+k).classList.toggle('on',k===2));
+      $('#prediccion').className='prediccion lista';$('#prediccion b').textContent='≈ 0,8 kWh';clearInterval(tp)}},420)};
 
 /* precarga offline */
 if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});

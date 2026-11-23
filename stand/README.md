@@ -4,8 +4,8 @@ Dos páginas estáticas, sin dependencias externas:
 
 | Archivo | Para qué |
 |---|---|
-| `kiosko.html` | Presentación animada para el iPad en horizontal. 10 escenas que avanzan solas (≈ 3 min por vuelta) con un QR fijo en la esquina. |
-| `index.html` | Página que abre el QR en el celular del visitante: explicación completa, renders, video, tablas y enlace al repositorio. |
+| `kiosko.html` | Presentación animada para el iPad en horizontal. 12 escenas que avanzan solas (≈ 4 min por vuelta) con un QR fijo en la esquina. |
+| `index.html` | Página que abre el QR en el celular del visitante: explicación completa, renders, video, la LSTM explicada en lenguaje sencillo, preguntas frecuentes y enlace al repositorio. |
 
 ## Escenas del kiosco
 
@@ -16,9 +16,11 @@ Dos páginas estáticas, sin dependencias externas:
 5. Cálculo: muestreo de v(t)·i(t) y potencia activa en vivo.
 6. Video del producto (sin audio).
 7. Por dentro: render abierto con puntos señalados.
-8. Pronóstico LSTM: curva y error frente a métodos ingenuos.
-9. Comparación con medidores comerciales.
-10. Cierre con QR grande y equipo.
+8. ¿Cómo piensa la IA?: la LSTM lee 24 horas y sus tres puertas (olvido, entrada, salida) animadas.
+9. Pronóstico LSTM: curva y error frente a métodos simples (−17 % frente al mejor, a 24 h).
+10. Comparación con medidores comerciales.
+11. Preguntas frecuentes: tablero y equipos, cables, Wi-Fi, precisión.
+12. Cierre con QR grande y equipo.
 
 Controles: tocar a la derecha/izquierda avanza/retrocede; dos dedos pausa; en un teclado,
 flechas y barra espaciadora. Después de tocar, sigue avanzando sola.
@@ -36,7 +38,7 @@ Si se usa otra URL, regenerar el QR: `pip install qrcode && python3 stand/genera
 
 1. Abrir `https://davixcky.github.io/medidor-energia-esp32/kiosko.html` en Safari.
 2. **Compartir → Agregar a inicio**. Se abre a pantalla completa, sin barra de Safari.
-3. Abrirla una vez con Wi-Fi y dejar pasar una vuelta completa: queda guardada y funciona sin internet.
+3. Abrirla una vez con Wi-Fi (y de nuevo tras cada actualización) y dejar pasar una vuelta completa: queda guardada y funciona sin internet.
 4. **Ajustes → Pantalla y brillo → Bloqueo automático: Nunca**, brillo alto, modo No molestar.
 5. **Ajustes → Accesibilidad → Acceso guiado** activado. En la app, triple clic al botón lateral
    para bloquearla y que nadie salga de la presentación.
