@@ -3,13 +3,15 @@
 
 El aro de la llavero pasa por el hueco de la pinza, como el conductor de fase.
 Genera, por cada chiste: STL de la base, STL del color, un 3MF de dos partes
-(Bambu Studio / OrcaSlicer asignan el filamento 1 y 2) y una vista previa PNG.
+(Bambu Studio / OrcaSlicer asignan el filamento 1 y 2), una vista previa PNG
+y cuatro placas 3MF listas para acomodar en una cama de 256 x 256 mm.
 
-Uso:  pip install trimesh shapely mapbox_earcut manifold3d fonttools pillow
+Uso:  pip install trimesh shapely mapbox_earcut manifold3d fonttools pillow qrcode
       python3 stand/llavero/generar_llavero.py
 """
 from pathlib import Path
 import math
+import os
 import zipfile
 
 import trimesh
@@ -22,8 +24,8 @@ from shapely.geometry.polygon import orient
 from shapely.ops import unary_union
 
 AQUI = Path(__file__).resolve().parent
-FUENTE = "/usr/share/fonts/opentype/inter/Inter-Black.otf"
-FUENTE_PEQ = "/usr/share/fonts/opentype/inter/Inter-Bold.otf"
+FUENTE = os.environ.get("FUENTE_LLAVERO", "/usr/share/fonts/opentype/inter/Inter-Black.otf")
+FUENTE_PEQ = os.environ.get("FUENTE_LLAVERO_PEQ", "/usr/share/fonts/opentype/inter/Inter-Bold.otf")
 
 # --- medidas (mm) ---
 R_EXT, R_HUECO = 13.0, 6.0          # aro de la pinza; hueco de 12 mm para la argolla
@@ -49,6 +51,16 @@ CHISTES = {
 
 # Llavero QR para regalar en el stand: abre la página del proyecto.
 URL_QR = "https://davixcky.github.io/medidor-energia-esp32/"
+
+# Las placas de chistes usan base oscura + detalle verde. El QR queda separado
+# porque necesita base clara + detalle oscuro. La placa QR lleva seis copias:
+# es la pieza pensada para regalar en el stand.
+PLACAS = (
+    ("placa-01-medicion", ("fase", "ads1015", "muestras", "mcp6004"), 1),
+    ("placa-02-proyecto", ("hardexplosion", "revision", "puentes", "arranque"), 1),
+    ("placa-03-equipo", ("factura", "francia", "equipo"), 1),
+    ("placa-04-qr-x6", ("qr",), 6),
+)
 
 
 # ---------- texto a polígonos ----------
@@ -203,6 +215,56 @@ def escribir_3mf(ruta, nombre, base, capa):
         z.writestr("Metadata/model_settings.config", ajustes)
 
 
+def escribir_placa_3mf(ruta, nombre, claves, copias, mallas_por_clave):
+    """Escribe una placa con objetos de dos partes, ya espaciados para 256 mm."""
+    # Cuatro llaveros horizontales en dos filas. El QR es vertical y admite 3 x 2.
+    posiciones = ([(42, 78), (145, 78), (42, 148), (145, 148)] if copias == 1 else
+                  [(43, 69), (112, 69), (181, 69), (43, 157), (112, 157), (181, 157)])
+    recursos, objetos_config, items = [], [], []
+    id_por_clave = {}
+    siguiente_id = 1
+
+    for clave in claves:
+        base, capa = mallas_por_clave[clave]
+        base_id, color_id, conjunto_id = siguiente_id, siguiente_id + 1, siguiente_id + 2
+        siguiente_id += 3
+        id_por_clave[clave] = conjunto_id
+        etiqueta = "QR" if clave == "qr" else clave
+        recursos.extend((
+            f'<object id="{base_id}" type="model" name="{etiqueta} base">{malla_xml(base)}</object>',
+            f'<object id="{color_id}" type="model" name="{etiqueta} color">{malla_xml(capa)}</object>',
+            f'<object id="{conjunto_id}" type="model" name="Llavero {etiqueta}"><components>'
+            f'<component objectid="{base_id}"/><component objectid="{color_id}"/>'
+            '</components></object>',
+        ))
+        objetos_config.append(
+            f'<object id="{conjunto_id}"><metadata key="name" value="Llavero {etiqueta}"/>'
+            '<metadata key="extruder" value="1"/>'
+            f'<part id="{base_id}" subtype="normal_part"><metadata key="name" value="base"/>'
+            '<metadata key="extruder" value="1"/></part>'
+            f'<part id="{color_id}" subtype="normal_part"><metadata key="name" value="color"/>'
+            '<metadata key="extruder" value="2"/></part></object>'
+        )
+
+    instancias = list(claves) if copias == 1 else [claves[0]] * copias
+    assert len(instancias) <= len(posiciones)
+    for clave, (x, y) in zip(instancias, posiciones):
+        items.append(f'<item objectid="{id_por_clave[clave]}" '
+                     f'transform="1 0 0 0 1 0 0 0 1 {x} {y} 0"/>')
+
+    modelo = ('<?xml version="1.0" encoding="UTF-8"?>\n'
+              '<model unit="millimeter" xml:lang="es" '
+              'xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02">'
+              f'<metadata name="Title">{nombre}</metadata><resources>{"".join(recursos)}</resources>'
+              f'<build>{"".join(items)}</build></model>')
+    ajustes = f'<?xml version="1.0" encoding="UTF-8"?>\n<config>{"".join(objetos_config)}</config>'
+    with zipfile.ZipFile(ruta, "w", zipfile.ZIP_DEFLATED) as z:
+        z.writestr("[Content_Types].xml", '<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="model" ContentType="application/vnd.ms-package.3dmanufacturing-3dmodel+xml"/><Default Extension="config" ContentType="text/xml"/></Types>')
+        z.writestr("_rels/.rels", '<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Target="/3D/3dmodel.model" Id="rel0" Type="http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel"/></Relationships>')
+        z.writestr("3D/3dmodel.model", modelo)
+        z.writestr("Metadata/model_settings.config", ajustes)
+
+
 # ---------- vista previa ----------
 def vista(ruta, forma, verde, escala=14, claro=False):
     minx, miny, maxx, maxy = forma.bounds
@@ -269,12 +331,15 @@ def llavero_qr():
 def main():
     (AQUI / "stl").mkdir(exist_ok=True)
     (AQUI / "3mf").mkdir(exist_ok=True)
+    (AQUI / "placas").mkdir(exist_ok=True)
+    mallas_por_clave = {}
     for clave, (lineas, pie) in CHISTES.items():
         forma, verde, base, capa = mallas(lineas, pie)
         assert base.is_watertight and capa.is_watertight, clave
         base.export(AQUI / "stl" / f"llavero-{clave}-base.stl")
         capa.export(AQUI / "stl" / f"llavero-{clave}-color.stl")
         escribir_3mf(AQUI / "3mf" / f"llavero-{clave}.3mf", f"Llavero {clave}", base, capa)
+        mallas_por_clave[clave] = (base, capa)
         vista(AQUI / f"vista-{clave}.png", forma, verde)
         x0, y0, x1, y1 = forma.bounds
         print(f"{clave}: {x1 - x0:.1f} × {y1 - y0:.1f} × {ALTO} mm · base {base.volume / 1000:.2f} cm³ · color {capa.volume / 1000:.2f} cm³")
@@ -283,9 +348,15 @@ def main():
     base.export(AQUI / "stl" / "llavero-qr-claro.stl")
     capa.export(AQUI / "stl" / "llavero-qr-oscuro.stl")
     escribir_3mf(AQUI / "3mf" / "llavero-qr.3mf", "Llavero QR", base, capa)
+    mallas_por_clave["qr"] = (base, capa)
     vista(AQUI / "vista-qr.png", forma, oscuro, claro=True)
     x0, y0, x1, y1 = forma.bounds
     print(f"qr: {x1 - x0:.1f} × {y1 - y0:.1f} × {ALTO} mm · {n}×{n} módulos de {m:.2f} mm")
+
+    for nombre, claves, copias in PLACAS:
+        escribir_placa_3mf(AQUI / "placas" / f"{nombre}.3mf", nombre, claves, copias, mallas_por_clave)
+        cantidad = len(claves) if copias == 1 else copias
+        print(f"{nombre}: {cantidad} llaveros")
 
 
 if __name__ == "__main__":

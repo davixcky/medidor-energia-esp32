@@ -31,6 +31,29 @@ probar la primera pieza impresa con el celular antes de imprimir varias.
 
 ## Imprimir
 
+### Placas listas
+
+La carpeta `placas/` contiene cuatro archivos 3MF ya acomodados para una cama de **256 × 256 mm**.
+Cada llavero sigue siendo un objeto de dos partes, por lo que se puede mover o borrar sin separar sus
+colores.
+
+| Placa | Contenido | Filamento 1 | Filamento 2 |
+|---|---|---|---|
+| `placa-01-medicion.3mf` | fase, ADS1015, muestras, MCP6004 | oscuro | verde |
+| `placa-02-proyecto.3mf` | Hardexplosion, revisión, puentes, arranque | oscuro | verde |
+| `placa-03-equipo.3mf` | factura, Francia, equipo | oscuro | verde |
+| `placa-04-qr-x6.3mf` | 6 llaveros QR | blanco o claro | negro |
+
+Abrir una placa en Bambu Studio u OrcaSlicer, confirmar los dos filamentos y laminar con capa de
+0,2 mm. Las placas contienen geometría y posiciones, no un perfil de impresora: así se pueden usar
+con cualquier Bambu de cama completa o con otra impresora de al menos 220 × 220 mm. Si la cama es
+más pequeña, usar los 3MF individuales de `3mf/`.
+
+Imprimir primero una sola copia de `llavero-qr.3mf` y comprobarla con varios celulares antes de
+lanzar `placa-04-qr-x6.3mf`.
+
+### Archivos individuales
+
 - Medidas: 79 × 26 × 3,6 mm. Hueco de 12 mm para la argolla.
 - Abrir `3mf/llavero-<chiste>.3mf` en Bambu Studio u OrcaSlicer: es **un objeto con dos partes**.
   La parte `base` va con el filamento 1 (gris oscuro o negro) y `color` con el filamento 2 (verde).
@@ -48,6 +71,6 @@ probar la primera pieza impresa con el celular antes de imprimir varias.
 Editar `CHISTES` en `generar_llavero.py` y ejecutar:
 
 ```sh
-pip install trimesh shapely mapbox_earcut manifold3d fonttools pillow
+pip install trimesh shapely mapbox_earcut manifold3d fonttools pillow qrcode
 python3 stand/llavero/generar_llavero.py
 ```
