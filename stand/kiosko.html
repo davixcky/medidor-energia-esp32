@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Medidor CUC">
+<meta name="theme-color" content="#12161b">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="img/icono.png">
+<title>Medidor CUC · Stand</title>
+<style>
+:root{
+  --bg:#12161b; --bg2:#1a2027; --panel:#202832; --line:#2e3946;
+  --tx:#eef2f6; --tx2:#a8b4c2; --tx3:#6f7d8d;
+  --verde:#3ddc97; --azul:#5aa9ff; --naranja:#f5a35c; --rojo:#ff6b6b; --violeta:#b08cff;
+  --dur:14s;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--tx);overflow:hidden;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif;
+  -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+body{background:radial-gradient(1200px 700px at 75% 20%,#1d2a33 0%,var(--bg) 60%)}
+.num{font-variant-numeric:tabular-nums}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,monospace}
+
+/* ---------- estructura ---------- */
+#escenario{position:fixed;inset:0;padding:clamp(28px,4vw,56px) clamp(32px,4.5vw,64px) 104px}
+.escena{position:absolute;inset:clamp(28px,4vw,56px) clamp(32px,4.5vw,64px) 104px;
+  display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(24px,3.5vw,56px);align-items:center;
+  opacity:0;visibility:hidden;transition:opacity .9s ease,visibility 0s .9s}
+.escena.activa{opacity:1;visibility:visible;transition:opacity .9s ease}
+.escena{padding-right:190px}
+.escena.una{grid-template-columns:1fr}
+#s-video,#s-cierre{padding-right:0}
+.kicker{font-size:clamp(14px,1.35vw,18px);letter-spacing:.18em;text-transform:uppercase;color:var(--verde);font-weight:700;margin-bottom:14px}
+h1{font-size:clamp(40px,4.9vw,68px);line-height:1.02;font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(34px,3.9vw,54px);line-height:1.05;font-weight:800;letter-spacing:-.02em}
+.lead{font-size:clamp(18px,1.75vw,24px);line-height:1.4;color:var(--tx2);margin-top:20px;max-width:34ch}
+.acento{color:var(--verde)} .az{color:var(--azul)} .na{color:var(--naranja)} .ro{color:var(--rojo)}
+
+/* entrada escalonada */
+.escena .ent{opacity:0;transform:translateY(22px)}
+.escena.activa .ent{animation:sube .8s cubic-bezier(.2,.8,.2,1) forwards}
+.escena.activa .ent:nth-child(2){animation-delay:.15s}
+.escena.activa .ent:nth-child(3){animation-delay:.3s}
+.escena.activa .ent:nth-child(4){animation-delay:.45s}
+.escena.activa .ent:nth-child(5){animation-delay:.6s}
+.escena.activa .ent:nth-child(6){animation-delay:.75s}
+@keyframes sube{to{opacity:1;transform:none}}
+
+/* ---------- barra inferior ---------- */
+#barra{position:fixed;left:clamp(32px,4.5vw,64px);right:clamp(32px,4.5vw,64px);bottom:28px;height:52px;
+  display:flex;align-items:center;gap:20px;z-index:5}
+#marca{display:flex;align-items:center;gap:12px;font-size:15px;color:var(--tx2);white-space:nowrap}
+#marca b{color:var(--tx)}
+#puntos{display:flex;gap:8px;flex:1;justify-content:center}
+.punto{width:34px;height:5px;border-radius:3px;background:var(--line);overflow:hidden;position:relative}
+.punto i{position:absolute;inset:0;background:var(--verde);transform-origin:left;transform:scaleX(0)}
+.punto.hecho i{transform:scaleX(1)}
+.punto.actual i{animation:llena var(--dur) linear forwards}
+.pausado .punto.actual i{animation-play-state:paused}
+@keyframes llena{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* QR fijo */
+#qr{position:fixed;right:clamp(24px,3vw,40px);bottom:96px;z-index:6;background:#fff;border-radius:18px;padding:12px 12px 10px;
+  width:168px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.45);transition:opacity .6s,transform .6s}
+#qr img{width:144px;height:144px;display:block}
+#qr span{display:block;color:#12161b;font-weight:700;font-size:13px;margin-top:6px;line-height:1.2}
+#qr.oculto{opacity:0;transform:scale(.9);pointer-events:none}
+#qr::before{content:"";position:absolute;inset:-6px;border-radius:22px;border:2px solid var(--verde);animation:latido 2.4s ease-in-out infinite}
+@keyframes latido{0%,100%{opacity:0;transform:scale(.97)}50%{opacity:.9;transform:scale(1.02)}}
+
+#toque{position:fixed;top:22px;right:28px;font-size:13px;color:var(--tx3);z-index:6;transition:opacity .5s}
+#iniciar{position:fixed;inset:0;z-index:20;background:rgba(10,13,16,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center}
+#iniciar[hidden]{display:none}
+#iniciar button{font:inherit;font-size:22px;font-weight:700;background:var(--verde);color:#08130e;border:0;border-radius:999px;padding:18px 40px}
+#iniciar p{color:var(--tx2);max-width:46ch;line-height:1.5}
+
+/* ---------- componentes ---------- */
+.tarjetas{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:28px;max-width:560px}
+.tarjeta{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.tarjeta small{display:block;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3);font-weight:600}
+.tarjeta strong{display:block;font-size:clamp(28px,3vw,40px);font-weight:800;margin-top:4px}
+.tarjeta strong em{font-style:normal;font-size:.5em;color:var(--tx2);margin-left:6px;font-weight:600}
+.etq-demo{display:inline-block;margin-top:14px;font-size:12px;color:var(--tx3);border:1px dashed var(--line);border-radius:999px;padding:4px 12px}
+
+.render{position:relative;width:100%;aspect-ratio:2100/1350;border-radius:24px;overflow:hidden;background:#2a3037}
+.render img{width:100%;height:100%;object-fit:cover;display:block}
+#s-dentro .render{overflow:visible}
+#s-dentro .render img{border-radius:24px}
+.flota{animation:flota 7s ease-in-out infinite}
+@keyframes flota{0%,100%{transform:translateY(0) scale(1.02)}50%{transform:translateY(-10px) scale(1.04)}}
+canvas{display:block;width:100%;height:100%}
+
+/* escena 1 */
+#s-portada .visual{position:relative}
+#s-portada .ondas{position:absolute;left:-8%;right:-8%;bottom:-14%;height:42%;opacity:.9;pointer-events:none}
+.barraled{position:absolute;left:27%;top:28.5%;width:44%;height:3.2%;border-radius:20px;background:var(--verde);mix-blend-mode:screen;filter:blur(6px);animation:brilla 2.8s ease-in-out infinite}
+@keyframes brilla{0%,100%{opacity:.15}50%{opacity:.65}}
+
+/* escena 2: factura */
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;width:100%;max-width:520px}
+.dia{aspect-ratio:1;border-radius:10px;background:var(--panel);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--tx3);transition:background .3s,color .3s}
+.dia.on{background:#3a2a1e;color:var(--naranja);border-color:#5b3d22}
+.dia.fin{background:var(--naranja);color:#1b1208;font-weight:800}
+.versus{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px;max-width:560px}
+.vs{border-radius:18px;padding:18px 20px;background:var(--panel);border:1px solid var(--line)}
+.vs b{display:block;font-size:clamp(30px,3.2vw,44px);font-weight:800}
+.vs span{color:var(--tx2);font-size:16px}
+.vs.bueno{border-color:#24624a;background:#16271f}
+.pulso{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--verde);margin-right:10px;vertical-align:middle;animation:pulso 1s ease-out infinite}
+@keyframes pulso{0%{box-shadow:0 0 0 0 rgba(61,220,151,.7)}100%{box-shadow:0 0 0 16px rgba(61,220,151,0)}}
+
+/* escena 3: pinza */
+.pinza svg{width:100%;height:auto;overflow:visible}
+.campo{fill:none;stroke:var(--verde);stroke-width:2.5;opacity:0;transform-box:fill-box;transform-origin:center}
+.escena.activa .campo{animation:campo 2.4s ease-out infinite}
+.escena.activa .campo.c2{animation-delay:.8s}.escena.activa .campo.c3{animation-delay:1.6s}
+@keyframes campo{0%{opacity:.9;transform:scale(.55)}100%{opacity:0;transform:scale(1.35)}}
+.electron{fill:var(--naranja)}
+.lista{list-style:none;margin-top:26px;display:grid;gap:14px;max-width:560px}
+.lista li{display:flex;gap:14px;align-items:flex-start;font-size:clamp(17px,1.6vw,21px);line-height:1.35;color:var(--tx2)}
+.lista li b{color:var(--tx)}
+.chip{flex:none;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px}
+
+/* escena 4: cadena */
+.cadena{grid-column:1/-1;position:relative;width:100%}
+.cadena svg{width:100%;height:auto}
+.nodo rect{fill:var(--panel);stroke:var(--line);stroke-width:2;transition:all .4s}
+.nodo.on rect{stroke:var(--verde);fill:#183027}
+.nodo text{fill:var(--tx);font-weight:700;font-size:21px}
+.nodo text.sub{fill:var(--tx2);font-weight:500;font-size:16px}
+.nodo text.ico{font-size:34px}
+.via{stroke:var(--line);stroke-width:3;fill:none;stroke-dasharray:6 8}
+.particula{fill:var(--verde)}
+
+/* escena 5: matemática */
+.formula{font-size:clamp(22px,2.3vw,32px);margin-top:26px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 22px;display:inline-block;line-height:1.5}
+.formula .frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-size:.75em;margin:0 6px}
+.formula .frac span:first-child{border-bottom:2px solid var(--tx2);padding:0 4px}
+.lienzo{background:var(--bg2);border:1px solid var(--line);border-radius:24px;aspect-ratio:4/3;padding:8px;position:relative}
+.leyenda{position:absolute;top:16px;left:22px;display:flex;gap:18px;font-size:15px;font-weight:600}
+.leyenda i{display:inline-block;width:14px;height:4px;border-radius:2px;margin-right:6px;vertical-align:middle}
+
+/* escena piensa */
+.piensa{display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:10px;padding:22px 26px;aspect-ratio:auto}
+.p-tit{font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);font-weight:700}
+.horas{display:grid;grid-template-columns:repeat(24,1fr);gap:3px;align-items:end;height:90px}
+.horas i{display:block;border-radius:3px 3px 0 0;background:#3a4452;transition:background .2s}
+.horas i.leida{background:#6b5a99}.horas i.ahora{background:var(--violeta);box-shadow:0 0 12px var(--violeta)}
+.p-flecha{text-align:center;color:var(--tx3);font-size:14px}
+.libreta{background:#1d1830;border:1px solid #3b3160;border-radius:16px;padding:14px 16px}
+.puertas{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pu{text-align:center;border-radius:10px;padding:8px 4px;font-weight:700;font-size:15px;background:#262037;color:var(--tx3);transition:all .25s}
+.pu.on{background:var(--violeta);color:#160f29;transform:scale(1.05)}
+.memoria{display:grid;grid-template-columns:repeat(16,1fr);gap:4px;margin-top:12px;height:46px;align-items:center}
+.memoria i{display:block;height:100%;border-radius:4px;background:var(--violeta);transition:opacity .35s}
+.prediccion{text-align:center;font-size:20px;color:var(--tx2);background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;transition:all .4s}
+.prediccion b{color:var(--tx)}
+.prediccion.lista{border-color:var(--violeta);color:var(--tx)}
+.prediccion.lista b{color:var(--violeta);font-size:26px}
+/* escena faq */
+.faqs{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.faq{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px 22px}
+.faq b{display:block;font-size:clamp(19px,1.8vw,24px);margin-bottom:8px}
+.faq p{color:var(--tx2);font-size:clamp(16px,1.5vw,19px);line-height:1.4}
+.escena.activa .faqs .faq:nth-child(1){animation-delay:.4s}.escena.activa .faqs .faq:nth-child(2){animation-delay:1.2s}
+.escena.activa .faqs .faq:nth-child(3){animation-delay:2s}.escena.activa .faqs .faq:nth-child(4){animation-delay:2.8s}
+
+/* escena video */
+.video{width:100%;border-radius:24px;overflow:hidden;background:#000;aspect-ratio:16/9;max-height:100%}
+.video video{width:100%;height:100%;object-fit:cover;display:block}
+
+/* escena: por dentro */
+.punto-hot{position:absolute;transform:translate(-50%,-50%);opacity:0}
+.escena.activa .punto-hot{animation:aparece .5s ease forwards}
+.punto-hot .aro{width:22px;height:22px;border-radius:50%;background:var(--verde);border:3px solid #fff;box-shadow:0 0 0 0 rgba(61,220,151,.7);animation:pulso 1.4s ease-out infinite}
+.punto-hot .rot{position:absolute;left:30px;top:50%;transform:translateY(-50%);white-space:nowrap;background:rgba(18,22,27,.92);border:1px solid var(--line);color:var(--tx);font-weight:700;font-size:16px;padding:8px 12px;border-radius:10px}
+.punto-hot.izq .rot{left:auto;right:30px}
+.punto-hot.abajo .rot{left:50%;top:34px;transform:translateX(-50%)}
+.punto-hot.arriba .rot{left:50%;top:-12px;transform:translate(-50%,-100%)}
+.punto-hot .rot small{display:block;font-weight:500;color:var(--tx2);font-size:13px}
+@keyframes aparece{to{opacity:1}}
+
+/* escena LSTM */
+.barras{display:grid;gap:12px;margin-top:24px;max-width:540px}
+.fila{display:grid;grid-template-columns:190px 1fr 64px;align-items:center;gap:12px;font-size:16px;color:var(--tx2)}
+.fila .pista{height:18px;background:var(--bg2);border-radius:9px;overflow:hidden}
+.fila .rel{height:100%;border-radius:9px;background:var(--tx3);width:0;transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.fila.lstm{color:var(--tx);font-weight:700}
+.fila.lstm .rel{background:var(--violeta)}
+.grande{white-space:nowrap;font-size:clamp(56px,6vw,84px);font-weight:900;line-height:1;color:var(--violeta)}
+
+/* escena comparación */
+.tabla{width:100%;border-collapse:separate;border-spacing:0 10px;font-size:clamp(16px,1.6vw,21px)}
+.tabla td,.tabla th{padding:14px 18px;text-align:left}
+.tabla th{color:var(--tx3);font-size:14px;text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.tabla tr.fil td{background:var(--panel)}
+.tabla tr.fil td:first-child{border-radius:12px 0 0 12px;font-weight:700}
+.tabla tr.fil td:last-child{border-radius:0 12px 12px 0}
+.tabla tr.nuestro td{background:#183027;color:var(--tx)}
+.no{color:var(--rojo);font-weight:700}.si{color:var(--verde);font-weight:800}
+
+/* cierre */
+#s-cierre{grid-template-columns:1.2fr 1fr}
+.qrgrande{background:#fff;border-radius:28px;padding:22px;width:min(400px,100%);justify-self:center;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.qrgrande img{width:100%;display:block}
+.qrgrande b{display:block;color:#12161b;font-size:22px;margin-top:10px}
+.equipo{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.persona{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:10px 20px;font-size:19px;font-weight:600}
+.honesto{margin-top:26px;font-size:15px;color:var(--tx3);max-width:52ch;line-height:1.5}
+
+@media (max-aspect-ratio:1/1){ /* iPad en vertical */
+  .escena{grid-template-columns:1fr;align-content:center}
+  #s-cierre{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important}}
+</style>
+</head>
+<body>
+
+<div id="escenario">
+
+  <!-- 1. PORTADA -->
+  <section class="escena" id="s-portada" data-dur="14">
+    <div>
+      <div class="kicker ent">Sistemas Embebidos 1 · Universidad de la Costa</div>
+      <h1 class="ent">¿Cuánta energía está gastando <span class="acento">ahora mismo</span>?</h1>
+      <p class="lead ent">Medidor de energía no invasivo de dos canales con ESP32. Mide tu tablero y tu aire acondicionado, segundo a segundo.</p>
+      <div class="tarjetas ent">
+        <div class="tarjeta"><small>Potencia total</small><strong class="num acento" id="p-tot">1,84<em>kW</em></strong></div>
+        <div class="tarjeta"><small>Tensión</small><strong class="num" id="v-rms">121,2<em>V</em></strong></div>
+        <div class="tarjeta"><small>CH1 · Tablero</small><strong class="num az" id="i1">15,3<em>A</em></strong></div>
+        <div class="tarjeta"><small>CH2 · Aire acond.</small><strong class="num na" id="i2">8,7<em>A</em></strong></div>
+      </div>
+      <span class="etq-demo ent">Valores animados de demostración</span>
+    </div>
+    <div class="visual">
+      <div class="render flota"><img src="img/cerrado.jpg" alt="Render del medidor cerrado"><div class="barraled"></div></div>
+      <div class="ondas"><canvas id="c-ondas"></canvas></div>
+    </div>
+  </section>
+
+  <!-- 2. PROBLEMA -->
+  <section class="escena" id="s-problema" data-dur="14">
+    <div>
+      <div class="kicker ent">El problema</div>
+      <h2 class="ent">Tu factura llega <span class="na">30 días tarde</span> y no dice qué equipo gastó.</h2>
+      <p class="lead ent">En los edificios comerciales del Caribe, el aire acondicionado representa cerca de la <b style="color:var(--tx)">mitad del consumo</b>. Sin medición por circuito, no se puede saber cuánto ahorra un cambio.</p>
+      <div class="versus ent">
+        <div class="vs"><span>Factura</span><b class="na">1 dato / mes</b><span>total, sin desglose</span></div>
+        <div class="vs bueno"><span><i class="pulso"></i>Este medidor</span><b class="acento">1 dato / s</b><span>por circuito</span></div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:center"><div class="cal" id="cal"></div></div>
+  </section>
+
+  <!-- 3. NO INVASIVO -->
+  <section class="escena" id="s-pinza" data-dur="14">
+    <div>
+      <div class="kicker ent">Medición no invasiva</div>
+      <h2 class="ent">Sin cortar un solo cable.</h2>
+      <ul class="lista">
+        <li class="ent"><span class="chip" style="background:#1b2c40;color:var(--azul)">I</span><span><b>Pinzas SCT-013</b> de núcleo partido abrazan el conductor: la corriente crea un campo magnético que la pinza convierte en una señal pequeña.</span></li>
+        <li class="ent"><span class="chip" style="background:#173026;color:var(--verde)">V</span><span><b>ZMPT101B</b> reduce los 120 V con un transformador aislado. La red queda en un compartimento separado.</span></li>
+        <li class="ent"><span class="chip" style="background:#33261b;color:var(--naranja)">2</span><span><b>Dos canales:</b> CH1 mide todo el tablero, CH2 un subcircuito como el del aire acondicionado.</span></li>
+      </ul>
+    </div>
+    <div class="pinza">
+      <svg viewBox="0 0 600 460" aria-label="Pinza alrededor de un cable">
+        <defs>
+          <linearGradient id="gcable" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3a4552"/><stop offset=".5" stop-color="#596878"/><stop offset="1" stop-color="#2c3540"/></linearGradient>
+        </defs>
+        <ellipse class="campo"    cx="300" cy="230" rx="150" ry="150"/>
+        <ellipse class="campo c2" cx="300" cy="230" rx="150" ry="150"/>
+        <ellipse class="campo c3" cx="300" cy="230" rx="150" ry="150"/>
+        <rect x="0" y="206" width="600" height="48" rx="24" fill="url(#gcable)"/>
+        <g id="electrones"></g>
+        <!-- pinza -->
+        <path d="M300 120 a110 110 0 1 1 -0.1 0" fill="none" stroke="#e7ebef" stroke-width="34" stroke-dasharray="330 20 330 20" stroke-linecap="butt" opacity=".95"/>
+        <path d="M300 120 a110 110 0 1 1 -0.1 0" fill="none" stroke="#c9d0d8" stroke-width="10" opacity=".6"/>
+        <rect x="270" y="330" width="60" height="70" rx="8" fill="#e7ebef"/>
+        <path d="M300 400 C300 440 360 440 420 440 L600 440" stroke="#9aa6b2" stroke-width="7" fill="none"/>
+        <text x="300" y="72" text-anchor="middle" fill="#a8b4c2" font-size="20" font-weight="700">SCT-013-000</text>
+        <text x="10" y="180" fill="#f5a35c" font-size="18" font-weight="700">fase → corriente</text>
+        <text x="455" y="425" fill="#a8b4c2" font-size="16">señal al ESP32</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- 4. CADENA -->
+  <section class="escena una" id="s-cadena" data-dur="15">
+    <div>
+      <div class="kicker ent">Cómo funciona</div>
+      <h2 class="ent">Del cable a tu celular en un segundo.</h2>
+    </div>
+    <div class="cadena ent">
+      <svg viewBox="0 0 1500 330" id="svg-cadena">
+        <path class="via" id="ruta" d="M130 165 H1370"/>
+        <g id="parts"></g>
+      </svg>
+    </div>
+    <p class="lead ent" style="max-width:none;margin-top:0">El ESP32 toma <b style="color:var(--tx)">8.000 muestras por segundo</b> de cada señal, calcula sobre <b style="color:var(--tx)">60 ciclos completos</b> de la red y envía un registro por Wi-Fi. Si se cae la red guarda hasta 20 minutos.</p>
+  </section>
+
+  <!-- 5. MATEMÁTICA -->
+  <section class="escena" id="s-mate" data-dur="15">
+    <div>
+      <div class="kicker ent">Dentro del ESP32</div>
+      <h2 class="ent">Multiplicar, sumar, promediar.</h2>
+      <p class="lead ent">Cada muestra de tensión se multiplica por la de corriente. El promedio de esos productos es la <b style="color:var(--tx)">potencia activa</b>, la que realmente pagas.</p>
+      <div class="formula ent">P ≈ <span class="frac"><span>1</span><span>N</span></span> Σ v<sub>n</sub> · i<sub>n</sub></div>
+      <div class="tarjetas ent" style="margin-top:20px">
+        <div class="tarjeta"><small>Potencia activa P</small><strong class="num acento" id="m-p">0<em>W</em></strong></div>
+        <div class="tarjeta"><small>Factor de potencia</small><strong class="num" id="m-fp">0,00</strong></div>
+      </div>
+    </div>
+    <div class="lienzo">
+      <div class="leyenda"><span><i style="background:var(--verde)"></i>v(t)</span><span><i style="background:var(--azul)"></i>i(t)</span><span><i style="background:var(--naranja)"></i>p = v·i</span></div>
+      <canvas id="c-mate"></canvas>
+    </div>
+  </section>
+
+  <!-- 6. VIDEO -->
+  <section class="escena una" id="s-video" data-dur="38" style="align-content:center">
+    <div class="video ent"><video id="video" src="img/producto.mp4" poster="img/producto-poster.jpg" muted playsinline preload="auto"></video></div>
+  </section>
+
+  <!-- 7. POR DENTRO -->
+  <section class="escena" id="s-dentro" data-dur="15" style="grid-template-columns:.62fr 1.6fr">
+    <div>
+      <div class="kicker ent">Por dentro</div>
+      <h2 class="ent">Tarjetas modulares, red aislada.</h2>
+      <p class="lead ent">Cinco tarjetas de baja tensión: potencia, corriente, tensión, control e interfaz. Los 120 V quedan en un compartimento propio con guarda opaca.</p>
+      <p class="lead ent">En la tapa, una pantalla táctil recibe los datos del ESP32 por <b style="color:var(--tx)">ESP-NOW</b>.</p>
+    </div>
+    <div class="render">
+      <img src="img/abierto.jpg" alt="Render del medidor abierto">
+      <div class="punto-hot abajo" style="left:58.5%;top:35%;animation-delay:.6s"><div class="aro"></div><div class="rot">ESP32 principal<small>adquisición · cálculo · Wi-Fi</small></div></div>
+      <div class="punto-hot izq" style="left:36%;top:62%;animation-delay:1.4s"><div class="aro"></div><div class="rot">Convertidor 12 V → 5 V<small>LM2596</small></div></div>
+      <div class="punto-hot" style="left:36%;top:22%;animation-delay:2.2s"><div class="aro"></div><div class="rot">Pantalla táctil<small>LilyGO T4-S3 AMOLED</small></div></div>
+      <div class="punto-hot" style="left:21.5%;top:39%;animation-delay:3s"><div class="aro"></div><div class="rot">Alarma sonora<small>piezo</small></div></div>
+      <div class="punto-hot arriba" style="left:82%;top:36.5%;animation-delay:3.8s"><div class="aro" style="background:var(--naranja)"></div><div class="rot">Zona de 120 V<small>separada y señalizada</small></div></div>
+    </div>
+  </section>
+
+  <!-- 8a. LSTM, explicación amigable -->
+  <section class="escena" id="s-piensa" data-dur="18">
+    <div>
+      <div class="kicker ent" style="color:var(--violeta)">¿Cómo piensa la IA?</div>
+      <h2 class="ent">Lee el día de ayer y lleva una libreta.</h2>
+      <p class="lead ent">La red <b style="color:var(--tx)">LSTM</b> recorre las últimas 24 horas, una por una: consumo, hora, día y temperatura. Mientras lee, tres puertas deciden qué guardar en su memoria.</p>
+      <ul class="lista">
+        <li class="ent"><span class="chip" style="background:#2b2140">🧽</span><span><b>Olvido:</b> borra lo que ya no sirve.</span></li>
+        <li class="ent"><span class="chip" style="background:#2b2140">✏️</span><span><b>Entrada:</b> anota lo nuevo e importante.</span></li>
+        <li class="ent"><span class="chip" style="background:#2b2140">📣</span><span><b>Salida:</b> usa lo anotado para predecir.</span></li>
+      </ul>
+    </div>
+    <div class="lienzo piensa">
+      <div class="p-tit">Las últimas 24 horas</div>
+      <div class="horas" id="horas"></div>
+      <div class="p-flecha">▼</div>
+      <div class="libreta">
+        <div class="p-tit" style="margin:0 0 10px">Libreta de memoria</div>
+        <div class="puertas"><div class="pu" id="pu0">🧽 Olvido</div><div class="pu" id="pu1">✏️ Entrada</div><div class="pu" id="pu2">📣 Salida</div></div>
+        <div class="memoria" id="memoria"></div>
+      </div>
+      <div class="p-flecha">▼</div>
+      <div class="prediccion" id="prediccion">Hora siguiente: <b class="num">…</b></div>
+    </div>
+  </section>
+
+  <!-- 8. LSTM -->
+  <section class="escena" id="s-lstm" data-dur="16">
+    <div>
+      <div class="kicker ent" style="color:var(--violeta)">Inteligencia artificial</div>
+      <h2 class="ent">Predice el consumo de las próximas horas.</h2>
+      <p class="lead ent">Una red neuronal <b style="color:var(--tx)">LSTM</b> de 5.281 parámetros aprende el ciclo diario y la temperatura. Entrenada con datos públicos de una vivienda (UCI) mientras reunimos registros propios.</p>
+      <div class="ent" style="margin-top:24px;display:flex;align-items:baseline;gap:16px"><span class="grande num" id="mejora">−17 %</span><span style="color:var(--tx2);font-size:18px;max-width:22ch">de error frente al mejor método simple, a 24 h</span></div>
+      <div class="barras ent">
+        <div class="fila lstm"><span>LSTM</span><div class="pista"><div class="rel" data-v="0.464"></div></div><span class="num">0,46</span></div>
+        <div class="fila"><span>Repetir ayer</span><div class="pista"><div class="rel" data-v="0.558"></div></div><span class="num">0,56</span></div>
+        <div class="fila"><span>Repetir última hora</span><div class="pista"><div class="rel" data-v="0.706"></div></div><span class="num">0,71</span></div>
+        <div style="font-size:13px;color:var(--tx3)">Error absoluto medio (kWh), pronóstico recursivo a 24 h</div>
+      </div>
+    </div>
+    <div class="lienzo">
+      <div class="leyenda"><span><i style="background:var(--tx2)"></i>consumo real</span><span><i style="background:var(--violeta)"></i>pronóstico</span><span style="color:var(--tx3);font-weight:500">curva ilustrativa</span></div>
+      <canvas id="c-lstm"></canvas>
+    </div>
+  </section>
+
+  <!-- 9. COMPARACIÓN -->
+  <section class="escena una" id="s-compara" data-dur="14">
+    <div>
+      <div class="kicker ent">¿Por qué no comprar uno?</div>
+      <h2 class="ent">Los comerciales son cajas cerradas.</h2>
+    </div>
+    <table class="tabla ent">
+      <tr><th>Solución</th><th>Canales</th><th>Acceso a la forma de onda</th><th>Método de cálculo</th></tr>
+      <tr class="fil"><td>Shelly EM</td><td>2</td><td class="no">No</td><td>Cerrado</td></tr>
+      <tr class="fil"><td>Emporia Vue</td><td>hasta 18</td><td class="no">No</td><td>Cerrado, nube propia</td></tr>
+      <tr class="fil"><td>PZEM-004T</td><td>1</td><td class="no">No</td><td>Valores ya calculados</td></tr>
+      <tr class="fil nuestro"><td>Este proyecto</td><td>2 + tensión</td><td class="si">Sí · 8.000 muestras/s</td><td class="si">Abierto, hecho por el grupo</td></tr>
+    </table>
+  </section>
+
+  <!-- 9a. PREGUNTAS FRECUENTES -->
+  <section class="escena una" id="s-faq" data-dur="22">
+    <div>
+      <div class="kicker ent">Preguntas frecuentes</div>
+      <h2 class="ent">Lo que más nos preguntan.</h2>
+    </div>
+    <div class="faqs">
+      <div class="faq ent"><b>¿Lo pongo en el tablero y veo todos mis equipos?</b><p>Mide <span class="acento">2 circuitos</span>: el total de la casa y uno que elijas, como el aire. Reconocer cada aparato por su “huella” eléctrica es el siguiente paso: el medidor ya guarda la forma de onda que se necesita.</p></div>
+      <div class="faq ent"><b>¿Hay que cortar cables?</b><p>No. Las pinzas abrazan el cable. Pero abrir el tablero es trabajo de un <span class="na">electricista</span>.</p></div>
+      <div class="faq ent"><b>¿Y si se cae el Wi-Fi?</b><p>Sigue midiendo, lo muestra en su pantalla y guarda <span class="acento">20 minutos</span> de registros para enviarlos después.</p></div>
+      <div class="faq ent"><b>¿Qué tan preciso es?</b><p>La meta es <span class="acento">±3 %</span> en potencia. Probado con señales simuladas; la prueba con carga real está en curso.</p></div>
+    </div>
+  </section>
+
+  <!-- 10. CIERRE -->
+  <section class="escena" id="s-cierre" data-dur="16">
+    <div>
+      <div class="kicker ent">Explora el proyecto</div>
+      <h1 class="ent">Escanea y mira <span class="acento">todo por dentro</span>.</h1>
+      <p class="lead ent">Esquemáticos, cálculos, modelos 3D, firmware, plataforma web y el modelo de pronóstico. Todo el código es abierto.</p>
+      <div class="equipo ent"><span class="persona">David Orozco</span><span class="persona">Jose Torres</span><span class="persona">Leo Rojas</span></div>
+      <p class="honesto ent">Ingeniería Electrónica · CUC · 2026-2. Estado: diseño, firmware y plataforma probados con señales simuladas; montaje y validación eléctrica en curso.</p>
+    </div>
+    <div class="qrgrande ent"><img src="img/qr.svg" alt="Código QR"><b>Apunta tu cámara aquí</b></div>
+  </section>
+
+</div>
+
+<div id="qr"><img src="img/qr.svg" alt="Código QR"><span>Escanea para<br>explorar el proyecto</span></div>
+<div id="toque">Toca a los lados para avanzar o retroceder</div>
+<div id="barra"><div id="marca"><b>Medidor ESP32</b> · Universidad de la Costa</div><div id="puntos"></div></div>
+
+<div id="iniciar">
+  <h2>Medidor de energía · Stand CUC</h2>
+  <p>Toca para iniciar. La presentación avanza sola; toca a la derecha o izquierda para navegar. Toca con dos dedos para pausar.</p>
+  <button type="button">Iniciar presentación</button>
+</div>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const escenas=$$('.escena'); let idx=0, timer=null, pausado=false, reanudar=null;
+const puntos=$('#puntos');
+escenas.forEach(()=>{const d=document.createElement('div');d.className='punto';d.innerHTML='<i></i>';puntos.appendChild(d)});
+const fmt=(n,d=1)=>n.toFixed(d).replace('.',',');
+
+/* ---------- navegación ---------- */
+function ir(n){
+  escenas[idx].classList.remove('activa');
+  idx=(n+escenas.length)%escenas.length;
+  // reiniciar animaciones CSS
+  const e=escenas[idx]; void e.offsetWidth; e.classList.add('activa');
+  const dur=+e.dataset.dur||14;
+  document.documentElement.style.setProperty('--dur',dur+'s');
+  $$('.punto').forEach((p,i)=>{p.className='punto'+(i<idx?' hecho':'')+(i===idx?' actual':'');const k=p.firstChild;k.style.animation='none';void k.offsetWidth;k.style.animation=''});
+  $('#qr').classList.toggle('oculto',e.id==='s-cierre'||e.id==='s-video');
+  alEntrar[e.id]&&alEntrar[e.id]();
+  const v=$('#video'); if(e.id==='s-video'){v.currentTime=0;v.play().catch(()=>{})} else v.pause();
+  clearTimeout(timer); if(!pausado) timer=setTimeout(()=>ir(idx+1),dur*1000);
+}
+function pausar(p){pausado=p;document.body.classList.toggle('pausado',p);clearTimeout(timer);if(!p) ir(idx)}
+document.addEventListener('touchstart',ev=>{if(ev.touches.length===2){pausar(!pausado);ev.preventDefault()}},{passive:false});
+document.addEventListener('click',ev=>{
+  if(!$('#iniciar').hidden) return;
+  const der=ev.clientX>innerWidth/2; ir(idx+(der?1:-1));
+  $('#toque').style.opacity=0;
+});
+document.addEventListener('keydown',ev=>{if(ev.key==='ArrowRight')ir(idx+1);if(ev.key==='ArrowLeft')ir(idx-1);if(ev.key===' ')pausar(!pausado)});
+document.addEventListener('gesturestart',e=>e.preventDefault());
+
+/* mantener la pantalla encendida */
+let wl=null; async function despierto(){try{wl=await navigator.wakeLock?.request('screen')}catch(e){}}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')despierto()});
+
+$('#iniciar button').addEventListener('click',ev=>{
+  ev.stopPropagation(); $('#iniciar').hidden=true; despierto();
+  document.documentElement.requestFullscreen?.().catch(()=>{});
+  const v=$('#video'); v.play().then(()=>v.pause()).catch(()=>{}); // desbloquea reproducción en iOS
+  ir(0);
+});
+if(new URLSearchParams(location.search).has('auto')){$('#iniciar').hidden=true;setTimeout(()=>ir(0),50)}
+
+/* ---------- utilidades de lienzo ---------- */
+function lienzo(c){const r=c.getBoundingClientRect(),d=devicePixelRatio||1;
+  if(c.width!==Math.round(r.width*d)){c.width=Math.round(r.width*d);c.height=Math.round(r.height*d)}
+  const x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);return[x,r.width,r.height]}
+const activa=id=>escenas[idx].id===id && $('#iniciar').hidden;
+
+/* ---------- 1. valores en vivo + ondas ---------- */
+let t0=performance.now();
+setInterval(()=>{if(!activa('s-portada'))return;const t=(performance.now()-t0)/1000;
+  const i1=15.3+Math.sin(t*.7)*1.6+Math.random()*.3, i2=8.7+Math.sin(t*.4+1)*.9+Math.random()*.2, v=121+Math.sin(t*.3)*.8;
+  $('#i1').innerHTML=fmt(i1)+'<em>A</em>';$('#i2').innerHTML=fmt(i2)+'<em>A</em>';$('#v-rms').innerHTML=fmt(v)+'<em>V</em>';
+  $('#p-tot').innerHTML=fmt(v*i1*0.96/1000,2)+'<em>kW</em>'},900);
+
+function ondas(now){
+  if(activa('s-portada')){const[x,w,h]=lienzo($('#c-ondas'));x.clearRect(0,0,w,h);const t=now/1000;
+    [['#3ddc97',.36,0],['#5aa9ff',.26,.5],['#f5a35c',.18,.9]].forEach(([col,a,ph])=>{
+      x.beginPath();for(let px=0;px<=w;px+=3){const y=h/2+Math.sin(px/w*Math.PI*6-t*2.2-ph)*h*a;px?x.lineTo(px,y):x.moveTo(px,y)}
+      x.strokeStyle=col;x.lineWidth=3;x.globalAlpha=.85;x.stroke()});x.globalAlpha=1}
+  requestAnimationFrame(ondas)}
+requestAnimationFrame(ondas);
+
+/* ---------- 2. calendario ---------- */
+const cal=$('#cal');for(let d=1;d<=35;d++){const e=document.createElement('div');e.className='dia';e.textContent=d<=30?d:'';if(d>30)e.style.visibility='hidden';cal.appendChild(e)}
+const alEntrar={};
+alEntrar['s-problema']=()=>{const ds=$$('.dia');ds.forEach(d=>d.className='dia');
+  ds.slice(0,30).forEach((d,i)=>setTimeout(()=>{if(!activa('s-problema'))return;d.classList.add(i===29?'fin':'on');if(i===29)d.textContent='$'},800+i*230))};
+
+/* ---------- 3. electrones ---------- */
+const g=$('#electrones');for(let i=0;i<14;i++){const c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('r',6);c.setAttribute('cy',230);c.setAttribute('class','electron');g.appendChild(c)}
+function electrones(now){if(activa('s-pinza')){[...g.children].forEach((c,i)=>{c.setAttribute('cx',((now/6+i*43)%640)-20)})}requestAnimationFrame(electrones)}
+requestAnimationFrame(electrones);
+
+/* ---------- 4. cadena ---------- */
+const nodos=[['🧲','Pinzas y ZMPT','sensores'],['🎚️','Acondicionar','filtro · polarización'],['📈','ADC del ESP32','8.000 muestras/s'],['🧮','Calcular','V · I · P · FP · THD'],['📡','Wi-Fi','lotes cada 5 s'],['📊','Plataforma','tablero + LSTM']];
+const sc=$('#svg-cadena'),NS='http://www.w3.org/2000/svg';
+nodos.forEach(([ico,t,s],i)=>{const cx=130+i*248;const n=document.createElementNS(NS,'g');n.setAttribute('class','nodo');
+  n.innerHTML=`<rect x="${cx-110}" y="70" width="220" height="190" rx="22"/><text class="ico" x="${cx}" y="135" text-anchor="middle">${ico}</text><text x="${cx}" y="190" text-anchor="middle">${t}</text><text class="sub" x="${cx}" y="220" text-anchor="middle">${s}</text>`;
+  sc.appendChild(n)});
+const parts=$('#parts');for(let i=0;i<10;i++){const c=document.createElementNS(NS,'circle');c.setAttribute('r',7);c.setAttribute('class','particula');c.setAttribute('cy',50);parts.appendChild(c)}
+let tc=0;
+alEntrar['s-cadena']=()=>{tc=performance.now();$$('.nodo').forEach(n=>n.classList.remove('on'))};
+function cadena(now){if(activa('s-cadena')){const t=(now-tc)/1000;const k=Math.min(5,Math.floor(t/1.6));
+  $$('.nodo').forEach((n,i)=>n.classList.toggle('on',i<=k));
+  [...parts.children].forEach((c,i)=>{const p=((now/1000*0.22+i/10)%1);c.setAttribute('cx',130+p*1240);c.setAttribute('cy',36);c.style.opacity=p*1240<=k*248+10?1:0})}
+  requestAnimationFrame(cadena)}
+requestAnimationFrame(cadena);
+
+/* ---------- 5. muestreo y potencia ---------- */
+let tm=0;alEntrar['s-mate']=()=>{tm=performance.now()};
+function mate(now){if(activa('s-mate')){const[x,w,h]=lienzo($('#c-mate'));x.clearRect(0,0,w,h);
+  const t=(now-tm)/1000, fi=.55+.25*Math.sin(t*.35), pad=26, cy=h*.42, A=h*.25, ciclos=2.5, N=60;
+  const prog=Math.min(1,t/5);
+  // eje
+  x.strokeStyle='#2e3946';x.lineWidth=1;x.beginPath();x.moveTo(pad,cy);x.lineTo(w-pad,cy);x.stroke();
+  const X=u=>pad+u*(w-2*pad), ang=u=>u*ciclos*2*Math.PI;
+  const curva=(f,col,amp)=>{x.beginPath();for(let k=0;k<=300;k++){const u=k/300;const y=cy-f(ang(u))*amp;k?x.lineTo(X(u),y):x.moveTo(X(u),y)}x.strokeStyle=col;x.lineWidth=3;x.stroke()};
+  // potencia instantánea (sombreado)
+  x.beginPath();x.moveTo(X(0),cy);for(let k=0;k<=300*prog;k++){const u=k/300;x.lineTo(X(u),cy-Math.sin(ang(u))*Math.sin(ang(u)-fi)*A*.9)}x.lineTo(X(prog),cy);x.closePath();x.fillStyle='rgba(245,163,92,.28)';x.fill();
+  curva(a=>Math.sin(a),'#3ddc97',A);curva(a=>Math.sin(a-fi)*.7,'#5aa9ff',A);
+  // muestras
+  let suma=0,n=0;for(let k=0;k<N;k++){const u=k/(N-1);if(u>prog)break;const a=ang(u);
+    x.fillStyle='#eef2f6';x.beginPath();x.arc(X(u),cy-Math.sin(a)*A,3.2,0,7);x.fill();
+    x.beginPath();x.arc(X(u),cy-Math.sin(a-fi)*.7*A,3.2,0,7);x.fill();
+    suma+=Math.sin(a)*Math.sin(a-fi);n++}
+  // cursor
+  x.strokeStyle='rgba(238,242,246,.4)';x.setLineDash([5,6]);x.beginPath();x.moveTo(X(prog),20);x.lineTo(X(prog),h-60);x.stroke();x.setLineDash([]);
+  const fp=Math.cos(fi), S=120*15.3, P=n?S*fp*Math.min(1,prog*1.05):0;
+  x.fillStyle='#a8b4c2';x.font='600 15px -apple-system,sans-serif';x.fillText(`muestras: ${Math.round(prog*8000*ciclos/60)}  ·  ventana de ciclos completos`,pad,h-22);
+  $('#m-p').innerHTML=Math.round(P).toLocaleString('es-CO')+'<em>W</em>';$('#m-fp').textContent=fmt(prog>.98?fp:fp*prog,2);
+  if(t>9)tm=now;}
+  requestAnimationFrame(mate)}
+requestAnimationFrame(mate);
+
+/* ---------- 8. LSTM ---------- */
+let tl=0;
+alEntrar['s-lstm']=()=>{tl=performance.now();$$('.rel').forEach(b=>b.style.width='0');setTimeout(()=>$$('.rel').forEach(b=>b.style.width=(b.dataset.v/0.75*100)+'%'),900)};
+// perfil diario sintético inspirado en una vivienda (picos mañana y noche)
+const real=[],pred=[];for(let k=0;k<72;k++){const hr=k%24;const base=.45+.35*Math.exp(-((hr-8)**2)/4)+1.1*Math.exp(-((hr-20)**2)/6)+.15*Math.sin(k*1.7)*Math.random();real.push(base);
+  pred.push(.45+.32*Math.exp(-((hr-8.3)**2)/5)+1.0*Math.exp(-((hr-20.2)**2)/7)+.04*Math.sin(k))}
+function lstm(now){if(activa('s-lstm')){const[x,w,h]=lienzo($('#c-lstm'));x.clearRect(0,0,w,h);
+  const pad=30,top=60,bot=h-50,X=k=>pad+k/71*(w-2*pad),Y=v=>bot-(v/2)*(bot-top);const corte=48;
+  const t=(now-tl)/1000;
+  x.fillStyle='rgba(176,140,255,.08)';x.fillRect(X(corte),top-20,X(71)-X(corte),bot-top+20);
+  x.fillStyle='#6f7d8d';x.font='600 14px -apple-system,sans-serif';x.fillText('historial (24 h × 4 variables)',X(0),bot+30);x.fillText('próximas 24 h',X(corte)+8,bot+30);
+  const linea=(arr,a,b,col,lw)=>{if(b<a)return;x.beginPath();for(let k=a;k<=b;k++){k>a?x.lineTo(X(k),Y(arr[k])):x.moveTo(X(k),Y(arr[k]))}x.strokeStyle=col;x.lineWidth=lw;x.stroke()};
+  linea(real,0,Math.min(corte,Math.floor(t*16)),'#a8b4c2',2.5);
+  if(t>3.4){const kp=Math.min(71,corte+Math.floor((t-3.4)*9));linea(pred,corte,kp,'#b08cff',4);x.fillStyle='#b08cff';x.beginPath();x.arc(X(kp),Y(pred[kp]),6,0,7);x.fill()}
+  if(t>7){x.setLineDash([4,6]);linea(real,corte,Math.min(71,corte+Math.floor((t-7)*9)),'#a8b4c2',2);x.setLineDash([])}
+  if(t>14)tl=now;}
+  requestAnimationFrame(lstm)}
+requestAnimationFrame(lstm);
+
+/* ---------- 8a. cómo piensa la LSTM ---------- */
+const perfil=[.5,.42,.38,.36,.36,.4,.6,.9,.8,.6,.55,.6,.7,.62,.58,.6,.7,.95,1.3,1.6,1.5,1.2,.9,.65];
+const horas=$('#horas');perfil.forEach(v=>{const i=document.createElement('i');i.style.height=(v/1.6*100)+'%';horas.appendChild(i)});
+const mem=$('#memoria');for(let k=0;k<16;k++)mem.appendChild(document.createElement('i'));
+let tp=null;
+alEntrar['s-piensa']=()=>{clearInterval(tp);let h=-8;const hs=[...horas.children];hs.forEach(e=>e.className='');
+  [...mem.children].forEach(e=>e.style.opacity=.15);$('#prediccion').className='prediccion';$('#prediccion b').textContent='…';
+  tp=setInterval(()=>{if(!activa('s-piensa')){clearInterval(tp);return}h++;if(h<0)return;
+    if(h<24){hs.forEach((e,k)=>e.className=k<h?'leida':k===h?'ahora':'');
+      const pu=h%3;[0,1,2].forEach(k=>$('#pu'+k).classList.toggle('on',k===pu));
+      [...mem.children].forEach((e,k)=>e.style.opacity=(.2+.8*Math.abs(Math.sin(h*.45+k*.9)*perfil[h]/1.6)).toFixed(2))}
+    else if(h===24){hs.forEach(e=>e.className='leida');[0,1,2].forEach(k=>$('#pu'+k).classList.toggle('on',k===2));
+      $('#prediccion').className='prediccion lista';$('#prediccion b').textContent='≈ 0,8 kWh';clearInterval(tp)}},420)};
+
+/* precarga offline */
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+})();
+</script>
+</body>
+</html>
