@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Medidor CUC · Pantalla</title>
+<!--
+  Segunda pantalla del stand (HDMI). Se adapta a barra (p. ej. 1920×480), pantalla normal o vertical.
+  Parámetros en la URL:
+    ?girar=90 | 180 | 270   gira el contenido si la pantalla llega de lado
+    ?modo=letrero | medidor  fija una sola vista (por defecto alterna)
+    ?seg=12                  segundos por vista
+-->
+<style>
+:root{--bg:#12161b;--panel:#1d242d;--line:#2e3946;--tx:#eef2f6;--tx2:#a8b4c2;--tx3:#6f7d8d;
+  --verde:#3ddc97;--azul:#5aa9ff;--naranja:#f5a35c;--violeta:#b08cff;--h:8px;--w:8px}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--tx);cursor:none;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,"Noto Sans","DejaVu Sans",sans-serif}
+.num{font-variant-numeric:tabular-nums}
+#raiz{position:absolute;left:0;top:0;transform-origin:0 0;display:grid;gap:calc(var(--u)*3);padding:calc(var(--u)*5);
+  background:radial-gradient(120% 140% at 85% 0%,#1c2a33 0%,var(--bg) 60%)}
+
+/* ---- QR, siempre visible ---- */
+#qr{background:#fff;border-radius:calc(var(--u)*3);padding:calc(var(--u)*2.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(var(--u)*1);position:relative}
+#qr img{display:block;width:100%;height:auto;aspect-ratio:1}
+#qr span{color:#12161b;font-weight:800;text-align:center;line-height:1.1;font-size:calc(var(--u)*3.4)}
+#qr::after{content:"";position:absolute;inset:calc(var(--u)*-1.2);border-radius:calc(var(--u)*4);border:calc(var(--u)*.6) solid var(--verde);animation:latido 2.4s ease-in-out infinite}
+@keyframes latido{0%,100%{opacity:0}50%{opacity:.9}}
+
+/* ---- vistas ---- */
+#vistas{position:relative;min-width:0;min-height:0}
+.vista{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:calc(var(--u)*2.4);opacity:0;transition:opacity .8s}
+.vista.on{opacity:1}
+.kicker{color:var(--verde);font-weight:800;letter-spacing:.16em;text-transform:uppercase;font-size:calc(var(--u)*3)}
+h1{font-weight:900;letter-spacing:-.02em;line-height:1;font-size:calc(var(--u)*11)}
+h1 em{font-style:normal;color:var(--verde)}
+.intro{color:var(--tx2);font-size:calc(var(--u)*4.6);line-height:1.25;min-height:2.5em;transition:opacity .5s}
+.intro b{color:var(--tx)}
+.pie{display:flex;gap:calc(var(--u)*2);flex-wrap:wrap;color:var(--tx3);font-size:calc(var(--u)*2.8);font-weight:600}
+.pie span{border:1px solid var(--line);border-radius:999px;padding:calc(var(--u)*.6) calc(var(--u)*2)}
+
+/* medidor */
+.cab{display:flex;align-items:center;gap:calc(var(--u)*2);font-size:calc(var(--u)*3);color:var(--tx2);font-weight:700}
+.vivo{width:calc(var(--u)*2.2);height:calc(var(--u)*2.2);border-radius:50%;background:var(--verde);animation:pulso 1s ease-out infinite}
+@keyframes pulso{0%{box-shadow:0 0 0 0 rgba(61,220,151,.7)}100%{box-shadow:0 0 0 calc(var(--u)*2.4) rgba(61,220,151,0)}}
+.demo{margin-left:auto;font-weight:500;color:var(--tx3);font-size:calc(var(--u)*2.4)}
+.cuerpo{display:grid;gap:calc(var(--u)*2.4);min-height:0;flex:1}
+.grande{background:var(--panel);border:1px solid var(--line);border-radius:calc(var(--u)*3);padding:calc(var(--u)*2.4) calc(var(--u)*3);display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.grande small{color:var(--tx3);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:calc(var(--u)*2.6)}
+.grande strong{font-weight:900;color:var(--verde);font-size:calc(var(--u)*13);line-height:1}
+.grande strong em{font-style:normal;font-size:.38em;color:var(--tx2);margin-left:.2em}
+.grande canvas{position:absolute;left:0;right:0;bottom:0;width:100%;height:45%;opacity:.55}
+.mosaico{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--u)*2)}
+.t{background:var(--panel);border:1px solid var(--line);border-radius:calc(var(--u)*2.4);padding:calc(var(--u)*1.6) calc(var(--u)*2.2);display:flex;flex-direction:column;justify-content:center;border-left:calc(var(--u)*.8) solid var(--c,var(--line))}
+.t small{color:var(--tx3);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:calc(var(--u)*2.3)}
+.t strong{font-weight:800;font-size:calc(var(--u)*6);line-height:1.1}
+.t strong em{font-style:normal;font-size:.5em;color:var(--tx2);margin-left:.15em}
+
+/* ---- formatos ---- */
+.barra #raiz{grid-template-columns:1fr auto}
+.barra #qr{height:calc(var(--H) - var(--u)*8);aspect-ratio:.86}
+.barra .cuerpo{grid-template-columns:1.2fr 1.6fr}
+.barra .mosaico{grid-template-columns:repeat(3,1fr)}
+.barra h1{font-size:calc(var(--u)*10.5)}
+.barra .intro{font-size:calc(var(--u)*4.2);min-height:1.3em}
+.barra #raiz{padding:calc(var(--u)*4)}
+.barra .grande strong{font-size:calc(var(--u)*12)}
+
+.normal #raiz{grid-template-columns:1fr calc(var(--W)*.28)}
+.normal #qr{align-self:center}
+.normal .cuerpo{grid-template-rows:1.1fr 1fr}
+
+.vertical #raiz{grid-template-rows:1fr auto}
+.vertical #qr{width:calc(var(--W)*.62);justify-self:center}
+.vertical .vista{text-align:center;align-items:center}
+.vertical .pie{justify-content:center}
+.vertical .cuerpo{width:100%;grid-template-rows:1fr auto}
+</style>
+</head>
+<body>
+<div id="raiz">
+  <div id="vistas">
+    <!-- LETRERO -->
+    <section class="vista" id="letrero">
+      <div class="kicker">Sistemas Embebidos 1 · CUC</div>
+      <h1>Medidor de energía <em>no invasivo</em></h1>
+      <p class="intro" id="intro"></p>
+      <div class="pie"><span>ESP32</span><span>2 canales + tensión</span><span>Pronóstico con IA</span></div>
+    </section>
+    <!-- MEDIDOR -->
+    <section class="vista" id="medidor">
+      <div class="cab"><i class="vivo"></i>Medidor en vivo · 120 V · 60 Hz<span class="demo">datos de demostración</span></div>
+      <div class="cuerpo">
+        <div class="grande"><small>Consumo ahora</small><strong class="num" id="pt">1,84<em>kW</em></strong><canvas id="onda"></canvas></div>
+        <div class="mosaico">
+          <div class="t" style="--c:var(--verde)"><small>Tensión</small><strong class="num" id="v">121,2<em>V</em></strong></div>
+          <div class="t" style="--c:var(--azul)"><small>CH1 · Tablero</small><strong class="num" id="i1">15,3<em>A</em></strong></div>
+          <div class="t" style="--c:var(--naranja)"><small>CH2 · Aire</small><strong class="num" id="i2">8,7<em>A</em></strong></div>
+          <div class="t"><small>Factor de pot.</small><strong class="num" id="fp">0,96</strong></div>
+          <div class="t"><small>Energía hoy</small><strong class="num" id="e">12,4<em>kWh</em></strong></div>
+          <div class="t" style="--c:var(--violeta)"><small>IA · próx. hora</small><strong class="num" id="ia">1,9<em>kWh</em></strong></div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div id="qr"><img src="img/qr.svg" alt="Código QR"><span>Escanea y explora el proyecto</span></div>
+</div>
+
+<script>
+(()=>{
+const q=new URLSearchParams(location.search), $=s=>document.querySelector(s);
+const giro=((+q.get('girar')||0)%360+360)%360, SEG=(+q.get('seg')||12)*1000, MODO=q.get('modo');
+const raiz=$('#raiz'), fmt=(n,d=1)=>n.toFixed(d).replace('.',',');
+
+/* tamaño efectivo, formato y giro */
+function ajustar(){
+  const lado=giro===90||giro===270, W=lado?innerHeight:innerWidth, H=lado?innerWidth:innerHeight, a=W/H;
+  const r=document.documentElement.style;
+  r.setProperty('--W',W+'px');r.setProperty('--H',H+'px');
+  // unidad base: proporcional al lado que limita
+  const u=a>2.2?Math.min(H/100*1.45,W/100*.38):a<1?W/100*.9:Math.min(W/100*.62,H/100);
+  r.setProperty('--u',u+'px');
+  document.body.className=a>2.2?'barra':a<1?'vertical':'normal';
+  raiz.style.width=W+'px';raiz.style.height=H+'px';
+  raiz.style.transform=giro===90?`translateX(${innerWidth}px) rotate(90deg)`:giro===180?`translate(${innerWidth}px,${innerHeight}px) rotate(180deg)`:giro===270?`translateY(${innerHeight}px) rotate(270deg)`:'none';
+  if(document.body.className==='barra'){$('#qr span').textContent='Escanea y explora'}
+}
+addEventListener('resize',ajustar);ajustar();
+
+/* alternar vistas */
+const vistas=[$('#letrero'),$('#medidor')];let iv=MODO==='medidor'?1:0;
+function mostrar(){vistas.forEach((v,k)=>v.classList.toggle('on',k===iv))}
+mostrar();if(!MODO)setInterval(()=>{iv=1-iv;mostrar()},SEG);
+
+/* frases del letrero */
+const frases=['Mide el consumo de tu <b>tablero</b> y tu <b>aire acondicionado</b>, segundo a segundo.',
+  '<b>Sin cortar cables:</b> las pinzas abrazan el conductor.','<b>8.000 muestras por segundo</b> en cada canal.',
+  'Una <b>red neuronal LSTM</b> predice el consumo de las próximas horas.','Tu factura llega en 30 días. <b>Este medidor, cada segundo.</b>',
+  '<b>Código abierto:</b> del sensor a la nube.'];
+let fi=0;const intro=$('#intro');
+function frase(){intro.style.opacity=0;setTimeout(()=>{intro.innerHTML=frases[fi++%frases.length];intro.style.opacity=1},500)}
+frase();setInterval(frase,4000);
+
+/* valores animados */
+let e=12.4,t0=performance.now();
+setInterval(()=>{const t=(performance.now()-t0)/1000;
+  const i1=15.3+Math.sin(t*.5)*1.8+Math.random()*.3,i2=8.7+Math.sin(t*.3+1)*1+Math.random()*.2,v=121+Math.sin(t*.2)*.8,fp=.95+Math.sin(t*.4)*.02,p=v*i1*fp/1000;
+  e+=p/3600;
+  $('#pt').innerHTML=fmt(p,2)+'<em>kW</em>';$('#v').innerHTML=fmt(v)+'<em>V</em>';$('#i1').innerHTML=fmt(i1)+'<em>A</em>';
+  $('#i2').innerHTML=fmt(i2)+'<em>A</em>';$('#fp').textContent=fmt(fp,2);$('#e').innerHTML=fmt(e)+'<em>kWh</em>';
+  $('#ia').innerHTML=fmt(1.8+Math.sin(t*.05)*.2)+'<em>kWh</em>'},1000);
+
+/* onda: 30 fps para que la Raspberry Pi vaya holgada */
+const cv=$('#onda');let ult=0;
+function onda(now){requestAnimationFrame(onda);if(now-ult<33||!vistas[1].classList.contains('on'))return;ult=now;
+  const r=cv.getBoundingClientRect(),w=r.width,h=r.height;if(!w)return;
+  if(cv.width!==Math.round(w)){cv.width=Math.round(w);cv.height=Math.round(h)}
+  const x=cv.getContext('2d');x.clearRect(0,0,w,h);const t=now/1000;
+  [['#3ddc97',.38,0],['#5aa9ff',.28,.5],['#f5a35c',.18,.9]].forEach(([c,a,ph])=>{x.beginPath();
+    for(let px=0;px<=w;px+=4){const y=h/2+Math.sin(px/w*Math.PI*6-t*2.2-ph)*h*a;px?x.lineTo(px,y):x.moveTo(px,y)}
+    x.strokeStyle=c;x.lineWidth=3;x.stroke()})}
+requestAnimationFrame(onda);
+})();
+</script>
+</body>
+</html>

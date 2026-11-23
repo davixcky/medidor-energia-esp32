@@ -5,6 +5,7 @@ Dos páginas estáticas, sin dependencias externas:
 | Archivo | Para qué |
 |---|---|
 | `kiosko.html` | Presentación animada para el iPad en horizontal. 12 escenas que avanzan solas (≈ 4 min por vuelta) con un QR fijo en la esquina. |
+| `pantalla.html` | Segunda pantalla HDMI (pantalla de gabinete de PC). Alterna un letrero (nombre, frase, QR) y un medidor en vivo de demostración. Se ajusta a barra, pantalla normal o vertical. |
 | `index.html` | Página que abre el QR en el celular del visitante: explicación completa, renders, video, la LSTM explicada en lenguaje sencillo, preguntas frecuentes y enlace al repositorio. |
 
 ## Escenas del kiosco
@@ -46,6 +47,42 @@ Si se usa otra URL, regenerar el QR: `pip install qrcode && python3 stand/genera
 
 Prueba local: `cd stand && python3 -m http.server 8000` y abrir `http://<ip-del-computador>:8000/kiosko.html`
 desde el iPad en la misma red. Agregar `?auto` a la URL omite la pantalla de inicio.
+
+## Segunda pantalla HDMI (`pantalla.html`)
+
+Funciona sin internet y se adapta sola a la forma de la pantalla: barra (p. ej. 1920×480),
+normal (800×480, 1024×600, 1920×1080) o vertical. El QR queda visible todo el tiempo.
+
+Opciones en la URL:
+
+| Parámetro | Efecto |
+|---|---|
+| `?girar=90` (o 180, 270) | Gira el contenido. Muchas barras de 8,8" llegan como 480×1920 vertical. |
+| `?modo=letrero` / `?modo=medidor` | Muestra solo una vista. Por defecto alterna. |
+| `?seg=12` | Segundos por vista. |
+
+**Con Raspberry Pi** (recomendada la Zero 2 W; la Zero W original es demasiado lenta para Chromium):
+
+1. Grabar **Raspberry Pi OS con escritorio** con Raspberry Pi Imager (configurar Wi-Fi y SSH ahí).
+2. Conectar la pantalla por mini-HDMI y encender.
+3. En la Pi:
+   ```sh
+   git clone https://github.com/davixcky/medidor-energia-esp32.git
+   cd medidor-energia-esp32 && bash stand/pi/instalar.sh
+   sudo reboot
+   ```
+4. Si la imagen sale de lado, repetir con `GIRAR=90 bash stand/pi/instalar.sh` (o 270).
+
+Al encender abre la página a pantalla completa, sin cursor, sin apagar la pantalla y la reabre si
+se cierra. No necesita internet en el stand.
+
+Si la pantalla no muestra imagen o la resolución es incorrecta, agregar al final de la línea de
+`/boot/firmware/cmdline.txt` la resolución de la pantalla, por ejemplo `video=HDMI-A-1:1920x480@60`
+(o `480x1920@60`), y reiniciar.
+
+**Con el Mac:** conectar la pantalla, en **Ajustes → Pantallas** usarla como pantalla extendida
+(no duplicada), hacer doble clic en `stand/mac/abrir-pantalla.command`, arrastrar la ventana a la
+pantalla pequeña y pulsar **Control + Command + F**.
 
 ## Fuentes
 
