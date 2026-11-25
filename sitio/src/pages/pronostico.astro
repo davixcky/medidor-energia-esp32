@@ -1,0 +1,240 @@
+---
+import Base from '../layouts/Base.astro';
+import Cifra from '../components/Cifra.astro';
+import metricas from '../../../pronostico/metricas.json';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const url = (p: string) => `${base}/${p.replace(/^\//, '')}`;
+const gh = 'https://github.com/davixcky/medidor-energia-esp32/blob/main';
+
+const METODOS = ['LSTM', 'Persistencia', 'Ingenuo 24 h', 'Ingenuo 168 h'] as const;
+const HORIZONTES = ['1 h', '24 h recursivo', '48 h recursivo'] as const;
+
+const n = (x: number) => x.toFixed(3).replace('.', ',');
+
+// Mejora del LSTM frente al mejor método simple en cada horizonte (MAE).
+function mejora(h: (typeof HORIZONTES)[number]) {
+  const r = metricas.resultados[h] as Record<string, { MAE: number }>;
+  const simples = METODOS.slice(1).map((m) => r[m].MAE);
+  return Math.round(((r['LSTM'].MAE - Math.min(...simples)) / Math.min(...simples)) * 100);
+}
+
+// El mejor valor de cada fila se resalta.
+function esMejor(h: (typeof HORIZONTES)[number], metodo: string) {
+  const r = metricas.resultados[h] as Record<string, { MAE: number }>;
+  return r[metodo].MAE === Math.min(...METODOS.map((m) => r[m].MAE));
+}
+
+const ej = metricas.ejemplos;
+---
+
+<Base
+  titulo="Pronóstico con LSTM · Medidor de energía ESP32"
+  descripcion="Una red LSTM de 5.281 parámetros pronostica 48 h de consumo. Entrenada en PyTorch, corre en el servidor en TypeScript con los mismos pesos."
+  imagen="img/lstm-pronostico.png"
+>
+  <section>
+    <div class="envoltura">
+      <span class="kicker">Pronóstico</span>
+      <h1 class="mt-s">Una red que aprendió a leer el día</h1>
+      <p class="plomo estrecho mt">
+        Saber cuánto se consumió es útil; saber cuánto se va a consumir permite actuar antes. Una red
+        LSTM lee las últimas 24 horas y pronostica las siguientes 48, hora por hora, con un intervalo
+        de confianza del 90 %.
+      </p>
+
+      <div class="rejilla rejilla-4 mt-l">
+        <Cifra valor={metricas.parametros.toLocaleString('es-CO')} rotulo="parámetros entrenables<br>— cabe en el servidor" color="verde" />
+        <Cifra valor="24 → 48" unidad="h" rotulo="lee un día,<br>pronostica dos" color="azul" />
+        <Cifra valor={`${mejora('24 h recursivo')} %`} rotulo="de error frente al mejor<br>método simple, a 24 h" color="naranja" />
+        <Cifra valor="1e−4" rotulo="diferencia máxima entre<br>TypeScript y PyTorch" color="violeta" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------- cómo -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">Cómo piensa</span>
+        <h2>Tres puertas y una memoria</h2>
+        <p>
+          Una celda LSTM mantiene un estado interno y decide, en cada hora, qué olvidar de lo que ya
+          sabía, qué incorporar de lo nuevo y qué sacar como salida. Eso le permite aprender el ciclo
+          diario y el semanal sin que nadie se los programe.
+        </p>
+      </div>
+
+      <div class="rejilla rejilla-2">
+        <figure class="claro">
+          <img src={url('img/lstm-celda.png')} alt="Diagrama de una celda LSTM con sus tres puertas" loading="lazy" width="1200" height="800" />
+          <figcaption>La celda y sus tres puertas: olvido, entrada y salida.</figcaption>
+        </figure>
+        <figure class="claro">
+          <img src={url('img/lstm-ecuaciones.png')} alt="Ecuaciones de la celda LSTM" loading="lazy" width="1200" height="800" />
+          <figcaption>Las ecuaciones que implementan esas puertas.</figcaption>
+        </figure>
+      </div>
+
+      <div class="tarjeta mt">
+        <h3>La arquitectura</h3>
+        <p>
+          24 horas × 4 variables → capa LSTM de 32 unidades → capa densa de 16 → una salida. Las
+          cuatro variables de cada hora son el consumo, la temperatura y dos codificaciones de la hora
+          del día. El pronóstico de 48 h se construye de forma recursiva: cada hora predicha se
+          realimenta como entrada de la siguiente.
+        </p>
+        <div class="etiquetas mt-s">
+          <span class="etiqueta verde">LSTM 32</span>
+          <span class="etiqueta azul">densa 16</span>
+          <span class="etiqueta naranja">{metricas.epocas} épocas</span>
+          <span class="etiqueta">{ej.entrenamiento.toLocaleString('es-CO')} ejemplos</span>
+        </div>
+      </div>
+
+      <figure class="claro">
+        <img src={url('img/lstm-ventanas.png')} alt="Esquema de las ventanas de entrenamiento" loading="lazy" width="1400" height="700" />
+        <figcaption>
+          Cómo se parten los datos en ventanas: {ej.entrenamiento.toLocaleString('es-CO')} de
+          entrenamiento, {ej.validacion.toLocaleString('es-CO')} de validación y{' '}
+          {ej.prueba.toLocaleString('es-CO')} de prueba, siempre en ese orden temporal.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------- resultados -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">Resultados</span>
+        <h2>¿Le gana a lo obvio?</h2>
+        <p>
+          Esa es la única pregunta que importa en un pronóstico. Se compara contra tres métodos
+          simples: repetir la última hora (<em>persistencia</em>), repetir la misma hora de ayer
+          (<em>ingenuo 24 h</em>) y repetir la misma hora de la semana pasada
+          (<em>ingenuo 168 h</em>). Error absoluto medio en kW, menor es mejor.
+        </p>
+      </div>
+
+      <div class="tabla-envoltura">
+        <table>
+          <thead>
+            <tr>
+              <th>Horizonte</th>
+              {METODOS.map((m) => <th>{m}</th>)}
+              <th>Mejora</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              HORIZONTES.map((h) => (
+                <tr>
+                  <td><strong>{h}</strong></td>
+                  {METODOS.map((m) => (
+                    <td>
+                      {esMejor(h, m) ? (
+                        <strong style="color:var(--verde)">{n((metricas.resultados[h] as any)[m].MAE)}</strong>
+                      ) : (
+                        n((metricas.resultados[h] as any)[m].MAE)
+                      )}
+                    </td>
+                  ))}
+                  <td><span class="etiqueta verde">{mejora(h)} %</span></td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        El LSTM gana en los tres horizontes. La ventaja es mayor a 24 y 48 horas, que es justamente
+        donde los métodos simples se quedan sin información útil.
+      </p>
+
+      <div class="rejilla rejilla-2 mt">
+        <figure class="claro">
+          <img src={url('img/lstm-horizonte.png')} alt="Error del pronóstico según el horizonte" loading="lazy" width="1300" height="850" />
+          <figcaption>El error crece con el horizonte, pero más despacio que en los métodos simples.</figcaption>
+        </figure>
+        <figure class="claro">
+          <img src={url('img/lstm-entrenamiento.png')} alt="Curvas de pérdida de entrenamiento y validación" loading="lazy" width="1300" height="850" />
+          <figcaption>Pérdida de entrenamiento y validación a lo largo de las {metricas.epocas} épocas.</figcaption>
+        </figure>
+        <figure class="claro">
+          <img src={url('img/lstm-dia-real.png')} alt="Pronóstico contra el consumo real de un día" loading="lazy" width="1300" height="850" />
+          <figcaption>Un día real de la partición de prueba, pronóstico contra medición.</figcaption>
+        </figure>
+        <figure class="claro">
+          <img src={url('img/lstm-pronostico.png')} alt="Pronóstico de 48 horas con intervalo de confianza" loading="lazy" width="1300" height="850" />
+          <figcaption>Pronóstico de 48 h con el intervalo del 90 %, construido con el RMSE de prueba.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------- limitaciones -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">Honestidad</span>
+        <h2>Lo que este modelo todavía no es</h2>
+      </div>
+
+      <div class="aviso">
+        <strong>Está entrenado con datos de Francia, no de Barranquilla.</strong> Se usó la serie
+        pública <em>Individual Household Electric Power Consumption</em> de la UCI, de una vivienda en
+        Sceaux, con temperaturas de −10,5 a 31,7 °C y una media de 10,7 °C. El clima del Caribe cae en
+        el extremo alto de ese rango, donde el modelo vio pocos ejemplos. El tablero lo advierte.
+      </div>
+
+      <div class="aviso">
+        <strong>La temperatura es un perfil, no una medición.</strong> El modelo necesita la
+        temperatura de cada hora y, por defecto, se usa un perfil diario típico de Barranquilla
+        (25 °C a las 5 h, 32 °C a las 14 h). <code>TEMP_CONSTANTE</code> permite fijar un valor único.
+      </div>
+
+      <div class="aviso">
+        <strong>Falta reentrenarlo con datos propios.</strong> El modelo definitivo debería entrenarse
+        con el consumo que mida este medidor. Lo que está publicado es la línea base: la arquitectura,
+        el código de entrenamiento y la prueba que garantiza que la inferencia en el servidor da lo
+        mismo que PyTorch.
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------- reproducir -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">Reproducir</span>
+        <h2>Entrenarlo de nuevo</h2>
+        <p>
+          Los datos se descargan de fuentes públicas; ni ellos ni el entorno virtual están en el
+          repositorio.
+        </p>
+      </div>
+
+      <pre><code>cd pronostico
+python3 -m venv .venv
+.venv/bin/pip install torch --index-url https://download.pytorch.org/whl/cpu
+.venv/bin/pip install pandas matplotlib
+# ... descarga de los datos de la UCI y del clima de Open-Meteo ...
+.venv/bin/python train.py        # entrena, evalúa y dibuja las figuras
+.venv/bin/python predict.py      # pronóstico de 48 h</code></pre>
+
+      <p>
+        Tras reentrenarlo, <code>pnpm exportar-lstm</code> vuelca los pesos a
+        <code>plataforma/src/server/lstm-pesos.json</code>, y una prueba comprueba que la inferencia
+        en TypeScript sigue coincidiendo con PyTorch con una diferencia menor que 1e−4.
+      </p>
+
+      <div class="botones mt">
+        <a class="boton boton-fantasma" href={`${gh}/pronostico/README.md`}>Instrucciones completas</a>
+        <a class="boton boton-fantasma" href={`${gh}/pronostico/modelo.py`}>El modelo</a>
+        <a class="boton boton-fantasma" href={`${gh}/plataforma/src/server/lstm.ts`}>Inferencia en TypeScript</a>
+      </div>
+    </div>
+  </section>
+</Base>

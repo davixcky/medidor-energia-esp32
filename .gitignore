@@ -12,6 +12,8 @@ plataforma/datos/
 simulacion/*.dat
 *.FCBak
 freecad/.render/
+# Salida del laminador de Bambu Studio
+/result.json
 hardware/fabricacion/ruteo/
 # STEP pesados: se regeneran con kicad-cli y freecad/generar.sh (ver sección 10)
 freecad/*.step
@@ -23,19 +25,25 @@ hardware/*.kicad_prl
 # Secretos del firmware
 firmware/include/secretos.h
 
-# Revisión B: sources and selected previews live in Git; large deliverables are release assets.
-freecad/revision-b/render/
-freecad/revision-b/*.step
-freecad/revision-b/*.zip
-freecad/revision-b/p2s-petg/*/*.gcode
-freecad/revision-b/p2s-petg/*/*.3mf
-freecad/revision-b/p2s-petg/*.gcode
-freecad/revision-b/p2s-petg/*.3mf
-freecad/revision-b/p2s-petg/*/slicer.log
-video/revision-b/*.blend
-video/revision-b/*.mp4
-video/revision-b/preview-*.png
-video/revision-b/final-*.png
-video/revision-b/contacto.png
-video/revision-b/audio/*.wav
-video/revision-b/*.zip
+# Sitio Astro
+sitio/node_modules/
+sitio/dist/
+sitio/.astro/
+
+# archivo/: revisiones superadas. Las fuentes y las vistas elegidas viven en Git;
+# los entregables grandes son archivos de las releases.
+archivo/revision-b/render/
+archivo/revision-b/*.step
+archivo/revision-b/*.zip
+archivo/revision-b/p2s-petg/*/*.gcode
+archivo/revision-b/p2s-petg/*/*.3mf
+archivo/revision-b/p2s-petg/*.gcode
+archivo/revision-b/p2s-petg/*.3mf
+archivo/revision-b/p2s-petg/*/slicer.log
+archivo/video-revision-b/*.blend
+archivo/video-revision-b/*.mp4
+archivo/video-revision-b/preview-*.png
+archivo/video-revision-b/final-*.png
+archivo/video-revision-b/contacto.png
+archivo/video-revision-b/audio/*.wav
+archivo/video-revision-b/*.zip

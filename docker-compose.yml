@@ -1,0 +1,111 @@
+# Plataforma del medidor de energía, para levantarla sin instalar Node ni pnpm.
+#
+#   docker compose up web                      modo demostración, sin base de datos
+#                                              -> http://localhost:3000
+#
+#   docker compose --profile db up postgres migrar web-db
+#                                              Postgres local + migración + plataforma real
+#                                              -> http://localhost:3001
+#
+#   (un "docker compose --profile db up" a secas levanta además la demostración en
+#    el 3000; no choca con nada, pero son dos plataformas corriendo a la vez)
+#
+#   docker compose down -v                     para todo y borra los datos de Postgres
+#
+# El modo demostración levanta un Postgres en memoria (PGlite), carga 21 días de consumo
+# simulado y luego agrega un registro por segundo. Energía, umbrales P95, alertas y
+# pronóstico salen del mismo código que en producción. Ver plataforma/README.md.
+
+services:
+  # ---------------------------------------------------------------- demostración
+  web:
+    build:
+      context: ./plataforma
+      dockerfile: Dockerfile
+    image: medidor-energia-plataforma
+    container_name: medidor-web
+    environment:
+      DEMO: "1"
+      PORT: "3000"
+      # TEMP_CONSTANTE: "28"   # fija la temperatura del pronóstico en vez del perfil diario
+    ports:
+      - "3000:3000"
+    healthcheck:
+      # El arranque de la demostración tarda unos segundos en cargar los 21 días.
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/ultimo').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    restart: unless-stopped
+
+  # ------------------------------------------------- Postgres local (perfil "db")
+  postgres:
+    image: postgres:17-alpine
+    profiles: ["db"]
+    container_name: medidor-postgres
+    environment:
+      POSTGRES_USER: medidor
+      POSTGRES_PASSWORD: medidor
+      POSTGRES_DB: medidor
+    ports:
+      - "54329:5432"
+    volumes:
+      - datos-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U medidor -d medidor"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  # Aplica supabase/migrations/*.sql una vez y termina. Mismo esquema que en Supabase.
+  migrar:
+    image: postgres:17-alpine
+    profiles: ["db"]
+    container_name: medidor-migrar
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PGPASSWORD: medidor
+    volumes:
+      - ./plataforma/supabase/migrations:/migraciones:ro
+    command: >
+      sh -c 'set -e; for f in /migraciones/*.sql; do
+               echo "aplicando $$f";
+               psql -h postgres -U medidor -d medidor -v ON_ERROR_STOP=1 -f "$$f";
+             done; echo "migraciones aplicadas"'
+    restart: "no"
+
+  # La misma imagen que web, pero contra el Postgres de arriba y en otro puerto,
+  # para que ambos modos puedan convivir sin pelearse el 3000.
+  web-db:
+    build:
+      context: ./plataforma
+      dockerfile: Dockerfile
+    image: medidor-energia-plataforma
+    profiles: ["db"]
+    container_name: medidor-web-db
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrar:
+        condition: service_completed_successfully
+    environment:
+      # sslmode=disable: este Postgres es local y no tiene TLS (Supabase sí lo exige).
+      DATABASE_URL: postgres://medidor:medidor@postgres:5432/medidor?sslmode=disable
+      PORT: "3000"
+      DB_CONEXIONES: "5"
+    ports:
+      - "3001:3000"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/ultimo').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    restart: unless-stopped
+
+volumes:
+  datos-postgres:

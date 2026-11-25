@@ -1,15 +1,20 @@
-"""Revisión B: gabinete PETG con tapa magnética y guarda interior atornillada.
-freecadcmd freecad/medidor_profesional.py
+"""Revisión B (superada por E.9): gabinete PETG con tapa magnética y guarda interior atornillada.
+freecadcmd archivo/revision-b/medidor_profesional.py
 No cambia la PCB ni sobrescribe la revisión anterior.
+
+Escribe en esta misma carpeta y toma la geometría base de freecad/ (medidor.py y comun.py),
+que siguen siendo los modelos vivos del proyecto.
 """
 import sys,json,math
 from pathlib import Path
-HERE=Path(__file__).resolve().parent;sys.path.insert(0,str(HERE))
+HERE=Path(__file__).resolve().parent
+# Los módulos base viven en freecad/, dos niveles arriba de archivo/revision-b/.
+sys.path.insert(0,str(HERE.parents[1]/'freecad'))
 import FreeCAD as App
 import Part,MeshPart,Import
 import medidor as base
 from comun import V,Modelo,caja_redondeada,cilindro,texto,tubo,COLOR
-OUT=HERE/'revision-b';OUT.mkdir(exist_ok=True)
+OUT=HERE;OUT.mkdir(exist_ok=True)
 base.R_ESQ=10.0
 TOP=76.6;ZLID=72.;MAG_D=8.2;MAG_DEPTH=3.2
 # Provisional cable overmold envelope, not a claim about an unmeasured USB-C board.

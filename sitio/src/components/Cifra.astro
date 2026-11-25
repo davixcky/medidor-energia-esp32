@@ -1,0 +1,14 @@
+---
+interface Props {
+  valor: string;
+  unidad?: string;
+  rotulo: string;
+  color?: 'verde' | 'azul' | 'naranja' | 'violeta' | '';
+}
+const { valor, unidad = '', rotulo, color = '' } = Astro.props;
+---
+
+<div class={`cifra ${color}`}>
+  <div class="valor">{valor}{unidad && <span class="unidad">{unidad}</span>}</div>
+  <div class="rotulo" set:html={rotulo}></div>
+</div>

@@ -16,7 +16,7 @@ CONTENIDO
 6. Cupones, montaje y validación en banco como siguiente paso.
 
 ORIGEN
-Geometría: freecad/revision-b/render/ensamble.json, exportada del ensamble FreeCAD.
+Geometría: archivo/revision-b/render/ensamble.json, exportada del ensamble FreeCAD.
 Pantalla: img/ui-lcd-resumen.png, generada por las pruebas de interfaz del firmware.
 Voz sintética local: Kokoro-82M, ef_dora, español, mediante kokoro-onnx.
 Guion: audio/narracion.txt. Tiempos medidos por segmento en tiempos.json.

@@ -1,0 +1,105 @@
+# Publica en GitHub Pages, en un solo despliegue, el sitio del proyecto (Astro) y las
+# páginas del stand:
+#
+#   /                 sitio del proyecto en Astro  <- es a donde apuntan los QR impresos
+#   /kiosko.html      presentación del iPad        <- URL sin cambios
+#   /pantalla.html    segunda pantalla HDMI        <- URL sin cambios
+#   /img/*            imágenes del stand y del informe
+#   /stand/           página anterior del QR, conservada como respaldo
+#
+# Los llaveros impresos y stand/img/qr.svg codifican exactamente
+# https://davixcky.github.io/medidor-energia-esp32/ — la raíz no se puede mover sin
+# volver a imprimirlos.
+#
+# Requiere una vez: Settings → Pages → Source: GitHub Actions.
+name: Pages (sitio + stand)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'sitio/**'
+      - 'stand/**'
+      - 'docs/informe.md'
+      - 'img/**'
+      - 'freecad/revision-e7/*.png'
+      - 'hardware/perforadas-modulares/schematic-previews/**'
+      - 'pronostico/metricas.json'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  construir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: sitio/pnpm-lock.yaml
+
+      # preparar-assets.mjs copia img/, stand/img/, los renders E.9 y las vistas de los
+      # esquemáticos a sitio/public/, y falla si falta alguno de los esperados.
+      - name: Construir el sitio
+        working-directory: sitio
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      # Las páginas del stand se superponen al dist de Astro para conservar sus URL.
+      # index.html NO se copia a la raíz: ahí va el sitio de Astro.
+      - name: Superponer las páginas del stand
+        run: |
+          set -euo pipefail
+          for f in kiosko.html pantalla.html sw.js manifest.webmanifest; do
+            cp "stand/$f" "sitio/dist/$f"
+          done
+          mkdir -p sitio/dist/img
+          cp -R stand/img/. sitio/dist/img/
+          # Respaldo de la página anterior del QR, con sus rutas relativas intactas.
+          mkdir -p sitio/dist/stand
+          cp stand/index.html sitio/dist/stand/index.html
+          cp -R stand/img sitio/dist/stand/img
+
+      - name: Comprobar que las URL del stand quedaron en su sitio
+        run: |
+          set -euo pipefail
+          for f in index.html kiosko.html pantalla.html sw.js manifest.webmanifest \
+                   img/qr.svg img/icono.png img/producto.mp4 stand/index.html; do
+            test -s "sitio/dist/$f" || { echo "FALTA sitio/dist/$f"; exit 1; }
+          done
+          # La raíz debe ser el sitio de Astro, no la página antigua del stand.
+          grep -q 'Medidor de energía no invasivo con ESP32' sitio/dist/index.html \
+            || { echo "la raíz no es el sitio de Astro"; exit 1; }
+          echo "Estructura publicada correcta."
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: sitio/dist
+
+  publicar:
+    needs: construir
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

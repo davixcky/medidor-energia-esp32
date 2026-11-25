@@ -1,0 +1,260 @@
+---
+import Base from '../layouts/Base.astro';
+import Cifra from '../components/Cifra.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const url = (p: string) => `${base}/${p.replace(/^\//, '')}`;
+const gh = 'https://github.com/davixcky/medidor-energia-esp32/blob/main';
+
+// Solo las cinco tarjetas con hoja de esquemático, en orden T1…T5.
+// No incluye U4 ni Z1, que no tienen hoja propia.
+const HOJAS = [
+  ['t1', 'Potencia'],
+  ['t2', 'Corriente + VBIAS'],
+  ['t3', 'Tensión ELV'],
+  ['t4', 'Control'],
+  ['t5', 'Interfaz y alertas'],
+] as const;
+
+const tarjetas = [
+  { id: 'T1', n: 'Potencia', mm: '50 × 40 mm', d: 'Protección de entrada y distribución de 12 V / 5 V.', color: 'naranja' },
+  { id: 'U4', n: 'Buck LM2596', mm: '43 × 21 × 14 mm', d: 'Módulo aparte en cuna a presión; genera los 5 V.', color: 'naranja' },
+  { id: 'T2', n: 'Corriente + VBIAS', mm: '70 × 55 mm', d: 'Los dos canales SCT, sus resistencias de carga y la polarización.', color: 'verde' },
+  { id: 'T3', n: 'Tensión ELV', mm: '55 × 45 mm', d: 'Acondicionamiento del ZMPT101B del lado de baja tensión.', color: 'verde' },
+  { id: 'T4', n: 'Control', mm: '80 × 65 mm', d: 'ESP32 principal: adquisición, LED de estado, Wi-Fi y ESP-NOW.', color: 'azul' },
+  { id: 'T5', n: 'Interfaz y alertas', mm: '65 × 50 mm', d: '74HCT245, salida FCOB y excitación del piezo.', color: 'violeta' },
+  { id: 'Z1', n: 'Red de 120 V', mm: 'compartimento aislado', d: 'Fusible, borne protegido y primario del ZMPT101B.', color: 'rojo' },
+];
+---
+
+<Base
+  titulo="Hardware · Medidor de energía ESP32"
+  descripcion="Esquemático en KiCad, PCB de una cara, arquitectura de cinco tarjetas modulares y BOM por tarjeta del medidor de energía no invasivo."
+  imagen="esquematicos/medidor-t4.png"
+>
+  <section>
+    <div class="envoltura">
+      <span class="kicker">Hardware</span>
+      <h1 class="mt-s">Esquemático, PCB y lista de materiales</h1>
+      <p class="plomo estrecho mt">
+        El diseño eléctrico está hecho en KiCad y generado por script, de modo que el esquemático se
+        puede reconstruir desde cero y comparar. La revisión vigente, <strong>E.9</strong>, parte el
+        medidor en cinco tarjetas de baja tensión más un compartimento aislado para la red.
+      </p>
+
+      <div class="rejilla rejilla-4 mt-l">
+        <Cifra valor="5" rotulo="tarjetas de baja tensión<br>más la zona de red" color="verde" />
+        <Cifra valor="0" rotulo="violaciones de ERC<br>en las cinco hojas" color="azul" />
+        <Cifra valor="12" unidad="V" rotulo="entrada aislada, con buck<br>LM2596 ajustado a 5,0 V" color="naranja" />
+        <Cifra valor="1" rotulo="cara de cobre en la PCB<br>original, con puentes" color="violeta" />
+      </div>
+
+      <div class="aviso peligro mt-l">
+        <strong>Estado real del diseño.</strong> Las cinco hojas pasan el ERC sin violaciones y el CAD
+        está verificado, pero <strong>eso no es una aprobación eléctrica</strong>. El montaje y la
+        validación con carga real están pendientes. Antes de conectar la lógica hay que comprobar
+        tensión, polaridad y temperatura del LM2596 con una fuente limitada en corriente, y seguir el
+        protocolo de <a href={`${gh}/hardware/perforadas-modulares/SEGURIDAD-Y-PRUEBAS.md`}>seguridad y pruebas</a>.
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------- arquitectura -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">Arquitectura E.9</span>
+        <h2>Cinco tarjetas, cada una con un trabajo</h2>
+        <p>
+          La partición mantiene las entradas analógicas lejos del buck, del FCOB, del piezo y del
+          Wi-Fi. El ESP32 principal sigue siendo el dueño de la adquisición, la energía, las alarmas y
+          la publicación: la pantalla LilyGO es solo un terminal.
+        </p>
+      </div>
+
+      <div class="tabla-envoltura">
+        <table>
+          <thead>
+            <tr><th>Conjunto</th><th>Tamaño</th><th>Responsabilidad</th></tr>
+          </thead>
+          <tbody>
+            {
+              tarjetas.map((t) => (
+                <tr>
+                  <td>
+                    <span class={`etiqueta ${t.color === 'rojo' || t.color === 'violeta' ? '' : t.color}`}>
+                      {t.id}
+                    </span>{' '}
+                    <strong>{t.n}</strong>
+                  </td>
+                  <td><code>{t.mm}</code></td>
+                  <td>{t.d}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="aviso">
+        <strong>La pantalla no manda.</strong> La LilyGO T4-S3 recibe un <code>TelemetryPacket</code>
+        versionado por ESP-NOW, lo valida y muestra <code>SIN DATOS</code> si se vence el tiempo de
+        espera. A la tapa solo pasan 5 V protegidos y GND. En E.9 no hay encoder ni pulsadores: toda
+        la navegación es táctil.
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------- esquemático -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">Esquemáticos</span>
+        <h2>Las cinco hojas, T1 a T5</h2>
+        <p>
+          Generadas con <code>herramientas/generar_kicad_perforadas.py</code> y verificadas con
+          <code>kicad-cli sch erc</code>. Cada hoja tiene su reporte de ERC junto al archivo.
+        </p>
+      </div>
+
+      <div class="rejilla rejilla-3">
+        {
+          HOJAS.map(([t, nombre]) => (
+            <figure class="claro">
+              <img src={url(`esquematicos/medidor-${t}.png`)} alt={`Esquemático de la tarjeta ${t.toUpperCase()}: ${nombre}`} loading="lazy" width="1200" height="850" />
+              <figcaption>
+                <strong>{t.toUpperCase()}</strong> — {nombre}
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+
+      <div class="botones mt">
+        <a class="boton boton-fantasma" href={`${gh}/hardware/perforadas-modulares/medidor-E9-esquematicos-T1-T5.pdf`}>
+          Las cinco hojas en PDF
+        </a>
+        <a class="boton boton-fantasma" href={`${gh}/hardware/perforadas-modulares/kicad`}>
+          Proyectos de KiCad
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------- PCB -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">PCB</span>
+        <h2>Una sola cara, fabricada por el grupo</h2>
+        <p>
+          La primera revisión se diseñó como PCB de una cara para poder fabricarla con transferencia
+          de tóner y atacado químico, sin depender de un proveedor. Al ser de una cara, necesita
+          puentes de alambre documentados uno por uno.
+        </p>
+      </div>
+
+      <div class="rejilla rejilla-2">
+        <figure>
+          <img src={url('img/3d-placa-iso.png')} alt="Vista isométrica del render 3D de la PCB con sus componentes" loading="lazy" width="1400" height="1000" />
+          <figcaption>Render con los componentes en su posición real, importados del STEP de KiCad.</figcaption>
+        </figure>
+        <figure class="claro">
+          <img src={url('img/pcb-cobre-toner.png')} alt="Arte de cobre listo para transferencia por tóner" loading="lazy" width="1200" height="900" />
+          <figcaption>Arte de cobre para tóner. Se imprime al 100 %, sin ajustar a la página.</figcaption>
+        </figure>
+      </div>
+
+      <h3 class="mt-l">Archivos de fabricación</h3>
+      <ul class="lista mt-s">
+        <li>
+          <strong>Gerber y taladros</strong> en <code>hardware/fabricacion/cnc/</code>, empaquetados en
+          <code>gerbers-medidor.zip</code>: es lo que se sube a un fabricante como JLCPCB.
+        </li>
+        <li>
+          <strong>Transferencia por tóner</strong>: cobre y serigrafía en espejo, a escala 1:1, en
+          <code>hardware/fabricacion/toner/</code>.
+        </li>
+        <li>
+          <strong>Puentes de alambre</strong> obligatorios, listados en <code>PUENTES.md</code>.
+        </li>
+        <li>
+          Todo sale de <code>herramientas/exportar_fabricacion.sh</code>, junto con las vistas 3D, el
+          STEP y el DRC.
+        </li>
+      </ul>
+
+      <div class="aviso">
+        <strong>La revisión vigente no se fabrica como PCB.</strong> E.9 son cinco tarjetas perforadas
+        que se arman a mano con los paquetes de construcción: un PDF por tarjeta con su esquemático,
+        su lista de materiales y el orden de soldadura.
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------- BOM -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">Lista de materiales</span>
+        <h2>BOM por tarjeta</h2>
+        <p>
+          Hay una lista por cada tarjeta y una lista de lo que va fuera de ellas, además de una lista
+          de precisión con los componentes cuyo valor afecta la medida.
+        </p>
+      </div>
+
+      <div class="rejilla rejilla-2">
+        <a class="tarjeta" href={`${gh}/hardware/perforadas-modulares/BOM-E9-by-board.md`}>
+          <div class="icono">📋</div>
+          <h3>BOM E.9 por tarjeta</h3>
+          <p>Todo lo que lleva cada una de las cinco tarjetas, en Markdown y en CSV.</p>
+        </a>
+        <a class="tarjeta" href={`${gh}/hardware/perforadas-modulares/BOM-precision.md`}>
+          <div class="icono">🎯</div>
+          <h3>BOM de precisión</h3>
+          <p>Los componentes cuya tolerancia entra directamente en el error de medida.</p>
+        </a>
+        <a class="tarjeta" href={`${gh}/hardware/COMPONENTES-COMPRADOS-VERIFICADOS.md`}>
+          <div class="icono">✅</div>
+          <h3>Componentes verificados</h3>
+          <p>Lo que ya se compró y se midió con calibrador, con su referencia real.</p>
+        </a>
+        <a class="tarjeta" href={`${gh}/hardware/perforadas-modulares/construction-packets`}>
+          <div class="icono">🔧</div>
+          <h3>Paquetes de construcción</h3>
+          <p>Un PDF por tarjeta para armarla: esquemático, materiales y orden de soldadura.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------- verificación -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">Verificación</span>
+        <h2>Simulación antes de soldar</h2>
+        <p>
+          La cadena de acondicionamiento se simuló en ngspice para comprobar que 60 A en CH1 y 30 A en
+          CH2 caen dentro de la zona lineal del ADC, y que las sobrecargas no sacan las señales de
+          rango. Las netlists y la tabla de resultados están en el repositorio.
+        </p>
+      </div>
+
+      <figure>
+        <img src={url('img/sim-resultados.png')} alt="Gráficas de los resultados de la simulación en ngspice" loading="lazy" width="1400" height="900" />
+        <figcaption>
+          Resultados de las dieciséis simulaciones: respuesta en frecuencia, casos nominales,
+          sobrecargas y variación de la alimentación.
+        </figcaption>
+      </figure>
+
+      <div class="botones mt">
+        <a class="boton boton-fantasma" href={`${gh}/simulacion/resultados.md`}>Tabla de resultados</a>
+        <a class="boton boton-fantasma" href={`${gh}/hardware/erc.rpt`}>Reporte de ERC</a>
+        <a class="boton boton-fantasma" href={`${gh}/hardware/drc.rpt`}>Reporte de DRC</a>
+      </div>
+    </div>
+  </section>
+</Base>

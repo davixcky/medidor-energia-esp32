@@ -1,7 +1,12 @@
 // Guarda la presentación en el iPad para que funcione sin Wi-Fi en el stand.
-const CACHE = 'stand-v3';
+//
+// v4: la raíz del sitio ya no es esta carpeta, es el sitio del proyecto en Astro
+// (ver .github/workflows/pages.yml). Se dejó de precargar './' e 'index.html'
+// porque el kiosco no los necesita y sus hojas de estilo no están en esta lista.
+// Subir el número de versión es lo que hace que el iPad descarte la copia anterior.
+const CACHE = 'stand-v4';
 const ARCHIVOS = [
-  './', 'index.html', 'kiosko.html', 'manifest.webmanifest',
+  'kiosko.html', 'manifest.webmanifest',
   'img/qr.svg', 'img/icono.png', 'img/cerrado.jpg', 'img/abierto.jpg',
   'img/tablero.jpg', 'img/tablero-movil.jpg', 'img/bloques.jpg',
   'img/lstm-dia.jpg', 'img/esquematico.jpg', 'img/tft.png',

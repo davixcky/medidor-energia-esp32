@@ -1,0 +1,105 @@
+---
+/**
+ * Tensión y corriente de un ciclo de red, desfasadas: es la imagen de lo que el
+ * medidor digitaliza. El área sombreada es la potencia instantánea v(t)·i(t).
+ * Se dibuja con un path calculado en el build, no con una imagen.
+ */
+const ANCHO = 1200;
+const ALTO = 260;
+const CENTRO = ALTO / 2;
+const CICLOS = 2;
+const FASE = Math.PI / 5; // ≈ 36°, factor de potencia ≈ 0,81
+
+const puntos = 240;
+const x = (i: number) => (i / puntos) * ANCHO;
+const ang = (i: number) => (i / puntos) * CICLOS * 2 * Math.PI;
+
+const senoidal = (amp: number, fase: number) =>
+  Array.from({ length: puntos + 1 }, (_, i) => {
+    const y = CENTRO - Math.sin(ang(i) - fase) * amp;
+    return `${i === 0 ? 'M' : 'L'}${x(i).toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+
+const v = senoidal(96, 0);
+const c = senoidal(60, FASE);
+
+// Potencia instantánea, normalizada y referida al eje para poder rellenarla.
+const p =
+  Array.from({ length: puntos + 1 }, (_, i) => {
+    const prod = Math.sin(ang(i)) * Math.sin(ang(i) - FASE);
+    const y = CENTRO - prod * 74;
+    return `${i === 0 ? 'M' : 'L'}${x(i).toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ') + ` L${ANCHO},${CENTRO} L0,${CENTRO} Z`;
+---
+
+<div class="onda">
+  <svg viewBox={`0 0 ${ANCHO} ${ALTO}`} preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="g-pot" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#f5a35c" stop-opacity="0.26" />
+        <stop offset="100%" stop-color="#f5a35c" stop-opacity="0.02" />
+      </linearGradient>
+      <linearGradient id="g-desv" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="transparent" />
+        <stop offset="12%" stop-color="#fff" />
+        <stop offset="88%" stop-color="#fff" />
+        <stop offset="100%" stop-color="transparent" />
+      </linearGradient>
+      <mask id="m-desv"><rect width={ANCHO} height={ALTO} fill="url(#g-desv)" /></mask>
+    </defs>
+
+    <g mask="url(#m-desv)">
+      <line x1="0" y1={CENTRO} x2={ANCHO} y2={CENTRO} stroke="#27323e" stroke-width="1" />
+      <path d={p} fill="url(#g-pot)" />
+      <path class="traza v" d={v} fill="none" stroke="#5aa9ff" stroke-width="2.6" stroke-linecap="round" />
+      <path class="traza i" d={c} fill="none" stroke="#3ddc97" stroke-width="2.6" stroke-linecap="round" />
+    </g>
+  </svg>
+
+  <div class="leyenda">
+    <span class="azul">— v(t) · 120 V</span>
+    <span class="verde">— i(t) · CH1</span>
+    <span class="naranja">▚ p(t) = v·i</span>
+  </div>
+</div>
+
+<style>
+  .onda {
+    position: relative;
+    margin: 36px 0 0;
+  }
+  .onda svg {
+    width: 100%;
+    height: clamp(150px, 22vw, 240px);
+    overflow: visible;
+  }
+  .traza {
+    stroke-dasharray: 3000;
+    stroke-dashoffset: 3000;
+    animation: dibujar 2.1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    filter: drop-shadow(0 0 7px currentColor);
+  }
+  .traza.v { color: #5aa9ff; }
+  .traza.i { color: #3ddc97; animation-delay: 0.22s; }
+
+  @keyframes dibujar {
+    to { stroke-dashoffset: 0; }
+  }
+
+  .leyenda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 6px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--tx3);
+  }
+  .leyenda .azul { color: #5aa9ff; }
+  .leyenda .verde { color: #3ddc97; }
+  .leyenda .naranja { color: #f5a35c; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .traza { stroke-dashoffset: 0; animation: none; }
+  }
+</style>

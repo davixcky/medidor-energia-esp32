@@ -1,4 +1,4 @@
-"""freecadcmd freecad/revision-b/verificar_ensamble.py"""
+"""freecadcmd archivo/revision-b/verificar_ensamble.py"""
 import FreeCAD as App,json
 from pathlib import Path
 p=Path(__file__).resolve().parent;d=App.openDocument(str(p/'medidor-revB.FCStd'))

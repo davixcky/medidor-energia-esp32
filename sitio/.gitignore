@@ -1,0 +1,5 @@
+node_modules/
+dist/
+.astro/
+# public/ se reconstruye con scripts/preparar-assets.mjs desde img/, stand/img/ y freecad/
+public/

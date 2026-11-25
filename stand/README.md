@@ -29,11 +29,25 @@ flechas y barra espaciadora. Después de tocar, sigue avanzando sola.
 ## Publicar (una vez)
 
 1. En GitHub: **Settings → Pages → Source: GitHub Actions**.
-2. Hacer *merge* a `main`. El flujo `.github/workflows/stand-pages.yml` publica `stand/` en
-   `https://davixcky.github.io/medidor-energia-esp32/`.
+2. Hacer *merge* a `main`. El flujo [`.github/workflows/pages.yml`](../.github/workflows/pages.yml)
+   publica, en un solo despliegue, el sitio del proyecto y estas páginas:
+
+   | URL | Qué queda ahí |
+   |---|---|
+   | `/` | El [sitio del proyecto en Astro](../sitio/README.md) — **es a donde apuntan los QR** |
+   | `/kiosko.html` | La presentación del iPad (URL sin cambios) |
+   | `/pantalla.html` | La segunda pantalla HDMI (URL sin cambios) |
+   | `/img/*` | Las imágenes de esta carpeta (sin cambios) |
+   | `/stand/` | `index.html` de esta carpeta, conservada como respaldo |
+
 3. El repositorio debe ser público (o tener un plan que permita Pages privadas).
 
-Si se usa otra URL, regenerar el QR: `pip install qrcode && python3 stand/generar_qr.py https://otra-url/`.
+> **La raíz la ocupa el sitio del proyecto, no `index.html` de esta carpeta.** El QR impreso
+> sigue funcionando porque la URL no cambió: lleva a una página mejor. La versión anterior
+> queda disponible en `/stand/`.
+
+Si se usa otra URL hay que regenerar el QR **y volver a imprimir los llaveros**:
+`pip install qrcode && python3 stand/generar_qr.py https://otra-url/`.
 
 ## Preparar el iPad
 
@@ -86,7 +100,7 @@ pantalla pequeña y pulsar **Control + Command + F**.
 
 ## Fuentes
 
-Los textos y cifras salen del documento principal (`README.md`) y de `pronostico/metricas.json`.
+Los textos y cifras salen del [informe](../docs/informe.md) y de `pronostico/metricas.json`.
 Las imágenes son copias reducidas de `freecad/revision-e7/` e `img/`; el video es
 `video/revision-e7/medidor-E7-producto.mp4` re-codificado a 720p sin audio. Los valores de la portada
 y la curva del pronóstico del kiosco son ilustrativos y así se indica en pantalla.

@@ -1,0 +1,268 @@
+---
+import Base from '../layouts/Base.astro';
+import Cifra from '../components/Cifra.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const url = (p: string) => `${base}/${p.replace(/^\//, '')}`;
+const gh = 'https://github.com/davixcky/medidor-energia-esp32/blob/main';
+
+const trama = [
+  ['0', 'uint32', 't', 'época Unix en segundos, UTC'],
+  ['4', 'int16', 'v_rms', '0,01 V'],
+  ['6', 'int16[3]', 'i_rms', '0,01 A — CH1, CH2 y uno de reserva'],
+  ['12', 'int16[3]', 'p', '1 W'],
+  ['18', 'int16[3]', 'q', '1 var'],
+  ['24', 'int16[3]', 's', '1 VA'],
+  ['30', 'int16[3]', 'fp', '0,0001'],
+  ['36', 'int16', 'f', '0,01 Hz'],
+  ['38', 'int16', 'thd', '0,01 % — corriente de CH1'],
+];
+---
+
+<Base
+  titulo="Firmware · Medidor de energía ESP32"
+  descripcion="Firmware del ESP32: adquisición a 8.000 muestras/s por canal, cálculo con enteros exactos, búfer sin red y terminal gráfico LilyGO por ESP-NOW."
+  imagen="img/ui-lcd-resumen.png"
+>
+  <section>
+    <div class="envoltura">
+      <span class="kicker">Firmware</span>
+      <h1 class="mt-s">Un núcleo mide, el otro habla</h1>
+      <p class="plomo estrecho mt">
+        El ESP32 tiene dos núcleos y el firmware los reparte a propósito: el núcleo 1 no hace nada
+        más que muestrear y calcular, para que nada le robe tiempo al muestreo; el núcleo 0 se
+        encarga del Wi-Fi, la hora y el envío. Se comunican por cola, nunca compartiendo variables.
+      </p>
+
+      <div class="rejilla rejilla-4 mt-l">
+        <Cifra valor="8.000" unidad="/s" rotulo="muestras por segundo<br>y por canal" color="verde" />
+        <Cifra valor="60" rotulo="ciclos de red por ventana<br>(≈ 1 s por registro)" color="azul" />
+        <Cifra valor="20" unidad="min" rotulo="de registros guardados<br>cuando no hay red" color="naranja" />
+        <Cifra valor="40" rotulo="armónicos de THD<br>medidos con Goertzel" color="violeta" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------- tareas -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">Reparto de trabajo</span>
+        <h2>Tres tareas, dos núcleos</h2>
+      </div>
+
+      <div class="tabla-envoltura">
+        <table>
+          <thead>
+            <tr><th>Núcleo</th><th>Tarea</th><th>Qué hace</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="etiqueta verde">1</span></td>
+              <td><code>adquisicion</code></td>
+              <td>
+                Muestrea tensión (GPIO35), CH1 (GPIO36) y CH2 (GPIO39) a 8.000 muestras/s por canal y
+                cierra una ventana cada 60 ciclos de red. Solo entrega resultados por cola.
+              </td>
+            </tr>
+            <tr>
+              <td><span class="etiqueta azul">0</span></td>
+              <td><code>red</code></td>
+              <td>
+                Wi-Fi, hora por NTP (UTC−5), un registro ADR-001 de 40 B por ventana, búfer de 1.200
+                registros y envío en lotes cada 5 s a <code>POST /api/ingesta</code>.
+              </td>
+            </tr>
+            <tr>
+              <td><span class="etiqueta azul">0</span></td>
+              <td><code>interfaz</code></td>
+              <td>
+                Envía el estado ya calculado a la LilyGO T4-S3 por ESP-NOW, maneja el piezo y el LED
+                de estado.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ cálculo -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">El cálculo</span>
+        <h2>Enteros exactos, sin trampas de punto flotante</h2>
+        <p>
+          La biblioteca de medición no depende de Arduino: es C++ puro, así que se compila y se prueba
+          en el PC. Eso permite verificarla con señales sintéticas antes de tener el hardware.
+        </p>
+      </div>
+
+      <ul class="lista">
+        <li>
+          <strong>Ventanas de ciclos enteros</strong>, sincronizadas por cruce por cero: así el valor
+          eficaz no depende de dónde empezó la medición.
+        </li>
+        <li>
+          <strong>Sumas enteras exactas</strong> para los valores eficaces y la potencia activa,
+          quitando la componente continua de la propia ventana — no hace falta conocer VBIAS.
+        </li>
+        <li>
+          <strong>Corrección del multiplexado</strong>: la tensión se interpola al instante de cada
+          muestra de corriente, y el retardo del multiplexor se mide al arrancar.
+        </li>
+        <li>
+          <strong>S = V·I</strong>, <strong>Q = √(S² − P²)</strong> y <strong>FP = P/S</strong>, con
+          la frecuencia calculada por ciclos sobre la duración real de la ventana.
+        </li>
+        <li>
+          <strong>THD de la corriente de CH1</strong> hasta el armónico 40 con el algoritmo de
+          Goertzel, compensando la atenuación del filtro antialias.
+        </li>
+        <li>
+          <strong>Tara</strong>: guarda el piso de ruido de cada canal en NVS y lo resta en
+          cuadratura.
+        </li>
+      </ul>
+
+      <h3 class="mt-l">Probado en el PC, sin hardware</h3>
+      <p class="mt-s">
+        La prueba genera señales con la misma cadena del hardware —pinza, resistencia de carga, VBIAS,
+        ADC de 12 bits con ruido y retardo de multiplexado— y compara V, I, P, frecuencia y THD contra
+        los valores exactos.
+      </p>
+      <pre><code>cd firmware
+make -C test             # prueba del cálculo con señales sintéticas
+make -C test pantallas   # dibuja las pantallas de la interfaz en el PC</code></pre>
+    </div>
+  </section>
+
+  <!-- -------------------------------------------------------------- trama -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">Contrato ADR-001</span>
+        <h2>40 bytes por registro</h2>
+        <p>
+          Cada ventana se convierte en una trama binaria de 40 B, <em>little-endian</em> y sin
+          relleno. Es exactamente lo mismo que envía el simulador de la plataforma, así que el
+          servidor no distingue entre uno y otro: se prueba el camino completo sin hardware.
+        </p>
+      </div>
+
+      <div class="tabla-envoltura">
+        <table>
+          <thead>
+            <tr><th>Desplazamiento</th><th>Tipo</th><th>Campo</th><th>Escala</th></tr>
+          </thead>
+          <tbody>
+            {
+              trama.map(([off, tipo, campo, escala]) => (
+                <tr>
+                  <td><code>{off}</code></td>
+                  <td><code>{tipo}</code></td>
+                  <td><code>{campo}</code></td>
+                  <td>{escala}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        La definición compartida entre los firmwares está en
+        <a href={`${gh}/shared/telemetry_packet.h`}><code>shared/telemetry_packet.h</code></a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------- placas -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">Las placas</span>
+        <h2>Tres firmwares</h2>
+      </div>
+
+      <div class="rejilla rejilla-3">
+        <a class="tarjeta" href={`${gh}/firmware/README.md`}>
+          <div class="icono">⚡</div>
+          <h3>firmware/</h3>
+          <p>
+            ESP32-DevKitC V4 (WROOM). El medidor: muestrea, calcula, guarda sin red y publica. Es el
+            dueño de todo.
+          </p>
+          <div class="etiquetas mt-s"><span class="etiqueta verde">principal</span></div>
+        </a>
+        <a class="tarjeta" href={`${gh}/firmware-lilygo/README.md`}>
+          <div class="icono">🖥</div>
+          <h3>firmware-lilygo/</h3>
+          <p>
+            LilyGO T4-S3 AMOLED. Solo terminal gráfico por ESP-NOW: no lee ADC, no integra energía y
+            no decide alarmas.
+          </p>
+          <div class="etiquetas mt-s"><span class="etiqueta azul">pantalla</span></div>
+        </a>
+        <a class="tarjeta" href={`${gh}/firmware-demo-sender`}>
+          <div class="icono">🧪</div>
+          <h3>firmware-demo-sender/</h3>
+          <p>Emite tramas de prueba contra la plataforma, para validar la ingesta desde una placa real.</p>
+          <div class="etiquetas mt-s"><span class="etiqueta">pruebas</span></div>
+        </a>
+      </div>
+
+      <h3 class="mt-l">Compilar y cargar</h3>
+      <pre><code>cd firmware
+cp include/secretos.h.ejemplo include/secretos.h   # red Wi-Fi y URL del servidor
+pio run                  # compila
+pio run -t upload        # carga en el ESP32
+pio device monitor        # consola serie a 115200 baudios</code></pre>
+
+      <div class="aviso">
+        <strong><code>secretos.h</code> no está en Git.</strong> Sin copiarlo primero, la compilación
+        falla a propósito, para que unas credenciales de Wi-Fi no terminen en el repositorio.
+      </div>
+
+      <div class="aviso peligro">
+        <strong>La LilyGO no se programa con el arnés conectado.</strong> Hay que desconectar VBUS del
+        arnés y usar solo USB-C: alimentarla por las dos vías a la vez puede dañarla. Las
+        actualizaciones de rutina del ESP32 principal deberían ir por OTA, porque su USB-C queda
+        dentro del gabinete.
+      </div>
+    </div>
+  </section>
+
+  <!-- ----------------------------------------------------------- interfaz -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">Interfaz local</span>
+        <h2>Las pantallas, dibujadas en el PC</h2>
+        <p>
+          Las pantallas se renderizan en el computador con la misma lógica que corre en la placa, así
+          que se pueden revisar y versionar como cualquier otra salida del proyecto.
+        </p>
+      </div>
+
+      <div class="rejilla rejilla-2">
+        <figure class="claro">
+          <img src={url('img/ui-lcd-pantallas.png')} alt="Conjunto de pantallas de la interfaz local" loading="lazy" width="1400" height="900" />
+          <figcaption>Las pantallas de la interfaz local, generadas por las pruebas.</figcaption>
+        </figure>
+        <figure class="claro">
+          <img src={url('img/ui-lcd-navegacion.png')} alt="Diagrama de navegación entre pantallas" loading="lazy" width="1200" height="900" />
+          <figcaption>
+            Diagrama de navegación, generado con Graphviz desde <code>interfaz/navegacion.py</code>.
+          </figcaption>
+        </figure>
+      </div>
+
+      <figure>
+        <img src={url('render/tft-render-horizontal.png')} alt="Render de la pantalla LilyGO horizontal en la tapa" loading="lazy" width="1400" height="900" />
+        <figcaption>La LilyGO T4-S3 horizontal, tal como queda en la tapa del gabinete.</figcaption>
+      </figure>
+    </div>
+  </section>
+</Base>

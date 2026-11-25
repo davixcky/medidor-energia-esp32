@@ -1,0 +1,324 @@
+---
+import Base from '../layouts/Base.astro';
+import Cifra from '../components/Cifra.astro';
+import Onda from '../components/Onda.astro';
+import Cadena from '../components/Cadena.astro';
+import metricas from '../../../pronostico/metricas.json';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const url = (p: string) => `${base}/${p.replace(/^\//, '')}`;
+
+// Mejora del LSTM frente al mejor método simple, a 24 h (MAE sobre los datos de prueba).
+const r24 = metricas.resultados['24 h recursivo'];
+const mejorSimple = Math.min(
+  r24['Persistencia'].MAE,
+  r24['Ingenuo 24 h'].MAE,
+  r24['Ingenuo 168 h'].MAE,
+);
+const mejora = Math.round(((r24['LSTM'].MAE - mejorSimple) / mejorSimple) * 100);
+
+const areas = [
+  {
+    icono: '📐',
+    t: 'Hardware',
+    d: 'Esquemático en KiCad sin errores de ERC, PCB de una cara fabricada por el grupo y la revisión vigente en cinco tarjetas modulares, con BOM por tarjeta.',
+    href: '/hardware',
+    tags: ['KiCad 10', 'ERC limpio', 'BOM E.9'],
+  },
+  {
+    icono: '💻',
+    t: 'Firmware',
+    d: 'Dos núcleos: uno solo muestrea y calcula, el otro habla Wi-Fi. El cálculo no depende de Arduino y se prueba en el PC con señales sintéticas.',
+    href: '/firmware',
+    tags: ['PlatformIO', 'ESP-NOW', 'pruebas en PC'],
+  },
+  {
+    icono: '🧊',
+    t: 'Gabinete',
+    d: 'Modelado por script en FreeCAD: cada cota es un parámetro. Zona de red separada, tapa magnética y probetas de ajuste antes de imprimir el juego.',
+    href: '/modelos-3d',
+    tags: ['FreeCAD 1.1', 'PETG', '3MF listos'],
+  },
+  {
+    icono: '🌐',
+    t: 'Plataforma',
+    d: 'Recibe las tramas, integra energía, calcula umbrales P95, abre alertas y muestra todo en un tablero que se actualiza cada segundo.',
+    href: '/plataforma',
+    tags: ['TanStack Start', 'Postgres', 'SSE'],
+  },
+  {
+    icono: '🧠',
+    t: 'Pronóstico',
+    d: `Una LSTM de ${metricas.parametros.toLocaleString('es-CO')} parámetros pronostica 48 h de consumo. Corre en el servidor en TypeScript, con los mismos pesos que PyTorch.`,
+    href: '/pronostico',
+    tags: ['PyTorch', `${mejora} % de error`, '48 h'],
+  },
+  {
+    icono: '📄',
+    t: 'Informe',
+    d: 'El documento académico completo: planteamiento, marco teórico, estado del arte, cálculos de cada componente, protocolo de pruebas y cronograma.',
+    href: '/informe',
+    tags: ['ABPr', 'Corte 2'],
+  },
+];
+---
+
+<Base
+  titulo="Medidor de energía no invasivo con ESP32 · CUC"
+  descripcion="Mide el consumo de tu tablero y de tu aire acondicionado segundo a segundo, sin cortar un solo cable. Proyecto de Sistemas Embebidos 1, Universidad de la Costa, 2026-2."
+>
+  <!-- ------------------------------------------------------------- portada -->
+  <section class="portada">
+    <div class="envoltura">
+      <span class="kicker">Universidad de la Costa · Sistemas Embebidos 1 · 2026-2</span>
+      <h1>
+        Tu factura llega 30 días tarde.<br />
+        <span class="destacado">Este medidor, cada segundo.</span>
+      </h1>
+      <p class="plomo estrecho mt">
+        Un medidor de energía monofásico de 120 V que mide <strong>sin cortar un solo cable</strong>:
+        dos pinzas de núcleo partido abrazan el conductor de fase y un transformador aislado lee la
+        tensión. El ESP32 calcula potencia activa, reactiva, aparente y factor de potencia, y lo
+        publica por Wi-Fi a un tablero que además <strong>pronostica las próximas 48 horas</strong>.
+      </p>
+
+      <div class="botones mt-l">
+        <a class="boton boton-primario" href={url('/informe')}>Leer el informe completo</a>
+        <a class="boton boton-fantasma" href="https://github.com/davixcky/medidor-energia-esp32">
+          Ver el código en GitHub
+        </a>
+      </div>
+
+      <Onda />
+    </div>
+  </section>
+
+  <!-- -------------------------------------------------------------- cifras -->
+  <section class="franja-cifras">
+    <div class="envoltura">
+      <div class="rejilla rejilla-4">
+        <Cifra valor="8.000" unidad="/s" rotulo="muestras por segundo<br>y por canal" color="verde" />
+        <Cifra valor="2 + 1" rotulo="canales de corriente<br>y uno de tensión" color="azul" />
+        <Cifra valor="±3" unidad="%" rotulo="error objetivo de<br>potencia activa" color="naranja" />
+        <Cifra valor="40" unidad="B" rotulo="por registro enviado<br>(contrato ADR-001)" color="violeta" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ problema -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">El problema</span>
+        <h2>Un número al mes no sirve para ahorrar</h2>
+        <p>
+          Sin medición adicional, la factura informa el consumo total con hasta treinta días de
+          retraso. No dice qué circuito lo produjo ni a qué hora, y una medida de ahorro no se puede
+          verificar antes del siguiente ciclo de facturación. En la costa Caribe, donde el aire
+          acondicionado pesa cerca de la mitad del consumo de un local comercial, eso es casi toda
+          la información que importa.
+        </p>
+      </div>
+
+      <div class="rejilla rejilla-3">
+        <div class="tarjeta">
+          <div class="icono">🗓</div>
+          <h3>Resolución de un mes</h3>
+          <p>
+            No muestra el ciclo diario ni el semanal, que son los que dominan en un clima sin
+            estaciones.
+          </p>
+        </div>
+        <div class="tarjeta">
+          <div class="icono">🧮</div>
+          <h3>Todo agregado</h3>
+          <p>
+            Un solo número para la casa entera: no se puede atribuir el gasto a la nevera, al aire o
+            a la cocina.
+          </p>
+        </div>
+        <div class="tarjeta">
+          <div class="icono">⏳</div>
+          <h3>Treinta días de latencia</h3>
+          <p>
+            El usuario se entera cuando ya no puede hacer nada, y no puede comprobar si lo que hizo
+            funcionó.
+          </p>
+        </div>
+      </div>
+
+      <div class="aviso">
+        <strong>Y los medidores comerciales no ayudan a estudiarlo.</strong> Tienen arquitectura
+        cerrada: no dan acceso a la forma de onda ni al método de cálculo, así que no sirven para
+        aprender la cadena de medición completa, que es justamente el objetivo del curso.
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------- cadena -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">Cómo funciona</span>
+        <h2>Del conductor de fase al tablero web</h2>
+        <p>
+          Seis etapas, todas abiertas y documentadas: se puede seguir una lectura desde el campo
+          magnético alrededor del cable hasta el punto que aparece en la gráfica.
+        </p>
+      </div>
+      <Cadena />
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ producto -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">El equipo</span>
+        <h2>Pensado para vivir en un tablero eléctrico</h2>
+        <p>
+          Gabinete impreso en PETG con la zona de 120 V separada por un tabique atornillado, tapa con
+          cierre magnético, pantalla AMOLED en la tapa y entradas de pinza en el costado.
+        </p>
+      </div>
+
+      <div class="galeria">
+        <figure class="grande">
+          <img src={url('render/medidor-E7-abierto.png')} alt="Render del medidor abierto, con las tarjetas y el cableado interior a la vista" loading="lazy" width="1600" height="1200" />
+          <figcaption>
+            Interior de la revisión E.9: cinco tarjetas de baja tensión y la red de 120 V confinada a
+            su propia zona, detrás de la guarda.
+          </figcaption>
+        </figure>
+        <figure>
+          <img src={url('render/medidor-E7-cerrado.png')} alt="Render del medidor cerrado" loading="lazy" width="1600" height="1200" />
+          <figcaption>Cerrado, con la pantalla en la tapa.</figcaption>
+        </figure>
+        <figure>
+          <img src={url('render/medidor-E9-entradas-SCT.png')} alt="Detalle de las entradas de las pinzas SCT en el costado del gabinete" loading="lazy" width="1600" height="1200" />
+          <figcaption>Entradas de las dos pinzas SCT-013 en el costado.</figcaption>
+        </figure>
+      </div>
+
+      <div class="botones mt">
+        <a class="boton boton-fantasma" href={url('/modelos-3d')}>Ver el gabinete en detalle</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ tablero -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">La plataforma</span>
+        <h2>Lo que ve el usuario</h2>
+        <p>
+          El tablero se actualiza cada segundo por <em>server-sent events</em>. Muestra la potencia
+          de cada canal, la energía de hoy comparada con ayer a la misma hora, la proyección del mes
+          y el pronóstico de las próximas 48 horas con su intervalo de confianza.
+        </p>
+      </div>
+
+      <div class="rejilla rejilla-2">
+        <figure>
+          <img src={url('img/ui-tablero-escritorio.png')} alt="Tablero de la plataforma en pantalla de escritorio" loading="lazy" width="1600" height="1000" />
+          <figcaption>Tablero en escritorio.</figcaption>
+        </figure>
+        <figure>
+          <img src={url('img/ui-tablero-movil.png')} alt="Tablero de la plataforma en un teléfono" loading="lazy" width="800" height="1400" />
+          <figcaption>El mismo tablero en el teléfono.</figcaption>
+        </figure>
+      </div>
+
+      <div class="botones mt">
+        <a class="boton boton-fantasma" href={url('/plataforma')}>Arquitectura, API y contrato</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- -------------------------------------------------------------- áreas -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">Explorar</span>
+        <h2>Todo el proyecto, por partes</h2>
+        <p>
+          Cada pieza tiene su propia documentación, sus archivos fuente y sus verificaciones. Nada de
+          esto es una captura de pantalla: todo se regenera con los scripts del repositorio.
+        </p>
+      </div>
+
+      <div class="rejilla rejilla-3">
+        {
+          areas.map((a) => (
+            <a class="tarjeta" href={url(a.href)}>
+              <div class="icono">{a.icono}</div>
+              <h3>{a.t}</h3>
+              <p>{a.d}</p>
+              <div class="etiquetas mt-s">
+                {a.tags.map((t) => (
+                  <span class="etiqueta">{t}</span>
+                ))}
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------- cta -->
+  <section class="cierre">
+    <div class="envoltura centrado estrecho">
+      <span class="kicker">Proyecto de aula · ABPr</span>
+      <h2 class="mt-s">Abierto de arriba a abajo</h2>
+      <p class="plomo mt-s">
+        Esquemáticos, PCB, firmware, modelos 3D, plataforma, red neuronal y hasta este sitio: todo
+        está en el repositorio y todo se regenera con un script.
+      </p>
+      <div class="botones mt-l" style="justify-content:center">
+        <a class="boton boton-primario" href="https://github.com/davixcky/medidor-energia-esp32">
+          Repositorio en GitHub
+        </a>
+        <a class="boton boton-fantasma" href={url('/informe')}>Informe completo</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .portada { padding: clamp(52px, 9vw, 96px) 0 64px; }
+  .portada h1 { margin-top: 18px; }
+  .destacado {
+    background: linear-gradient(95deg, #3ddc97, #5aa9ff 55%, #b08cff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .franja-cifras {
+    padding: 34px 0;
+    background: var(--bg2);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .galeria {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  }
+  .galeria figure { margin: 0; }
+  .galeria .grande { grid-column: 1 / -1; }
+
+  .cierre {
+    background:
+      radial-gradient(48rem 24rem at 50% 118%, rgba(61, 220, 151, 0.11), transparent 70%),
+      var(--bg2);
+  }
+
+  @media (min-width: 900px) {
+    .galeria { grid-template-columns: 1fr 1fr; }
+    .galeria .grande { grid-column: 1 / -1; }
+  }
+</style>

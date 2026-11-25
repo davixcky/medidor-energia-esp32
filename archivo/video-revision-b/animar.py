@@ -11,7 +11,7 @@ s.cycles.device='GPU';s.render.fps=fps;s.frame_start=1;s.frame_end=tim['duration
 s.render.resolution_x=1920;s.render.resolution_y=1080;s.render.resolution_percentage=100
 s.render.image_settings.file_format='PNG';s.render.threads_mode='FIXED';s.render.threads=6
 # An actual CAD turntable/exploded view. The mains guard stays screwed in place.
-data=json.loads((root/'freecad/revision-b/render/ensamble.json').read_text())
+data=json.loads((root/'archivo/revision-b/render/ensamble.json').read_text())
 opening=segments[1]['start'];closing=segments[2]['start']
 for row in data:
  o=bpy.data.objects.get(row['nombre'])

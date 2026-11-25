@@ -1,0 +1,218 @@
+---
+import Base from '../layouts/Base.astro';
+import Cifra from '../components/Cifra.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const url = (p: string) => `${base}/${p.replace(/^\//, '')}`;
+const gh = 'https://github.com/davixcky/medidor-energia-esp32/blob/main';
+
+const api = [
+  ['POST', '/api/ingesta', 'Uno o más registros de 40 B concatenados, o JSON. Cabeceras X-Nodo y X-Firmware. Los duplicados se ignoran.'],
+  ['GET', '/api/tablero', 'Todo lo que muestra el tablero, en una sola respuesta.'],
+  ['GET', '/api/ultimo', 'El último registro recibido.'],
+  ['GET', '/api/serie', 'Promedios de P1, P2, V y FP1 por intervalo.'],
+  ['GET', '/api/energia', 'Energía de hoy, de ayer a la misma hora, del mes por día y proyección.'],
+  ['GET', '/api/pronostico', 'Pronóstico horario del LSTM con intervalo del 90 %.'],
+  ['GET', '/api/alertas', 'Últimas alertas abiertas.'],
+  ['PATCH', '/api/alertas/:id', 'Marca una alerta como notificada, revisada o descartada.'],
+  ['GET', '/api/eventos', 'Server-Sent Events: un evento por registro nuevo y uno al abrir una alerta.'],
+];
+---
+
+<Base
+  titulo="Plataforma web · Medidor de energía ESP32"
+  descripcion="Plataforma en TanStack Start: ingesta de tramas ADR-001, energía integrada, umbrales P95, alertas, pronóstico LSTM y tablero en tiempo real."
+  imagen="img/ui-tablero-escritorio.png"
+>
+  <section>
+    <div class="envoltura">
+      <span class="kicker">Plataforma</span>
+      <h1 class="mt-s">Del byte al tablero</h1>
+      <p class="plomo estrecho mt">
+        Una sola aplicación de TanStack Start: el <em>frontend</em> y el <em>backend</em> viven juntos
+        y los sirve un solo proceso de Node. Recibe las tramas del ESP32, las guarda en Postgres,
+        integra la energía, calcula umbrales, abre alertas y pronostica — y lo muestra todo en un
+        tablero que se actualiza cada segundo.
+      </p>
+
+      <div class="rejilla rejilla-4 mt-l">
+        <Cifra valor="1" unidad="Hz" rotulo="actualización del tablero<br>por SSE" color="verde" />
+        <Cifra valor="P95" rotulo="umbral de alerta sobre<br>los últimos 21 días" color="azul" />
+        <Cifra valor="48" unidad="h" rotulo="de pronóstico con<br>intervalo del 90 %" color="naranja" />
+        <Cifra valor="0" rotulo="base de datos necesaria<br>en modo demostración" color="violeta" />
+      </div>
+
+      <div class="botones mt-l">
+        <a class="boton boton-primario" href={`${gh}/plataforma/README.md`}>Documentación completa</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------- arquitectura -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">Arquitectura</span>
+        <h2>El mismo camino para el ESP32 y el simulador</h2>
+        <p>
+          El simulador envía <strong>exactamente</strong> lo que enviará el ESP32: tramas binarias
+          ADR-001 con las mismas cabeceras. Así el camino de ingesta, el cálculo de energía, los
+          umbrales y las alertas se prueban completos antes de tener la placa.
+        </p>
+      </div>
+
+      <pre><code>ESP32 (firmware) ──POST /api/ingesta (tramas ADR-001 de 40 B)──▶  Servidor TanStack Start
+pnpm simular     ─────────────── mismo formato ───────────────▶   ├─ adr001.ts    decodificación y validación
+                                                                  ├─ servicio.ts  energía, P95, alertas, pronóstico
+                                                                  ├─ lstm.ts      inferencia del LSTM en TypeScript
+                                                                  ├─ db.ts        conexión a Postgres (postgres.js)
+                                                                  └─ routes/api/* API REST y eventos SSE
+Navegador ◀── HTML con datos + /api/eventos (SSE, 1 Hz) ──  index.tsx (tablero)</code></pre>
+
+      <div class="rejilla rejilla-2 mt-l">
+        <div class="tarjeta">
+          <div class="icono">🗄</div>
+          <h3>Almacenamiento</h3>
+          <p>
+            Postgres en Supabase. Cuatro tablas: <code>registros</code>, <code>horas</code> (energía
+            integrada por hora y canal), <code>umbrales</code> y <code>alertas</code>. Tienen RLS
+            activo <strong>y sin políticas</strong>, así que la API pública de Supabase no las puede
+            leer: solo el servidor, que se conecta directamente.
+          </p>
+        </div>
+        <div class="tarjeta">
+          <div class="icono">📦</div>
+          <h3>Ingesta por lotes</h3>
+          <p>
+            Cada <code>POST</code> se guarda en una transacción. Los registros se insertan de una vez
+            —<code>ON CONFLICT DO NOTHING</code> descarta los repetidos— y la energía por hora se
+            acumula en memoria antes de escribirla, para no ir a la base por cada registro.
+          </p>
+        </div>
+        <div class="tarjeta">
+          <div class="icono">⚡</div>
+          <h3>Energía</h3>
+          <p>
+            Cada registro aporta P·Δt, donde Δt es el tiempo hasta el registro anterior. Las brechas
+            de más de 60 s —el nodo sin red— no se integran, para no inventar consumo que no se midió.
+          </p>
+        </div>
+        <div class="tarjeta">
+          <div class="icono">🔔</div>
+          <h3>Alertas</h3>
+          <p>
+            Se abre una alerta cuando la potencia de un canal supera el umbral durante 5 min o más. El
+            umbral es el percentil 95 de los últimos 21 días; se calcula con al menos un día de datos
+            y se recalcula cada 7 días.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ tablero -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">El tablero</span>
+        <h2>Tres formas de verlo</h2>
+      </div>
+
+      <figure>
+        <img src={url('img/ui-tablero-escritorio.png')} alt="Tablero completo en pantalla de escritorio" loading="lazy" width="1600" height="1000" />
+        <figcaption>En escritorio: potencia por canal, energía, alertas y pronóstico a la vez.</figcaption>
+      </figure>
+
+      <div class="rejilla rejilla-2">
+        <figure>
+          <img src={url('img/ui-tablero-movil.png')} alt="Tablero en un teléfono" loading="lazy" width="800" height="1400" />
+          <figcaption>En el teléfono, apilado.</figcaption>
+        </figure>
+        <figure>
+          <img src={url('img/ui-tablero-oscuro.png')} alt="Tablero en tema oscuro" loading="lazy" width="1600" height="1000" />
+          <figcaption>Tema oscuro.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------- API -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">API</span>
+        <h2>Nueve rutas</h2>
+        <p>
+          Si se omite el parámetro <code>nodo</code>, se usa el primer nodo que haya enviado datos.
+        </p>
+      </div>
+
+      <div class="tabla-envoltura">
+        <table>
+          <thead>
+            <tr><th>Método</th><th>Ruta</th><th>Descripción</th></tr>
+          </thead>
+          <tbody>
+            {
+              api.map(([m, ruta, d]) => (
+                <tr>
+                  <td>
+                    <span class={`etiqueta ${m === 'GET' ? 'azul' : m === 'POST' ? 'verde' : 'naranja'}`}>{m}</span>
+                  </td>
+                  <td><code>{ruta}</code></td>
+                  <td>{d}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="mt-l">Enviar una trama a mano</h3>
+      <pre><code>curl -X POST http://localhost:3000/api/ingesta \
+     -H 'Content-Type: application/octet-stream' \
+     -H 'X-Nodo: nodo01' -H 'X-Firmware: fw-v1.0.0' \
+     --data-binary @trama.bin</code></pre>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------- levantarla -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">Probarla</span>
+        <h2>Levantarla en un comando</h2>
+        <p>
+          El modo de demostración no necesita base de datos: levanta un Postgres en memoria con la
+          misma migración, carga 21 días de consumo simulado por la <strong>misma</strong> función de
+          ingesta que usa el ESP32 y luego agrega un registro por segundo.
+        </p>
+      </div>
+
+      <h3>Con Docker</h3>
+      <pre><code>docker compose up web            # http://localhost:3000</code></pre>
+
+      <h3 class="mt">Con Node</h3>
+      <pre><code>cd plataforma
+pnpm install
+pnpm build && DEMO=1 pnpm start  # http://localhost:3000</code></pre>
+
+      <h3 class="mt">Con Postgres local en lugar de la demostración</h3>
+      <pre><code>docker compose --profile db up postgres migrar web-db   # http://localhost:3001</code></pre>
+
+      <div class="aviso">
+        <strong>El simulador imita la costa Caribe.</strong> Genera carga base, una nevera que cicla,
+        el aire acondicionado en CH2 y picos de cocina. Su versión de firmware termina en
+        <code>-sim</code>, y el tablero muestra un aviso mientras los datos vengan de ahí: nunca se
+        presenta un dato simulado como si fuera medido.
+      </div>
+
+      <h3 class="mt-l">Pruebas</h3>
+      <p class="mt-s">
+        <code>pnpm test</code> cubre la decodificación ADR-001, el LSTM contra PyTorch, la energía, el
+        P95, las alertas y el pronóstico. Las del servicio necesitan un Postgres y se omiten sin él
+        — y no conviene apuntarlas a producción, porque vacían las tablas.
+      </p>
+    </div>
+  </section>
+</Base>

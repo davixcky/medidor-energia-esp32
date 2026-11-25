@@ -10,11 +10,15 @@ from PySide import QtCore
 def guardar_vistas():
     carpeta = Path(__file__).resolve().parent
     Gui.activateWorkbench("PartWorkbench")
-    for ruta in (
+    rutas = (
         carpeta / "medidor.FCStd",
         carpeta / "banco.FCStd",
-        carpeta / "revision-b" / "medidor-revB.FCStd",
-    ):
+        # Revisión B, superada por E.9: se conserva en archivo/ y solo se reescribe si está presente.
+        carpeta.parent / "archivo" / "revision-b" / "medidor-revB.FCStd",
+    )
+    for ruta in rutas:
+        if not ruta.exists():
+            continue
         doc = App.openDocument(str(ruta))
         for pieza in doc.Objects:
             if pieza.ViewObject is None:

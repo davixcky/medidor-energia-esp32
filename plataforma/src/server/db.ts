@@ -39,10 +39,14 @@ export function sql(): Sql {
   if (!cliente) {
     const url = process.env.DATABASE_URL
     if (!url) throw new Error('falta DATABASE_URL (cadena de conexión de Supabase); DEMO=1 corre sin base de datos')
+    // Supabase exige TLS; un Postgres propio (pruebas, docker compose) normalmente no lo tiene.
+    // Se reconoce por el host local o por sslmode=disable, el parámetro estándar de libpq, que
+    // permite apuntar a una base en otro contenedor sin que postgres.js intente TLS.
     const local = /@(localhost|127\.0\.0\.1)[:/]/.test(url)
+    const sinTls = local || /[?&]sslmode=disable(&|$)/.test(url)
     cliente = postgres(url, {
       prepare: false,
-      ssl: local ? false : 'require',
+      ssl: sinTls ? false : 'require',
       max: Number(process.env.DB_CONEXIONES ?? 5),
       onnotice: () => {},
       types: tipos,

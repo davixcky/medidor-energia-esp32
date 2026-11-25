@@ -1,0 +1,256 @@
+---
+import Base from '../layouts/Base.astro';
+import Cifra from '../components/Cifra.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const url = (p: string) => `${base}/${p.replace(/^\//, '')}`;
+const gh = 'https://github.com/davixcky/medidor-energia-esp32/blob/main';
+
+const vistas = [
+  ['medidor-E7-cerrado.png', 'Cerrado', 'La tapa magnética y la pantalla en su lugar.'],
+  ['medidor-E7-abierto.png', 'Abierto', 'Las cinco tarjetas y el recorrido del cableado interior.'],
+  ['medidor-E7-planta.png', 'Planta', 'Distribución de las tarjetas y la zona de red separada.'],
+  ['medidor-E7-trasera.png', 'Trasera', 'El prensaestopas PG7 por donde entra el cable de sensado de red.'],
+  ['medidor-E7-tapa-interior.png', 'Tapa por dentro', 'Placa trasera deslizante que retiene el vidrio de la pantalla.'],
+  ['medidor-E7-cierre-magnetico.png', 'Cierre magnético', 'Cuatro pares de imanes a presión y topes de alineación impresos.'],
+  ['medidor-E7-difusor.png', 'Difusor', 'Bandeja cautiva y difusor hexagonal de la barra de LED.'],
+  ['medidor-E8-pantalla-soporte-explotado.png', 'Pantalla, explotada', 'Orden de montaje de la pantalla, sin un solo tornillo.'],
+  ['medidor-E9-entradas-SCT.png', 'Entradas SCT', 'Dos jacks de 3,5 mm en el costado izquierdo para las pinzas.'],
+  ['medidor-E9-alimentacion-12V.png', 'Alimentación 12 V', 'Jack CON-156A de 5,5 × 2,5 mm, positivo al centro.'],
+  ['medidor-E9-ruta-alimentacion-interior.png', 'Ruta de alimentación', 'Del jack a la entrada protegida J1 y los arneses del LM2596.'],
+];
+---
+
+<Base
+  titulo="Gabinete y modelos 3D · Medidor de energía ESP32"
+  descripcion="Gabinete impreso en PETG modelado por script en FreeCAD: zona de red separada, tapa magnética sin tornillos y probetas de ajuste antes de imprimir el juego completo."
+  imagen="render/medidor-E7-abierto.png"
+>
+  <section>
+    <div class="envoltura">
+      <span class="kicker">Modelos 3D</span>
+      <h1 class="mt-s">Un gabinete que es código</h1>
+      <p class="plomo estrecho mt">
+        Nada del gabinete se dibujó a mano: todo sale de scripts de Python para FreeCAD, donde cada
+        cota es un parámetro al principio del archivo. Cambiar el grosor de una pared o la posición de
+        un conector es cambiar un número y volver a correr el script.
+      </p>
+
+      <div class="rejilla rejilla-4 mt-l">
+        <Cifra valor="280×180×70" unidad="mm" rotulo="gabinete impreso<br>en PETG" color="verde" />
+        <Cifra valor="0" rotulo="tornillos de ensamble<br>y cero pegamento" color="azul" />
+        <Cifra valor="10" rotulo="probetas de ajuste<br>antes del juego completo" color="naranja" />
+        <Cifra valor="5" rotulo="placas de Bambu Studio<br>listas para imprimir" color="violeta" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ diseño -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">Decisiones de diseño</span>
+        <h2>Sin tornillos, sin pegamento, sin bisagra</h2>
+        <p>
+          La revisión E.9 se armó alrededor de una idea: que todo se pueda abrir, revisar y volver a
+          cerrar sin herramientas ni consumibles, pero que la zona peligrosa necesite intención para
+          llegar a ella.
+        </p>
+      </div>
+
+      <div class="rejilla rejilla-2">
+        <div class="tarjeta">
+          <div class="icono">🧲</div>
+          <h3>Tapa a presión magnética</h3>
+          <p>
+            Cuatro pares de imanes alojados a presión y topes de alineación impresos. No hay bisagra:
+            una muesca suave de 19 mm en la pared frontal permite levantarla sin añadir una manija.
+          </p>
+        </div>
+        <div class="tarjeta">
+          <div class="icono">🛡</div>
+          <h3>Zona de red confinada</h3>
+          <p>
+            La red de 120 V vive en su propio compartimento opaco (Z1), con sockets ciegos a presión
+            que exigen herramienta para quitarse. No es un certificado reglamentario: es una barrera
+            deliberada.
+          </p>
+        </div>
+        <div class="tarjeta">
+          <div class="icono">📺</div>
+          <h3>Pantalla retenida desde dentro</h3>
+          <p>
+            El vidrio de la LilyGO queda a ras y se sujeta con una placa trasera deslizante con
+            agujeros de cerradura impresos. Se puede desmontar sin tocar el vidrio.
+          </p>
+        </div>
+        <div class="tarjeta">
+          <div class="icono">🔌</div>
+          <h3>Conectores repartidos por pared</h3>
+          <p>
+            Izquierda: los dos jacks de 3,5 mm de las pinzas. Derecha: el jack de 12 V. Atrás: el
+            prensaestopas PG7 del cable de sensado de red — que no es la entrada de alimentación.
+          </p>
+        </div>
+      </div>
+
+      <div class="aviso">
+        <strong>El USB-C queda dentro.</strong> El conector del ESP32 permanece bajo la tapa
+        magnética: el gabinete no tiene una abertura aproximada o sobredimensionada para él. Las
+        actualizaciones de rutina deberían ir por OTA.
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ vistas -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">El modelo</span>
+        <h2>Once vistas del gabinete E.9</h2>
+        <p>
+          Imágenes renderizadas en Blender a partir del mismo modelo que genera los STL, verificadas
+          automáticamente para que ninguna quede desactualizada respecto al CAD.
+        </p>
+      </div>
+
+      <div class="rejilla rejilla-2">
+        {
+          vistas.map(([archivo, titulo, pie]) => (
+            <figure>
+              <img src={url(`render/${archivo}`)} alt={`Render del gabinete: ${titulo}`} loading="lazy" width="1600" height="1200" />
+              <figcaption><strong>{titulo}</strong> — {pie}</figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------- impresión -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">Imprimir</span>
+        <h2>La placa 1 es obligatoria</h2>
+        <p>
+          El proyecto de Bambu Studio viene en cinco placas, y la primera no es parte del gabinete:
+          son las diez probetas de ajuste. Sirven para comprobar, con el material y la boquilla
+          definitivos, que los componentes comprados entran de verdad.
+        </p>
+      </div>
+
+      <ol class="pasos">
+        <li>
+          <strong>Medir cada componente comprado</strong> con calibrador y compararlo con
+          <code>medidas-componentes.json</code>.
+        </li>
+        <li>
+          <strong>Imprimir solo la placa 1</strong> con el mismo material, boquilla y perfil que se
+          usarán para el gabinete.
+        </li>
+        <li>
+          <strong>Probar los ajustes</strong>: deslizamientos rígidos, retención a presión y
+          extracción sin forzar el componente.
+        </li>
+        <li>
+          <strong>Solo entonces</strong> lanzar las placas 4 y 5, que son el cuerpo y la tapa: van de
+          canto en la cama de 256 × 256 mm y llevan soporte en árbol híbrido y 12 mm de balsa.
+        </li>
+      </ol>
+
+      <div class="aviso">
+        <strong>El hueco del LM2596 es conservador.</strong> Los 43 × 21 × 14 mm se reservaron sin
+        tener el módulo exacto identificado ni medido. No se puede dar el ajuste por bueno hasta que
+        su probeta pase con la pieza real.
+      </div>
+
+      <div class="botones mt">
+        <a class="boton boton-fantasma" href={`${gh}/freecad/revision-e7/bambu`}>Proyectos 3MF</a>
+        <a class="boton boton-fantasma" href={`${gh}/freecad/revision-e7/stl`}>Archivos STL</a>
+        <a class="boton boton-fantasma" href={`${gh}/freecad/revision-e7/MEDIDAS.md`}>Medidas</a>
+        <a class="boton boton-fantasma" href={`${gh}/freecad/revision-e7/BEST-PRACTICES.md`}>Buenas prácticas</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------- banco -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">Banco de pruebas</span>
+        <h2>Una caja para medir el medidor</h2>
+        <p>
+          Para validar la medida hace falta una carga conocida y un punto seguro donde poner la pinza.
+          El banco es una caja aparte con clavija y cordón, un tomacorriente doble y un lazo exterior
+          de fase que la pinza puede abrazar.
+        </p>
+      </div>
+
+      <div class="rejilla rejilla-2">
+        <figure>
+          <img src={url('img/3d-banco-abierto.png')} alt="Render del banco de pruebas abierto" loading="lazy" width="1400" height="1000" />
+          <figcaption>Banco abierto: clavija, cordón, tomacorriente doble y el lazo de fase.</figcaption>
+        </figure>
+        <figure>
+          <img src={url('img/3d-banco-planta.png')} alt="Vista en planta rotulada del banco de pruebas" loading="lazy" width="1400" height="1000" />
+          <figcaption>Planta rotulada, generada con los scripts del repositorio.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------- regenerar -->
+  <section>
+    <div class="envoltura">
+      <div class="encabezado-seccion">
+        <span class="kicker">Reproducir</span>
+        <h2>Regenerar todo el CAD</h2>
+      </div>
+      <pre><code>sh freecad/revision-e7/regenerar.sh cad               # FCStd, STEP y STL
+sh freecad/revision-e7/regenerar.sh bambu             # proyectos 3MF
+sh freecad/revision-e7/regenerar.sh vistas            # renders en Blender
+sh freecad/revision-e7/regenerar.sh validar-renders   # comprueba que no estén viejos</code></pre>
+      <p>
+        Requiere FreeCAD 1.1 y Blender. Las revisiones anteriores (B y E.5) se conservan en
+        <a href={`${gh}/archivo/README.md`}><code>archivo/</code></a> y siguen siendo reproducibles.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pasos {
+    counter-reset: paso;
+    list-style: none;
+    display: grid;
+    gap: 14px;
+    margin: 8px 0;
+  }
+  .pasos li {
+    position: relative;
+    padding-left: 48px;
+    color: var(--tx2);
+    font-size: 15.5px;
+    min-height: 34px;
+    padding-top: 4px;
+  }
+  .pasos li::before {
+    counter-increment: paso;
+    content: counter(paso);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--verde);
+    background: rgba(61, 220, 151, 0.1);
+    border: 1px solid rgba(61, 220, 151, 0.28);
+  }
+</style>

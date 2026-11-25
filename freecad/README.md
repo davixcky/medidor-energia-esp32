@@ -28,7 +28,15 @@ Para regenerar todo:
 ./generar.sh
 ```
 
-Si se regeneran los modelos por separado con `freecadcmd` (incluida la revisión B), ejecutar
+Si se regeneran los modelos por separado con `freecadcmd`, ejecutar
 después `freecad guardar_vistas.py` desde esta carpeta. Este paso usa la interfaz gráfica para
 guardar la presentación de los documentos: al abrirlos, el modelo debe aparecer sin activar
 manualmente la visibilidad de las piezas.
+
+## Revisión en curso y revisiones superadas
+
+- La revisión mecánica **en curso** es [`revision-e7/`](revision-e7/README.md) (modelo E.9).
+- Las revisiones **superadas** viven en [`../archivo/`](../archivo/README.md): la revisión B
+  (`archivo/revision-b/`, con su generador `medidor_profesional.py`) y la E.5
+  (`archivo/revision-e5/`). El generador de la revisión B toma `medidor.py` y `comun.py` de esta
+  carpeta, de modo que sigue siendo reproducible desde el archivo.

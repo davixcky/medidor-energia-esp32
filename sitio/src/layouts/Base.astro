@@ -1,0 +1,114 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  titulo: string;
+  descripcion: string;
+  imagen?: string;
+}
+
+const { titulo, descripcion, imagen = 'render/medidor-E7-cerrado.png' } = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const url = (p: string) => `${base}/${p.replace(/^\//, '')}`;
+const canonica = new URL(Astro.url.pathname, Astro.site).href;
+
+const paginas = [
+  { href: '/', texto: 'Inicio' },
+  { href: '/hardware', texto: 'Hardware' },
+  { href: '/firmware', texto: 'Firmware' },
+  { href: '/modelos-3d', texto: 'Gabinete' },
+  { href: '/plataforma', texto: 'Plataforma' },
+  { href: '/pronostico', texto: 'Pronóstico' },
+  { href: '/informe', texto: 'Informe' },
+];
+
+// Astro.url.pathname incluye el base; se normaliza para comparar.
+const actual = '/' + Astro.url.pathname.replace(base, '').replace(/^\/|\/$/g, '');
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0d1116" />
+    <title>{titulo}</title>
+    <meta name="description" content={descripcion} />
+    <link rel="canonical" href={canonica} />
+    <link rel="icon" href={url('img/icono.png')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:image" content={new URL(url(imagen), Astro.site).href} />
+    <meta property="og:url" content={canonica} />
+    <meta property="og:locale" content="es_CO" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="envoltura">
+        <a class="marca" href={url('/')}>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M1 14c3.5 0 4.5-9 8-9s4.5 9 8 9 4.5-5 6-5" stroke="#3ddc97" stroke-width="2.1"
+              stroke-linecap="round" />
+          </svg>
+          <span>Medidor de energía · ESP32</span>
+        </a>
+        <div class="nav-enlaces">
+          {paginas.map((p) => (
+            <a href={url(p.href)} aria-current={actual === p.href.replace(/\/$/, '') || (p.href === '/' && actual === '/') ? 'page' : undefined}>
+              {p.texto}
+            </a>
+          ))}
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="pie">
+      <div class="envoltura">
+        <div>
+          <h4>El proyecto</h4>
+          <p>
+            Medidor de energía eléctrica no invasivo<br />
+            de dos canales con ESP32
+          </p>
+          <p class="mt-s">
+            Sistemas Embebidos 1 · Ingeniería Electrónica<br />
+            Universidad de la Costa (CUC) · 2026-2
+          </p>
+        </div>
+        <div>
+          <h4>Equipo</h4>
+          <ul>
+            <li>David Orozco</li>
+            <li>Jose Torres</li>
+            <li>Leo Rojas</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Documentación</h4>
+          <ul>
+            <li><a href={url('/informe')}>Informe completo</a></li>
+            <li><a href={url('/hardware')}>Esquemático · PCB · BOM</a></li>
+            <li><a href={url('/plataforma')}>Plataforma y API</a></li>
+            <li>
+              <a href="https://github.com/davixcky/medidor-energia-esp32">Repositorio en GitHub</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4>En el stand</h4>
+          <ul>
+            <li><a href={url('/kiosko.html')}>Presentación del iPad</a></li>
+            <li><a href={url('/pantalla.html')}>Segunda pantalla</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "medidor-energia-sitio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "preparar": "node scripts/preparar-assets.mjs",
+    "predev": "pnpm preparar",
+    "dev": "astro dev",
+    "prebuild": "pnpm preparar",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "astro": "^5.6.1",
+    "katex": "^0.19.1",
+    "marked": "^15.0.7"
+  }
+}

@@ -1,0 +1,108 @@
+---
+/** La cadena de medición completa, del conductor de fase al tablero web. */
+const pasos = [
+  {
+    n: '01',
+    t: 'Sensores',
+    d: 'Dos pinzas SCT-013-000 abrazan el conductor sin cortarlo; un ZMPT101B aísla la tensión.',
+    tag: 'no invasivo',
+    color: 'verde',
+  },
+  {
+    n: '02',
+    t: 'Acondicionamiento',
+    d: 'Resistencia de carga, polarización a VBIAS, filtro antialias y protección por canal.',
+    tag: 'analógico',
+    color: 'azul',
+  },
+  {
+    n: '03',
+    t: 'ADC del ESP32',
+    d: '8.000 muestras/s por canal, ventanas de ciclos enteros sincronizadas por cruce por cero.',
+    tag: '12 bits',
+    color: 'azul',
+  },
+  {
+    n: '04',
+    t: 'Cálculo',
+    d: 'V e I eficaces, P, Q, S, factor de potencia, frecuencia y THD con sumas enteras exactas.',
+    tag: 'en el núcleo 1',
+    color: 'naranja',
+  },
+  {
+    n: '05',
+    t: 'Wi-Fi',
+    d: 'Una trama ADR-001 de 40 B por ventana. Sin red guarda 20 min y los envía en lote.',
+    tag: '40 B',
+    color: 'naranja',
+  },
+  {
+    n: '06',
+    t: 'Plataforma',
+    d: 'Energía integrada, umbrales P95, alertas y pronóstico de 48 h en el tablero.',
+    tag: 'tiempo real',
+    color: 'violeta',
+  },
+];
+---
+
+<ol class="cadena">
+  {
+    pasos.map((p) => (
+      <li class={p.color}>
+        <span class="n">{p.n}</span>
+        <h4>{p.t}</h4>
+        <p>{p.d}</p>
+        <span class="tag">{p.tag}</span>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .cadena {
+    list-style: none;
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+    counter-reset: paso;
+  }
+  .cadena li {
+    position: relative;
+    background: linear-gradient(180deg, var(--panel), var(--bg2));
+    border: 1px solid var(--line);
+    border-top: 2px solid var(--borde, var(--verde));
+    border-radius: var(--radio-s);
+    padding: 18px 17px 16px;
+  }
+  .cadena li.verde { --borde: #3ddc97; }
+  .cadena li.azul { --borde: #5aa9ff; }
+  .cadena li.naranja { --borde: #f5a35c; }
+  .cadena li.violeta { --borde: #b08cff; }
+
+  /* Sin flechas entre tarjetas: la rejilla reajusta el número de columnas según el
+     ancho, y una flecha al final de una fila apuntaría al vacío. El orden lo da el
+     número de cada paso. */
+
+  .n {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--borde, var(--verde));
+    letter-spacing: 0.1em;
+  }
+  .cadena h4 { margin: 7px 0 7px; font-size: 16.5px; }
+  .cadena p { font-size: 14.2px; line-height: 1.55; }
+  .tag {
+    display: inline-block;
+    margin-top: 12px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--tx3);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 3px 9px;
+  }
+
+</style>
