@@ -16,7 +16,7 @@ software y CAD; faltan montaje y validación eléctrica. La posición USB-C requ
 
 - [Descargas v1.3.0: video con voz y música, CAD y archivos P2S](https://github.com/davixcky/medidor-energia-esp32/releases/tag/v1.3.0).
 - [Ficha del dispositivo](../archivo/revision-b/medidor-revB.pdf) y [guía de montaje](../archivo/revision-b/LEER-ANTES-DE-IMPRIMIR.txt).
-- [Firmware y uso del encoder](../firmware/README.md#configuración-con-encoder-v130).
+- [Firmware y uso del encoder](../firmware/medidor/README.md#configuración-con-encoder-v130).
 - [Fuentes del video](../archivo/video-revision-b/LEEME.txt).
 
 Los STL y fuentes editables están en Git. El video, la escena Blender y los paquetes de
@@ -32,13 +32,13 @@ alarmas. Una LilyGO T4-S3 AMOLED en la tapa funciona únicamente como terminal
 gráfico por ESP-NOW; no sustituye al controlador del medidor. La lista de
 construcción E.8 está en
 [`lista-por-tarjeta-e8.csv`](../hardware/perforadas-modulares/lista-por-tarjeta-e8.csv).
-El [modelo mecánico E.8](../freecad/revision-e7/README.md) incluye ahora probetas de ajuste,
+El [modelo mecánico E.8](../3d/revision-e7/README.md) incluye ahora probetas de ajuste,
 placa trasera desmontable para la LilyGO, imanes a presión y proyectos reproducibles para Bambu Studio.
-Las referencias visuales actuales son la [vista cerrada](../freecad/revision-e7/medidor-E7-cerrado.png),
-la [vista abierta](../freecad/revision-e7/medidor-E7-abierto.png), la
-[planta](../freecad/revision-e7/medidor-E7-planta.png) y el
-[soporte de pantalla explotado](../freecad/revision-e7/medidor-E8-pantalla-soporte-explotado.png).
-Las [prácticas mecánicas E.8](../freecad/revision-e7/BEST-PRACTICES.md) se mantienen separadas de otros proyectos.
+Las referencias visuales actuales son la [vista cerrada](../3d/revision-e7/medidor-E7-cerrado.png),
+la [vista abierta](../3d/revision-e7/medidor-E7-abierto.png), la
+[planta](../3d/revision-e7/medidor-E7-planta.png) y el
+[soporte de pantalla explotado](../3d/revision-e7/medidor-E8-pantalla-soporte-explotado.png).
+Las [prácticas mecánicas E.8](../3d/revision-e7/BEST-PRACTICES.md) se mantienen separadas de otros proyectos.
 
 ## Contenido
 
@@ -303,7 +303,7 @@ comunicación (Ilustración 1). La frontera de seguridad separa la **zona de red
 únicamente el fusible y el módulo ZMPT101B, de la **zona de muy baja tensión** (azul), donde está todo
 lo que se suelda en la PCB.
 
-![Diagrama de bloques](../img/diagrama-de-bloques.png)
+![Diagrama de bloques](img/diagrama-de-bloques.png)
 
 **Ilustración 1.** Diagrama de bloques del medidor. Las flechas punteadas indican acople magnético (las
 pinzas no tienen contacto eléctrico con la red). Fuente: elaboración propia en Graphviz.
@@ -317,7 +317,7 @@ con **0 errores y 0 advertencias** ([`hardware/erc.rpt`](../hardware/erc.rpt)). 
 usan etiquetas de red con el mismo nombre: `CH1_ADC`, `CH2_ADC`, `V_ADC`, `VBIAS`, `ZMPT_OUT`, `LCD_DIN`,
 `LCD_CLK`, `LCD_CS`, `LCD_DC`, `LCD_RST`, `LCD_BL`, `LED_EST`, `SW1`, `SW2` y `RES_IO32/33/34`.
 
-![Esquemático](../img/esquematico.png)
+![Esquemático](img/esquematico.png)
 
 **Ilustración 2.** Esquemático del medidor (hoja A3). El recuadro rojo punteado delimita la zona de red.
 Fuente: elaboración propia en KiCad 10.
@@ -575,7 +575,7 @@ otro componente. Las reglas que se relajan a propósito son la
 diferencia con la huella de biblioteca, porque los pads se agrandaron, y la serigrafía recortada por
 esos pads.
 
-![Cobre de la PCB para transferencia de tóner](../img/pcb-cobre-toner.png)
+![Cobre de la PCB para transferencia de tóner](img/pcb-cobre-toner.png)
 
 **Ilustración 3.** Cara de cobre a escala 1:1, como se imprime para la transferencia de tóner
 (el texto se lee al revés). Fuente: elaboración propia en KiCad 10.
@@ -675,14 +675,14 @@ componentes. El ESP32 se monta sobre dos tiras de espadín hembra en las columna
 **Antes de soldar los zócalos (en la PCB o en la placa perforada) hay que medir con calibrador la
 separación entre filas de la tarjeta comprada:** algunos clones de 38 pines no tienen exactamente 25,4 mm.
 
-![Placa perforada, cara de componentes](../img/placa-perforada-componentes.png)
+![Placa perforada, cara de componentes](img/placa-perforada-componentes.png)
 
 **Ilustración 4.** Placa perforada, cara de componentes. Las líneas tenues son las pistas de estaño de
 la cara inferior y las gruesas, los puentes de cable aislado por la cara superior. Los círculos rojos
 marcan los puntos donde se sueldan los cables que vienen de los *jacks* de panel. Fuente: elaboración
 propia en Python y Matplotlib.
 
-![Placa perforada, cara de soldadura](../img/placa-perforada-soldadura.png)
+![Placa perforada, cara de soldadura](img/placa-perforada-soldadura.png)
 
 **Ilustración 5.** Placa perforada, cara de soldadura vista en espejo, como queda la placa al voltearla
 para soldar. Fuente: elaboración propia en Python y Matplotlib.
@@ -755,7 +755,7 @@ esa separación, así que el montaje exige:
 - cubrir con funda termoencogible el tramo del cable de MBT que pasa por el compartimento de red;
 - usar una clavija polarizada, para que el fusible F1 (en J4.1) quede siempre en la fase.
 
-![Gabinete](../img/gabinete.png)
+![Gabinete](img/gabinete.png)
 
 **Ilustración 6.** Planos del gabinete: vista superior sin tapa y vista exterior de la tapa, con cotas
 en milímetros. Fuente: elaboración propia en Python y Matplotlib.
@@ -826,7 +826,7 @@ advertencias** ([`hardware/erc-banco.rpt`](../hardware/erc-banco.rpt)).
 El medidor se alimenta de otro tomacorriente de pared, de modo que su propio consumo no se suma a la
 medida. La tensión de la red es la misma en los dos tomacorrientes si están en el mismo circuito.
 
-![Esquemático del banco de medición](../img/banco-esquematico.png)
+![Esquemático del banco de medición](img/banco-esquematico.png)
 
 **Ilustración 7.** Esquemático del banco de medición (hoja A4): clavija, lazo de medición con la pinza y
 tomacorriente de salida. Fuente: elaboración propia en KiCad 10.
@@ -851,7 +851,7 @@ El diseño del banco utiliza una caja plástica de 130 × 90 × 65 mm (Ilustraci
 cable de red entra por un prensaestopas PG11 con alivio de tracción y el lazo sale y vuelve por dos PG7,
 que también lo sujetan para que no se pueda halar hacia los bornes.
 
-![Banco de medición](../img/banco-pruebas.png)
+![Banco de medición](img/banco-pruebas.png)
 
 **Ilustración 8.** Banco de medición: interior sin tapa con el lazo de medición y la pinza (izquierda) y
 tapa vista desde afuera (derecha). Fuente: elaboración propia en Python y Matplotlib.
@@ -905,7 +905,7 @@ plateado).
 
 Antes de soldar, las entradas analógicas y la alimentación se simularon en **ngspice** con el script
 [`herramientas/simulacion.py`](../herramientas/simulacion.py). Cada caso genera una netlist (carpeta
-[`simulacion/`](../simulacion/), donde se puede abrir y repetir a mano), la ejecuta y compara el resultado
+[`hardware/simulacion/`](../hardware/simulacion/), donde se puede abrir y repetir a mano), la ejecuta y compara el resultado
 con el criterio de diseño. Los modelos son los mismos supuestos de la sección 7.4:
 
 - La pinza es una fuente de corriente ideal de relación 2000:1. No se modelan la saturación del núcleo
@@ -941,7 +941,7 @@ con el criterio de diseño. Los modelos son los mismos supuestos de la sección 
 
 Fuente: elaboración propia con ngspice.
 
-![Resultados de la simulación](../img/sim-resultados.png)
+![Resultados de la simulación](img/sim-resultados.png)
 
 **Ilustración 9.** Simulación en ngspice: tensión en el pin del ADC de CH1 y CH2 en corriente
 nominal, en el límite lineal y con sobrecorriente (arriba); respuesta en frecuencia de los tres filtros
@@ -987,18 +987,18 @@ conector micro-USB, pulsadores y regulador; el módulo ESP32-WROOM-32 y los dos 
 modelos de la biblioteca de KiCad. Las vistas de las Ilustraciones 10 a 12 las genera
 `kicad-cli` y sirven también como guía de montaje.
 
-![Placa en 3D, vista en perspectiva](../img/3d-placa-iso.png)
+![Placa en 3D, vista en perspectiva](img/3d-placa-iso.png)
 
 **Ilustración 10.** Modelo 3D de la PCB: ESP32-DevKitC sobre sus zócalos, canales de corriente y de
 tensión, alimentación y conectores. Las líneas blancas son los puentes de alambre. Fuente: elaboración
 propia en KiCad 10 y FreeCAD.
 
-![Placa en 3D, cara inferior](../img/3d-placa-abajo.png)
+![Placa en 3D, cara inferior](img/3d-placa-abajo.png)
 
 **Ilustración 11.** Cara de cobre de la PCB con el relleno de GND. Fuente: elaboración propia en
 KiCad 10.
 
-![Placa en 3D, vista superior](../img/3d-placa-arriba.png)
+![Placa en 3D, vista superior](img/3d-placa-arriba.png)
 
 **Ilustración 12.** Vista superior del modelo 3D, que sirve de guía de montaje junto con la
 Tabla 6. Fuente: elaboración propia en KiCad 10.
@@ -1010,7 +1010,7 @@ en FreeCAD.
 #### 7.13.2. Gabinetes y ensambles en FreeCAD
 
 Los dos equipos se modelaron en **FreeCAD 1.1** con scripts de Python que construyen cada pieza a
-partir de sólidos, operaciones booleanas y redondeos (carpeta [`freecad/`](../freecad/)). Cada cota es un
+partir de sólidos, operaciones booleanas y redondeos (carpeta [`3d/`](../3d/)). Cada cota es un
 parámetro del script, de modo que un cambio de medida se propaga a la caja, a la tapa y al ensamble.
 El ensamble del medidor en FreeCAD importa el STEP exportado desde KiCad (sección 7.13.1),
 por lo que conserva la posición de cada componente del diseño de la PCB.
@@ -1022,17 +1022,17 @@ alimentación están en la pared izquierda, y la ventana del USB en la pared fro
 13 a 15). La tapa lleva la ventana rehundida de la LCD, el LED, los pulsadores y los rótulos
 grabados.
 
-![Medidor cerrado](../img/3d-medidor-cerrado.png)
+![Medidor cerrado](img/3d-medidor-cerrado.png)
 
 **Ilustración 13.** Modelo 3D del medidor cerrado. Fuente: elaboración propia en FreeCAD (vista en Blender).
 
-![Medidor abierto](../img/3d-medidor-abierto.png)
+![Medidor abierto](img/3d-medidor-abierto.png)
 
 **Ilustración 14.** Modelo 3D del medidor con la tapa a un lado. Se muestran la PCB exportada desde
 KiCad con el ESP32, la zona de red tras el tabique y los componentes de la tapa. Fuente: elaboración propia en FreeCAD y KiCad
 (vista en Blender).
 
-![Medidor en planta](../img/3d-medidor-planta.png)
+![Medidor en planta](img/3d-medidor-planta.png)
 
 **Ilustración 15.** Vista superior del medidor sin tapa: compartimento de red (arriba), paso del
 cable de tres hilos por el collarín y PCB (abajo). Fuente: elaboración propia en FreeCAD y
@@ -1049,25 +1049,25 @@ equipo conectado sin abrir ningún circuito, y su cable termina en el conector m
 medidor (Ilustraciones 16 a 18). En el modelo, X1 queda a lo largo de la caja porque su yugo de 107 mm
 no cabe a lo ancho.
 
-![Banco cerrado](../img/3d-banco-cerrado.png)
+![Banco cerrado](img/3d-banco-cerrado.png)
 
 **Ilustración 16.** Modelo 3D del banco de medición cerrado: clavija y cordón al frente, tomacorriente X1
 en la tapa y, detrás, el lazo de fase con la pinza. Fuente: elaboración propia en FreeCAD.
 
-![Banco abierto](../img/3d-banco-abierto.png)
+![Banco abierto](img/3d-banco-abierto.png)
 
 **Ilustración 17.** Banco con la tapa a un lado. El tomacorriente y la pinza se dibujan translúcidos para
 mostrar el cableado: neutro (blanco) y tierra (verde) directo a X1, y la fase (negro) que sale al lazo
 exterior, atraviesa la ventana de la pinza y vuelve al tornillo de bronce. Fuente: elaboración propia en
 FreeCAD.
 
-![Banco en planta](../img/3d-banco-planta.png)
+![Banco en planta](img/3d-banco-planta.png)
 
 **Ilustración 18.** Vista superior del banco sin tapa, con cada pieza rotulada. Fuente: elaboración propia
 en FreeCAD (rótulos con Matplotlib).
 
-Los ensambles se exportaron en STEP con colores (`freecad/medidor.step` y `freecad/banco.step`), y
-los cuerpos y tapas, en STL para impresión 3D ([`freecad/stl/`](../freecad/stl/)). Para regenerar los
+Los ensambles se exportaron en STEP con colores (`3d/medidor.step` y `3d/banco.step`), y
+los cuerpos y tapas, en STL para impresión 3D ([`3d/stl/`](../3d/stl/)). Para regenerar los
 modelos y las ilustraciones:
 
 ```bash
@@ -1141,12 +1141,12 @@ Además, se enviaron al servidor tramas codificadas con el mismo código del *fi
 > los datos de UCI; por eso el pronóstico se presenta como ilustrativo hasta reentrenar con las
 > mediciones propias.
 
-![Plataforma web, vista de escritorio](../img/ui-tablero-escritorio.png)
+![Plataforma web, vista de escritorio](img/ui-tablero-escritorio.png)
 
 **Ilustración 19.** Tablero de la plataforma en vista de escritorio, alimentado por el simulador del
 nodo. Fuente: elaboración propia en TanStack Start.
 
-![Plataforma web, vista móvil](../img/ui-tablero-movil.png)
+![Plataforma web, vista móvil](img/ui-tablero-movil.png)
 
 **Ilustración 20.** Tablero en un teléfono de 390 px de ancho: inicio, potencia de 24 h con
 pronóstico y alertas. Fuente: elaboración propia en TanStack Start.
@@ -1156,7 +1156,7 @@ pronóstico y alertas. Fuente: elaboración propia en TanStack Start.
 La pantalla es una LCD Waveshare de 1,9" con controlador ST7789V2, de 170 × 320 píxeles a color, que el
 *firmware* usa en horizontal (320 × 170). Tiene cuatro pantallas en ciclo y tres que aparecen según el
 evento: arranque, alerta y tara (Ilustración 21; el arranque aparece en la Ilustración 22). El dibujo está en una biblioteca aparte del
-*firmware* ([`firmware/lib/interfaz/`](../firmware/lib/interfaz/)) que solo usa Adafruit GFX, de modo que
+*firmware* ([`firmware/lib/interfaz/`](../firmware/medidor/lib/interfaz/)) que solo usa Adafruit GFX, de modo que
 el mismo código se compila también en el PC y escribe las imágenes de este documento
 (`make -C firmware/test pantallas`). La prueba compara además la pantalla completa con la que se arma
 por franjas, como la envía el ESP32, y las dos resultan iguales. Las fuentes de Adafruit GFX no tienen
@@ -1178,13 +1178,13 @@ Tabla 16 resume la función de los pulsadores y del LED, y la Ilustración 22 mu
 
 Fuente: elaboración propia.
 
-![Pantallas de la LCD](../img/ui-lcd-pantallas.png)
+![Pantallas de la LCD](img/ui-lcd-pantallas.png)
 
 **Ilustración 21.** Pantallas de la LCD dibujadas por el código del *firmware*, dentro del contorno
 del módulo (51,2 × 27,3 mm). Fuente: elaboración propia con
-[`firmware/test/pantallas.cpp`](../firmware/test/pantallas.cpp).
+[`firmware/test/pantallas.cpp`](../firmware/medidor/test/pantallas.cpp).
 
-![Navegación de la LCD](../img/ui-lcd-navegacion.png)
+![Navegación de la LCD](img/ui-lcd-navegacion.png)
 
 **Ilustración 22.** Navegación entre pantallas con SW1 y SW2, y estados del LED. Fuente: elaboración
 propia en Graphviz.
@@ -1215,12 +1215,12 @@ estandarizado de la hora siguiente, que se lleva a kWh con $\hat y\,\sigma + \mu
 parámetros sale de las matrices: $4 \times 32 \times (32 + 4) + 4 \times 32 = 4.736$ en la LSTM,
 $32 \times 16 + 16 = 528$ en la capa densa y $16 + 1 = 17$ en la salida.
 
-![Celda LSTM](../img/lstm-celda.png)
+![Celda LSTM](img/lstm-celda.png)
 
 **Ilustración 23.** Esquema de la celda LSTM: la línea roja es el estado $c_t$ y las cajas son las
 compuertas. Fuente: elaboración propia en Python y Matplotlib.
 
-![Ecuaciones de la celda](../img/lstm-ecuaciones.png)
+![Ecuaciones de la celda](img/lstm-ecuaciones.png)
 
 **Ilustración 24.** Ecuaciones de la celda tal como están programadas en
 [`pronostico/modelo.py`](../pronostico/modelo.py). Fuente: elaboración propia en Python y Matplotlib.
@@ -1230,7 +1230,7 @@ ventanas), validación hasta el 31 de diciembre de 2009 (4.377) y prueba de ener
 (7.528). La normalización se calcula solo con los datos de entrenamiento. El entrenamiento usa Adam con
 parada temprana sobre la validación y tarda unos 6 s en CPU (Ilustración 25).
 
-![Curvas de aprendizaje](../img/lstm-entrenamiento.png)
+![Curvas de aprendizaje](img/lstm-entrenamiento.png)
 
 **Ilustración 25.** Error cuadrático medio por época en entrenamiento y validación. El error de
 validación queda por debajo del de entrenamiento porque el *dropout* solo actúa al entrenar y porque el
@@ -1243,7 +1243,7 @@ ventana (correlación de 0,90), y en esa unidad la compuerta de olvido baja dura
 entrada sube, es decir, el estado se renueva con cada hora; otras unidades cambian despacio a lo largo
 del día.
 
-![LSTM sobre un día real](../img/lstm-dia-real.png)
+![LSTM sobre un día real](img/lstm-dia-real.png)
 
 **Ilustración 26.** Entrada, compuertas de la unidad 2 y estado de las 32 unidades de la red
 entrenada sobre el 10 de febrero de 2010. Fuente: elaboración propia con
@@ -1276,7 +1276,7 @@ La Ilustración 27 muestra el error medio por horizonte en 281 inicios a mediano
 menos error que las tres referencias en las 48 horas; el error no crece de forma continua, porque también
 depende de la hora del día: es bajo en la madrugada y alto en la noche.
 
-![Error por horizonte](../img/lstm-horizonte.png)
+![Error por horizonte](img/lstm-horizonte.png)
 
 **Ilustración 27.** Error absoluto medio por horizonte del pronóstico recursivo frente a las
 referencias, en el conjunto de prueba. Fuente: elaboración propia con
@@ -1287,7 +1287,7 @@ MAPE a 48 h presenta un valor similar al del ingenuo diario (70,3 % frente a 70,
 en las horas nocturnas de bajo consumo, por lo que la comparación se centra en el MAE y el RMSE. La Ilustración
 28 muestra un caso del conjunto de prueba.
 
-![Pronóstico de 48 h](../img/lstm-pronostico.png)
+![Pronóstico de 48 h](img/lstm-pronostico.png)
 
 **Ilustración 28.** Consumo medido durante 72 h y pronóstico recursivo de las 48 h siguientes, del 10
 al 12 de marzo de 2010, frente a la línea base semanal. Fuente: elaboración propia en Python con PyTorch.
@@ -1304,7 +1304,7 @@ columnas `tiempo,kwh,temp`) y los pesos entrenados `lstm.pt`.
 
 ### 7.16. *Firmware*
 
-El *firmware* ([`firmware/`](../firmware/)) está escrito en C++ con PlatformIO y el *framework* Arduino para
+El *firmware* ([`firmware/`](../firmware/medidor/)) está escrito en C++ con PlatformIO y el *framework* Arduino para
 ESP32 (ESP-IDF 4.4). Compila sin errores y ocupa el 30 % de la RAM y el 77 % de la memoria de programa.
 Se reparte en tres tareas de FreeRTOS (Tabla 18).
 
@@ -1400,7 +1400,7 @@ El diseño se revisó mediante las siguientes verificaciones y cálculos:
 
 ### 8.2. Cronograma
 
-![Cronograma](../img/cronograma.png)
+![Cronograma](img/cronograma.png)
 
 **Ilustración 29.** Cronograma de actividades y estado al 21 de octubre de 2026. Fuente: elaboración
 propia en Python y Matplotlib.
@@ -1562,6 +1562,7 @@ medidor-energia-esp32/
 │   ├── Medidor.pretty/, fp-lib-table huellas propias (zócalo del DevKitC, cables de jack, puente)
 │   ├── drc.rpt                       DRC con comparación contra el esquemático
 │   ├── 3d/                           modelo del DevKitC, huellas, posición de conectores y STEP
+│   ├── simulacion/                   netlists de ngspice, datos y resultados.md
 │   └── perforadas-modulares/         revisión E.9: tarjetas T1–T5, BOM por tarjeta y paquetes
 ├── herramientas/
 │   ├── generar_esquematico.py        genera el esquemático de KiCad
@@ -1572,28 +1573,27 @@ medidor-energia-esp32/
 │   ├── modelo_devkitc.py             modelo 3D del ESP32-DevKitC (FreeCAD)
 │   ├── placa_perforada.py            distribución alternativa en placa perforada y su verificación
 │   ├── figuras.py                    diagrama de bloques, gabinetes y cronograma
-│   └── sexpr.py                      lector y escritor del formato de KiCad
-├── simulacion/                       netlists de ngspice, datos y resultados.md
-├── plataforma/                       aplicación TanStack Start (frontend + backend), ver su README
-├── firmware/                         firmware del ESP32 (PlatformIO), ver su README
-├── firmware-lilygo/                  terminal gráfico LilyGO T4-S3 (ESP-NOW)
-├── firmware-demo-sender/             emisor de tramas de prueba
-├── shared/
-│   └── telemetry_packet.h            trama ADR-001 compartida entre firmwares
-├── interfaz/
-│   └── navegacion.py                 diagrama de navegación de la LCD
+│   ├── sexpr.py                      lector y escritor del formato de KiCad
+│   └── interfaz/navegacion.py        diagrama de navegación de la pantalla
+├── firmware/
+│   ├── medidor/                     firmware del ESP32 (PlatformIO), ver su README
+│   ├── lilygo/                      terminal gráfico LilyGO T4-S3 (ESP-NOW)
+│   ├── demo-sender/                 emisor de tramas de prueba
+│   └── comun/telemetry_packet.h     trama ADR-001 compartida entre firmwares
+├── plataforma/                      aplicación TanStack Start (frontend + backend), ver su README
 ├── pronostico/
-│   ├── modelo.py                     datos y red LSTM
-│   ├── train.py                      entrenamiento, evaluación y gráficas
-│   ├── predict.py                    pronóstico de 48 h
-│   └── lstm.pt                       pesos entrenados
-├── freecad/                          gabinetes y ensambles en FreeCAD, piezas en STEP y STL
-│   └── revision-e7/                  revisión mecánica vigente (modelo E.9)
-├── sitio/                            sitio del proyecto en Astro (GitHub Pages)
-├── stand/                            kiosco del stand: QR, iPad y segunda pantalla
-├── video/revision-e7/                video de producto vigente
-├── archivo/                          revisiones superadas (B, E.5 y su video)
-└── img/                              ilustraciones del documento
+│   ├── modelo.py                    datos y red LSTM
+│   ├── train.py                     entrenamiento, evaluación y gráficas
+│   ├── predict.py                   pronóstico de 48 h
+│   └── lstm.pt                      pesos entrenados
+├── 3d/                              gabinetes y ensambles en FreeCAD, piezas en STEP y STL
+│   └── revision-e7/                 revisión mecánica vigente (modelo E.9)
+├── sitio/                           sitio del proyecto en Astro (GitHub Pages)
+│   └── stand/                       kiosco del stand: QR, iPad y segunda pantalla
+├── docs/
+│   ├── img/                         ilustraciones del documento
+│   └── video/revision-e7/           video de producto vigente
+└── archivo/                         revisiones superadas (B, E.5 y su video)
 ```
 
 Para regenerar todo (requiere KiCad 10, Freerouting 2.5 y Java solo para rutear de nuevo, FreeCAD 1.1, Blender,
@@ -1606,23 +1606,23 @@ cd ../hardware
 kicad-cli sch erc -o erc.rpt medidor-energia.kicad_sch
 kicad-cli sch export netlist --format kicadsexpr -o medidor-energia.net medidor-energia.kicad_sch
 kicad-cli sch export pdf -o medidor-energia.pdf medidor-energia.kicad_sch
-pdftoppm -png -r 160 -singlefile medidor-energia.pdf ../img/esquematico
+pdftoppm -png -r 160 -singlefile medidor-energia.pdf ../docs/img/esquematico
 python3 ../herramientas/generar_banco.py
 kicad-cli sch erc -o erc-banco.rpt banco-pruebas.kicad_sch
 kicad-cli sch export netlist --format kicadsexpr -o banco-pruebas.net banco-pruebas.kicad_sch
 kicad-cli sch export pdf -o banco-pruebas.pdf banco-pruebas.kicad_sch
-pdftoppm -png -r 200 -singlefile banco-pruebas.pdf ../img/banco-esquematico
+pdftoppm -png -r 200 -singlefile banco-pruebas.pdf ../docs/img/banco-esquematico
 cd ../herramientas
 python3 placa_perforada.py      # falla si la placa no coincide con la netlist
 python3 figuras.py
-python3 simulacion.py > ../simulacion/resultados.md
+python3 simulacion.py > ../hardware/simulacion/resultados.md
 cd ../plataforma && pnpm install && pnpm test && pnpm build && pnpm capturas
-cd ../firmware && pio pkg install && make -C test && make -C test pantallas && pio run
-cd ../interfaz && python3 navegacion.py
-cd ../herramientas && freecadcmd modelo_devkitc.py
+cd ../firmware/medidor && pio pkg install && make -C test && make -C test pantallas && pio run
+cd ../../herramientas/interfaz && python3 navegacion.py
+cd .. && freecadcmd modelo_devkitc.py
 python3 generar_pcb.py          # 'rutear' para rutear de nuevo (java + freerouting.jar)
 ./exportar_fabricacion.sh       # fabricación, vistas 3D, STEP y DRC
-cd ../freecad && ./generar.sh
+cd ../3d && ./generar.sh
 ```
 
 El LSTM se regenera con las instrucciones de [`pronostico/README.md`](../pronostico/README.md) (requiere

@@ -34,23 +34,23 @@ pronostica 48 h con una red LSTM.
 | **Paquetes de construcción** (armar cada tarjeta) | [`construction-packets/`](hardware/perforadas-modulares/construction-packets/) · [pack E.9](hardware/perforadas-modulares/medidor-E9-construction-pack.pdf) |
 | Banco de pruebas | [`hardware/banco-pruebas.kicad_sch`](hardware/banco-pruebas.kicad_sch) · [PDF](hardware/banco-pruebas.pdf) |
 | Verificaciones ERC / DRC | [`erc.rpt`](hardware/erc.rpt) · [`drc.rpt`](hardware/drc.rpt) · [`erc-banco.rpt`](hardware/erc-banco.rpt) |
-| Simulación en ngspice | [`simulacion/`](simulacion/) · [resultados](simulacion/resultados.md) |
+| Simulación en ngspice | [`hardware/simulacion/`](hardware/simulacion/) · [resultados](hardware/simulacion/resultados.md) |
 
 ### 💻 Firmware
 
 | Carpeta | Objetivo | Qué hace |
 |---|---|---|
-| [`firmware/`](firmware/README.md) | ESP32-DevKitC V4 (WROOM) | Medidor: muestrea 8.000 muestras/s por canal, calcula, guarda sin red y envía tramas ADR-001 |
-| [`firmware-lilygo/`](firmware-lilygo/README.md) | LilyGO T4-S3 AMOLED | Solo terminal gráfico por ESP-NOW. No mide ni decide alarmas |
-| [`firmware-demo-sender/`](firmware-demo-sender/) | Cualquier ESP32 | Emite tramas de prueba contra la plataforma |
-| [`shared/telemetry_packet.h`](shared/telemetry_packet.h) | — | Definición de la trama ADR-001 compartida |
+| [`firmware/medidor/`](firmware/medidor/README.md) | ESP32-DevKitC V4 (WROOM) | Medidor: muestrea 8.000 muestras/s por canal, calcula, guarda sin red y envía tramas ADR-001 |
+| [`firmware/lilygo/`](firmware/lilygo/README.md) | LilyGO T4-S3 AMOLED | Solo terminal gráfico por ESP-NOW. No mide ni decide alarmas |
+| [`firmware/demo-sender/`](firmware/demo-sender/) | Cualquier ESP32 | Emite tramas de prueba contra la plataforma |
+| [`firmware/comun/telemetry_packet.h`](firmware/comun/telemetry_packet.h) | — | Definición de la trama ADR-001 compartida |
 
 ### 🧊 Modelos 3D
 
 | Carpeta | Contenido |
 |---|---|
-| [`freecad/revision-e7/`](freecad/revision-e7/README.md) | **Gabinete vigente (E.9)**: STL, 3MF listos para Bambu Studio, probetas de ajuste, [medidas](freecad/revision-e7/MEDIDAS.md) y [buenas prácticas](freecad/revision-e7/BEST-PRACTICES.md) |
-| [`freecad/`](freecad/README.md) | Scripts base del gabinete y del banco, ensambles y [STL](freecad/stl/) |
+|    | **Gabinete vigente (E.9)**: STL, 3MF listos para Bambu Studio, probetas de ajuste, [medidas](3d/revision-e7/MEDIDAS.md) y [buenas prácticas](3d/revision-e7/BEST-PRACTICES.md) |
+| [`3d/`](3d/README.md) | Scripts base del gabinete y del banco, ensambles y [STL](3d/stl/) |
 | [`archivo/`](archivo/README.md) | Revisiones superadas (B y E.5) |
 
 ### 🌐 Web
@@ -60,7 +60,7 @@ pronostica 48 h con una red LSTM.
 | [`plataforma/`](plataforma/README.md) | Plataforma: TanStack Start (React 19 + TypeScript), ingesta ADR-001, Postgres en Supabase, energía, alertas, LSTM y tablero en tiempo real. Incluye la **API** y el contrato de la trama |
 | [`pronostico/`](pronostico/README.md) | Red LSTM en PyTorch: datos, entrenamiento y pesos |
 | [`sitio/`](sitio/README.md) | Sitio del proyecto en Astro, publicado en GitHub Pages |
-| [`stand/`](stand/README.md) | Kiosco del stand: página del QR, presentación para iPad y segunda pantalla HDMI |
+| [`sitio/stand/`](sitio/stand/README.md) | Kiosco del stand: página del QR, presentación para iPad y segunda pantalla HDMI |
 
 ### 🛠 Herramientas
 
@@ -119,7 +119,7 @@ Detalle completo —API, contrato ADR-001, variables de entorno, Supabase y prue
 Requiere [PlatformIO](https://platformio.org/install/cli).
 
 ```bash
-cd firmware
+cd firmware/medidor
 cp include/secretos.h.ejemplo include/secretos.h   # red Wi-Fi y URL del servidor
 pio run                                            # compila
 make -C test                                       # prueba el cálculo en el PC, sin hardware
@@ -148,11 +148,11 @@ pnpm dev                         # http://localhost:4321
 | Placa | Carpeta | Comandos |
 |---|---|---|
 | ESP32-DevKitC V4 (medidor) | `firmware/` | `pio run -t upload` y luego `pio device monitor` (115200 baudios) |
-| LilyGO T4-S3 AMOLED (pantalla) | `firmware-lilygo/` | `pio run -t upload` |
-| Emisor de prueba | `firmware-demo-sender/` | `pio run -t upload` |
+| LilyGO T4-S3 AMOLED (pantalla) | `firmware/lilygo/` | `pio run -t upload` |
+| Emisor de prueba | `firmware/demo-sender/` | `pio run -t upload` |
 
 ```bash
-cd firmware
+cd firmware/medidor
 cp include/secretos.h.ejemplo include/secretos.h   # obligatorio antes de cargar
 pio run -t upload
 pio device monitor
@@ -162,7 +162,7 @@ pio device monitor
 - Si hay varias placas conectadas, fijar el puerto: `pio run -t upload --upload-port /dev/cu.usbserial-XXXX`
   (en macOS, `ls /dev/cu.*` los lista).
 - **La LilyGO no se programa con el arnés conectado.** Desconectar VBUS del arnés y usar solo
-  USB-C; no alimentar por las dos vías a la vez. Ver [`firmware-lilygo/README.md`](firmware-lilygo/README.md).
+  USB-C; no alimentar por las dos vías a la vez. Ver [`firmware/lilygo/README.md`](firmware/lilygo/README.md).
 
 ### Subir los archivos de fabricación de la PCB
 
@@ -192,11 +192,11 @@ Si hay una PCB impresa de por medio, conviene seguir también el protocolo de
 ### Subir las piezas 3D a la impresora
 
 Los proyectos de Bambu Studio ya laminados están en
-[`freecad/revision-e7/bambu/`](freecad/revision-e7/bambu/) — abrir el `.3mf` y enviar a la impresora.
+[`3d/revision-e7/bambu/`](3d/revision-e7/bambu/) — abrir el `.3mf` y enviar a la impresora.
 Antes de imprimir el juego completo conviene sacar las
-[probetas de ajuste](freecad/revision-e7/pruebas-de-ajuste/), que verifican los alojamientos de imán,
+[probetas de ajuste](3d/revision-e7/pruebas-de-ajuste/), que verifican los alojamientos de imán,
 los jacks SCT y el prensaestopas. Los STL sueltos están en
-[`freecad/revision-e7/stl/`](freecad/revision-e7/stl/).
+[`3d/revision-e7/stl/`](3d/revision-e7/stl/).
 
 ### Publicar la plataforma web
 
@@ -220,7 +220,7 @@ en el mismo despliegue de GitHub Pages, las páginas del stand:
 | `/stand/` | Página anterior del QR, conservada como respaldo |
 
 Requiere una vez: **Settings → Pages → Source: GitHub Actions**. Si cambia la URL hay que regenerar
-el QR y volver a imprimir los llaveros: `python3 stand/generar_qr.py https://otra-url/`.
+el QR y volver a imprimir los llaveros: `python3 sitio/stand/generar_qr.py https://otra-url/`.
 
 ---
 
@@ -228,23 +228,30 @@ el QR y volver a imprimir los llaveros: `python3 stand/generar_qr.py https://otr
 
 ```
 medidor-energia-esp32/
-├── docs/informe.md            informe académico completo
+├── README.md                  este índice
+├── docker-compose.yml         levanta la plataforma web
+├── render.yaml                blueprint de Render
+│
+├── 3d/                        modelos 3D en FreeCAD
+│   └── revision-e7/           gabinete vigente (E.9): STL, 3MF y probetas
 ├── hardware/                  esquemático · PCB · BOM · fabricación
-│   └── perforadas-modulares/  revisión vigente E.9: tarjetas T1–T5
-├── firmware/                  ESP32 del medidor (PlatformIO)
-├── firmware-lilygo/           terminal gráfico LilyGO T4-S3
-├── firmware-demo-sender/      emisor de tramas de prueba
-├── shared/                    trama ADR-001 compartida
-├── freecad/                   modelos 3D (revision-e7/ es la vigente)
+│   ├── perforadas-modulares/  revisión vigente E.9: tarjetas T1–T5
+│   └── simulacion/            netlists de ngspice y resultados
+├── firmware/
+│   ├── medidor/               ESP32-DevKitC: mide, calcula y publica
+│   ├── lilygo/                terminal gráfico LilyGO T4-S3 (ESP-NOW)
+│   ├── demo-sender/           emisor de tramas de prueba
+│   └── comun/                 trama ADR-001 compartida
 ├── plataforma/                plataforma web (TanStack Start + Docker)
 ├── pronostico/                red LSTM en PyTorch
-├── simulacion/                netlists de ngspice
-├── herramientas/              generadores de esquemáticos, PCB, figuras y documentación
-├── interfaz/                  diagrama de navegación de la LCD
-├── sitio/                     sitio del proyecto en Astro
-├── stand/                     kiosco del stand (QR, iPad, HDMI) y llaveros
-├── video/revision-e7/         video de producto vigente
-├── img/                       ilustraciones del informe
+├── sitio/                     sitio del proyecto en Astro (GitHub Pages)
+│   └── stand/                 kiosco del stand (QR, iPad, HDMI) y llaveros
+├── herramientas/              generadores de esquemáticos, PCB y figuras
+│   └── interfaz/              diagrama de navegación de la pantalla
+├── docs/
+│   ├── informe.md             informe académico completo
+│   ├── img/                   ilustraciones del informe
+│   └── video/revision-e7/     video de producto vigente
 └── archivo/                   revisiones superadas (B, E.5 y su video)
 ```
 

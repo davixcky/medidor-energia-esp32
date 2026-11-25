@@ -2,7 +2,7 @@
  * Copia a sitio/public/ las ilustraciones que ya existen en el repositorio, para no
  * duplicarlas en Git. Se ejecuta solo antes de `astro dev` y `astro build`.
  *
- *   img/        + stand/img/   ->  public/img/      (mismo /img/ que espera el kiosco)
+ *   docs/img/ + sitio/stand/img/ -> public/img/      (mismo /img/ que espera el kiosco)
  *   renders E.9                ->  public/render/
  *   vistas de los esquemáticos ->  public/esquematicos/
  *
@@ -19,8 +19,8 @@ const PUBLICO = resolve(AQUI, '../public');
 
 /** Carpetas que se copian enteras al destino indicado. */
 const CARPETAS = [
-  ['img', 'img'],
-  ['stand/img', 'img'],
+  ['docs/img', 'img'],
+  ['sitio/stand/img', 'img'],
   ['hardware/perforadas-modulares/schematic-previews', 'esquematicos'],
 ];
 
@@ -65,9 +65,9 @@ async function copiarRenders() {
   await mkdir(destino, { recursive: true });
   let n = 0;
   for (const nombre of RENDERS) {
-    const origen = join(RAIZ, 'freecad/revision-e7', nombre);
+    const origen = join(RAIZ, '3d/revision-e7', nombre);
     if (!existsSync(origen)) {
-      faltantes.push(`freecad/revision-e7/${nombre}`);
+      faltantes.push(`3d/revision-e7/${nombre}`);
       continue;
     }
     await cp(origen, join(destino, nombre));
@@ -88,7 +88,7 @@ for (const [desde, hacia] of CARPETAS) {
 }
 const nr = await copiarRenders();
 total += nr;
-console.log(`  freecad/revision-e7 -> public/render  (${nr})`);
+console.log(`  3d/revision-e7 -> public/render  (${nr})`);
 
 console.log(`${total} archivos preparados en sitio/public/`);
 

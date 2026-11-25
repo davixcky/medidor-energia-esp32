@@ -2,9 +2,9 @@
 """Simulación SPICE (ngspice) de las entradas analógicas y de la alimentación del medidor.
 
 Cada caso escribe una netlist, la ejecuta con `ngspice -b`, lee los datos con `wrdata` y
-compara el resultado con el límite de diseño. Las netlists quedan en ../simulacion/ para
+compara el resultado con el límite de diseño. Las netlists quedan en ../hardware/simulacion/ para
 poder abrirlas y repetirlas a mano. El resumen se imprime como tabla en Markdown y las
-gráficas se escriben en ../img/sim-*.png.
+gráficas se escriben en ../docs/img/sim-*.png.
 
 Supuestos del modelo (los mismos del documento, sección 7.4):
 - La pinza SCT-013-000 es una fuente de corriente ideal de relación 2000:1. No modela la
@@ -26,8 +26,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
-SIM = os.path.join(AQUI, "..", "simulacion")
-IMG = os.path.join(AQUI, "..", "img")
+SIM = os.path.join(AQUI, "..", "hardware", "simulacion")
+IMG = os.path.join(AQUI, "..", "docs", "img")
 
 # BAT85 (hoja de datos: VF ≤ 240 mV a 0,1 mA, 320 mV a 1 mA, 400 mV a 10 mA, 800 mV a 100 mA)
 # 1N5819 (hoja de datos: VF típica ≈ 0,45 V a 1 A)

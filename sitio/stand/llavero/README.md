@@ -72,5 +72,5 @@ Editar `CHISTES` en `generar_llavero.py` y ejecutar:
 
 ```sh
 pip install trimesh shapely mapbox_earcut manifold3d fonttools pillow qrcode
-python3 stand/llavero/generar_llavero.py
+python3 sitio/stand/llavero/generar_llavero.py
 ```

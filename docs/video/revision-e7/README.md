@@ -1,7 +1,7 @@
 # Video del medidor E.7
 
 Video de 38 s (912 fotogramas a 24 fps, Full HD) generado desde el ensamble
-FreeCAD de `freecad/revision-e7/`. Es una visualización de diseño: no
+FreeCAD de `3d/revision-e7/`. Es una visualización de diseño: no
 sustituye prueba eléctrica, calibración ni verificación de aislamiento.
 
 ## Estados que muestra
@@ -22,13 +22,13 @@ ni funciona como indicador de nivel.
 Desde la raíz del repositorio, con el CAD ya regenerado:
 
 ```sh
-uv run --python 3.12 --with kokoro-onnx==0.6.1 --with soundfile python video/revision-e7/audio/generar.py
-python video/revision-e7/pantallas.py
-BUILD_ONLY=1 blender -b --python video/revision-e7/animar.py
-python video/revision-e7/graficos.py
-blender -b --python video/revision-e7/animar.py
-python video/revision-e7/finalizar.py
-python video/revision-e7/verificar.py
+uv run --python 3.12 --with kokoro-onnx==0.6.1 --with soundfile python docs/video/revision-e7/audio/generar.py
+python docs/video/revision-e7/pantallas.py
+BUILD_ONLY=1 blender -b --python docs/video/revision-e7/animar.py
+python docs/video/revision-e7/graficos.py
+blender -b --python docs/video/revision-e7/animar.py
+python docs/video/revision-e7/finalizar.py
+python docs/video/revision-e7/verificar.py
 ```
 
 La voz usa los modelos Kokoro de `~/.cache/hyperframes/tts/`. `PREVIEW=1` con

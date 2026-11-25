@@ -1,4 +1,4 @@
-"""Rotula la vista superior del banco renderizada por FreeCAD y la guarda en ../img/3d-banco-planta.png."""
+"""Rotula la vista superior del banco renderizada por FreeCAD y la guarda en ../docs/img/3d-banco-planta.png."""
 import os
 
 import matplotlib
@@ -8,7 +8,7 @@ import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
-IMG = os.path.join(AQUI, "..", "img")
+IMG = os.path.join(AQUI, "..", "docs", "img")
 
 img = mpimg.imread(os.path.join(AQUI, "planta-banco-base.png"))   # vista sin rótulos de render.py
 x0, x1, y0, y1 = 280, 1780, 200, 1030           # recorte alrededor del banco (píxeles)

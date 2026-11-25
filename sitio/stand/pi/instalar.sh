@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Convierte una Raspberry Pi en el reproductor de la segunda pantalla del stand.
-# Al encender, abre stand/pantalla.html a pantalla completa en la pantalla HDMI, sin internet.
+# Al encender, abre sitio/stand/pantalla.html a pantalla completa en la pantalla HDMI, sin internet.
 #
 # Uso (en la Pi, con Raspberry Pi OS con escritorio):
 #   git clone https://github.com/davixcky/medidor-energia-esp32.git
-#   cd medidor-energia-esp32 && bash stand/pi/instalar.sh            # sin giro
-#   GIRAR=90 bash stand/pi/instalar.sh                                # si la imagen sale de lado
+#   cd medidor-energia-esp32 && bash sitio/stand/pi/instalar.sh            # sin giro
+#   GIRAR=90 bash sitio/stand/pi/instalar.sh                                # si la imagen sale de lado
 set -euo pipefail
 
 ORIGEN="$(cd "$(dirname "$0")/.." && pwd)"
@@ -64,4 +64,4 @@ fi
 echo
 echo "Listo. Reinicia con: sudo reboot"
 echo "La página es: $URL"
-echo "Para cambiar el giro: GIRAR=90 bash stand/pi/instalar.sh (0, 90, 180 o 270)"
+echo "Para cambiar el giro: GIRAR=90 bash sitio/stand/pi/instalar.sh (0, 90, 180 o 270)"

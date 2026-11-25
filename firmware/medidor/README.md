@@ -41,8 +41,8 @@ sonido y umbral local de alerta en NVS. Una alerta pendiente tiene prioridad sob
 Wi-Fi y calibración conservan sus mecanismos existentes; no se editan con el encoder.
 
 A/B usan GPIO32/33 y el pulsador GPIO16, con contactos a GND y pull-ups de 3,3 V.
-El cableado está en [encoder-conexiones.csv](../hardware/encoder-conexiones.csv) y las cotas y
-componentes en [la guía de montaje](../archivo/revision-b/LEER-ANTES-DE-IMPRIMIR.txt).
+El cableado está en [encoder-conexiones.csv](../../hardware/encoder-conexiones.csv) y las cotas y
+componentes en [la guía de montaje](../../archivo/revision-b/LEER-ANTES-DE-IMPRIMIR.txt).
 La placa debe ser ESP32-WROOM; GPIO16 no está disponible para esto en algunos módulos con PSRAM.
 `ENCODER_EDGES_PER_DETENT` admite 2 o 4 según la ficha del encoder; por defecto 4.
 
@@ -50,7 +50,7 @@ La placa debe ser ESP32-WROOM; GPIO16 no está disponible para esto en algunos m
 make -C test ajustes feedback
 ```
 
-![Menú de configuración](../img/ui-lcd-configuracion.png)
+![Menú de configuración](../../docs/img/ui-lcd-configuracion.png)
 
 ## Pantalla
 

@@ -13,7 +13,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 HW = ROOT / "hardware/perforadas-modulares"
 KICAD = HW / "kicad"
-CAD = ROOT / "freecad/revision-e7"
+CAD = ROOT / "3d/revision-e7"
 
 
 def main():

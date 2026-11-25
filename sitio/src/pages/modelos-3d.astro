@@ -166,10 +166,10 @@ const vistas = [
       </div>
 
       <div class="botones mt">
-        <a class="boton boton-fantasma" href={`${gh}/freecad/revision-e7/bambu`}>Proyectos 3MF</a>
-        <a class="boton boton-fantasma" href={`${gh}/freecad/revision-e7/stl`}>Archivos STL</a>
-        <a class="boton boton-fantasma" href={`${gh}/freecad/revision-e7/MEDIDAS.md`}>Medidas</a>
-        <a class="boton boton-fantasma" href={`${gh}/freecad/revision-e7/BEST-PRACTICES.md`}>Buenas prácticas</a>
+        <a class="boton boton-fantasma" href={`${gh}/3d/revision-e7/bambu`}>Proyectos 3MF</a>
+        <a class="boton boton-fantasma" href={`${gh}/3d/revision-e7/stl`}>Archivos STL</a>
+        <a class="boton boton-fantasma" href={`${gh}/3d/revision-e7/MEDIDAS.md`}>Medidas</a>
+        <a class="boton boton-fantasma" href={`${gh}/3d/revision-e7/BEST-PRACTICES.md`}>Buenas prácticas</a>
       </div>
     </div>
   </section>
@@ -207,10 +207,10 @@ const vistas = [
         <span class="kicker">Reproducir</span>
         <h2>Regenerar todo el CAD</h2>
       </div>
-      <pre><code>sh freecad/revision-e7/regenerar.sh cad               # FCStd, STEP y STL
-sh freecad/revision-e7/regenerar.sh bambu             # proyectos 3MF
-sh freecad/revision-e7/regenerar.sh vistas            # renders en Blender
-sh freecad/revision-e7/regenerar.sh validar-renders   # comprueba que no estén viejos</code></pre>
+      <pre><code>sh 3d/revision-e7/regenerar.sh cad               # FCStd, STEP y STL
+sh 3d/revision-e7/regenerar.sh bambu             # proyectos 3MF
+sh 3d/revision-e7/regenerar.sh vistas            # renders en Blender
+sh 3d/revision-e7/regenerar.sh validar-renders   # comprueba que no estén viejos</code></pre>
       <p>
         Requiere FreeCAD 1.1 y Blender. Las revisiones anteriores (B y E.5) se conservan en
         <a href={`${gh}/archivo/README.md`}><code>archivo/</code></a> y siguen siendo reproducibles.

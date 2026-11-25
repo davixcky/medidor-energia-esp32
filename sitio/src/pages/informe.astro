@@ -43,23 +43,34 @@ const esImagen = (h: string) => /\.(png|jpe?g|svg|gif|webp)$/i.test(h);
 
 /** Debe coincidir con los destinos de scripts/preparar-assets.mjs. */
 const DESTINOS: [RegExp, string][] = [
-  [/^img\//, 'img/'],
-  [/^stand\/img\//, 'img/'],
-  [/^freecad\/revision-e7\//, 'render/'],
+  [/^docs\/img\//, 'img/'],
+  [/^sitio\/stand\/img\//, 'img/'],
+  [/^3d\/revision-e7\//, 'render/'],
   [/^hardware\/perforadas-modulares\/schematic-previews\//, 'esquematicos/'],
 ];
 
+/** `../hardware/x` -> `hardware/x`; `img/x` -> `docs/img/x`. */
+const desdeLaRaiz = (href: string) => {
+  const partes: string[] = ['docs'];
+  for (const seg of href.split('/')) {
+    if (seg === '.' || seg === '') continue;
+    if (seg === '..') partes.pop();
+    else partes.push(seg);
+  }
+  return partes.join('/');
+};
+
 const resolver = (href: string) => {
   if (/^(https?:|mailto:|#)/.test(href)) return href;
-  const limpio = href.replace(/^\.\.\//, '');
-  if (esImagen(limpio)) {
+  const enRepo = desdeLaRaiz(href);
+  if (esImagen(enRepo)) {
     for (const [patron, destino] of DESTINOS) {
-      if (patron.test(limpio)) return url(limpio.replace(patron, destino));
+      if (patron.test(enRepo)) return url(enRepo.replace(patron, destino));
     }
     // Imagen del repositorio que el sitio no publica: se sirve desde GitHub.
-    return `https://raw.githubusercontent.com/davixcky/medidor-energia-esp32/main/${limpio}`;
+    return `https://raw.githubusercontent.com/davixcky/medidor-energia-esp32/main/${enRepo}`;
   }
-  return `${REPO}/${limpio}`;
+  return `${REPO}/${enRepo}`;
 };
 
 renderer.link = function ({ href, title, tokens }) {

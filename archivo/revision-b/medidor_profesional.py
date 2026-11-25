@@ -2,14 +2,14 @@
 freecadcmd archivo/revision-b/medidor_profesional.py
 No cambia la PCB ni sobrescribe la revisión anterior.
 
-Escribe en esta misma carpeta y toma la geometría base de freecad/ (medidor.py y comun.py),
+Escribe en esta misma carpeta y toma la geometría base de 3d/ (medidor.py y comun.py),
 que siguen siendo los modelos vivos del proyecto.
 """
 import sys,json,math
 from pathlib import Path
 HERE=Path(__file__).resolve().parent
-# Los módulos base viven en freecad/, dos niveles arriba de archivo/revision-b/.
-sys.path.insert(0,str(HERE.parents[1]/'freecad'))
+# Los módulos base viven en 3d/, dos niveles arriba de archivo/revision-b/.
+sys.path.insert(0,str(HERE.parents[1]/'3d'))
 import FreeCAD as App
 import Part,MeshPart,Import
 import medidor as base

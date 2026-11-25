@@ -85,7 +85,7 @@ La LCD sube 4,9 mm respecto de la primera revisión B; la tapa incluye un alojam
 inferior de 51,8 × 27,9 mm. Usar la tapa y retenedores del mismo paquete actualizado.
 La superficie activa queda a Z75,3 mm. Se verificó sin intersecciones con la tapa.
 Render reproducible: usar LCD_TEXTURE con la ruta absoluta a img/ui-lcd-resumen.png
-al ejecutar freecad/render_blender.py en Blender; MODEL_FILE, STEP_FILE,
+al ejecutar 3d/render_blender.py en Blender; MODEL_FILE, STEP_FILE,
 RENDER_TEMP y RENDER_OUT seleccionan esta revisión sin modificar la anterior.
 
 ENCODER DE CONFIGURACIÓN — FIRMWARE 1.3.0

@@ -7,7 +7,7 @@ Genera, por cada chiste: STL de la base, STL del color, un 3MF de dos partes
 y cuatro placas 3MF listas para acomodar en una cama de 256 x 256 mm.
 
 Uso:  pip install trimesh shapely mapbox_earcut manifold3d fonttools pillow qrcode
-      python3 stand/llavero/generar_llavero.py
+      python3 sitio/stand/llavero/generar_llavero.py
 """
 from pathlib import Path
 import math

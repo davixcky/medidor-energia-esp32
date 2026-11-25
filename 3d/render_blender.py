@@ -3,7 +3,7 @@
 Se ejecuta en dos pasos (los llama generar.sh):
     freecadcmd render_blender.py                      exporta las mallas del ensamble a .render/
     blender --background --python render_blender.py -- .render/ensamble.json
-Conserva los nombres de las ilustraciones: ../img/3d-medidor-{cerrado,abierto,planta}.png.
+Conserva los nombres de las ilustraciones: ../docs/img/3d-medidor-{cerrado,abierto,planta}.png.
 """
 import json
 import os
@@ -177,7 +177,7 @@ def renderizar():
         objeto.location = objetivo + Vector(direccion).normalized() * 700
         objeto.rotation_euler = (objetivo - objeto.location).to_track_quat('-Z', 'Y').to_euler()
         camara.ortho_scale = escala
-        escena.render.filepath = os.path.join(os.environ.get("RENDER_OUT", os.path.join(AQUI, "..", "img")), f"3d-medidor-{vista}.png")
+        escena.render.filepath = os.path.join(os.environ.get("RENDER_OUT", os.path.join(AQUI, "..", "docs", "img")), f"3d-medidor-{vista}.png")
         bpy.ops.render.render(write_still=True)
 
 

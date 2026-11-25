@@ -1,6 +1,6 @@
 """Escena Blender del medidor E.7 a partir del ensamble exportado por FreeCAD.
 
-La usan `render_modelo.py` (vistas fijas) y `video/revision-e7/animar.py`.
+La usan `render_modelo.py` (vistas fijas) y `docs/video/revision-e7/animar.py`.
 La tapa es suelta (cierre magnético): cuelga de un vacío que sigue la misma
 trayectoria de servicio que valida el CAD, y los tres puentes de arnés se
 recalculan con la misma fórmula de coca en U.

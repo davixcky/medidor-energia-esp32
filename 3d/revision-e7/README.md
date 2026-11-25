@@ -27,11 +27,11 @@ The connector openings and retainers are represented in the CAD, but production 
 ## Regenerate
 
 ```sh
-sh freecad/revision-e7/regenerar.sh cad
-sh freecad/revision-e7/regenerar.sh bambu
-sh freecad/revision-e7/regenerar.sh json
-sh freecad/revision-e7/regenerar.sh vistas
-sh freecad/revision-e7/regenerar.sh validar-renders
+sh 3d/revision-e7/regenerar.sh cad
+sh 3d/revision-e7/regenerar.sh bambu
+sh 3d/revision-e7/regenerar.sh json
+sh 3d/revision-e7/regenerar.sh vistas
+sh 3d/revision-e7/regenerar.sh validar-renders
 ```
 
 The still images are the current visual reference. Old videos are intentionally not regenerated.

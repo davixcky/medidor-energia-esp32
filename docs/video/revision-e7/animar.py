@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Construye y renderiza el video E.7 desde el ensamble FreeCAD.
 
-    blender -b --python video/revision-e7/animar.py            # 912 fotogramas a frames/
-    PREVIEW=1 blender -b --python video/revision-e7/animar.py  # una imagen por plano
+    blender -b --python docs/video/revision-e7/animar.py            # 912 fotogramas a frames/
+    PREVIEW=1 blender -b --python docs/video/revision-e7/animar.py  # una imagen por plano
     BUILD_ONLY=1 ...                                           # solo .blend y seguimiento.json
 """
 from pathlib import Path
@@ -15,8 +15,8 @@ from bpy_extras.object_utils import world_to_camera_view
 from mathutils import Vector
 
 p = Path(__file__).resolve().parent
-root = p.parents[1]
-sys.path[:0] = [str(p), str(root / 'freecad/revision-e7')]
+root = p.parents[2]  # docs/video/revision-e7 -> raíz del repositorio
+sys.path[:0] = [str(p), str(root / '3d/revision-e7')]
 import linea_tiempo as lt
 from escena_blender import Escena
 

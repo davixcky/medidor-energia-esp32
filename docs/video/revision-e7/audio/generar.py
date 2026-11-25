@@ -1,6 +1,6 @@
 """Narración (Kokoro), cama tonal y pitidos del piezo.  Escribe mezcla.wav y ../tiempos.json.
 
-    uv run --python 3.12 --with kokoro-onnx==0.6.1 --with soundfile python video/revision-e7/audio/generar.py
+    uv run --python 3.12 --with kokoro-onnx==0.6.1 --with soundfile python docs/video/revision-e7/audio/generar.py
 """
 from pathlib import Path
 import json

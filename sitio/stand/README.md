@@ -29,12 +29,12 @@ flechas y barra espaciadora. Después de tocar, sigue avanzando sola.
 ## Publicar (una vez)
 
 1. En GitHub: **Settings → Pages → Source: GitHub Actions**.
-2. Hacer *merge* a `main`. El flujo [`.github/workflows/pages.yml`](../.github/workflows/pages.yml)
+2. Hacer *merge* a `main`. El flujo [`.github/workflows/pages.yml`](../../.github/workflows/pages.yml)
    publica, en un solo despliegue, el sitio del proyecto y estas páginas:
 
    | URL | Qué queda ahí |
    |---|---|
-   | `/` | El [sitio del proyecto en Astro](../sitio/README.md) — **es a donde apuntan los QR** |
+   | `/` | El [sitio del proyecto en Astro](../README.md) — **es a donde apuntan los QR** |
    | `/kiosko.html` | La presentación del iPad (URL sin cambios) |
    | `/pantalla.html` | La segunda pantalla HDMI (URL sin cambios) |
    | `/img/*` | Las imágenes de esta carpeta (sin cambios) |
@@ -47,7 +47,7 @@ flechas y barra espaciadora. Después de tocar, sigue avanzando sola.
 > queda disponible en `/stand/`.
 
 Si se usa otra URL hay que regenerar el QR **y volver a imprimir los llaveros**:
-`pip install qrcode && python3 stand/generar_qr.py https://otra-url/`.
+`pip install qrcode && python3 sitio/stand/generar_qr.py https://otra-url/`.
 
 ## Preparar el iPad
 
@@ -82,10 +82,10 @@ Opciones en la URL:
 3. En la Pi:
    ```sh
    git clone https://github.com/davixcky/medidor-energia-esp32.git
-   cd medidor-energia-esp32 && bash stand/pi/instalar.sh
+   cd medidor-energia-esp32 && bash sitio/stand/pi/instalar.sh
    sudo reboot
    ```
-4. Si la imagen sale de lado, repetir con `GIRAR=90 bash stand/pi/instalar.sh` (o 270).
+4. Si la imagen sale de lado, repetir con `GIRAR=90 bash sitio/stand/pi/instalar.sh` (o 270).
 
 Al encender abre la página a pantalla completa, sin cursor, sin apagar la pantalla y la reabre si
 se cierra. No necesita internet en el stand.
@@ -95,12 +95,12 @@ Si la pantalla no muestra imagen o la resolución es incorrecta, agregar al fina
 (o `480x1920@60`), y reiniciar.
 
 **Con el Mac:** conectar la pantalla, en **Ajustes → Pantallas** usarla como pantalla extendida
-(no duplicada), hacer doble clic en `stand/mac/abrir-pantalla.command`, arrastrar la ventana a la
+(no duplicada), hacer doble clic en `sitio/stand/mac/abrir-pantalla.command`, arrastrar la ventana a la
 pantalla pequeña y pulsar **Control + Command + F**.
 
 ## Fuentes
 
-Los textos y cifras salen del [informe](../docs/informe.md) y de `pronostico/metricas.json`.
-Las imágenes son copias reducidas de `freecad/revision-e7/` e `img/`; el video es
-`video/revision-e7/medidor-E7-producto.mp4` re-codificado a 720p sin audio. Los valores de la portada
+Los textos y cifras salen del [informe](../../docs/informe.md) y de `pronostico/metricas.json`.
+Las imágenes son copias reducidas de `3d/revision-e7/` e `img/`; el video es
+`docs/video/revision-e7/medidor-E7-producto.mp4` re-codificado a 720p sin audio. Los valores de la portada
 y la curva del pronóstico del kiosco son ilustrativos y así se indica en pantalla.

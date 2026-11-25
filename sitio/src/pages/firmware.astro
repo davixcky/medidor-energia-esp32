@@ -132,7 +132,7 @@ const trama = [
         ADC de 12 bits con ruido y retardo de multiplexado— y compara V, I, P, frecuencia y THD contra
         los valores exactos.
       </p>
-      <pre><code>cd firmware
+      <pre><code>cd firmware/medidor
 make -C test             # prueba del cálculo con señales sintéticas
 make -C test pantallas   # dibuja las pantallas de la interfaz en el PC</code></pre>
     </div>
@@ -173,7 +173,7 @@ make -C test pantallas   # dibuja las pantallas de la interfaz en el PC</code></
 
       <p>
         La definición compartida entre los firmwares está en
-        <a href={`${gh}/shared/telemetry_packet.h`}><code>shared/telemetry_packet.h</code></a>.
+        <a href={`${gh}/firmware/comun/telemetry_packet.h`}><code>firmware/comun/telemetry_packet.h</code></a>.
       </p>
     </div>
   </section>
@@ -187,34 +187,34 @@ make -C test pantallas   # dibuja las pantallas de la interfaz en el PC</code></
       </div>
 
       <div class="rejilla rejilla-3">
-        <a class="tarjeta" href={`${gh}/firmware/README.md`}>
+        <a class="tarjeta" href={`${gh}/firmware/medidor/README.md`}>
           <div class="icono">⚡</div>
-          <h3>firmware/</h3>
+          <h3>firmware/medidor/</h3>
           <p>
             ESP32-DevKitC V4 (WROOM). El medidor: muestrea, calcula, guarda sin red y publica. Es el
             dueño de todo.
           </p>
           <div class="etiquetas mt-s"><span class="etiqueta verde">principal</span></div>
         </a>
-        <a class="tarjeta" href={`${gh}/firmware-lilygo/README.md`}>
+        <a class="tarjeta" href={`${gh}/firmware/lilygo/README.md`}>
           <div class="icono">🖥</div>
-          <h3>firmware-lilygo/</h3>
+          <h3>firmware/lilygo/</h3>
           <p>
             LilyGO T4-S3 AMOLED. Solo terminal gráfico por ESP-NOW: no lee ADC, no integra energía y
             no decide alarmas.
           </p>
           <div class="etiquetas mt-s"><span class="etiqueta azul">pantalla</span></div>
         </a>
-        <a class="tarjeta" href={`${gh}/firmware-demo-sender`}>
+        <a class="tarjeta" href={`${gh}/firmware/demo-sender`}>
           <div class="icono">🧪</div>
-          <h3>firmware-demo-sender/</h3>
+          <h3>firmware/demo-sender/</h3>
           <p>Emite tramas de prueba contra la plataforma, para validar la ingesta desde una placa real.</p>
           <div class="etiquetas mt-s"><span class="etiqueta">pruebas</span></div>
         </a>
       </div>
 
       <h3 class="mt-l">Compilar y cargar</h3>
-      <pre><code>cd firmware
+      <pre><code>cd firmware/medidor
 cp include/secretos.h.ejemplo include/secretos.h   # red Wi-Fi y URL del servidor
 pio run                  # compila
 pio run -t upload        # carga en el ESP32

@@ -1,7 +1,7 @@
 /**
  * Capturas del tablero con Chrome sin interfaz (playwright-core, sin descargar navegadores).
  * Requiere el servidor en marcha (pnpm start) con datos (pnpm simular --dias 21).
- *   node scripts/capturas.ts            # escribe en ../img/
+ *   node scripts/capturas.ts            # escribe en ../../docs/img/
  * CHROME=/ruta/al/navegador y URL=http://… cambian los valores por defecto.
  */
 import { execFileSync } from 'node:child_process'
@@ -11,7 +11,7 @@ import { join } from 'node:path'
 import { chromium } from 'playwright-core'
 
 const URL_BASE = process.env.URL ?? 'http://localhost:3000/'
-const IMG = new URL('../../img/', import.meta.url).pathname
+const IMG = new URL('../../docs/img/', import.meta.url).pathname
 const navegador = await chromium.launch({ executablePath: process.env.CHROME ?? '/usr/bin/google-chrome-stable' })
 
 async function captura(ruta: string, opc: { ancho: number; alto: number; tema: 'light' | 'dark'; escala?: number; seccion?: string; movil?: boolean }) {

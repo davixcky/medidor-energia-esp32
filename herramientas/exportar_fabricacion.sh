@@ -3,12 +3,12 @@
 #   toner/  PDF a escala 1:1 para imprimir en láser (transferencia de tóner)
 #   cnc/    Gerber y taladros Excellon (FlatCAM, Candle, bCNC) y el zip para un fabricante
 #   guia-montaje.pdf, vista-cobre-desde-abajo.pdf, vista-toner.png y DRC
-# Las vistas 3D para el documento van a ../img/3d-placa-{arriba,abajo,iso}.png.
+# Las vistas 3D para el documento van a ../docs/img/3d-placa-{arriba,abajo,iso}.png.
 set -euo pipefail
 cd "$(dirname "$0")/../hardware"
 PCB=medidor-energia.kicad_pcb
 OUT=fabricacion
-IMG=../img
+IMG=../docs/img
 q() { grep -v -e assert -e '^Plotted' -e '^Done' -e '^$' -e Debug || true; }
 
 rm -rf "$OUT/toner" "$OUT/cnc"

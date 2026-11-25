@@ -9,14 +9,14 @@ __pycache__/
 # Datos y resultados regenerables
 pronostico/datos/
 plataforma/datos/
-simulacion/*.dat
+hardware/simulacion/*.dat
 *.FCBak
-freecad/.render/
+3d/.render/
 # Salida del laminador de Bambu Studio
 /result.json
 hardware/fabricacion/ruteo/
-# STEP pesados: se regeneran con kicad-cli y freecad/generar.sh (ver sección 10)
-freecad/*.step
+# STEP pesados: se regeneran con kicad-cli y 3d/generar.sh (ver sección 10)
+3d/*.step
 hardware/3d/medidor-placa.step
 hardware/*-backups/
 hardware/fp-info-cache

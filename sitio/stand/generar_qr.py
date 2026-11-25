@@ -1,6 +1,6 @@
-"""Genera stand/img/qr.svg con la URL que abre el visitante.
+"""Genera sitio/stand/img/qr.svg con la URL que abre el visitante.
 
-Uso:  python3 stand/generar_qr.py [URL]
+Uso:  python3 sitio/stand/generar_qr.py [URL]
 Requiere: pip install qrcode
 """
 import sys

@@ -30,7 +30,7 @@ Abrir medidor-revB-audio.mp4 con VLC u otro reproductor H.264/AAC.
 No se necesita Internet para reproducirlo. Subtítulos opcionales desde el reproductor.
 
 REGENERACIÓN
-1. Generar base.blend con freecad/render_blender.py y SAVE_SCENE, LCD_TEXTURE.
+1. Generar base.blend con 3d/render_blender.py y SAVE_SCENE, LCD_TEXTURE.
 2. audio/generar.py genera voces, mezcla y tiempos (requiere Kokoro y sus pesos).
 3. blender -b base.blend --python animar.py crea la escena y vistas previas.
 4. python graficos.py genera rótulos y subtítulos.

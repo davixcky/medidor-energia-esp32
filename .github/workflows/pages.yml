@@ -7,7 +7,7 @@
 #   /img/*            imágenes del stand y del informe
 #   /stand/           página anterior del QR, conservada como respaldo
 #
-# Los llaveros impresos y stand/img/qr.svg codifican exactamente
+# Los llaveros impresos y sitio/stand/img/qr.svg codifican exactamente
 # https://davixcky.github.io/medidor-energia-esp32/ — la raíz no se puede mover sin
 # volver a imprimirlos.
 #
@@ -19,10 +19,9 @@ on:
     branches: [main]
     paths:
       - 'sitio/**'
-      - 'stand/**'
       - 'docs/informe.md'
-      - 'img/**'
-      - 'freecad/revision-e7/*.png'
+      - 'docs/img/**'
+      - '3d/revision-e7/*.png'
       - 'hardware/perforadas-modulares/schematic-previews/**'
       - 'pronostico/metricas.json'
       - '.github/workflows/pages.yml'
@@ -53,7 +52,7 @@ jobs:
           cache: pnpm
           cache-dependency-path: sitio/pnpm-lock.yaml
 
-      # preparar-assets.mjs copia img/, stand/img/, los renders E.9 y las vistas de los
+      # preparar-assets.mjs copia docs/img/, sitio/stand/img/, los renders E.9 y las vistas de los
       # esquemáticos a sitio/public/, y falla si falta alguno de los esperados.
       - name: Construir el sitio
         working-directory: sitio
@@ -67,20 +66,20 @@ jobs:
         run: |
           set -euo pipefail
           for f in kiosko.html pantalla.html sw.js manifest.webmanifest; do
-            cp "stand/$f" "sitio/dist/$f"
+            cp "sitio/stand/$f" "sitio/dist/$f"
           done
           mkdir -p sitio/dist/img
-          cp -R stand/img/. sitio/dist/img/
+          cp -R sitio/stand/img/. sitio/dist/img/
           # Respaldo de la página anterior del QR, con sus rutas relativas intactas.
           mkdir -p sitio/dist/stand
-          cp stand/index.html sitio/dist/stand/index.html
-          cp -R stand/img sitio/dist/stand/img
+          cp sitio/stand/index.html sitio/dist/stand/index.html
+          cp -R sitio/stand/img sitio/dist/stand/img
 
       - name: Comprobar que las URL del stand quedaron en su sitio
         run: |
           set -euo pipefail
           for f in index.html kiosko.html pantalla.html sw.js manifest.webmanifest \
-                   img/qr.svg img/icono.png img/producto.mp4 stand/index.html; do
+                   img/qr.svg img/icono.png img/producto.mp4 sitio/stand/index.html; do
             test -s "sitio/dist/$f" || { echo "FALTA sitio/dist/$f"; exit 1; }
           done
           # La raíz debe ser el sitio de Astro, no la página antigua del stand.

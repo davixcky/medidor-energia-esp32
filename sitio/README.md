@@ -31,8 +31,8 @@ existe en el repositorio, y **falla si falta alguna**. Se ejecuta solo, antes de
 
 | Origen | Destino |
 |---|---|
-| `img/` y `stand/img/` | `public/img/` |
-| `freecad/revision-e7/*.png` (renders E.9) | `public/render/` |
+| `img/` y `sitio/stand/img/` | `public/img/` |
+| `3d/revision-e7/*.png` (renders E.9) | `public/render/` |
 | `hardware/perforadas-modulares/schematic-previews/` | `public/esquematicos/` |
 
 `public/` está en `.gitignore`: es caché de construcción, no fuente. Si se agrega un
@@ -54,17 +54,17 @@ despliegue de Pages, que además superpone las páginas del stand:
 | `/pantalla.html` | segunda pantalla HDMI (URL sin cambios) |
 | `/stand/` | página anterior del QR, como respaldo |
 
-> **La raíz no se puede mover.** Los llaveros impresos y `stand/img/qr.svg` codifican
+> **La raíz no se puede mover.** Los llaveros impresos y `sitio/stand/img/qr.svg` codifican
 > exactamente `https://davixcky.github.io/medidor-energia-esp32/`. Cambiar la URL obliga a
-> regenerar el QR (`python3 stand/generar_qr.py <url>`) y a volver a imprimir los llaveros.
+> regenerar el QR (`python3 sitio/stand/generar_qr.py <url>`) y a volver a imprimir los llaveros.
 
 El flujo comprueba, antes de publicar, que `kiosko.html`, `pantalla.html`, `sw.js`,
-`manifest.webmanifest`, `img/qr.svg` y `stand/index.html` estén en su sitio y que la raíz
+`manifest.webmanifest`, `img/qr.svg` y `sitio/stand/index.html` estén en su sitio y que la raíz
 sea este sitio y no la página antigua.
 
 ## Diseño
 
-La paleta es la misma del kiosco (`stand/index.html`), para que el QR lleve a algo que se
+La paleta es la misma del kiosco (`sitio/stand/index.html`), para que el QR lleve a algo que se
 ve como la presentación física. Tokens en [`src/styles/global.css`](src/styles/global.css);
 tema oscuro único y deliberado. Las cifras de la portada y de la página del pronóstico se
 leen de `pronostico/metricas.json` en tiempo de construcción, así que no se desactualizan

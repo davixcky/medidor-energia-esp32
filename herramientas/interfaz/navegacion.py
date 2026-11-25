@@ -2,9 +2,9 @@
 """Diagrama de navegación de la LCD con los pulsadores (Graphviz).
 
 Cada nodo muestra la pantalla real, dibujada por el código del firmware en el PC
-(`make -C ../firmware/test pantallas`, que escribe ../img/ui-lcd-*.png). Genera:
+(`make -C ../../firmware/medidor/test pantallas`, que escribe ../../docs/img/ui-lcd-*.png). Genera:
 
-    ../img/ui-lcd-navegacion.png
+    ../../docs/img/ui-lcd-navegacion.png
 """
 import os
 import subprocess
@@ -13,7 +13,7 @@ import tempfile
 from PIL import Image
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
-IMG = os.path.normpath(os.path.join(AQUI, "..", "img"))
+IMG = os.path.normpath(os.path.join(AQUI, "..", "..", "docs", "img"))
 PANTALLAS = {"arranque": "Arranque", "resumen": "1. Resumen", "ch1": "2. CH1", "ch2": "3. CH2",
              "energia": "4. Energía hoy", "alerta": "Alerta", "tara": "Tara del canal"}
 COLOR = {"alerta": "#c62828", "tara": "#b35900"}
