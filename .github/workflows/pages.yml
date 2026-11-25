@@ -78,8 +78,11 @@ jobs:
       - name: Comprobar que las URL del stand quedaron en su sitio
         run: |
           set -euo pipefail
+          # Ojo: estas rutas son las del sitio YA PUBLICADO (dentro de sitio/dist/),
+          # no las del repositorio. La página de respaldo se publica en /stand/
+          # aunque su fuente viva en sitio/stand/.
           for f in index.html kiosko.html pantalla.html sw.js manifest.webmanifest \
-                   img/qr.svg img/icono.png img/producto.mp4 sitio/stand/index.html; do
+                   img/qr.svg img/icono.png img/producto.mp4 stand/index.html; do
             test -s "sitio/dist/$f" || { echo "FALTA sitio/dist/$f"; exit 1; }
           done
           # La raíz debe ser el sitio de Astro, no la página antigua del stand.
